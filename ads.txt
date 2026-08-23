@@ -1,0 +1,4 @@
+# Ads.txt file for ToolX Pro
+# Replace the contents of this file with the code provided by Adsterra or your Ad Network.
+# Example Adsterra format (if required):
+# adsterra.com, PUBLISHER_ID, DIRECT, TAG_ID

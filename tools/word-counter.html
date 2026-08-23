@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word & Character Counter - ToolX Pro</title>
+    <meta name="description" content="Calculate the number of words, characters, sentences, lines, and reading time of your text in real-time.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="app-container">
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="tool-container">
+                    <div class="tool-header">
+                        <h1 class="tool-title">🔤 Word & Character Counter</h1>
+                        <p class="tool-desc">Type or paste your text below to get instant word count, character count, and other metrics.</p>
+                    </div>
+                    
+                    <div class="tool-body">
+                        <div class="form-group">
+                            <label for="text-input">Your Text:</label>
+                            <textarea id="text-input" class="form-control" rows="8" placeholder="Start typing here..." style="resize:vertical;"></textarea>
+                        </div>
+                        
+                        <div style="display:flex; justify-content:flex-end; gap:10px;">
+                            <button id="clear-btn" class="btn btn-secondary" style="width:auto; padding:8px 16px;">🧹 Clear Text</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Stats Dashboard -->
+                    <div id="stats-dashboard" style="margin-top:1rem; border-top:1px solid var(--border-color); padding-top:1.5rem;">
+                        <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:12px; color:var(--primary);">📊 Text Analytics:</h3>
+                        
+                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:12px;">
+                            <div style="background:var(--bg-secondary); padding:12px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
+                                <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:4px;">Words</p>
+                                <b id="word-count" style="font-size:1.4rem; color:var(--primary);">0</b>
+                            </div>
+                            <div style="background:var(--bg-secondary); padding:12px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
+                                <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:4px;">Characters</p>
+                                <b id="char-count" style="font-size:1.4rem;">0</b>
+                            </div>
+                            <div style="background:var(--bg-secondary); padding:12px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
+                                <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:4px;">No Spaces</p>
+                                <b id="nospace-char-count" style="font-size:1.4rem;">0</b>
+                            </div>
+                            <div style="background:var(--bg-secondary); padding:12px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
+                                <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:4px;">Lines</p>
+                                <b id="line-count" style="font-size:1.4rem;">0</b>
+                            </div>
+                            <div style="background:var(--bg-secondary); padding:12px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
+                                <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:4px;">Sentences</p>
+                                <b id="sentence-count" style="font-size:1.4rem;">0</b>
+                            </div>
+                            <div style="background:var(--bg-secondary); padding:12px; border-radius:8px; border:1px solid var(--border-color); text-align:center; border-left:4px solid var(--accent);">
+                                <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:4px;">Reading Time</p>
+                                <b id="read-time" style="font-size:1.1rem; color:var(--accent);">0 sec</b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/word-counter.js"></script>
+</body>
+</html>

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF to Word Converter - ToolX Pro</title>
+    <meta name="description" content="Convert PDF documents into editable Word (.docx / .doc) files quickly, accurately, and 100% securely in your browser.">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- PDF.js CDN for client-side PDF rendering & parsing -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- docx.js CDN for native Word .docx document generation -->
+    <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.umd.js"></script>
+    <script>
+        if (window.pdfjsLib) {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+    </script>
+    <style>
+        .compact-pdf-box {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+        .pdf-preview-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 16px;
+            width: 180px;
+            text-align: center;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            margin: 0 auto;
+        }
+        .pdf-thumbnail-canvas {
+            width: 100%;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.06);
+            margin-bottom: 8px;
+            background: #fff;
+        }
+        .spinner-ring {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--primary-glow, rgba(245, 124, 0, 0.2));
+            border-top: 4px solid var(--primary, #f57c00);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 16px;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        @media (max-width: 576px) {
+            .upload-area {
+                padding: 1.5rem 1rem !important;
+            }
+            .tool-title {
+                font-size: 1.35rem !important;
+            }
+            .btn-action-lg {
+                width: 100% !important;
+                padding: 12px 20px !important;
+                font-size: 1rem !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="tool-container compact-pdf-box">
+                    <div class="tool-header" style="text-align: center; margin-bottom: 1.2rem;">
+                        <h1 class="tool-title" style="font-size: 1.6rem; font-weight: 700;">📝 PDF to Word Converter</h1>
+                        <p class="tool-desc" style="font-size: 0.88rem; color: var(--text-secondary); max-width: 540px; margin: 0 auto;">Convert PDF files into fully editable Word documents (.docx / .doc) with layout and formatting preserved.</p>
+                    </div>
+                    
+                    <div class="tool-body">
+                        <!-- Step 1: Drag & Drop Upload Zone -->
+                        <div id="upload-stage" class="upload-area" style="padding: 2rem 1.2rem; border-radius: 12px; border: 2px dashed var(--border-color); background: var(--bg-secondary); text-align: center;">
+                            <span class="upload-icon" style="font-size: 2.8rem; display: block; margin-bottom: 8px;">📄</span>
+                            <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 6px; color: var(--text-primary);">Convert PDF to WORD</h2>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 18px;">Fast, private, and 100% free browser conversion.</p>
+                            
+                            <button id="select-pdf-btn" class="btn btn-primary btn-action-lg" style="padding: 12px 28px; font-size: 1rem; font-weight: 700; border-radius: 8px;">
+                                Select PDF file
+                            </button>
+                            <p style="font-size: 0.8rem; color: var(--text-secondary); margin-top: 10px;">or drop PDF here</p>
+                            <input type="file" id="pdf-upload" accept="application/pdf" style="display:none;">
+                        </div>
+
+                        <!-- Step 2: PDF Card Preview & Conversion Controls -->
+                        <div id="preview-stage" style="display:none; text-align: center; margin-top: 0.8rem;">
+                            <div style="display: flex; flex-direction: column; align-items: center; gap: 14px;">
+                                <div class="pdf-preview-card">
+                                    <span style="position: absolute; top: -8px; right: -8px; background: var(--primary, #f57c00); color: white; border-radius: 50%; width: 24px; height: 24px; font-size: 0.75rem; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 5px rgba(0,0,0,0.2);" id="page-count-badge">1</span>
+                                    <canvas id="pdf-thumb-canvas" class="pdf-thumbnail-canvas"></canvas>
+                                    <h4 id="preview-file-name" style="font-size: 0.85rem; font-weight: 600; margin: 0; word-break: break-all; color: var(--text-primary);">document.pdf</h4>
+                                    <p id="preview-file-meta" style="font-size: 0.75rem; color: var(--text-secondary); margin: 2px 0 0;">PDF Document</p>
+                                </div>
+
+                                <div style="width: 100%; max-width: 320px; text-align: left;">
+                                    <label style="font-weight: 600; font-size: 0.82rem; margin-bottom: 4px; display: block; color: var(--text-primary);">Conversion Mode:</label>
+                                    <select id="conversion-mode-select" class="form-control" style="width: 100%; padding: 8px 12px; border-radius: 6px; font-size: 0.85rem; font-weight: 600;">
+                                        <option value="high-fidelity">🎯 Exact 1-to-1 Page Layout (Recommended)</option>
+                                        <option value="text-editable">📝 Editable Flowing Text Mode</option>
+                                    </select>
+                                </div>
+
+                                <div style="display: flex; gap: 10px; align-items: center; justify-content: center; flex-wrap: wrap;">
+                                    <button id="change-pdf-btn" class="btn btn-secondary" style="padding: 8px 16px; font-size: 0.85rem;">
+                                        🔄 Change PDF
+                                    </button>
+                                </div>
+
+                                <div style="width: 100%; max-width: 320px;">
+                                    <button id="convert-now-btn" class="btn btn-primary btn-action-lg" style="width: 100%; padding: 12px; font-size: 1rem; font-weight: 700; border-radius: 8px;">
+                                        Convert to WORD &rarr;
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Step 3: Converting Overlay / Loading Screen -->
+                        <div id="loading-stage" style="display:none; text-align: center; padding: 2.5rem 1rem;">
+                            <div class="spinner-ring"></div>
+                            <h2 style="font-size: 1.25rem; font-weight: 700; margin-bottom: 6px;" id="loading-title">Converting PDF to WORD...</h2>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary);" id="loading-subtitle">Extracting text layout & page structure</p>
+                        </div>
+
+                        <!-- Step 4: Final Success Screen -->
+                        <div id="success-stage" style="display:none; text-align: center; padding: 1.5rem 1rem;">
+                            <span style="font-size: 3rem; display: block; margin-bottom: 8px;">🎉</span>
+                            <h2 style="font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin-bottom: 6px;">PDF Converted Successfully!</h2>
+                            <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 20px;">Your editable Word document is ready for download.</p>
+                            
+                            <div style="display: flex; flex-direction: column; align-items: center; gap: 12px; margin-bottom: 20px;">
+                                <button id="download-word-primary-btn" class="btn btn-primary btn-action-lg" style="padding: 14px 32px; font-size: 1.05rem; font-weight: 700; border-radius: 8px; max-width: 320px; width: 100%;">
+                                    📥 Download WORD
+                                </button>
+                                
+                                <div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 6px;">
+                                    <button id="download-doc-alt-btn" class="btn btn-secondary" style="padding: 8px 14px; font-size: 0.82rem;">
+                                        📝 Download (.doc)
+                                    </button>
+                                    <button id="copy-text-alt-btn" class="btn btn-secondary" style="padding: 8px 14px; font-size: 0.82rem;">
+                                        📋 Copy Raw Text
+                                    </button>
+                                    <button id="toggle-editor-btn" class="btn btn-secondary" style="padding: 8px 14px; font-size: 0.82rem;">
+                                        ✏️ Edit Text Content
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Optional Text Preview / Editor Box -->
+                            <div id="editor-wrapper" style="display:none; text-align: left; max-width: 600px; margin: 16px auto 0; background: var(--card-bg); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-color);">
+                                <h3 style="font-size: 0.9rem; font-weight: 600; margin-bottom: 6px;">Document Text Editor:</h3>
+                                <textarea id="extracted-text-area" class="form-control" style="width:100%; min-height:220px; font-family:inherit; font-size:0.9rem; line-height:1.5; padding:10px; border-radius:6px; resize:vertical;"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/pdf-to-word.js"></script>
+</body>
+</html>

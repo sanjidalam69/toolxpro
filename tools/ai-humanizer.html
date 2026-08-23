@@ -1,0 +1,758 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Text Humanizer - Free AI to Human Text Converter | ToolX Pro</title>
+    <meta name="description" content="Transform mechanical AI drafts into authentic, fluid human writing with natural perplexity and zero robotic traces. Free online AI humanizer by ToolX Pro.">
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .humanizer-wrapper {
+            position: relative;
+            max-width: 1140px;
+            margin: 0 auto;
+        }
+
+        .humanizer-ambient-glow {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
+            height: 220px;
+            background: radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(99, 102, 241, 0.08) 45%, transparent 70%);
+            filter: blur(50px);
+            z-index: 0;
+            pointer-events: none;
+            animation: humanizerPulse 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes humanizerPulse {
+            0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.06); }
+        }
+
+        .humanizer-main-card {
+            position: relative;
+            z-index: 1;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px 28px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .humanizer-main-card {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(16, 185, 129, 0.15);
+        }
+
+        .humanizer-hero-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .humanizer-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 14px;
+            border-radius: 9999px;
+            background: rgba(16, 185, 129, 0.09);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #059669;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 0.3px;
+            margin-bottom: 10px;
+        }
+
+        [data-theme="dark"] .humanizer-status-pill {
+            background: rgba(16, 185, 129, 0.16);
+            border-color: rgba(52, 211, 153, 0.4);
+            color: #34d399;
+        }
+
+        .pulse-dot-green {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #10b981;
+            box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            animation: pulseGreen 2s infinite;
+        }
+
+        @keyframes pulseGreen {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(16, 185, 129, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+        }
+
+        .humanizer-title {
+            font-family: var(--font-header);
+            font-size: 2.1rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text-primary) 30%, #10b981 70%, #6366f1 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .humanizer-subtitle {
+            font-size: 0.94rem;
+            color: var(--text-secondary);
+            max-width: 680px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Mode Selector Chips */
+        .modes-bar-wrapper {
+            margin-bottom: 18px;
+        }
+
+        .modes-bar-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+
+        .modes-chips-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 8px;
+        }
+
+        .human-chip {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 8px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 0.84rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+            outline: none;
+            white-space: nowrap;
+        }
+
+        .human-chip:hover {
+            border-color: #10b981;
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        .human-chip.active {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(99, 102, 241, 0.08));
+            border-color: #10b981;
+            color: #059669;
+            font-weight: 700;
+            box-shadow: 0 0 0 1px #10b981;
+        }
+
+        [data-theme="dark"] .human-chip.active {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.22), rgba(99, 102, 241, 0.15));
+            border-color: #34d399;
+            color: #34d399;
+            box-shadow: 0 0 0 1px #34d399;
+        }
+
+        /* Dual Pane Studio */
+        .studio-dual-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 16px;
+        }
+
+        .studio-pane {
+            display: flex;
+            flex-direction: column;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            transition: all 0.25s ease;
+            min-height: 380px;
+        }
+
+        .studio-pane:focus-within {
+            border-color: #10b981;
+            box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+        }
+
+        .pane-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            background: rgba(0, 0, 0, 0.02);
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        [data-theme="dark"] .pane-header {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .pane-title {
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .pane-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-pane-action {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.76rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: var(--transition);
+        }
+
+        .btn-pane-action:hover {
+            border-color: #10b981;
+            color: #059669;
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        .pane-body {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .human-textarea {
+            flex: 1;
+            width: 100%;
+            min-height: 260px;
+            padding: 14px 16px;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: transparent;
+            border: none;
+            outline: none;
+            resize: none;
+            font-family: inherit;
+        }
+
+        .human-textarea::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        .human-diff-box {
+            display: none;
+            flex: 1;
+            padding: 14px 16px;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+            white-space: pre-wrap;
+            overflow-y: auto;
+            max-height: 320px;
+        }
+
+        .human-diff-box del {
+            background: rgba(239, 68, 68, 0.14);
+            color: #ef4444;
+            text-decoration: line-through;
+            padding: 2px 5px;
+            border-radius: 4px;
+            margin: 0 2px;
+        }
+
+        .human-diff-box ins {
+            background: rgba(16, 185, 129, 0.16);
+            color: #10b981;
+            text-decoration: none;
+            border-bottom: 2px solid #10b981;
+            padding: 2px 5px;
+            border-radius: 4px;
+            margin: 0 2px;
+            font-weight: 700;
+        }
+
+        .output-empty-state {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            color: var(--text-secondary);
+            pointer-events: none;
+        }
+
+        .empty-icon-art {
+            font-size: 2.2rem;
+            margin-bottom: 8px;
+            opacity: 0.7;
+        }
+
+        .pane-footer-hud {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 8px 14px;
+            background: rgba(0, 0, 0, 0.02);
+            border-top: 1px solid var(--border-color);
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+
+        [data-theme="dark"] .pane-footer-hud {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .ai-risk-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: 700;
+            font-size: 0.75rem;
+            background: rgba(239, 68, 68, 0.1);
+            color: #ef4444;
+            border: 1px solid rgba(239, 68, 68, 0.25);
+        }
+
+        .human-score-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            background: rgba(16, 185, 129, 0.12);
+            color: #059669;
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+
+        [data-theme="dark"] .human-score-tag {
+            color: #34d399;
+        }
+
+        .btn-humanize-main {
+            background: linear-gradient(135deg, #10b981 0%, #059669 60%, #6366f1 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 8px 16px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: all 0.25s ease;
+            box-shadow: 0 3px 12px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-humanize-main:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 5px 16px rgba(16, 185, 129, 0.4);
+        }
+
+        .btn-humanize-main:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .thinking-overlay {
+            display: none;
+            position: absolute;
+            inset: 0;
+            background: var(--card-bg);
+            opacity: 0.95;
+            z-index: 10;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .thinking-spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid rgba(16, 185, 129, 0.2);
+            border-top-color: #10b981;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 12px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .thinking-phase-text {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .thinking-sub-text {
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        /* AI Detector Strip */
+        .bypass-detector-strip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .bypass-strip-title {
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .detector-badges-group {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+
+        .detector-badge {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            padding: 3px 8px;
+            border-radius: 6px;
+            font-size: 0.74rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            color: var(--text-secondary);
+        }
+
+        .detector-badge.passed {
+            color: #059669;
+            border-color: rgba(16, 185, 129, 0.35);
+            background: rgba(16, 185, 129, 0.08);
+        }
+
+        [data-theme="dark"] .detector-badge.passed {
+            color: #34d399;
+        }
+
+        .output-view-toggle {
+            display: flex;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 2px;
+            gap: 2px;
+        }
+
+        .btn-view-toggle {
+            background: transparent;
+            border: none;
+            color: var(--text-secondary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-view-toggle.active {
+            background: var(--bg-secondary);
+            color: #059669;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        }
+
+        .audio-wave {
+            display: none;
+            align-items: center;
+            gap: 3px;
+            height: 12px;
+        }
+
+        .audio-bar {
+            width: 2.5px;
+            height: 100%;
+            background: #10b981;
+            border-radius: 2px;
+            animation: audioBounce 0.8s ease-in-out infinite alternate;
+        }
+
+        .audio-bar:nth-child(2) { animation-delay: 0.2s; }
+        .audio-bar:nth-child(3) { animation-delay: 0.4s; }
+
+        @keyframes audioBounce {
+            0% { height: 3px; }
+            100% { height: 12px; }
+        }
+
+        @media (max-width: 900px) {
+            .studio-dual-container { grid-template-columns: 1fr; gap: 16px; }
+            .modes-chips-grid { grid-template-columns: repeat(3, 1fr); }
+            .humanizer-main-card { padding: 20px 16px; }
+            .humanizer-title { font-size: 1.8rem; }
+        }
+
+        @media (max-width: 640px) {
+            .humanizer-main-card { padding: 16px 12px; border-radius: 16px; }
+            .humanizer-title { font-size: 1.55rem; }
+            .humanizer-subtitle { font-size: 0.86rem; margin-bottom: 12px; }
+            .humanizer-status-pill { font-size: 0.74rem; padding: 4px 10px; }
+            
+            /* Mode chips horizontal touch swipe on mobile */
+            .modes-bar-wrapper { margin-bottom: 14px; }
+            .modes-bar-header { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .modes-chips-grid {
+                display: flex;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+                padding-bottom: 6px;
+                gap: 6px;
+                scrollbar-width: none;
+            }
+            .modes-chips-grid::-webkit-scrollbar { display: none; }
+            .human-chip { flex: 0 0 auto; padding: 8px 14px; font-size: 0.82rem; }
+
+            /* Studio Panes on Mobile */
+            .studio-pane { min-height: 280px; }
+            .human-textarea { min-height: 180px; font-size: 0.95rem; padding: 12px; }
+            .pane-header { padding: 8px 10px; }
+            .btn-pane-action { padding: 4px 7px; font-size: 0.74rem; }
+            
+            /* Mobile Footer HUD & Full Width Tap Button */
+            .pane-footer-hud {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                padding: 10px;
+            }
+            .pane-footer-hud > div {
+                justify-content: space-between;
+                width: 100%;
+            }
+            .btn-humanize-main {
+                width: 100%;
+                justify-content: center;
+                padding: 12px;
+                font-size: 0.95rem;
+            }
+
+            /* Detector strip on mobile */
+            .bypass-detector-strip {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                padding: 10px 12px;
+            }
+            .detector-badges-group {
+                display: grid;
+                grid-template-columns: 1fr 1fr;
+                gap: 6px;
+                width: 100%;
+            }
+            .detector-badge {
+                justify-content: center;
+                font-size: 0.72rem;
+                padding: 4px 6px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="humanizer-wrapper">
+                    <!-- Ambient Glow -->
+                    <div class="humanizer-ambient-glow"></div>
+
+                    <div class="humanizer-main-card">
+                        
+                        <!-- Hero Section -->
+                        <div class="humanizer-hero-header">
+                            <h1 class="humanizer-title">✨ AI Text Humanizer</h1>
+                            <p class="humanizer-subtitle">Elevate AI drafts into authentic human writing with natural nuance, perfect rhythm, and undetectable precision.</p>
+                        </div>
+
+                        <!-- Mode Selector Bar -->
+                        <div class="modes-bar-wrapper">
+                            <div class="modes-bar-header">
+                                <span>🎯 Select Humanizing Mode:</span>
+                                <span id="active-mode-display" style="color:#059669; font-weight:700; font-size:0.82rem;">Balanced</span>
+                            </div>
+                            <div class="modes-chips-grid" style="display: flex; gap: 8px;">
+                                <button type="button" class="human-chip active" data-mode="standard" style="flex: 1;">
+                                    <span>🌿</span>
+                                    <span>Balanced</span>
+                                </button>
+                                <button type="button" class="human-chip" data-mode="stealth" style="flex: 1;">
+                                    <span>🛡️</span>
+                                    <span>Max Stealth</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- ═══════════════════════════════════════════════════════
+                             DUAL STUDIO WORKSPACE (Side-by-Side)
+                             ═══════════════════════════════════════════════════════ -->
+                        <div class="studio-dual-container">
+                            
+                            <!-- LEFT PANE: Input AI Text -->
+                            <div class="studio-pane">
+                                <div class="pane-header">
+                                    <div class="pane-title">
+                                        <span>🤖 Original AI Text</span>
+                                    </div>
+                                    <div class="pane-actions">
+                                        <button type="button" id="paste-btn" class="btn-pane-action">📋 Paste</button>
+                                        <button type="button" id="upload-btn" class="btn-pane-action">📁 Upload</button>
+                                        <input type="file" id="file-input" accept=".txt,.doc,.docx" style="display:none;">
+                                        <button type="button" id="clear-btn" class="btn-pane-action">🧹 Clear</button>
+                                    </div>
+                                </div>
+
+                                <div class="pane-body">
+                                    <textarea id="input-text" class="human-textarea" placeholder="Paste your AI-generated text here (from ChatGPT, Claude, Gemini, DeepSeek)... AI Humanizer will de-robotize it into natural human writing." maxlength="12000"></textarea>
+                                </div>
+
+                                <div class="pane-footer-hud">
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <span id="input-word-count">0 words</span>
+                                        <span>•</span>
+                                        <span id="input-char-count">0 / 12,000 chars</span>
+                                    </div>
+                                    <button type="button" id="humanize-btn" class="btn-humanize-main">
+                                        <span id="btn-icon">✦</span>
+                                        <span id="btn-text">Humanize Text</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- RIGHT PANE: Humanized Output -->
+                            <div class="studio-pane" style="position:relative;">
+                                
+                                <!-- Processing Overlay -->
+                                <div id="thinking-overlay" class="thinking-overlay">
+                                    <div class="thinking-spinner"></div>
+                                    <div id="thinking-phase" class="thinking-phase-text">Neutralizing AI Clichés & Buzzwords…</div>
+                                    <div class="thinking-sub-text">Injecting natural human burstiness, perplexity & rhythm</div>
+                                </div>
+
+                                <div class="pane-header">
+                                    <div class="pane-title">
+                                        <span>🌿 Humanized Output</span>
+                                        <span id="human-score-badge" class="human-score-tag" style="display:none;">🌿 99% Human</span>
+                                    </div>
+                                    <div class="pane-actions">
+                                        <div class="output-view-toggle" id="output-view-toggle" style="display:none;">
+                                            <button type="button" id="toggle-plain" class="btn-view-toggle active">Text</button>
+                                            <button type="button" id="toggle-diff" class="btn-view-toggle">Changes</button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pane-body">
+                                    <textarea id="output-text" class="human-textarea" readonly style="display:none;"></textarea>
+                                    <div id="diff-output" class="human-diff-box"></div>
+
+                                    <!-- Empty State Placeholder -->
+                                    <div id="empty-state" class="output-empty-state">
+                                        <div class="empty-icon-art">🌿✨</div>
+                                        <h4 style="font-size:0.96rem; font-weight:700; color:var(--text-primary); margin-bottom:2px;">Humanized Output Appears Here</h4>
+                                        <p style="font-size:0.82rem; max-width:280px;">Paste AI text on the left and click "Humanize Text".</p>
+                                    </div>
+                                </div>
+
+                                <div class="pane-footer-hud" id="output-footer" style="display:none;">
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <span id="output-word-count">0 words</span>
+                                        <span>•</span>
+                                        <span id="cliches-removed-count" style="color:#10b981; font-weight:700;"></span>
+                                    </div>
+                                    <div style="display:flex; align-items:center; gap:6px;">
+                                        <button type="button" id="tts-btn" class="btn-pane-action" title="Read aloud">
+                                            <span id="tts-icon">🔊</span>
+                                            <span id="tts-text">Listen</span>
+                                            <div class="audio-wave" id="audio-wave">
+                                                <div class="audio-bar"></div>
+                                                <div class="audio-bar"></div>
+                                                <div class="audio-bar"></div>
+                                            </div>
+                                        </button>
+                                        <button type="button" id="download-btn" class="btn-pane-action" title="Download text">⬇️ Save</button>
+                                        <button type="button" id="copy-btn" class="btn-pane-action" style="background:#10b981; color:#fff; border-color:#10b981; font-weight:700;">📋 Copy</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/ai-humanizer.js"></script>
+</body>
+</html>

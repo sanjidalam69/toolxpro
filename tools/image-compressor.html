@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Compressor - ToolX Pro</title>
+    <meta name="description" content="Reduce the file size of JPG, PNG, and WebP images quickly and securely in your browser.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="app-container">
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="tool-container">
+                    <div class="tool-header">
+                        <h1 class="tool-title">📉 Image Compressor</h1>
+                        <p class="tool-desc">Compress images directly in your browser. None of your photos are uploaded to external servers.</p>
+                    </div>
+                    
+                    <div class="tool-body">
+                        <!-- Drag and Drop Upload Area -->
+                        <div class="upload-area" id="drop-area">
+                            <span class="upload-icon">📁</span>
+                            <h3 style="font-size:1.1rem; font-weight:600;">Drag & drop your image here or click to browse</h3>
+                            <p style="font-size:0.85rem; color:var(--text-secondary);">Supports: JPG, JPEG, PNG, WebP</p>
+                            <input type="file" id="image-upload" accept="image/*" style="display:none;">
+                        </div>
+
+                        <!-- Compression Settings -->
+                        <div id="settings-area" style="display:none; margin-top:1.5rem; animation: fadeIn 0.3s;">
+                            <div style="display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:space-between; background:var(--bg-secondary); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <img id="image-preview" style="max-height:80px; max-width:80px; border-radius:8px; object-fit:cover; border:1px solid var(--border-color);">
+                                    <div>
+                                        <p id="file-name" style="font-weight:600; font-size:0.95rem; word-break:break-all;"></p>
+                                        <p id="file-size" style="font-size:0.85rem; color:var(--text-secondary);"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-bottom:0; min-width:200px; flex:1;">
+                                    <label for="quality-range" style="display:flex; justify-content:space-between;">
+                                        <span>Compression Quality:</span>
+                                        <b id="quality-val" style="color:var(--primary);">70%</b>
+                                    </label>
+                                    <input type="range" id="quality-range" min="10" max="100" value="70" style="width:100%; cursor:pointer;">
+                                </div>
+                            </div>
+                            
+                            <button id="compress-btn" class="btn btn-primary" style="margin-top:1.2rem;">Compress Image 🚀</button>
+                        </div>
+                    </div>
+                    
+                    <div id="results" class="results-card">
+                        <h2 class="results-title">📊 Compressed Image</h2>
+                        <div class="results-content" id="results-content">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/image-compressor.js"></script>
+</body>
+</html>

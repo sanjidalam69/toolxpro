@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SSC & HSC GPA Calculator (Bangladesh Board Standard) - ToolX Pro</title>
+    <meta name="description" content="Calculate your SSC, HSC, Dakhil, and Alim GPA following official Bangladesh Education Board 4th subject rules and 5.00 grading scale.">
+    <meta name="keywords" content="ssc gpa calculator, hsc gpa calculator, bangladesh education board gpa, 4th subject rule, dakhil gpa, alim gpa, gpa 5 calculator">
+    <link rel="stylesheet" href="../css/style.css?v=42.0">
+    <style>
+        .bd-scale-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.92rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .bd-scale-table th {
+            background: var(--bg-secondary);
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 700;
+        }
+        .bd-scale-table td {
+            padding: 9px 14px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        .bd-scale-table tr:hover {
+            background: var(--primary-glow);
+        }
+        .subject-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            transition: var(--transition);
+        }
+        .subject-row:hover {
+            border-color: var(--primary);
+        }
+        .subject-row.is-optional {
+            border-left: 4px solid var(--accent);
+            background: var(--primary-glow);
+        }
+        .radio-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            font-size: 0.88rem;
+            font-weight: 600;
+            user-select: none;
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <!-- Header Injected dynamically by layout.js -->
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <main class="content-area">
+                <div class="tool-container">
+                    <div class="tool-header">
+                        <span style="padding:4px 12px; background:var(--primary-glow); color:var(--accent); font-size:0.82rem; font-weight:700; border-radius:20px; text-transform:uppercase;">🇧🇩 Official Board Standard</span>
+                        <h1 class="tool-title" style="margin-top:8px;">SSC & HSC GPA Calculator</h1>
+                        <p class="tool-desc">Calculate your official GPA based on Bangladesh Education Board rules (Dhaka, Rajshahi, Chittagong, Comilla, Jessore, Barisal, Sylhet, Dinajpur, Mymensingh, Madrasah) with automatic 4th Subject bonus logic.</p>
+                    </div>
+                    
+                    <div class="tool-body">
+                        <!-- Exam and Group Selector -->
+                        <div class="form-row" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:15px; margin-bottom:1.5rem;">
+                            <div class="form-group">
+                                <label for="exam-type" style="font-weight:700;">📚 Select Board Exam:</label>
+                                <select id="exam-type" class="form-control">
+                                    <optgroup label="SSC (Secondary School Certificate)">
+                                        <option value="ssc-science" selected>SSC - Science Group</option>
+                                        <option value="ssc-commerce">SSC - Business Studies (Commerce)</option>
+                                        <option value="ssc-humanities">SSC - Humanities (Arts)</option>
+                                        <option value="dakhil">Dakhil (Madrasah Board)</option>
+                                    </optgroup>
+                                    <optgroup label="HSC (Higher Secondary Certificate)">
+                                        <option value="hsc-science">HSC - Science Group</option>
+                                        <option value="hsc-commerce">HSC - Business Studies (Commerce)</option>
+                                        <option value="hsc-humanities">HSC - Humanities (Arts)</option>
+                                        <option value="alim">Alim (Madrasah Board)</option>
+                                    </optgroup>
+                                    <optgroup label="Custom">
+                                        <option value="custom">Custom Subject Configuration</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="input-mode" style="font-weight:700;">⚙️ Input Mode:</label>
+                                <select id="input-mode" class="form-control">
+                                    <option value="grade" selected>Direct Letter Grade (A+, A, A-...)</option>
+                                    <option value="marks">Subject Marks (0 - 100)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Subjects Container Header -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding:0 4px;">
+                            <span style="font-size:0.95rem; font-weight:700; color:var(--text-primary);">Subject Name & Grade</span>
+                            <span style="font-size:0.85rem; color:var(--text-secondary);">4th Subject Selector (⭐)</span>
+                        </div>
+
+                        <!-- Subjects List Container -->
+                        <div id="subjects-container" style="display:flex; flex-direction:column; gap:10px; margin-bottom:1.5rem;">
+                            <!-- Injected dynamically by JS -->
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div style="display:flex; gap:12px; margin-bottom:1.5rem; flex-wrap:wrap;">
+                            <button id="add-subject-btn" class="btn btn-secondary" style="width:auto; display:none; background:var(--bg-secondary); border:1px solid var(--border-color); color:var(--text-primary);">
+                                ➕ Add Another Subject
+                            </button>
+                            <button id="calculate-btn" class="btn btn-primary" style="flex:1; min-width:200px;">
+                                🚀 Calculate Official Board GPA
+                            </button>
+                            <button id="reset-btn" class="btn btn-secondary" style="width:auto; background:var(--bg-secondary); border:1px solid var(--border-color); color:var(--text-primary);">
+                                🔄 Reset
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Result Card -->
+                    <div id="results" class="results-card" style="display:none;">
+                        <h2 class="results-title">📊 Board Exam Result Summary</h2>
+                        <div class="results-content" id="results-content">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Grading Scale Info Table -->
+                    <div style="margin-top:2.5rem; border-top:1px dashed var(--border-color); padding-top:1.5rem;">
+                        <h3 style="font-family:var(--font-header); font-size:1.15rem; font-weight:700; color:var(--text-primary); margin-bottom:8px;">
+                            📋 Official Bangladesh Board Grading System (5.00 Scale)
+                        </h3>
+                        <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:12px;">
+                            Approved by the Ministry of Education & National Curriculum and Textbook Board (NCTB):
+                        </p>
+
+                        <div class="table-responsive">
+                            <table class="bd-scale-table">
+                                <thead>
+                                    <tr>
+                                        <th>Class Interval (Marks)</th>
+                                        <th>Letter Grade</th>
+                                        <th>Grade Point (GP)</th>
+                                        <th>Remarks</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="font-weight:600; color:var(--success);">
+                                        <td>80% – 100%</td>
+                                        <td>A+</td>
+                                        <td>5.00</td>
+                                        <td>Outstanding</td>
+                                    </tr>
+                                    <tr>
+                                        <td>70% – 79%</td>
+                                        <td>A</td>
+                                        <td>4.00</td>
+                                        <td>Excellent</td>
+                                    </tr>
+                                    <tr>
+                                        <td>60% – 69%</td>
+                                        <td>A-</td>
+                                        <td>3.50</td>
+                                        <td>Very Good</td>
+                                    </tr>
+                                    <tr>
+                                        <td>50% – 59%</td>
+                                        <td>B</td>
+                                        <td>3.00</td>
+                                        <td>Good</td>
+                                    </tr>
+                                    <tr>
+                                        <td>40% – 49%</td>
+                                        <td>C</td>
+                                        <td>2.00</td>
+                                        <td>Satisfactory / Passing Grade for 4th Subject</td>
+                                    </tr>
+                                    <tr>
+                                        <td>33% – 39%</td>
+                                        <td>D</td>
+                                        <td>1.00</td>
+                                        <td>Pass</td>
+                                    </tr>
+                                    <tr style="color:var(--danger); font-weight:600;">
+                                        <td>00% – 32%</td>
+                                        <td>F</td>
+                                        <td>0.00</td>
+                                        <td>Fail</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div style="background:var(--primary-glow); border-left:4px solid var(--accent); border-radius:8px; padding:12px 16px; font-size:0.92rem; line-height:1.6; margin-top:1rem;">
+                            📌 <strong>Official 4th Subject Rule:</strong> If you get above GP 2.00 (i.e. Grade C) in your 4th subject, the extra points (<code>Grade Point - 2.0</code>) are added to your main total before dividing by the mandatory subject count. A fail in the 4th subject will not fail you overall, but getting an F in any compulsory subject results in an overall Fail.
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <!-- Footer Injected dynamically by layout.js -->
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/bd-gpa.js"></script>
+</body>
+</html>

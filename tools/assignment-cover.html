@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignment Cover Page Generator - ToolX Pro</title>
+    <meta name="description" content="Free Assignment Cover Page Generator. Create and download professional A4 size assignment front pages in PDF and PNG format instantly.">
+    <link rel="stylesheet" href="../css/style.css?v=50.0">
+    
+    <!-- PDF and Canvas Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <style>
+        .cover-generator-grid {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 20px;
+            align-items: flex-start;
+        }
+        @media (max-width: 992px) {
+            .cover-generator-grid {
+                grid-template-columns: 1fr;
+                gap: 25px;
+            }
+        }
+
+        .controls-card {
+            background: var(--bg-secondary);
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+        @media (max-width: 992px) {
+            .controls-card {
+                max-height: none;
+                overflow-y: visible;
+            }
+        }
+
+        .form-section-title {
+            font-size: 1rem;
+            color: var(--primary);
+            margin: 16px 0 8px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+        .form-section-title:first-child { margin-top: 0; }
+
+        /* Template Picker */
+        .template-picker {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 5px;
+        }
+        .tpl-btn {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 10px 6px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.78rem;
+            font-weight: 600;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.2s;
+        }
+        .tpl-btn:hover { border-color: var(--primary); }
+        .tpl-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; }
+        .tpl-btn .tpl-icon { font-size: 1.4rem; display: block; margin-bottom: 4px; }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+        .input-grid.full { grid-template-columns: 1fr; }
+
+        @media (max-width: 576px) {
+            .input-grid {
+                grid-template-columns: 1fr !important;
+            }
+            .controls-card {
+                padding: 14px;
+            }
+        }
+
+        .form-control-sm {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.85rem;
+            box-sizing: border-box;
+        }
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 16px;
+            position: sticky;
+            bottom: 0;
+            background: var(--bg-secondary);
+            padding-top: 10px;
+            padding-bottom: 5px;
+            border-top: 1px solid var(--border-color);
+            z-index: 10;
+        }
+        @media (max-width: 576px) {
+            .action-buttons {
+                flex-direction: column;
+            }
+        }
+        .btn-download-pdf { background: #ef4444; color: white; flex: 1; padding: 12px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; }
+        .btn-download-png { background: #10b981; color: white; flex: 1; padding: 12px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; }
+
+        .preview-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background: #d1d5db;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+            min-height: 350px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        @media (max-width: 576px) {
+            .preview-container {
+                padding: 10px 5px;
+                border-radius: 8px;
+            }
+        }
+
+        /* ─────────────────────────────────────────────────────────────
+           BASE A4 PAPER
+        ───────────────────────────────────────────────────────────── */
+        #a4-preview {
+            width: 794px;
+            height: 1123px;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+            transform-origin: top center;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            font-family: 'Times New Roman', Times, serif;
+            color: #111;
+            box-sizing: border-box;
+        }
+
+        /* ─────────────────────────────────────────────────────────────
+           TEMPLATE 1: ROYAL ACADEMIC
+           Deep double-border, seal-like crest, formal typography
+        ───────────────────────────────────────────────────────────── */
+        .tpl-royal {
+            background: #fffdf7;
+            border: 14px solid var(--t);
+        }
+        .tpl-royal .t-outer-ring {
+            position: absolute;
+            inset: 8px;
+            border: 1px solid var(--t);
+            pointer-events: none;
+        }
+        .tpl-royal .t-inner-ring {
+            position: absolute;
+            inset: 14px;
+            border: 3px double var(--t);
+            pointer-events: none;
+        }
+        .tpl-royal .t-corner {
+            position: absolute;
+            width: 40px; height: 40px;
+            border-color: var(--t);
+            border-style: solid;
+        }
+        .tpl-royal .t-corner.tl { top: 24px; left: 24px; border-width: 3px 0 0 3px; }
+        .tpl-royal .t-corner.tr { top: 24px; right: 24px; border-width: 3px 3px 0 0; }
+        .tpl-royal .t-corner.bl { bottom: 24px; left: 24px; border-width: 0 0 3px 3px; }
+        .tpl-royal .t-corner.br { bottom: 24px; right: 24px; border-width: 0 3px 3px 0; }
+        .tpl-royal .t-body {
+            position: absolute;
+            inset: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+        .tpl-royal .t-logo { width: 120px; height: 120px; object-fit: contain; margin-bottom: 20px; }
+        .tpl-royal .t-uni {
+            font-size: 2.6rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            color: var(--t);
+            line-height: 1.2;
+            margin-bottom: 8px;
+        }
+        .tpl-royal .t-divider {
+            width: 70%;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 15px 0;
+            color: var(--t);
+        }
+        .tpl-royal .t-divider hr { flex: 1; border: none; border-top: 1px solid var(--t); }
+        .tpl-royal .t-divider span { font-size: 1.4rem; }
+        .tpl-royal .t-badge {
+            background: var(--t);
+            color: #fff;
+            padding: 16px 70px;
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            margin-bottom: 18px;
+        }
+        .tpl-royal .t-topic {
+            font-size: 1.55rem;
+            font-style: italic;
+            color: #333;
+            margin-bottom: 6px;
+            max-width: 90%;
+            line-height: 1.4;
+        }
+        .tpl-royal .t-course-row {
+            font-size: 1.3rem;
+            margin-bottom: 4px;
+            color: #555;
+        }
+        .tpl-royal .t-course-row strong { color: #222; }
+        .tpl-royal .t-hr {
+            width: 80%;
+            border: none;
+            border-top: 2px solid var(--t);
+            margin: 20px auto 20px;
+        }
+        .tpl-royal .t-info-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            width: 85%;
+            gap: 30px;
+            text-align: left;
+            font-size: 1.3rem;
+        }
+        .tpl-royal .t-col-label { font-size: 1.25rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--t); border-bottom: 1px solid var(--t); padding-bottom: 6px; margin-bottom: 10px; }
+        .tpl-royal .t-field { display: flex; gap: 6px; margin-bottom: 6px; }
+        .tpl-royal .t-field strong { min-width: 105px; }
+        .tpl-royal .t-date-strip {
+            margin-top: auto;
+            background: var(--t);
+            color: #fff;
+            font-size: 1.4rem;
+            font-weight: bold;
+            padding: 12px 0;
+            width: calc(100% + 120px);
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        /* ─────────────────────────────────────────────────────────────
+           TEMPLATE 2: BOLD BANNER (Side color bar + banner header)
+        ───────────────────────────────────────────────────────────── */
+        .tpl-banner {
+            background: #ffffff;
+            display: flex;
+            flex-direction: row;
+        }
+        .tpl-banner .t-sidebar {
+            width: 60px;
+            background: var(--t);
+            flex-shrink: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .tpl-banner .t-sidebar-text {
+            writing-mode: vertical-rl;
+            transform: rotate(180deg);
+            color: rgba(255,255,255,0.25);
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+        .tpl-banner .t-main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .tpl-banner .t-header {
+            background: var(--t);
+            padding: 50px 50px 40px;
+            color: #fff;
+            text-align: center;
+        }
+        .tpl-banner .t-logo { width: 110px; height: 110px; object-fit: contain; border-radius: 50%; background: rgba(255,255,255,0.15); padding: 10px; margin-bottom: 18px; }
+        .tpl-banner .t-uni { font-size: 2.5rem; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; line-height: 1.2; }
+        .tpl-banner .t-content { padding: 40px 50px; display: flex; flex-direction: column; flex: 1; }
+        .tpl-banner .t-badge {
+            background: var(--t);
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            padding: 18px;
+            text-align: center;
+            margin-bottom: 30px;
+            border-radius: 6px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+        }
+        .tpl-banner .t-topic-label { font-size: 1.1rem; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+        .tpl-banner .t-topic { font-size: 1.6rem; font-weight: bold; color: #111; margin-bottom: 20px; line-height: 1.4; }
+        .tpl-banner .t-meta-row { display: flex; gap: 6px; font-size: 1.25rem; margin-bottom: 6px; color: #444; }
+        .tpl-banner .t-meta-row strong { color: var(--t); min-width: 130px; }
+        .tpl-banner .t-divider { border: none; border-top: 2px solid #e5e7eb; margin: 20px 0; }
+        .tpl-banner .t-info-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; font-size: 1.2rem; }
+        .tpl-banner .t-col-label { font-size: 1.1rem; font-weight: 900; text-transform: uppercase; color: var(--t); border-left: 5px solid var(--t); padding-left: 10px; margin-bottom: 10px; }
+        .tpl-banner .t-field { display: flex; gap: 6px; margin-bottom: 5px; }
+        .tpl-banner .t-field strong { min-width: 90px; }
+        .tpl-banner .t-date {
+            margin-top: auto;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            border-top: 2px solid var(--t);
+            padding-top: 14px;
+            color: var(--t);
+        }
+
+        /* ─────────────────────────────────────────────────────────────
+           TEMPLATE 3: SPLIT DARK (Dark top half, white bottom)
+        ───────────────────────────────────────────────────────────── */
+        .tpl-split {
+            background: #fff;
+        }
+        .tpl-split .t-top-half {
+            background: var(--t);
+            height: 460px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .tpl-split .t-top-half::after {
+            content: '';
+            position: absolute;
+            bottom: -40px;
+            left: -5%;
+            width: 110%;
+            height: 80px;
+            background: #fff;
+            border-radius: 50%;
+        }
+        .tpl-split .t-top-circle {
+            position: absolute;
+            top: -100px; right: -100px;
+            width: 300px; height: 300px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+        }
+        .tpl-split .t-top-circle2 {
+            position: absolute;
+            bottom: -50px; left: -80px;
+            width: 250px; height: 250px;
+            background: rgba(255,255,255,0.05);
+            border-radius: 50%;
+        }
+        .tpl-split .t-logo { width: 100px; height: 100px; object-fit: contain; background: rgba(255,255,255,0.2); border-radius: 50%; padding: 12px; margin-bottom: 16px; position: relative; z-index: 1; }
+        .tpl-split .t-uni { font-size: 2.4rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: #fff; line-height: 1.2; position: relative; z-index: 1; }
+        .tpl-split .t-badge {
+            background: #fff;
+            color: var(--t);
+            font-size: 1.7rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            padding: 14px 60px;
+            border-radius: 60px;
+            margin-top: 22px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            position: relative; z-index: 1;
+        }
+        .tpl-split .t-bottom { padding: 50px 60px 40px; display: flex; flex-direction: column; flex: 1; }
+        .tpl-split .t-topic { font-size: 1.6rem; font-style: italic; color: #222; margin-bottom: 6px; line-height: 1.4; text-align: center; }
+        .tpl-split .t-course-row { font-size: 1.3rem; margin-bottom: 4px; text-align: center; color: #555; }
+        .tpl-split .t-course-row strong { color: var(--t); }
+        .tpl-split .t-hr { border: none; border-top: 2px solid #e5e7eb; margin: 20px auto; width: 80%; }
+        .tpl-split .t-info-row { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; font-size: 1.25rem; margin-top: 10px; }
+        .tpl-split .t-col-label { font-size: 1.1rem; font-weight: 900; text-transform: uppercase; color: var(--t); padding-bottom: 8px; border-bottom: 2px solid var(--t); margin-bottom: 12px; }
+        .tpl-split .t-field { display: flex; gap: 6px; margin-bottom: 5px; }
+        .tpl-split .t-field strong { min-width: 100px; }
+        .tpl-split .t-date { margin-top: auto; text-align: center; font-size: 1.3rem; font-weight: bold; background: var(--t); color: #fff; padding: 14px; border-radius: 8px; }
+
+        /* ─────────────────────────────────────────────────────────────
+           TEMPLATE 4: ELEGANT BORDER (Corner ornaments, classic)
+        ───────────────────────────────────────────────────────────── */
+        .tpl-elegant {
+            background: #fff;
+            padding: 50px;
+        }
+        .tpl-elegant .t-frame { position: absolute; inset: 20px; border: 2px solid var(--t); pointer-events: none; }
+        .tpl-elegant .t-frame-inner { position: absolute; inset: 26px; border: 1px solid var(--t); opacity: 0.5; pointer-events: none; }
+        /* Ornament corners */
+        .tpl-elegant .t-orn {
+            position: absolute;
+            width: 50px; height: 50px;
+            pointer-events: none;
+        }
+        .tpl-elegant .t-orn::before, .tpl-elegant .t-orn::after {
+            content: '';
+            position: absolute;
+            background: var(--t);
+        }
+        .tpl-elegant .t-orn.tl { top: 30px; left: 30px; }
+        .tpl-elegant .t-orn.tl::before { top: 0; left: 0; width: 40px; height: 4px; }
+        .tpl-elegant .t-orn.tl::after  { top: 0; left: 0; width: 4px; height: 40px; }
+        .tpl-elegant .t-orn.tr { top: 30px; right: 30px; }
+        .tpl-elegant .t-orn.tr::before { top: 0; right: 0; width: 40px; height: 4px; }
+        .tpl-elegant .t-orn.tr::after  { top: 0; right: 0; width: 4px; height: 40px; }
+        .tpl-elegant .t-orn.bl { bottom: 30px; left: 30px; }
+        .tpl-elegant .t-orn.bl::before { bottom: 0; left: 0; width: 40px; height: 4px; }
+        .tpl-elegant .t-orn.bl::after  { bottom: 0; left: 0; width: 4px; height: 40px; }
+        .tpl-elegant .t-orn.br { bottom: 30px; right: 30px; }
+        .tpl-elegant .t-orn.br::before { bottom: 0; right: 0; width: 40px; height: 4px; }
+        .tpl-elegant .t-orn.br::after  { bottom: 0; right: 0; width: 4px; height: 40px; }
+        .tpl-elegant .t-body { position: absolute; inset: 60px; display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .tpl-elegant .t-logo { width: 120px; height: 120px; object-fit: contain; margin-bottom: 20px; }
+        .tpl-elegant .t-uni { font-size: 2.6rem; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; color: var(--t); margin-bottom: 6px; line-height: 1.2; }
+        .tpl-elegant .t-dept { font-size: 1.4rem; color: #555; margin-bottom: 20px; font-style: italic; }
+        .tpl-elegant .t-badge {
+            border: 3px solid var(--t);
+            color: var(--t);
+            font-size: 1.8rem; font-weight: 900;
+            letter-spacing: 7px; text-transform: uppercase;
+            padding: 14px 60px;
+            margin-bottom: 25px;
+            position: relative;
+        }
+        .tpl-elegant .t-badge::before {
+            content: '— '; color: var(--t); font-weight: 400; letter-spacing: 0;
+        }
+        .tpl-elegant .t-badge::after {
+            content: ' —'; color: var(--t); font-weight: 400; letter-spacing: 0;
+        }
+        .tpl-elegant .t-topic { font-size: 1.5rem; font-style: italic; color: #333; margin-bottom: 8px; max-width: 90%; line-height: 1.4; }
+        .tpl-elegant .t-course-row { font-size: 1.3rem; margin-bottom: 4px; color: #555; }
+        .tpl-elegant .t-course-row strong { color: var(--t); }
+        .tpl-elegant .t-ornament-line { display: flex; align-items: center; width: 75%; margin: 18px auto; color: var(--t); gap: 8px; }
+        .tpl-elegant .t-ornament-line hr { flex: 1; border: none; border-top: 1.5px solid var(--t); }
+        .tpl-elegant .t-ornament-line span { font-size: 1.2rem; }
+        .tpl-elegant .t-info-row { display: grid; grid-template-columns: 1fr 1fr; width: 90%; gap: 30px; text-align: left; font-size: 1.25rem; }
+        .tpl-elegant .t-col-label { font-size: 1.1rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--t); margin-bottom: 10px; text-decoration: underline; text-underline-offset: 4px; }
+        .tpl-elegant .t-field { display: flex; gap: 6px; margin-bottom: 5px; }
+        .tpl-elegant .t-field strong { min-width: 100px; }
+        .tpl-elegant .t-date { margin-top: auto; font-size: 1.3rem; font-weight: bold; border-top: 1px solid var(--t); padding-top: 14px; width: 70%; color: #333; }
+
+        /* ─────────────────────────────────────────────────────────────
+           TEMPLATE 5: MODERN CARD (Clean cards, colored accent blocks)
+        ───────────────────────────────────────────────────────────── */
+        .tpl-card {
+            background: #f1f5f9;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .tpl-card .t-top-accent {
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 10px;
+            background: var(--t);
+        }
+        .tpl-card .t-header-card {
+            background: #fff;
+            border-radius: 20px;
+            padding: 35px;
+            text-align: center;
+            width: 100%;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.07);
+            margin-top: 20px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+        }
+        .tpl-card .t-logo { width: 100px; height: 100px; object-fit: contain; margin-bottom: 14px; }
+        .tpl-card .t-uni { font-size: 2.2rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--t); margin-bottom: 0; line-height: 1.2; }
+        .tpl-card .t-badge-wrap {
+            background: var(--t);
+            border-radius: 12px;
+            padding: 18px;
+            width: 100%;
+            text-align: center;
+            margin-bottom: 18px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+            box-sizing: border-box;
+        }
+        .tpl-card .t-badge { color: #fff; font-size: 2rem; font-weight: 900; letter-spacing: 6px; text-transform: uppercase; }
+        .tpl-card .t-topic-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 20px 25px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            margin-bottom: 18px;
+            box-sizing: border-box;
+            border-left: 6px solid var(--t);
+        }
+        .tpl-card .t-topic-label { font-size: 1rem; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+        .tpl-card .t-topic { font-size: 1.5rem; font-weight: bold; color: #111; line-height: 1.4; margin-bottom: 8px; }
+        .tpl-card .t-course-row { font-size: 1.2rem; color: #555; }
+        .tpl-card .t-course-row strong { color: var(--t); }
+        .tpl-card .t-info-row { display: grid; grid-template-columns: 1fr 1fr; width: 100%; gap: 14px; margin-top: auto; }
+        .tpl-card .t-info-card { background: #fff; border-radius: 12px; padding: 20px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); font-size: 1.15rem; }
+        .tpl-card .t-col-label { font-size: 1rem; font-weight: 900; text-transform: uppercase; color: #fff; background: var(--t); padding: 6px 12px; border-radius: 6px; margin-bottom: 12px; display: inline-block; }
+        .tpl-card .t-field { display: flex; gap: 6px; margin-bottom: 5px; }
+        .tpl-card .t-field strong { min-width: 90px; }
+        .tpl-card .t-date {
+            margin-top: 16px;
+            width: 100%;
+            background: var(--t);
+            color: #fff;
+            font-size: 1.3rem;
+            font-weight: bold;
+            padding: 14px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+            box-sizing: border-box;
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="tool-container">
+                    <div class="tool-header">
+                        <h1 class="tool-title">📄 Assignment Cover Generator</h1>
+                        <p class="tool-desc">Create professional, print-ready A4 assignment front pages in seconds. Download as PDF or PNG.</p>
+                    </div>
+
+                    <!-- Landing Selection Screen (Uses standard mobile-friendly site card styles) -->
+                    <div id="landing-selection" class="tools-section" style="margin-top: 15px; max-width: 850px; margin-left: auto; margin-right: auto;">
+                        <div class="tools-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+
+                            <!-- Card 1: All Universities -->
+                            <a href="assignment-cover.html?mode=all" class="tool-card">
+                                <span class="tool-badge badge-popular">Popular</span>
+                                <div class="tool-card-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">📄</div>
+                                <h3 class="tool-card-title">Assignment Cover (All Universities)</h3>
+                                <p class="tool-card-desc">Create custom assignment front pages for any school, college or university with custom logo upload.</p>
+                                <div class="card-action">Open Tool &rarr;</div>
+                            </a>
+
+                            <!-- Card 2: Southeast University -->
+                            <a href="assignment-cover.html?mode=seu" class="tool-card">
+                                <span class="tool-badge badge-popular" style="background: rgba(0, 51, 102, 0.15); color: #003366;">SEU Special</span>
+                                <div class="tool-card-icon" style="background: rgba(0, 51, 102, 0.1); color: #003366;">🏛️</div>
+                                <h3 class="tool-card-title">Assignment Cover (SEU)</h3>
+                                <p class="tool-card-desc">Instant cover generator pre-filled with official Southeast University logo and details for SEU students.</p>
+                                <div class="card-action">Open Tool &rarr;</div>
+                            </a>
+
+                        </div>
+                    </div>
+
+                    <!-- Generator Interface (hidden by default, shown when ?mode= param is present) -->
+                    <div id="generator-interface" class="cover-generator-grid" style="display:none;">
+                        
+                        <!-- Left: Form Controls -->
+                        <div class="controls-card">
+                            <!-- Switch mode header -->
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; padding-bottom:10px; border-bottom:1px solid var(--border-color);">
+                                <button id="btn-back-selection" style="background:none; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.9rem;">
+                                    &larr; Switch University Mode
+                                </button>
+                            </div>
+
+                            <!-- Template Picker -->
+                            <h3 class="form-section-title">🎨 Choose Template</h3>
+                            <div class="template-picker">
+                                <button class="tpl-btn active" data-tpl="royal"><span class="tpl-icon">👑</span>Royal Academic</button>
+                                <button class="tpl-btn" data-tpl="banner"><span class="tpl-icon">🏷️</span>Bold Banner</button>
+                                <button class="tpl-btn" data-tpl="split"><span class="tpl-icon">🌓</span>Split Dark</button>
+                                <button class="tpl-btn" data-tpl="elegant"><span class="tpl-icon">✒️</span>Elegant Border</button>
+                                <button class="tpl-btn" data-tpl="card" style="grid-column: span 2;"><span class="tpl-icon">🃏</span>Modern Card</button>
+                            </div>
+
+                            <!-- Theme Color & Font -->
+                            <h3 class="form-section-title">🖌️ Style</h3>
+                            <div class="input-grid">
+                                <div>
+                                    <label class="form-label">Theme Color</label>
+                                    <input type="color" id="inp-color" class="form-control-sm" value="#1e3a8a" style="height:38px; padding:2px;">
+                                </div>
+                                <div>
+                                    <label class="form-label">Font Family</label>
+                                    <select id="inp-font" class="form-control-sm">
+                                        <option value="'Times New Roman', Times, serif">Times New Roman</option>
+                                        <option value="Arial, Helvetica, sans-serif">Arial</option>
+                                        <option value="'Georgia', serif">Georgia</option>
+                                        <option value="'Palatino Linotype', serif">Palatino</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- University Info -->
+                            <h3 class="form-section-title">🏛️ University Details</h3>
+                            <div class="input-grid full">
+                                <div>
+                                    <label class="form-label">University Name</label>
+                                    <input type="text" id="inp-uni" class="form-control-sm" value="" placeholder="e.g. University of Dhaka">
+                                </div>
+                                <div>
+                                    <label class="form-label">Upload Logo</label>
+                                    <input type="file" id="inp-logo" accept="image/*" class="form-control-sm">
+                                </div>
+                            </div>
+
+                            <!-- Course Info -->
+                            <h3 class="form-section-title">📚 Course Details</h3>
+                            <div class="input-grid">
+                                <div style="grid-column: span 2;">
+                                    <label class="form-label">Assignment Topic</label>
+                                    <input type="text" id="inp-topic" class="form-control-sm" value="" placeholder="e.g. Impact of AI on Web Development">
+                                </div>
+                                <div>
+                                    <label class="form-label">Course Title</label>
+                                    <input type="text" id="inp-course-title" class="form-control-sm" value="" placeholder="e.g. Software Engineering">
+                                </div>
+                                <div>
+                                    <label class="form-label">Course Code</label>
+                                    <input type="text" id="inp-course-code" class="form-control-sm" value="" placeholder="e.g. CSE-401">
+                                </div>
+                            </div>
+
+                            <!-- Submitted By -->
+                            <h3 class="form-section-title">👨‍🎓 Submitted By (Student)</h3>
+                            <div class="input-grid">
+                                <div style="grid-column: span 2;">
+                                    <label class="form-label">Student Name</label>
+                                    <input type="text" id="inp-student-name" class="form-control-sm" value="" placeholder="e.g. Md. Rahim Uddin">
+                                </div>
+                                <div>
+                                    <label class="form-label">Student ID</label>
+                                    <input type="text" id="inp-student-id" class="form-control-sm" value="" placeholder="e.g. 20-12345-1">
+                                </div>
+                                <div>
+                                    <label class="form-label">Department</label>
+                                    <input type="text" id="inp-dept" class="form-control-sm" value="" placeholder="e.g. Computer Science">
+                                </div>
+                                <div>
+                                    <label class="form-label">Semester</label>
+                                    <input type="text" id="inp-semester" class="form-control-sm" value="" placeholder="e.g. Fall 2026">
+                                </div>
+                                <div>
+                                    <label class="form-label">Section / Group</label>
+                                    <input type="text" id="inp-section" class="form-control-sm" value="" placeholder="e.g. A">
+                                </div>
+                            </div>
+
+                            <!-- Submitted To -->
+                            <h3 class="form-section-title">👨‍🏫 Submitted To (Teacher)</h3>
+                            <div class="input-grid full">
+                                <div>
+                                    <label class="form-label">Teacher Name</label>
+                                    <input type="text" id="inp-teacher-name" class="form-control-sm" value="" placeholder="e.g. Dr. Reza Karim">
+                                </div>
+                                <div>
+                                    <label class="form-label">Designation</label>
+                                    <input type="text" id="inp-teacher-desig" class="form-control-sm" value="" placeholder="e.g. Professor & Head of Dept.">
+                                </div>
+                            </div>
+
+                            <!-- Submission Date -->
+                            <h3 class="form-section-title">📅 Submission</h3>
+                            <div class="input-grid full">
+                                <div>
+                                    <label class="form-label">Date of Submission</label>
+                                    <input type="text" id="inp-date" class="form-control-sm" value="" placeholder="e.g. 28th July, 2026">
+                                </div>
+                            </div>
+
+                            <!-- Actions -->
+                            <div class="action-buttons">
+                                <button id="btn-dl-png" class="btn-download-png">🖼️ Download PNG</button>
+                                <button id="btn-dl-pdf" class="btn-download-pdf">⬇️ Download PDF (A4)</button>
+                            </div>
+                        </div>
+
+                        <!-- Right: Live Preview -->
+                        <div class="preview-container">
+                            <div id="a4-preview"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/assignment-cover.js"></script>
+</body>
+</html>

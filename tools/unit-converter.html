@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter - ToolX Pro</title>
+    <meta name="description" content="Convert between different measurement units including length, weight, and temperature instantly.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="app-container">
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="tool-container">
+                    <div class="tool-header">
+                        <h1 class="tool-title">📐 Unit Converter</h1>
+                        <p class="tool-desc">Quickly convert values between various units of length, weight, and temperature.</p>
+                    </div>
+                    
+                    <div class="tool-body">
+                        <!-- Select Measurement Category -->
+                        <div class="form-group" style="max-width:300px; margin-bottom:1.5rem;">
+                            <label for="converter-category">Select Unit Category:</label>
+                            <select id="converter-category" class="form-control">
+                                <option value="length">📏 Length</option>
+                                <option value="weight">⚖️ Weight</option>
+                                <option value="temp">🌡️ Temperature</option>
+                            </select>
+                        </div>
+
+                        <!-- Converter Inputs -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="input-val">From Value:</label>
+                                <input type="number" id="input-val" class="form-control" placeholder="Enter value..." value="1" step="any" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="from-unit">From Unit:</label>
+                                <select id="from-unit" class="form-control"></select>
+                            </div>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="output-val">To Value:</label>
+                                <input type="text" id="output-val" class="form-control" readonly style="font-weight:bold; color:var(--primary); background:var(--bg-secondary);">
+                            </div>
+                            <div class="form-group">
+                                <label for="to-unit">To Unit:</label>
+                                <select id="to-unit" class="form-control"></select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/unit-converter.js"></script>
+</body>
+</html>

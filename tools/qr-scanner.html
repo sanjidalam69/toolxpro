@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QR Code Scanner - ToolX Pro</title>
+    <meta name="description" content="Scan QR codes instantly using your device camera or by uploading image files directly from your gallery.">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Load html5-qrcode from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js"></script>
+</head>
+<body>
+    <div id="app-container">
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="tool-container">
+                    <div class="tool-header">
+                        <h1 class="tool-title">📷 QR Code Scanner</h1>
+                        <p class="tool-desc">Decode any QR code using your webcam/device camera stream or by uploading an image file.</p>
+                    </div>
+                    
+                    <div class="tool-body">
+                        <!-- Navigation Tabs for Scanner Modes -->
+                        <div style="display:flex; border-bottom:1px solid var(--border-color); margin-bottom:1.5rem;">
+                            <button id="tab-camera-btn" class="btn btn-secondary active" style="flex:1; border-radius:8px 8px 0 0; border-bottom:none; font-weight:600; padding:10px;">📹 Live Camera Scan</button>
+                            <button id="tab-file-btn" class="btn btn-secondary" style="flex:1; border-radius:8px 8px 0 0; border-bottom:none; font-weight:600; padding:10px;">📁 Upload Image File</button>
+                        </div>
+
+                        <!-- Mode 1: Camera Scanner Container -->
+                        <div id="camera-scanner-area">
+                            <div id="reader" style="width:100%; max-width:450px; margin:0 auto; border-radius:12px; overflow:hidden; border:1px solid var(--border-color); background:var(--bg-secondary);"></div>
+                            <div style="display:flex; justify-content:center; gap:10px; margin-top:1.2rem;">
+                                <button id="start-camera-btn" class="btn btn-primary" style="width:auto; min-width:180px;">📹 Start Camera</button>
+                                <button id="stop-camera-btn" class="btn btn-secondary" style="width:auto; display:none;">⏹️ Stop Camera</button>
+                            </div>
+                        </div>
+
+                        <!-- Mode 2: Image File Upload Area -->
+                        <div id="file-scanner-area" style="display:none;">
+                            <div class="upload-area" id="drop-area">
+                                <span class="upload-icon">📷</span>
+                                <h3 style="font-size:1.1rem; font-weight:600;">Drag & drop your QR image here or click to browse</h3>
+                                <p style="font-size:0.85rem; color:var(--text-secondary);">Supports: PNG, JPG, JPEG, WebP</p>
+                                <input type="file" id="qr-file-upload" accept="image/*" style="display:none;">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Decoded Results Card -->
+                    <div id="results" class="results-card">
+                        <h2 class="results-title">📊 Scan Results</h2>
+                        <div class="results-content" id="results-content">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/qr-scanner.js"></script>
+</body>
+</html>

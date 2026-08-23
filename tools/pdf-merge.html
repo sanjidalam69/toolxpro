@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Merge - ToolX Pro</title>
+    <meta name="description" content="Combine and merge multiple PDF documents into a single file quickly, securely, and completely in your browser.">
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- Load pdf-lib from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+</head>
+<body>
+    <div id="app-container">
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="tool-container">
+                    <div class="tool-header">
+                        <h1 class="tool-title">📎 PDF Merge</h1>
+                        <p class="tool-desc">Select multiple PDF files, arrange them in your preferred order, and combine them into a single PDF.</p>
+                    </div>
+                    
+                    <div class="tool-body">
+                        <!-- Drag and Drop Upload Area -->
+                        <div class="upload-area" id="drop-area">
+                            <span class="upload-icon">📎</span>
+                            <h3 style="font-size:1.1rem; font-weight:600;">Drag & drop multiple PDFs here or click to browse</h3>
+                            <p style="font-size:0.85rem; color:var(--text-secondary);">Supports: .pdf (Select multiple files at once)</p>
+                            <input type="file" id="pdf-upload" accept="application/pdf" multiple style="display:none;">
+                        </div>
+
+                        <!-- Settings & Preview Area -->
+                        <div id="settings-area" style="display:none; margin-top:1.5rem; animation: fadeIn 0.3s;">
+                            <!-- Uploaded PDFs List -->
+                            <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:8px;">Uploaded PDF Files:</h3>
+                            <div class="file-list" id="pdfs-list">
+                                <!-- Dynamically added PDFs list -->
+                            </div>
+
+                            <button id="merge-pdf-btn" class="btn btn-primary" style="margin-top:1.2rem;">Merge PDFs Now 🚀</button>
+                        </div>
+                    </div>
+                    
+                    <div id="results" class="results-card">
+                        <h2 class="results-title">📊 PDF Merge Complete</h2>
+                        <div class="results-content" id="results-content">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/pdf-merge.js"></script>
+</body>
+</html>

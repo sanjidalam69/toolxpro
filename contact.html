@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - ToolX Pro</title>
+    <meta name="description" content="Get in touch with the ToolX Pro team. Report bugs, suggest new tools, or ask questions about our free online utility tools.">
+    <meta name="keywords" content="contact ToolX Pro, support, bug report, feature request, suggest tool, toolxpro contact">
+    <link rel="stylesheet" href="css/style.css?v=42.0">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ToolXPro.co/contact.html">
+    <meta property="og:title" content="Contact Us - ToolX Pro">
+    <meta property="og:description" content="Get in touch with the ToolX Pro team. Report bugs, suggest new tools, or ask questions about our free online utility tools.">
+
+    <style>
+        .contact-page-container {
+            max-width: 920px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 2rem 1.25rem 4rem;
+        }
+
+        .contact-hero {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: var(--glass-border);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .contact-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-gradient);
+        }
+
+        .contact-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: var(--primary-glow);
+            color: var(--accent);
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .contact-hero-title {
+            font-family: var(--font-header);
+            font-size: 2.3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .contact-hero-lead {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 740px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .contact-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            padding: 1.75rem;
+            box-shadow: var(--card-shadow);
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            transition: var(--transition);
+        }
+
+        .contact-card:hover {
+            transform: translateY(-3px);
+            border-color: var(--accent);
+            box-shadow: var(--hover-shadow);
+        }
+
+        .contact-icon-wrapper {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            background: var(--primary-glow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-card-title {
+            font-family: var(--font-header);
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .contact-card-desc {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: var(--text-secondary);
+        }
+
+        .email-highlight-box {
+            background: var(--bg-secondary);
+            border: 2px dashed var(--accent);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin: 1rem 0 1.5rem;
+        }
+
+        .email-address {
+            font-family: monospace;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+        }
+
+        .copy-email-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: var(--accent-gradient);
+            color: #ffffff !important;
+            border: none;
+            padding: 9px 18px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.92rem;
+            cursor: pointer;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .copy-email-btn:hover {
+            opacity: 0.92;
+            transform: translateY(-2px);
+        }
+
+        /* Interactive Contact Form */
+        .contact-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .form-group-full {
+            grid-column: 1 / -1;
+        }
+
+        .form-label {
+            display: block;
+            font-size: 0.92rem;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+
+        .form-input,
+        .form-select,
+        .form-textarea {
+            width: 100%;
+            padding: 10px 14px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 0.98rem;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-input:focus,
+        .form-select:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px var(--primary-glow);
+        }
+
+        .form-textarea {
+            min-height: 120px;
+            resize: vertical;
+        }
+
+        .submit-form-btn {
+            background: var(--accent-gradient);
+            color: #ffffff;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            box-shadow: 0 4px 15px rgba(245, 124, 0, 0.3);
+        }
+
+        .submit-form-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 124, 0, 0.45);
+        }
+
+        .contact-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .section-heading {
+            font-family: var(--font-header);
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .topics-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .topic-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 1rem 1.25rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .topic-item strong {
+            color: var(--text-primary);
+        }
+
+        .notice-card {
+            background: var(--primary-glow);
+            border-left: 4px solid var(--accent);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin: 1.2rem 0;
+            line-height: 1.65;
+            font-size: 0.98rem;
+        }
+
+        .notice-card a {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .dev-profile-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .disclaimer-footer-text {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        @media (max-width: 600px) {
+            .contact-form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <!-- Header Injected dynamically by layout.js -->
+        <header id="main-header"></header>
+
+        <main class="main-wrapper" style="flex-direction: column;">
+            <div class="contact-page-container">
+                
+                <!-- Hero Section -->
+                <div class="contact-hero">
+                    <div class="contact-hero-badge">🤝 We're Here to Help</div>
+                    <h1 class="contact-hero-title">Contact & Support</h1>
+                    <p class="contact-hero-lead">
+                        Have a question, feedback, or a tool request? Reach out to the ToolX Pro team. We are dedicated to providing fast, reliable, and free web utilities for everyone.
+                    </p>
+                </div>
+
+                <!-- Direct Email Channel -->
+                <section class="contact-section">
+                    <h2 class="section-heading">📧 Direct Email Channel</h2>
+                    <p style="font-size: 1.02rem; line-height: 1.7; color: var(--text-primary);">
+                        For fastest assistance, security questions, or business inquiries, contact our official support email directly:
+                    </p>
+
+                    <div class="email-highlight-box">
+                        <div>
+                            <span style="font-size: 0.85rem; color: var(--text-secondary); display: block; margin-bottom: 2px;">Official Inquiries & Support Email:</span>
+                            <span class="email-address" id="support-email">ai.sanjid.alam@gmail.com</span>
+                        </div>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <a href="mailto:ai.sanjid.alam@gmail.com?subject=ToolX%20Pro%20Feedback%20/%20Inquiry" class="copy-email-btn">
+                                ✉️ Compose Email
+                            </a>
+                            <button class="copy-email-btn" onclick="copySupportEmail()" style="background: var(--bg-primary); color: var(--text-primary); border: 1px solid var(--border-color);">
+                                📋 Copy Address
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Interactive Message & Feedback Form -->
+                <section class="contact-section">
+                    <h2 class="section-heading">📝 Send Us a Message</h2>
+                    <p style="font-size: 1.02rem; line-height: 1.7; color: var(--text-primary);">
+                        Fill out the form below to send feedback, suggest a new calculator or converter, or report an issue:
+                    </p>
+
+                    <form id="contact-form" onsubmit="handleContactSubmit(event)">
+                        <div class="contact-form-grid">
+                            <div>
+                                <label for="sender-name" class="form-label">Your Name</label>
+                                <input type="text" id="sender-name" class="form-input" placeholder="e.g. Sanjid Alam" required>
+                            </div>
+                            <div>
+                                <label for="sender-email" class="form-label">Your Email</label>
+                                <input type="email" id="sender-email" class="form-input" placeholder="e.g. you@example.com" required>
+                            </div>
+                            <div class="form-group-full">
+                                <label for="sender-topic" class="form-label">Topic / Subject</label>
+                                <select id="sender-topic" class="form-select" required>
+                                    <option value="💡 Tool Suggestion">💡 Suggest a New Tool or Calculator</option>
+                                    <option value="🐛 Bug Report">🐛 Bug Report / Broken Feature</option>
+                                    <option value="🎓 Student Corner Request">🎓 Student Corner Request (GPA / University)</option>
+                                    <option value="🔒 Privacy & Data Question">🔒 Privacy & Data Question</option>
+                                    <option value="🤝 Partnership / Collaboration">🤝 Partnership / Collaboration</option>
+                                    <option value="💬 General Feedback">💬 General Feedback</option>
+                                </select>
+                            </div>
+                            <div class="form-group-full">
+                                <label for="sender-message" class="form-label">Your Message</label>
+                                <textarea id="sender-message" class="form-textarea" placeholder="Describe your question, suggestion, or issue in detail..." required></textarea>
+                            </div>
+                            <div class="form-group-full" style="margin-top: 0.5rem;">
+                                <button type="submit" class="submit-form-btn">
+                                    🚀 Send Message Now
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <!-- What You Can Write to Us About -->
+                <section class="contact-section">
+                    <h2 class="section-heading">💬 How We Can Help</h2>
+                    
+                    <div class="topics-list">
+                        <div class="topic-item">
+                            <span style="font-size: 1.4rem;">🐛</span>
+                            <div>
+                                <strong>Bug Reports & Performance Issues</strong>
+                                <p style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 3px;">
+                                    Encountered an error with a PDF tool, calculator, or converter? Please include your browser and operating system so we can resolve it immediately.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="topic-item">
+                            <span style="font-size: 1.4rem;">💡</span>
+                            <div>
+                                <strong>Tool Suggestions & Academic Scales</strong>
+                                <p style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 3px;">
+                                    Need a specific university CGPA scale, custom assignment cover template, or new AI utility? Let us know and we'll prioritize building it.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="topic-item">
+                            <span style="font-size: 1.4rem;">🔒</span>
+                            <div>
+                                <strong>Privacy & Client-Side Security Inquiries</strong>
+                                <p style="font-size: 0.95rem; color: var(--text-secondary); margin-top: 3px;">
+                                    Have technical questions regarding how client-side WebAssembly and canvas sandbox file isolation works? Read our <a href="privacy-policy.html" style="color: var(--accent); font-weight: 600;">Privacy Policy</a> or write to us directly.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Developer & Transparency Section -->
+                <section class="contact-section">
+                    <h2 class="section-heading">👨‍💻 Developer Information & Webmaster</h2>
+                    
+                    <div class="dev-profile-card">
+                        <div>
+                            <strong style="font-size: 1.1rem; display: block; margin-bottom: 4px; color: var(--text-primary);">Sanjid Alam</strong>
+                            <span style="color: var(--text-secondary); font-size: 0.92rem; display: block; margin-bottom: 6px;">Creator & Lead Developer • ToolX Pro</span>
+                            <span style="display: inline-flex; align-items: center; gap: 5px; font-size: 0.85rem; color: #10B981; font-weight: 600; background: rgba(16, 185, 129, 0.1); padding: 3px 10px; border-radius: 20px;">
+                                ⚡ Typically replies within 24 hours
+                            </span>
+                        </div>
+                        <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                            <a href="https://www.linkedin.com/in/sanjid-alam-29752619b/" target="_blank" rel="noopener noreferrer" class="copy-email-btn" style="background: #0077b5; padding: 8px 14px; font-size: 0.88rem;">
+                                LinkedIn ↗
+                            </a>
+                            <a href="https://github.com/sanjidalam69" target="_blank" rel="noopener noreferrer" class="copy-email-btn" style="background: #24292e; padding: 8px 14px; font-size: 0.88rem;">
+                                GitHub ↗
+                            </a>
+                        </div>
+                    </div>
+
+                    <div class="notice-card" style="margin-top: 1.5rem;">
+                        🔍 <strong>Helpful Links:</strong> Explore our <a href="index.html#tools-container">Tools Directory</a>, check our <a href="index.html#blog-container">Guides & Articles</a>, or read our <a href="about.html">About Page</a> for more information.
+                    </div>
+
+                    <p class="disclaimer-footer-text">
+                        <strong>Disclaimer:</strong> ToolX Pro operates independently as a free web utility service. We do not sell user data, collect personal tracking cookies, or require paid accounts.
+                    </p>
+                </section>
+
+            </div>
+        </main>
+
+        <!-- Footer Injected dynamically by layout.js -->
+        <footer id="main-footer"></footer>
+    </div>
+
+    <script src="js/layout.js"></script>
+    <script>
+        function copySupportEmail() {
+            const email = document.getElementById("support-email").innerText;
+            navigator.clipboard.writeText(email).then(() => {
+                if (window.showToast) {
+                    window.showToast("Email address copied to clipboard!", "success");
+                } else {
+                    alert("Email copied: " + email);
+                }
+            }).catch(() => {
+                alert("Email: " + email);
+            });
+        }
+
+        function handleContactSubmit(event) {
+            event.preventDefault();
+            const name = document.getElementById("sender-name").value.trim();
+            const email = document.getElementById("sender-email").value.trim();
+            const topic = document.getElementById("sender-topic").value;
+            const message = document.getElementById("sender-message").value.trim();
+
+            if (!name || !email || !message) {
+                if (window.showToast) window.showToast("Please fill in all fields", "error");
+                return;
+            }
+
+            const subject = encodeURIComponent(`[ToolX Pro] ${topic} - from ${name}`);
+            const body = encodeURIComponent(`Sender: ${name} (${email})\nTopic: ${topic}\n\nMessage:\n${message}\n\nSent via ToolX Pro Contact Form`);
+            const mailtoUrl = `mailto:ai.sanjid.alam@gmail.com?subject=${subject}&body=${body}`;
+
+            if (window.showToast) {
+                window.showToast("Opening your email app to send message...", "success");
+            }
+            
+            setTimeout(() => {
+                window.location.href = mailtoUrl;
+            }, 500);
+        }
+    </script>
+</body>
+</html>

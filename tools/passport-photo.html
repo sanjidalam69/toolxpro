@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passport Photo Maker & Grid Generator - ToolX Pro</title>
+    <meta name="description" content="Create official passport size photos (2x2 inch, 35x45mm), change background color to white or blue, and generate printable A4 sheets online for free.">
+    <link rel="stylesheet" href="../css/style.css?v=26.0">
+</head>
+<body>
+    <div id="app-container">
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="tool-container">
+                    <div class="tool-header">
+                        <h1 class="tool-title">📸 Passport Photo Maker & A4 Sheet Generator</h1>
+                        <p class="tool-desc">Upload your photo, set custom background colors, crop to official passport dimensions, and print a sheet of 8 to 12 photos in seconds!</p>
+                    </div>
+                    
+                    <div class="tool-body">
+                        <div class="form-group">
+                            <label for="photo-upload">Upload Photo (JPG, PNG, WebP):</label>
+                            <input type="file" id="photo-upload" accept="image/*" class="form-control">
+                        </div>
+
+                        <div id="editor-controls" style="display:none; margin-top:1.5rem; flex-direction:column; gap:1.2rem;">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="size-preset">Photo Size Standard:</label>
+                                    <select id="size-preset" class="form-control">
+                                        <option value="passport-us">2 x 2 inch (US / International Standard)</option>
+                                        <option value="passport-bd" selected>35 x 45 mm (Bangladesh / European Standard)</option>
+                                        <option value="stamp">Stamp Size (25 x 30 mm)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="bg-color">Background Color:</label>
+                                    <select id="bg-color" class="form-control">
+                                        <option value="keep">Original Background</option>
+                                        <option value="#ffffff" selected>White (Standard Official)</option>
+                                        <option value="#0055ff">Light Blue (BD Exam / Official)</option>
+                                        <option value="#e2e8f0">Light Gray</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="grid-copies">A4 Sheet Copies:</label>
+                                    <select id="grid-copies" class="form-control">
+                                        <option value="1">Single Photo Only</option>
+                                        <option value="8" selected>8 Copies (A4 Sheet)</option>
+                                        <option value="12">12 Copies (A4 Sheet)</option>
+                                        <option value="16">16 Copies (A4 Sheet)</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <button id="generate-btn" class="btn btn-primary" style="margin-top:0.5rem;">Generate Passport Photo Sheet 🚀</button>
+                        </div>
+                    </div>
+                    
+                    <div id="results" class="results-card" style="display:none; margin-top:2rem;">
+                        <h2 class="results-title">✨ Preview & Download</h2>
+                        <div class="results-content" style="text-align:center;">
+                            <div id="canvas-container" style="margin:1.5rem 0; overflow-x:auto; display:flex; justify-content:center;">
+                                <canvas id="output-canvas" style="border:1px solid var(--border-color); border-radius:8px; max-width:100%; height:auto; box-shadow:var(--card-shadow);"></canvas>
+                            </div>
+                            <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
+                                <a id="download-btn" class="btn btn-primary" download="passport-photos.png" style="width:auto; text-decoration:none;">📥 Download High Quality Photo Sheet</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/passport-photo.js"></script>
+</body>
+</html>

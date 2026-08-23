@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Converter - ToolX Pro</title>
+    <meta name="description" content="Convert images between JPG, PNG, and WebP formats instantly and securely without server uploads.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="app-container">
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="tool-container">
+                    <div class="tool-header">
+                        <h1 class="tool-title">🔁 Image Converter</h1>
+                        <p class="tool-desc">Change image file formats (e.g. PNG to JPG, JPG to WebP) easily and locally.</p>
+                    </div>
+                    
+                    <div class="tool-body">
+                        <!-- Drag and Drop Upload Area -->
+                        <div class="upload-area" id="drop-area">
+                            <span class="upload-icon">🔁</span>
+                            <h3 style="font-size:1.1rem; font-weight:600;">Drag & drop your image here or click to browse</h3>
+                            <p style="font-size:0.85rem; color:var(--text-secondary);">Supports all standard image formats</p>
+                            <input type="file" id="image-upload" accept="image/*" style="display:none;">
+                        </div>
+
+                        <!-- Converter Settings -->
+                        <div id="settings-area" style="display:none; margin-top:1.5rem; animation: fadeIn 0.3s;">
+                            <div style="display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:space-between; background:var(--bg-secondary); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+                                <div style="display:flex; align-items:center; gap:10px;">
+                                    <img id="image-preview" style="max-height:80px; max-width:80px; border-radius:8px; object-fit:cover; border:1px solid var(--border-color);">
+                                    <div>
+                                        <p id="file-name" style="font-weight:600; font-size:0.95rem; word-break:break-all;"></p>
+                                        <p id="file-details" style="font-size:0.85rem; color:var(--text-secondary);"></p>
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-bottom:0; min-width:200px; flex:1;">
+                                    <label for="format-select">Select Target Format:</label>
+                                    <select id="format-select" class="form-control" style="margin-top:5px;">
+                                        <option value="image/jpeg">JPG / JPEG</option>
+                                        <option value="image/png">PNG (Supports Transparency)</option>
+                                        <option value="image/webp">WebP (Modern Web Format)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <button id="convert-btn" class="btn btn-primary" style="margin-top:1.2rem;">Convert Image 🚀</button>
+                        </div>
+                    </div>
+                    
+                    <div id="results" class="results-card">
+                        <h2 class="results-title">📊 Converted Image</h2>
+                        <div class="results-content" id="results-content">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/image-converter.js"></script>
+</body>
+</html>

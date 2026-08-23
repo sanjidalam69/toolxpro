@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bangla Unicode & Bijoy Converter - ToolX Pro</title>
+    <meta name="description" content="Convert Bijoy keyboard legacy ASCII/ANSI typing to Unicode Bangla and vice-versa for Photoshop, Illustrator, and web publishing.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="app-container">
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="tool-container">
+                    <div class="tool-header">
+                        <h1 class="tool-title">✍️ Bangla Unicode & Bijoy Converter</h1>
+                        <p class="tool-desc">Convert between standard Unicode (mobile/web readable Bangla) and Bijoy ANSI (SutonnyMJ font coding for design tools).</p>
+                    </div>
+                    
+                    <div class="tool-body">
+                        <!-- Unicode Textarea -->
+                        <div class="form-group">
+                            <label for="unicode-text">Unicode Text (Standard web-friendly Bangla):</label>
+                            <textarea id="unicode-text" class="form-control" rows="6" placeholder="Type or paste standard Unicode Bangla here (e.g. আমি বাংলায় গান গাই)..." style="resize:vertical;"></textarea>
+                        </div>
+                        
+                        <!-- Conversion Controls -->
+                        <div style="display:flex; justify-content:center; gap:12px; margin-bottom:1.5rem; flex-wrap:wrap;">
+                            <button id="uni-to-bijoy-btn" class="btn btn-primary" style="width:auto; min-width:200px;">Unicode to Bijoy ANSI ⬇️</button>
+                            <button id="bijoy-to-uni-btn" class="btn btn-secondary" style="width:auto; min-width:200px;">Bijoy ANSI to Unicode ⬆️</button>
+                        </div>
+
+                        <!-- Bijoy Textarea -->
+                        <div class="form-group">
+                            <label for="bijoy-text">Bijoy ANSI Text (SutonnyMJ font compatible code):</label>
+                            <textarea id="bijoy-text" class="form-control" rows="6" placeholder="Paste Bijoy ANSI text code here (e.g. Avwg evsjvq Mvb MvB)..." style="resize:vertical; font-family:var(--font-en);"></textarea>
+                        </div>
+
+                        <div style="display:flex; justify-content:space-between; gap:10px; margin-top:1.5rem; border-top: 1px solid var(--border-color); padding-top:1.5rem;">
+                            <button id="copy-unicode-btn" class="btn btn-secondary" style="width:auto;">📋 Copy Unicode</button>
+                            <button id="copy-bijoy-btn" class="btn btn-secondary" style="width:auto;">📋 Copy Bijoy</button>
+                            <button id="clear-btn" class="btn btn-secondary" style="width:auto; margin-left:auto;">🧹 Clear</button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/bangla-unicode.js"></script>
+</body>
+</html>

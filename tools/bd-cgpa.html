@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BD University CGPA Calculator (UGC 4.00 Scale) - ToolX Pro</title>
+    <meta name="description" content="Calculate CGPA & GPA for Bangladeshi Public, Private, and National Universities following the official UGC Uniform Grading System and credit-weighted formula.">
+    <meta name="keywords" content="bd cgpa calculator, ugc grading system bangladesh, national university cgpa, public university cgpa, private university cgpa calculator, semester gpa">
+    <link rel="stylesheet" href="../css/style.css?v=42.0">
+    <style>
+        .ugc-scale-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.92rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        .ugc-scale-table th {
+            background: var(--bg-secondary);
+            padding: 10px 14px;
+            text-align: left;
+            border-bottom: 2px solid var(--border-color);
+            font-weight: 700;
+        }
+        .ugc-scale-table td {
+            padding: 8px 14px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+        }
+        .ugc-scale-table tr:hover {
+            background: var(--primary-glow);
+        }
+        .entry-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px;
+            background: var(--bg-secondary);
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            transition: var(--transition);
+        }
+        .entry-row:hover {
+            border-color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <!-- Header Injected dynamically by layout.js -->
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <main class="content-area">
+                <div class="tool-container">
+                    <div class="tool-header">
+                        <span style="padding:4px 12px; background:var(--primary-glow); color:var(--accent); font-size:0.82rem; font-weight:700; border-radius:20px; text-transform:uppercase;">🎓 UGC Bangladesh Standard</span>
+                        <h1 class="tool-title" style="margin-top:8px;">BD University CGPA Calculator</h1>
+                        <p class="tool-desc">Calculate your Cumulative CGPA or Semester GPA for National University, Public Universities (DU, BUET, RU, JU, etc.), and Private Universities (NSU, BRACU, AIUB, SEU, UIU, etc.) using the official UGC 4.00 uniform grading scale.</p>
+                    </div>
+                    
+                    <div class="tool-body">
+                        <!-- Mode Selector and Scale -->
+                        <div class="form-row" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:15px; margin-bottom:1.5rem;">
+                            <div class="form-group">
+                                <label for="cgpa-mode" style="font-weight:700;">📊 Calculation Mode:</label>
+                                <select id="cgpa-mode" class="form-control">
+                                    <option value="subject" selected>Course / Subject-Wise (Single Semester GPA)</option>
+                                    <option value="semester">Semester-Wise (Cumulative CGPA)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="university-preset" style="font-weight:700;">🏛️ Grading Preset:</label>
+                                <select id="university-preset" class="form-control">
+                                    <option value="ugc-standard" selected>UGC Bangladesh Uniform Scale (Standard)</option>
+                                    <option value="nu-standard">National University (NU) Scale</option>
+                                    <option value="custom-scale">Custom Grade Points Input</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Table Column Headers -->
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; padding:0 4px; font-weight:700; font-size:0.92rem; color:var(--text-primary);">
+                            <span id="col-header-name" style="flex:2.2;">Course Name</span>
+                            <span style="flex:1.2; text-align:center;">Credits</span>
+                            <span id="col-header-grade" style="flex:1.8; text-align:center;">Grade / GP</span>
+                            <span style="flex:0.3;"></span>
+                        </div>
+
+                        <!-- Semesters/Subjects Container -->
+                        <div id="entries-container" style="display:flex; flex-direction:column; gap:10px; margin-bottom:1.5rem;">
+                            <!-- Injected dynamically by JS -->
+                        </div>
+
+                        <!-- Buttons Row -->
+                        <div style="display:flex; gap:12px; margin-bottom:1.5rem; flex-wrap:wrap;">
+                            <button id="add-entry-btn" class="btn btn-secondary" style="width:auto; background:var(--bg-secondary); border:1px solid var(--border-color); color:var(--text-primary);">
+                                ➕ Add Another Row
+                            </button>
+                            <button id="calculate-btn" class="btn btn-primary" style="flex:1; min-width:200px;">
+                                🚀 Calculate CGPA / GPA
+                            </button>
+                            <button id="reset-btn" class="btn btn-secondary" style="width:auto; background:var(--bg-secondary); border:1px solid var(--border-color); color:var(--text-primary);">
+                                🔄 Reset
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Result Summary Card -->
+                    <div id="results" class="results-card" style="display:none;">
+                        <h2 class="results-title">📊 University Academic Summary</h2>
+                        <div class="results-content" id="results-content">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+
+                    <!-- UGC Grading Scale Table -->
+                    <div style="margin-top:2.5rem; border-top:1px dashed var(--border-color); padding-top:1.5rem;">
+                        <h3 style="font-family:var(--font-header); font-size:1.15rem; font-weight:700; color:var(--text-primary); margin-bottom:8px;">
+                            📋 UGC Bangladesh Uniform Grading Scale (4.00 Scale)
+                        </h3>
+                        <p style="font-size:0.9rem; color:var(--text-secondary); margin-bottom:12px;">
+                            Standardized grading template formulated by University Grants Commission (UGC) of Bangladesh:
+                        </p>
+
+                        <div class="table-responsive">
+                            <table class="ugc-scale-table">
+                                <thead>
+                                    <tr>
+                                        <th>Numerical Marks</th>
+                                        <th>Letter Grade</th>
+                                        <th>Grade Point (GP)</th>
+                                        <th>Assessment / Classification</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="font-weight:600; color:var(--success);">
+                                        <td>80% and Above</td>
+                                        <td>A+</td>
+                                        <td>4.00</td>
+                                        <td>Outstanding (First Class)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>75% to &lt;80%</td>
+                                        <td>A</td>
+                                        <td>3.75</td>
+                                        <td>Excellent (First Class)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>70% to &lt;75%</td>
+                                        <td>A-</td>
+                                        <td>3.50</td>
+                                        <td>Very Good (First Class)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>65% to &lt;70%</td>
+                                        <td>B+</td>
+                                        <td>3.25</td>
+                                        <td>Good (First Class)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>60% to &lt;65%</td>
+                                        <td>B</td>
+                                        <td>3.00</td>
+                                        <td>Satisfactory (First Class Minimum)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>55% to &lt;60%</td>
+                                        <td>B-</td>
+                                        <td>2.75</td>
+                                        <td>Above Average (Second Class)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>50% to &lt;55%</td>
+                                        <td>C+</td>
+                                        <td>2.50</td>
+                                        <td>Average (Second Class)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>45% to &lt;50%</td>
+                                        <td>C</td>
+                                        <td>2.25</td>
+                                        <td>Below Average (Second Class Minimum)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>40% to &lt;45%</td>
+                                        <td>D</td>
+                                        <td>2.00</td>
+                                        <td>Pass (Third Class)</td>
+                                    </tr>
+                                    <tr style="color:var(--danger); font-weight:600;">
+                                        <td>Less than 40%</td>
+                                        <td>F</td>
+                                        <td>0.00</td>
+                                        <td>Fail</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap:12px; margin-top:1.2rem;">
+                            <div style="background:var(--bg-secondary); padding:12px; border-radius:8px; border:1px solid var(--border-color); font-size:0.88rem;">
+                                <strong>🥇 First Class Equivalent:</strong> CGPA 3.00 to 4.00 (60% to 100%)
+                            </div>
+                            <div style="background:var(--bg-secondary); padding:12px; border-radius:8px; border:1px solid var(--border-color); font-size:0.88rem;">
+                                <strong>🥈 Second Class Equivalent:</strong> CGPA 2.25 to 2.99 (45% to 59%)
+                            </div>
+                            <div style="background:var(--bg-secondary); padding:12px; border-radius:8px; border:1px solid var(--border-color); font-size:0.88rem;">
+                                <strong>🥉 Third Class / Pass:</strong> CGPA 2.00 to 2.24 (40% to 44%)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <!-- Footer Injected dynamically by layout.js -->
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/bd-cgpa.js"></script>
+</body>
+</html>

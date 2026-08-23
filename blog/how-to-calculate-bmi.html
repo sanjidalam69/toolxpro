@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Calculate BMI & Understand Results - ToolX Pro</title>
+    <meta name="description" content="A comprehensive guide to understanding Body Mass Index (BMI). Learn the formula, health categories, and tips to maintain a healthy weight.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="app-container">
+        <!-- Header Injected dynamically by layout.js -->
+        <header id="main-header"></header>
+
+        <main class="main-wrapper" style="flex-direction: column;">
+            <div class="tool-container" style="max-width:850px; margin:0 auto; width:100%;">
+                
+                <!-- Article Header -->
+                <div class="tool-header">
+                    <span style="padding:4px 10px; background:var(--primary-glow); color:var(--primary); font-size:0.8rem; font-weight:700; border-radius:20px; text-transform:uppercase;">Health Guide</span>
+                    <h1 class="tool-title" style="margin-top:10px;">How to Calculate BMI & Understand Results</h1>
+                    <p class="tool-desc">Published on July 21, 2026 • 5 min read</p>
+                </div>
+
+                <!-- Article Content -->
+                <div class="tool-body" style="font-size:1.05rem; line-height:1.7; color:var(--text-primary); display:flex; flex-direction:column; gap:1.2rem;">
+                    
+                    <p>Body Mass Index, or <b>BMI</b>, is a quick and widely used medical screening tool to check if a person has a healthy ratio of weight to height. While it doesn't measure body fat percentage directly, it correlates strongly with metabolic health risks.</p>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.4rem; font-weight:700; margin-top:1rem; color:var(--primary);">📐 The Mathematical Formula for BMI</h2>
+                    <p>Calculating your BMI is straightforward. The formula differs depending on whether you use the metric system or the imperial system:</p>
+
+                    <div style="background:var(--bg-secondary); border:1px solid var(--border-color); padding:1.2rem; border-radius:8px; border-left:4px solid var(--primary); font-family:var(--font-en);">
+                        <p style="margin-bottom:8px;"><b>Metric System (Standard):</b></p>
+                        <code style="font-size:1.1rem; font-weight:bold; color:var(--primary);">BMI = Weight (kg) / [Height (m)]²</code>
+                        <p style="margin-top:10px; margin-bottom:8px;"><b>Imperial System (US Standard):</b></p>
+                        <code style="font-size:1.1rem; font-weight:bold; color:var(--primary);">BMI = [Weight (lbs) / (Height (in))²] × 703</code>
+                    </div>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.4rem; font-weight:700; margin-top:1rem; color:var(--primary);">📊 Understanding BMI Classifications</h2>
+                    <p>According to the World Health Organization (WHO), adults over 20 years old are grouped into the following categories based on their BMI score:</p>
+
+                    <table style="width:100%; border-collapse:collapse; margin:1rem 0; font-size:0.95rem; border:1px solid var(--border-color);">
+                        <thead>
+                            <tr style="background:var(--bg-secondary); border-bottom:2px solid var(--border-color);">
+                                <th style="padding:12px; text-align:left; font-weight:bold;">BMI Range</th>
+                                <th style="padding:12px; text-align:left; font-weight:bold;">Classification</th>
+                                <th style="padding:12px; text-align:left; font-weight:bold;">Health Risk Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr style="border-bottom:1px solid var(--border-color);">
+                                <td style="padding:10px; color:var(--warning); font-weight:600;">Below 18.5</td>
+                                <td style="padding:10px;">Underweight</td>
+                                <td style="padding:10px;">Moderate Risk</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid var(--border-color); background:var(--primary-glow);">
+                                <td style="padding:10px; color:var(--success); font-weight:600;">18.5 – 24.9</td>
+                                <td style="padding:10px;">Normal Weight</td>
+                                <td style="padding:10px;">Minimal Risk (Healthy)</td>
+                            </tr>
+                            <tr style="border-bottom:1px solid var(--border-color);">
+                                <td style="padding:10px; color:var(--warning); font-weight:600;">25.0 – 29.9</td>
+                                <td style="padding:10px;">Overweight</td>
+                                <td style="padding:10px;">Increased Risk</td>
+                            </tr>
+                            <tr>
+                                <td style="padding:10px; color:var(--danger); font-weight:600;">30.0 and Above</td>
+                                <td style="padding:10px;">Obesity</td>
+                                <td style="padding:10px;">High Clinical Risk</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.4rem; font-weight:700; margin-top:1rem; color:var(--primary);">💡 Tips to Maintain a Healthy BMI</h2>
+                    <ol style="padding-left:20px; display:flex; flex-direction:column; gap:8px;">
+                        <li><b>Eat a Balanced Diet:</b> Focus on whole foods, vegetables, fruits, lean proteins, and complex carbohydrates. Limit processed sugars.</li>
+                        <li><b>Stay Physically Active:</b> Aim for at least 150 minutes of moderate aerobic exercises (like brisk walking or cycling) every week.</li>
+                        <li><b>Track Your Metrics:</b> Consistently monitor your progress using online tools to keep tabs on weight changes.</li>
+                    </ol>
+
+                    <hr style="border:none; border-top:1px dashed var(--border-color); margin:1.5rem 0;">
+
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;">
+                        <p style="font-size:0.95rem; font-weight:600;">Want to check your own BMI score instantly?</p>
+                        <a href="../tools/bmi-calculator.html" class="btn btn-primary" style="width:auto; padding:10px 20px;">⚖️ Run BMI Calculator</a>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer Injected dynamically by layout.js -->
+        <footer id="main-footer"></footer>
+    </div>
+
+    <script src="../js/layout.js"></script>
+</body>
+</html>

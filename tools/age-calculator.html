@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Age Calculator - ToolX Pro</title>
+    <meta name="description" content="Calculate your exact age in years, months, and days, count down to your next birthday, and see lifetime stats.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="app-container">
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="tool-container">
+                    <div class="tool-header">
+                        <h1 class="tool-title">🎂 Age Calculator</h1>
+                        <p class="tool-desc">Select your date of birth and the date you want to calculate your age at.</p>
+                    </div>
+                    
+                    <div class="tool-body">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="birth-date">Date of Birth:</label>
+                                <input type="date" id="birth-date" class="form-control" required>
+                                <div id="birth-date-preview" style="font-size:0.85rem; color:var(--primary); font-weight:600; margin-top:5px; min-height:18px;"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="target-date">Age at Date:</label>
+                                <input type="date" id="target-date" class="form-control" required>
+                                <div id="target-date-preview" style="font-size:0.85rem; color:var(--primary); font-weight:600; margin-top:5px; min-height:18px;"></div>
+                            </div>
+                        </div>
+                        <button id="calculate-btn" class="btn btn-primary">Calculate Age 🚀</button>
+                    </div>
+                    
+                    <div id="results" class="results-card">
+                        <h2 class="results-title">📊 Calculation Results</h2>
+                        <div class="results-content" id="results-content">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/age-calculator.js"></script>
+</body>
+</html>

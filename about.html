@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About ToolX Pro - Free Online Utility Tools Hub</title>
+    <meta name="description" content="Learn about ToolX Pro — a free, privacy-first collection of 22+ online tools for students, creators, and everyday users. No sign-up, no server uploads.">
+    <meta name="keywords" content="about ToolX Pro, free online tools, privacy first tools, web utility hub, student tools, pdf tools, client-side tools">
+    <link rel="stylesheet" href="css/style.css?v=42.0">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://ToolXPro.co/about.html">
+    <meta property="og:title" content="About ToolX Pro - Free Online Utility Tools Hub">
+    <meta property="og:description" content="Learn about ToolX Pro — a free, privacy-first collection of 22+ online tools for students, creators, and everyday users. No sign-up, no server uploads.">
+
+    <style>
+        .about-page-container {
+            max-width: 920px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 2rem 1.25rem 4rem;
+        }
+
+        .about-hero {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: var(--glass-border);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .about-hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--accent-gradient);
+        }
+
+        .about-hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: var(--primary-glow);
+            color: var(--accent);
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 1rem;
+        }
+
+        .about-hero-title {
+            font-family: var(--font-header);
+            font-size: 2.3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .about-hero-lead {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            max-width: 760px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        .about-section {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            border: 1px solid var(--border-color);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+        }
+
+        .section-heading {
+            font-family: var(--font-header);
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 1.2rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .about-text {
+            font-size: 1.02rem;
+            line-height: 1.75;
+            color: var(--text-primary);
+            margin-bottom: 1rem;
+        }
+
+        /* Tools Table Styling */
+        .tools-table-wrapper {
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin: 1.5rem 0;
+        }
+
+        .tools-table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.96rem;
+        }
+
+        .tools-table th {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            padding: 12px 18px;
+            font-weight: 700;
+            border-bottom: 2px solid var(--border-color);
+            font-family: var(--font-header);
+        }
+
+        .tools-table td {
+            padding: 12px 18px;
+            border-bottom: 1px solid var(--border-color);
+            color: var(--text-primary);
+            vertical-align: middle;
+        }
+
+        .tools-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tools-table tr:hover {
+            background: var(--primary-glow);
+        }
+
+        .cat-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        /* Feature / Notice Cards */
+        .notice-card {
+            background: var(--primary-glow);
+            border-left: 4px solid var(--accent);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin: 1.2rem 0;
+            line-height: 1.65;
+            font-size: 0.98rem;
+        }
+
+        .notice-card a {
+            color: var(--accent);
+            font-weight: 600;
+            text-decoration: underline;
+        }
+
+        .contact-card-box {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            background: var(--bg-secondary);
+            padding: 1.25rem 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-top: 1.2rem;
+        }
+
+        .contact-btn-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--accent-gradient);
+            color: #ffffff !important;
+            padding: 10px 20px;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .contact-btn-link:hover {
+            opacity: 0.92;
+            transform: translateY(-2px);
+        }
+
+        .disclaimer-footer-text {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-top: 1.5rem;
+            padding-top: 1rem;
+            border-top: 1px dashed var(--border-color);
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <!-- Header Injected dynamically by layout.js -->
+        <header id="main-header"></header>
+
+        <main class="main-wrapper" style="flex-direction: column;">
+            <div class="about-page-container">
+                
+                <!-- Hero Section -->
+                <div class="about-hero">
+                    <div class="about-hero-badge">✨ Fast, Free & Private</div>
+                    <h1 class="about-hero-title">About ToolX Pro</h1>
+                    <p class="about-hero-lead">
+                        ToolX Pro is a free, browser-based utility tools hub built for students, freelancers, and everyday users who need fast, reliable tools — without sign-ups, ads in their way, or privacy concerns.
+                    </p>
+                </div>
+
+                <!-- Mission Section -->
+                <section class="about-section">
+                    <h2 class="section-heading">🎯 Our Mission</h2>
+                    <p class="about-text">
+                        We believe useful tools should be accessible to everyone, everywhere — for free. Whether you're a university student in Dhaka needing to calculate your CGPA, a freelancer converting PDF files, or a writer polishing their grammar with AI, ToolX Pro has a tool ready for you — instantly, in your browser.
+                    </p>
+                </section>
+
+                <!-- What We Offer Section -->
+                <section class="about-section">
+                    <h2 class="section-heading">🛠️ What We Offer</h2>
+                    <p class="about-text">
+                        ToolX Pro currently provides <strong>22+ free, high-performance tools</strong> across 5 distinct categories:
+                    </p>
+
+                    <div class="tools-table-wrapper">
+                        <table class="tools-table">
+                            <thead>
+                                <tr>
+                                    <th style="width: 32%;">Category</th>
+                                    <th>Included Tools</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><span class="cat-tag">🤖 AI Tools</span></td>
+                                    <td>AI Text Humanizer, AI Grammar & Spell Fixer (powered by Google Gemini AI)</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="cat-tag">🎓 Student Corner</span></td>
+                                    <td>SSC/HSC Board GPA Calculator (5.00 Scale), BD University CGPA Calculator (UGC 4.00 Scale), Assignment Cover Generator (A4 Print Ready)</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="cat-tag">📄 PDF Tools</span></td>
+                                    <td>PDF to Word Converter, PDF Merge, Image to PDF, PDF Compressor, PDF Page Reorder & Delete</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="cat-tag">🖼️ Image Tools</span></td>
+                                    <td>Image Compressor, Image Converter, Passport Photo Maker (2x2 / 35x45mm), Background Remover (Transparent PNG)</td>
+                                </tr>
+                                <tr>
+                                    <td><span class="cat-tag">🛠️ Calculators & Utilities</span></td>
+                                    <td>Age Calculator, BMI Health Calculator, Word & Character Counter, Bijoy-to-Unicode Bangla Converter, QR Code Generator, QR Code Scanner, Unit Converter, File Size Converter</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <!-- Privacy First Section -->
+                <section class="about-section">
+                    <h2 class="section-heading">🔒 Privacy First — Always</h2>
+                    <p class="about-text">
+                        Most tools on ToolX Pro work <strong>100% client-side</strong> — meaning your files, text, and data are processed entirely inside your browser and are never sent to any external server. Your data stays on your device.
+                    </p>
+                    
+                    <div class="notice-card">
+                        ℹ️ <strong>AI Tools Transparency:</strong> The only exceptions are our AI-powered tools (Grammar Fixer and AI Humanizer), which send your input text securely to Google's Gemini AI API for natural language processing. These tools are clearly labeled "AI" on the site. Please review our <a href="privacy-policy.html">Privacy Policy</a> for full details.
+                    </div>
+                </section>
+
+                <!-- Built for Bangladesh Section -->
+                <section class="about-section">
+                    <h2 class="section-heading">🇧🇩 Built for Bangladesh and Beyond</h2>
+                    <p class="about-text">
+                        ToolX Pro was built with Bangladeshi students, freelancers, and professionals in mind — featuring localized tools like the SSC/HSC Board GPA Calculator (with NCTB 4th subject bonus calculation), BD University CGPA Calculator (UGC standard 4.00 scale), Assignment Cover Page Generator, and Bijoy-to-Unicode Bangla typing converter. All tools operate with maximum accuracy and adhere to international standards.
+                    </p>
+                </section>
+
+                <!-- Get in Touch Section -->
+                <section class="about-section">
+                    <h2 class="section-heading">📬 Get in Touch</h2>
+                    <p class="about-text">
+                        Have a suggestion for a new tool? Found a bug? We'd love to hear from you.
+                    </p>
+
+                    <div class="contact-card-box">
+                        <div>
+                            <strong style="font-size: 1.05rem; display: block; margin-bottom: 4px;">Have questions or feedback?</strong>
+                            <span style="color: var(--text-secondary); font-size: 0.92rem;">We typically respond to user inquiries within 24 hours.</span>
+                        </div>
+                        <a href="contact.html" class="contact-btn-link">👉 Visit Contact Page</a>
+                    </div>
+
+                    <p class="disclaimer-footer-text">
+                        <strong>Disclaimer:</strong> ToolX Pro is operated independently. We are not affiliated with Google, Adobe, Microsoft, or any other company whose file formats or APIs our tools support.
+                    </p>
+                </section>
+
+            </div>
+        </main>
+
+        <!-- Footer Injected dynamically by layout.js -->
+        <footer id="main-footer"></footer>
+    </div>
+
+    <script src="js/layout.js"></script>
+</body>
+</html>

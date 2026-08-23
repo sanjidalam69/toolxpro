@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Size Converter - ToolX Pro</title>
+    <meta name="description" content="Convert digital storage size values between Bytes, Kilobytes (KB), Megabytes (MB), Gigabytes (GB), and Terabytes (TB) instantly.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="app-container">
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="tool-container">
+                    <div class="tool-header">
+                        <h1 class="tool-title">💾 File Size Converter</h1>
+                        <p class="tool-desc">Enter any value and unit to convert it across all standard storage sizes in real-time.</p>
+                    </div>
+                    
+                    <div class="tool-body">
+                        <!-- Inputs -->
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="input-size">Input File Size:</label>
+                                <input type="number" id="input-size" class="form-control" placeholder="Enter size..." value="1" min="0" step="any" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="from-size-unit">From Unit:</label>
+                                <select id="from-size-unit" class="form-control">
+                                    <option value="B">Bytes (B)</option>
+                                    <option value="KB">Kilobytes (KB)</option>
+                                    <option value="MB" selected>Megabytes (MB)</option>
+                                    <option value="GB">Gigabytes (GB)</option>
+                                    <option value="TB">Terabytes (TB)</option>
+                                    <option value="PB">Petabytes (PB)</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- Results List -->
+                        <div style="margin-top:1.5rem; border-top:1px solid var(--border-color); padding-top:1.5rem;">
+                            <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:12px; color:var(--primary);">📊 Converted Values:</h3>
+                            <ul id="size-results-list" style="list-style:none; padding-left:0; display:flex; flex-direction:column; gap:10px;">
+                                <!-- Dynamically updated by JS -->
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/file-size-converter.js"></script>
+</body>
+</html>

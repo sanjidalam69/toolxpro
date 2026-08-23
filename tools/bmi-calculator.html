@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator - ToolX Pro</title>
+    <meta name="description" content="Calculate your Body Mass Index (BMI) and check your health weight classification using metric or imperial units.">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <div id="app-container">
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="tool-container">
+                    <div class="tool-header">
+                        <h1 class="tool-title">⚖️ BMI Calculator</h1>
+                        <p class="tool-desc">Calculate your Body Mass Index (BMI) to understand if your weight is in a healthy range.</p>
+                    </div>
+                    
+                    <div class="tool-body">
+                        <!-- Input Unit Selector -->
+                        <div class="form-group">
+                            <label>Unit System:</label>
+                            <div style="display:flex; gap:15px; margin-top:5px; flex-wrap:wrap;">
+                                <label style="font-weight:600; cursor:pointer; color:var(--primary);">
+                                    <input type="radio" name="unit-type" value="kg-ft" checked id="unit-kg-ft"> KG & Feet/Inches
+                                </label>
+                                <label style="font-weight:normal; cursor:pointer;">
+                                    <input type="radio" name="unit-type" value="metric" id="unit-metric"> Metric (KG & CM)
+                                </label>
+                                <label style="font-weight:normal; cursor:pointer;">
+                                    <input type="radio" name="unit-type" value="imperial" id="unit-imperial"> Imperial (LBS & Feet/Inches)
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- KG & Feet/Inches Inputs (Default) -->
+                        <div id="kg-ft-inputs">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="weight-kg-ft">Weight (kg):</label>
+                                    <input type="number" id="weight-kg-ft" class="form-control" placeholder="e.g. 65" min="1" step="any">
+                                </div>
+                                <div class="form-group">
+                                    <label>Height (feet & inches):</label>
+                                    <div style="display:flex; gap:10px;">
+                                        <input type="number" id="height-feet-kg" class="form-control" placeholder="Feet (e.g. 5)" min="0">
+                                        <input type="number" id="height-inches-kg" class="form-control" placeholder="Inches (e.g. 7)" min="0" max="11">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Metric Inputs (KG & CM) -->
+                        <div id="metric-inputs" style="display:none;">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="weight-metric">Weight (kg):</label>
+                                    <input type="number" id="weight-metric" class="form-control" placeholder="e.g. 65" min="1" step="any">
+                                </div>
+                                <div class="form-group">
+                                    <label for="height-metric">Height (cm):</label>
+                                    <input type="number" id="height-metric" class="form-control" placeholder="e.g. 170" min="1" step="any">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Imperial Inputs (LBS & Feet/Inches) -->
+                        <div id="imperial-inputs" style="display:none;">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="weight-imperial">Weight (lbs):</label>
+                                    <input type="number" id="weight-imperial" class="form-control" placeholder="e.g. 145" min="1" step="any">
+                                </div>
+                                <div class="form-group">
+                                    <label>Height (feet & inches):</label>
+                                    <div style="display:flex; gap:10px;">
+                                        <input type="number" id="height-feet" class="form-control" placeholder="Feet (e.g. 5)" min="0">
+                                        <input type="number" id="height-inches" class="form-control" placeholder="Inches (e.g. 7)" min="0" max="11">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <button id="calculate-btn" class="btn btn-primary">Calculate BMI 🚀</button>
+                    </div>
+                    
+                    <div id="results" class="results-card">
+                        <h2 class="results-title">📊 BMI Results</h2>
+                        <div class="results-content" id="results-content">
+                            <!-- Injected by JS -->
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/bmi-calculator.js"></script>
+</body>
+</html>

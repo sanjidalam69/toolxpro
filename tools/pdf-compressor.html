@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Compressor & Size Reducer - ToolX Pro</title>
+    <meta name="description" content="Compress PDF files online to reduce file size in KB or MB safely inside your browser.">
+    <link rel="stylesheet" href="../css/style.css?v=26.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+</head>
+<body>
+    <div id="app-container">
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="tool-container">
+                    <div class="tool-header">
+                        <h1 class="tool-title">📉 PDF Compressor & Size Reducer</h1>
+                        <p class="tool-desc">Reduce the storage file size of your PDF documents locally without losing readability or uploading to external servers.</p>
+                    </div>
+                    
+                    <div class="tool-body">
+                        <div class="form-group">
+                            <label for="pdf-compress-upload">Upload PDF Document:</label>
+                            <input type="file" id="pdf-compress-upload" accept="application/pdf" class="form-control">
+                        </div>
+
+                        <div id="compress-controls" style="display:none; margin-top:1.5rem; flex-direction:column; gap:1.2rem;">
+                            <div class="form-group">
+                                <label for="compression-level">Compression Preset:</label>
+                                <select id="compression-level" class="form-control">
+                                    <option value="recommended" selected>Recommended Compression (Good Quality & Small Size)</option>
+                                    <option value="high">High Compression (Maximum Size Reduction)</option>
+                                    <option value="low">Low Compression (Highest Visual Quality)</option>
+                                </select>
+                            </div>
+
+                            <button id="compress-btn" class="btn btn-primary">Compress PDF Now 🚀</button>
+                        </div>
+                    </div>
+                    
+                    <div id="results" class="results-card" style="display:none; margin-top:2rem;">
+                        <h2 class="results-title">🎉 Compression Complete</h2>
+                        <div class="results-content" style="text-align:center;">
+                            <div style="display:flex; justify-content:center; gap:20px; margin-bottom:1.5rem; flex-wrap:wrap;">
+                                <div style="background:var(--bg-secondary); padding:1rem 1.5rem; border-radius:10px; border:1px solid var(--border-color);">
+                                    <span>Original File Size:</span>
+                                    <h3 id="orig-size-label" style="color:var(--text-secondary); margin-top:4px;">0 KB</h3>
+                                </div>
+                                <div style="background:var(--primary-glow); padding:1rem 1.5rem; border-radius:10px; border:1px solid var(--primary);">
+                                    <span>Compressed File Size:</span>
+                                    <h3 id="new-size-label" style="color:var(--primary); margin-top:4px;">0 KB</h3>
+                                </div>
+                            </div>
+                            <a id="download-compressed-pdf" class="btn btn-primary" download="compressed.pdf" style="width:auto; text-decoration:none;">📥 Download Compressed PDF</a>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/pdf-compressor.js"></script>
+</body>
+</html>
