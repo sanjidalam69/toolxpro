@@ -8,6 +8,16 @@ document.addEventListener("DOMContentLoaded", () => {
     const copyBijoyBtn = document.getElementById("copy-bijoy-btn");
     const clearBtn = document.getElementById("clear-btn");
 
+    // Auto load text from Voice Typing tool if redirected
+    const pendingText = localStorage.getItem("toolx_pending_unicode");
+    if (pendingText) {
+        unicodeText.value = pendingText;
+        localStorage.removeItem("toolx_pending_unicode");
+        setTimeout(() => {
+            if (uniToBijoyBtn) uniToBijoyBtn.click();
+        }, 100);
+    }
+
     const uniToBijoyMap = {
         'অ': 'R', 'আ': 'Av', 'ই': 'B', 'ঈ': 'C', 'উ': 'D', 'ঊ': 'E', 'ঋ': 'F', 'এ': 'G', 'ঐ': 'H', 'ও': 'I', 'ঔ': 'J',
         'ক': 'k', 'খ': 'L', 'গ': 'g', 'ঘ': 'N', 'ঙ': 'U', 'চ': 'c', 'ছ': 'C', 'জ': 'j', 'ঝ': 'J', 'ঞ': 'I',

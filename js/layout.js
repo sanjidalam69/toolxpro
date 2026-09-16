@@ -7,6 +7,7 @@ const CATEGORIES_DATA = [
         isAi: true,
         tools: [
             { id: 'ai-humanizer', name: 'AI Text Humanizer', desc: 'Elevate AI drafts into polished human writing with natural nuance and effortless flow.', path: 'ai-humanizer.html' },
+            { id: 'speech-to-bangla', name: 'Bangla Voice Typing & Translator', desc: 'Speak in Bengali or English to convert speech into clean Bangla text with real-time translation.', path: 'speech-to-bangla.html' },
             { id: 'grammar-fixer', name: 'AI Grammar & Spell Fixer', desc: 'Check and fix spelling, grammar mistakes, punctuation, and refine writing tone instantly.', path: 'grammar-fixer.html' },
             { id: 'ai-resume', name: 'AI Resume Maker', desc: 'Build an outstanding professional resume using AI.', isFuture: true },
             { id: 'ai-cover-letter', name: 'AI Cover Letter', desc: 'Generate tailored cover letters for your job applications.', isFuture: true }

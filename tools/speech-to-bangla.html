@@ -1,0 +1,377 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bangla Voice Typing & Speech Translator - ToolX Pro</title>
+    <meta name="description" content="Free real-time Bangla Voice Typing and Speech-to-Bangla Translator. Speak in Bengali or English to convert voice to text, translate speech, and download documents instantly.">
+    <meta name="keywords" content="bangla voice typing, speech to bangla, voice to text bangla, english to bangla voice translator, bangla speech recognition, bengali typing, voice translator">
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <!-- Open Graph -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolxpro.live/tools/speech-to-bangla.html">
+    <meta property="og:title" content="Bangla Voice Typing & Speech Translator - ToolX Pro">
+    <meta property="og:description" content="Speak in Bengali or English to convert voice into clean Bangla text in real time with instant AI translation.">
+    <meta property="og:image" content="https://toolxpro.live/images/seu-logo.png">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
+
+    <style>
+        .voice-hub-container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        .voice-mode-selector {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+        .voice-mode-chip {
+            padding: 10px 18px;
+            border-radius: 30px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .voice-mode-chip:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-2px);
+        }
+        .voice-mode-chip.active {
+            background: var(--accent-gradient);
+            color: #ffffff;
+            border-color: transparent;
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
+        }
+        .mic-control-card {
+            text-align: center;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 2.5rem 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: var(--card-shadow);
+            position: relative;
+            overflow: hidden;
+        }
+        .mic-btn {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: var(--primary-gradient);
+            color: #ffffff;
+            border: none;
+            font-size: 2.5rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 8px 25px rgba(24, 24, 27, 0.25);
+            position: relative;
+            z-index: 2;
+        }
+        .mic-btn:hover {
+            transform: scale(1.08);
+            box-shadow: 0 12px 30px rgba(245, 158, 11, 0.4);
+        }
+        .mic-btn.recording {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            animation: pulse-ring 1.6s infinite cubic-bezier(0.4, 0, 0.6, 1);
+            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+        }
+        @keyframes pulse-ring {
+            0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(239, 68, 68, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        .mic-status-text {
+            margin-top: 1.25rem;
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+        .mic-hint {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 0.35rem;
+        }
+        .live-waveform {
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 4px;
+            height: 30px;
+            margin-top: 1rem;
+        }
+        .wave-bar {
+            width: 4px;
+            height: 10px;
+            background: var(--accent);
+            border-radius: 4px;
+            animation: wave 1s infinite ease-in-out alternate;
+        }
+        .wave-bar:nth-child(2) { animation-delay: 0.15s; }
+        .wave-bar:nth-child(3) { animation-delay: 0.3s; }
+        .wave-bar:nth-child(4) { animation-delay: 0.45s; }
+        .wave-bar:nth-child(5) { animation-delay: 0.6s; }
+        .wave-bar:nth-child(6) { animation-delay: 0.75s; }
+        @keyframes wave {
+            0% { height: 6px; }
+            100% { height: 26px; }
+        }
+        .voice-editor-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+        .voice-editor-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: var(--card-shadow);
+        }
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+        .editor-title {
+            font-size: 1rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .editor-stats {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+        .voice-textarea {
+            width: 100%;
+            min-height: 180px;
+            padding: 1rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-family: inherit;
+            font-size: 1.05rem;
+            line-height: 1.6;
+            resize: vertical;
+            outline: none;
+            transition: var(--transition);
+        }
+        .voice-textarea:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
+        }
+        .action-toolbar {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 1rem;
+        }
+        .action-btn {
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            transition: var(--transition);
+        }
+        .action-btn:hover {
+            background: var(--accent);
+            color: #ffffff;
+            border-color: var(--accent);
+        }
+        .action-btn.btn-clear:hover {
+            background: #ef4444;
+            border-color: #ef4444;
+            color: #ffffff;
+        }
+        .feature-benefits {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        .benefit-card {
+            padding: 1.25rem;
+            border-radius: 12px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+        }
+        .benefit-card h4 {
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+        .benefit-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <!-- Header Injected dynamically by layout.js -->
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <!-- Sidebar Injected dynamically by layout.js -->
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="voice-hub-container">
+                    
+                    <!-- Tool Header -->
+                    <div class="tool-header" style="text-align: center; margin-bottom: 2rem;">
+                        <h1 class="tool-title" style="font-size: 2.2rem; margin-bottom: 0.5rem;">🎙️ Bangla Voice Typing & Speech Translator</h1>
+                        <p class="tool-desc" style="font-size: 1.1rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto;">
+                            মুখে বাংলায় বা ইংরেজিতে কথা বলুন—সাথে সাথে রিয়েল-টাইমে নিখুঁত বাংলা টেক্সট ও অনুবাদ পেয়ে যান সম্পূর্ণ ফ্রিতে।
+                        </p>
+                    </div>
+
+                    <!-- Mode Selector -->
+                    <div class="voice-mode-selector">
+                        <button class="voice-mode-chip active" data-mode="bn-type">
+                            <span>🇧🇩</span> বাংলা ভয়েস টাইপিং (Speech to Bangla)
+                        </button>
+                        <button class="voice-mode-chip" data-mode="en-to-bn">
+                            <span>🗣️</span> ইংরেজি বলে বাংলায় অনুবাদ (English ➔ Bangla)
+                        </button>
+                        <button class="voice-mode-chip" data-mode="bn-to-en">
+                            <span>🔄</span> বাংলা বলে ইংরেজিতে অনুবাদ (Bangla ➔ English)
+                        </button>
+                    </div>
+
+                    <!-- Microphone Control Card -->
+                    <div class="mic-control-card">
+                        <button id="mic-toggle-btn" class="mic-btn" title="Click to Start Speaking">
+                            <span id="mic-icon">🎤</span>
+                        </button>
+
+                        <div id="mic-status" class="mic-status-text">মাইক চালু করতে ক্লিক করুন</div>
+                        <div id="mic-hint" class="mic-hint">মাইক্রোফোন অন করে স্পষ্ট উচ্চারণে কথা বলুন</div>
+
+                        <!-- Animated Waveform -->
+                        <div id="live-waveform" class="live-waveform">
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                            <div class="wave-bar"></div>
+                        </div>
+                    </div>
+
+                    <!-- Voice Editor Area -->
+                    <div class="voice-editor-grid">
+                        
+                        <!-- Primary Transcript Editor -->
+                        <div class="voice-editor-card">
+                            <div class="editor-header">
+                                <div class="editor-title">
+                                    <span id="primary-box-icon">✍️</span> 
+                                    <span id="primary-box-title">বাংলা টেক্সট (Speech Transcript)</span>
+                                </div>
+                                <div id="primary-stats" class="editor-stats">0 words | 0 chars</div>
+                            </div>
+                            
+                            <textarea id="primary-text" class="voice-textarea" placeholder="আপনি কথা বললে এখানে সরাসরি টাইপ হতে থাকবে... (অথবা কিবোর্ড দিয়ে এডিট করতে পারেন)"></textarea>
+
+                            <div class="action-toolbar">
+                                <button id="copy-primary-btn" class="action-btn">📋 Copy Text</button>
+                                <button id="listen-primary-btn" class="action-btn">🔊 Listen (ভয়েস শুনুন)</button>
+                                <button id="download-txt-btn" class="action-btn">💾 Download .txt</button>
+                                <button id="convert-bijoy-btn" class="action-btn" style="background: rgba(245, 158, 11, 0.1); border-color: var(--accent); color: var(--accent);">✍️ Convert to Bijoy 52</button>
+                                <button id="clear-all-btn" class="action-btn btn-clear" style="margin-left: auto;">🧹 Clear All</button>
+                            </div>
+                        </div>
+
+                        <!-- Translation Output Card (Shows when translation mode active) -->
+                        <div id="translation-card" class="voice-editor-card" style="display: none;">
+                            <div class="editor-header">
+                                <div class="editor-title">
+                                    <span>🌐</span> 
+                                    <span id="translation-box-title">অনূদিত ফলাফল (Translation Result)</span>
+                                </div>
+                                <div id="translation-stats" class="editor-stats">0 words</div>
+                            </div>
+                            
+                            <textarea id="translation-text" class="voice-textarea" placeholder="অনুবাদ এখানে দেখানো হবে..."></textarea>
+
+                            <div class="action-toolbar">
+                                <button id="copy-trans-btn" class="action-btn">📋 Copy Translation</button>
+                                <button id="listen-trans-btn" class="action-btn">🔊 Listen</button>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- SEO Educational & Guide Section -->
+                    <div class="feature-benefits">
+                        <h3 style="font-size: 1.4rem; color: var(--text-primary); text-align: center;">🔥 কেন ToolX Pro ভয়েস টাইপিং সেরা?</h3>
+                        <div class="benefits-grid">
+                            <div class="benefit-card">
+                                <h4>⚡ ১০০% দ্রুত ও নিখুঁত</h4>
+                                <p>গুগলের সর্বাধুনিক AI Speech Recognition ইঞ্জিনের সাহায্যে প্রতিটি বাংলা শব্দ পরিষ্কারভাবে টাইপ করে।</p>
+                            </div>
+                            <div class="benefit-card">
+                                <h4>🔒 কোনো সাইন-আপ বা লিমিট নেই</h4>
+                                <p>সম্পূর্ণ আনলিমিটেড এবং ফ্রি। কোনো রেজিস্ট্রেশন বা প্রিমিয়াম সাবস্ক্রিপশন ফি ছাড়াই ব্যবহার করা যায়।</p>
+                            </div>
+                            <div class="benefit-card">
+                                <h4>🌐 রিয়েল-টাইম অনুবাদ</h4>
+                                <p>ইংরেজি কথা শুনলেই তাৎক্ষণিকভাবে খাঁটি ও সাবলীল প্রমিত বাংলায় অনুবাদ করে দেয়।</p>
+                            </div>
+                            <div class="benefit-card">
+                                <h4>🎨 বিজয় ফন্ট সাপোর্ট</h4>
+                                <p>ভয়েসে টাইপ করা ইউনিকোড টেক্সটকে এক ক্লিকে SutonnyMJ ফন্টের বিজয় কোডে রূপান্তর করে ফটোশপে ব্যবহার করা যায়।</p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </main>
+        </div>
+        
+        <!-- Footer Injected dynamically by layout.js -->
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/speech-to-bangla.js"></script>
+</body>
+</html>
