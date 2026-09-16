@@ -1,46 +1,41 @@
-// ToolX Pro - AI Voice Typing & Speech Studio
-// Comprehensive Web Speech Engine, Real-time Dual Translation, TTS, Bijoy Converter & Audio Feedback
+// ToolX Pro - Bangla Voice Typing & Real-time Speech Translator
+// Minimalist, high-performance Web Speech API & Translation Engine
 
 document.addEventListener("DOMContentLoaded", () => {
     // ── DOM References ──
+    const tabButtons = document.querySelectorAll(".v-tab-btn");
+    const workspace = document.getElementById("voice-workspace");
+    
+    // Primary Editor
+    const primaryTitle = document.getElementById("primary-box-title");
+    const primaryStats = document.getElementById("primary-stats");
+    const primaryText = document.getElementById("primary-text");
+
+    // Translation Editor
+    const translationBox = document.getElementById("translation-box");
+    const translationTitle = document.getElementById("translation-box-title");
+    const translationStats = document.getElementById("translation-stats");
+    const translationText = document.getElementById("translation-text");
+
+    // Mic Controls
     const micToggleBtn = document.getElementById("mic-toggle-btn");
     const micIcon = document.getElementById("mic-icon");
-    const micStatus = document.getElementById("mic-status");
-    const micHint = document.getElementById("mic-hint");
-    const liveWaveform = document.getElementById("live-waveform");
+    const micBtnText = document.getElementById("mic-btn-text");
+    const micStatusText = document.getElementById("mic-status-text");
     const recordingTimer = document.getElementById("recording-timer");
     const timerCount = document.getElementById("timer-count");
-    const modeChips = document.querySelectorAll(".voice-chip");
-    const workspaceGrid = document.getElementById("workspace-grid");
 
-    // Primary Transcript Pane
-    const primaryIcon = document.getElementById("primary-pane-icon");
-    const primaryTitle = document.getElementById("primary-pane-title");
-    const primaryText = document.getElementById("primary-text");
-    const primaryStats = document.getElementById("primary-stats");
-    const copyPrimaryBtn = document.getElementById("copy-primary-btn");
-    const listenPrimaryBtn = document.getElementById("listen-primary-btn");
-    const downloadTxtBtn = document.getElementById("download-txt-btn");
+    // Action Buttons
+    const copyBtn = document.getElementById("copy-btn");
+    const listenBtn = document.getElementById("listen-btn");
+    const downloadBtn = document.getElementById("download-btn");
     const convertBijoyBtn = document.getElementById("convert-bijoy-btn");
-    const clearAllBtn = document.getElementById("clear-all-btn");
-
-    // Translation Pane
-    const translationPane = document.getElementById("translation-pane");
-    const translationTitle = document.getElementById("translation-pane-title");
-    const translationText = document.getElementById("translation-text");
-    const translationStats = document.getElementById("translation-stats");
-    const copyTransBtn = document.getElementById("copy-trans-btn");
-    const listenTransBtn = document.getElementById("listen-trans-btn");
-
-    // Font Controls & Quick Symbols
-    const fontIncBtn = document.getElementById("font-inc-btn");
-    const fontDecBtn = document.getElementById("font-dec-btn");
-    const puncButtons = document.querySelectorAll(".punc-chip[data-char]");
+    const clearBtn = document.getElementById("clear-btn");
 
     // Toast
-    const toast = document.getElementById("studio-toast");
+    const toast = document.getElementById("clean-toast");
     const toastIcon = document.getElementById("toast-icon");
-    const toastMsg = document.getElementById("toast-msg");
+    const toastText = document.getElementById("toast-text");
 
     // ── State Variables ──
     let currentMode = "bn-type"; // "bn-type" | "en-to-bn" | "bn-to-en"
@@ -50,50 +45,18 @@ document.addEventListener("DOMContentLoaded", () => {
     let translationTimeout = null;
     let timerInterval = null;
     let elapsedSeconds = 0;
-    let currentFontSize = 1.05; // rem
 
-    // ── Web Audio Chime Synthesizer ──
-    function playChime(type) {
-        try {
-            const AudioCtx = window.AudioContext || window.webkitAudioContext;
-            if (!AudioCtx) return;
-            const ctx = new AudioCtx();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-
-            if (type === "start") {
-                osc.frequency.setValueAtTime(520, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.12);
-                gain.gain.setValueAtTime(0.1, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.18);
-            } else if (type === "stop") {
-                osc.frequency.setValueAtTime(780, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.12);
-                gain.gain.setValueAtTime(0.1, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.18);
-            }
-        } catch (e) {
-            // Audio context gesture restriction or not supported
-        }
-    }
-
-    // ── Toast Notification System ──
+    // ── Toast Helper ──
     let toastTimeout = null;
-    function showToast(message, icon = "✅") {
+    function showToast(msg, icon = "✅") {
         if (!toast) return;
-        toastMsg.textContent = message;
+        toastText.textContent = msg;
         toastIcon.textContent = icon;
         toast.classList.add("show");
         clearTimeout(toastTimeout);
         toastTimeout = setTimeout(() => {
             toast.classList.remove("show");
-        }, 2200);
+        }, 2000);
     }
 
     // ── Check Browser Speech Support ──
@@ -101,14 +64,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const isSpeechSupported = !!SpeechRecognition;
 
     if (!isSpeechSupported) {
-        micStatus.textContent = "⚠️ ব্রাউজারে ভয়েস সাপোর্ট নেই";
-        micHint.textContent = "ভয়েস টাইপিং ব্যবহারের জন্য Chrome, Brave বা Edge ব্রাউজার ব্যবহার করুন।";
+        micStatusText.textContent = "⚠️ ব্রাউজারে ভয়েস সাপোর্ট নেই (Chrome/Edge ব্যবহার করুন)";
         micToggleBtn.disabled = true;
         micToggleBtn.style.opacity = "0.5";
         micToggleBtn.style.cursor = "not-allowed";
     }
 
-    // ── Initialize Speech Recognition Engine ──
+    // ── Speech Engine ──
     function initSpeechEngine() {
         if (!isSpeechSupported) return;
 
@@ -117,7 +79,6 @@ document.addEventListener("DOMContentLoaded", () => {
         recognition.interimResults = true;
         recognition.maxAlternatives = 1;
 
-        // Language setting
         if (currentMode === "en-to-bn") {
             recognition.lang = "en-US";
         } else {
@@ -128,17 +89,14 @@ document.addEventListener("DOMContentLoaded", () => {
             isRecording = true;
             micToggleBtn.classList.add("recording");
             micIcon.textContent = "⏹️";
-            liveWaveform.style.display = "flex";
+            micBtnText.textContent = "Stop Speaking";
             recordingTimer.style.display = "inline-flex";
             startTimer();
-            playChime("start");
 
             if (currentMode === "en-to-bn") {
-                micStatus.textContent = "🎙️ Listening in English... Speak clearly";
-                micHint.textContent = "কথা শেষ হলে স্টপ করতে লাল বাটনে চাপুন";
+                micStatusText.textContent = "Listening in English...";
             } else {
-                micStatus.textContent = "🎙️ বাংলায় শুনছি... পরিষ্কার করে কথা বলুন";
-                micHint.textContent = "কথা বলা শেষ হলে লাল বাটনে ক্লিক করে থামান";
+                micStatusText.textContent = "বাংলায় শুনছি... কথা বলুন";
             }
         };
 
@@ -157,10 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
             primaryText.value = fullText;
             updateStats();
 
-            // Auto-scroll textarea
             primaryText.scrollTop = primaryText.scrollHeight;
 
-            // Trigger real-time translation if enabled
             if (currentMode !== "bn-type" && finalTranscript.trim()) {
                 clearTimeout(translationTimeout);
                 translationTimeout = setTimeout(() => {
@@ -170,13 +126,12 @@ document.addEventListener("DOMContentLoaded", () => {
         };
 
         recognition.onerror = (event) => {
-            console.warn("Speech recognition warning/error:", event.error);
+            console.warn("Speech recognition warning:", event.error);
             if (event.error === "not-allowed") {
-                micStatus.textContent = "❌ মাইক্রোফোনের পারমিশন নেই";
-                micHint.textContent = "ব্রাউজারের অ্যাড্রেস বারের লক আইকনে ক্লিক করে Microphone Allow করুন।";
+                micStatusText.textContent = "❌ মাইক্রোফোনের অনুমতি দিন (Microphone Blocked)";
                 stopRecording();
             } else if (event.error === "no-speech") {
-                micHint.textContent = "কোনো আওয়াজ পাওয়া যায়নি, স্পষ্ট করে কথা বলুন...";
+                micStatusText.textContent = "কথা স্পষ্ট করে বলুন...";
             }
         };
 
@@ -216,7 +171,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (timerCount) timerCount.textContent = `${mins}:${secs}`;
     }
 
-    // ── Start / Stop Recording ──
+    // ── Start / Stop Voice ──
     function startRecording() {
         if (!isSpeechSupported) return;
         finalTranscript = primaryText.value;
@@ -235,13 +190,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 recognition.stop();
             } catch (e) {}
         }
-        playChime("stop");
         stopTimer();
         micToggleBtn.classList.remove("recording");
         micIcon.textContent = "🎤";
-        liveWaveform.style.display = "none";
-        micStatus.textContent = "কথা বলতে মাইকে ক্লিক করুন";
-        micHint.textContent = "মাইক্রোফোন অন করে পরিষ্কার কণ্ঠে কথা বলুন";
+        micBtnText.textContent = "Start Speaking";
+        micStatusText.textContent = "মাইক বন্ধ আছে";
     }
 
     micToggleBtn.addEventListener("click", () => {
@@ -252,47 +205,42 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-    // ── Segmented Mode Switching ──
-    modeChips.forEach(chip => {
-        chip.addEventListener("click", () => {
-            modeChips.forEach(c => c.classList.remove("active"));
-            chip.classList.add("active");
-            currentMode = chip.getAttribute("data-mode");
+    // ── Tab Switcher ──
+    tabButtons.forEach(btn => {
+        btn.addEventListener("click", () => {
+            tabButtons.forEach(b => b.classList.remove("active"));
+            btn.classList.add("active");
+            currentMode = btn.getAttribute("data-mode");
 
-            if (isRecording) {
-                stopRecording();
-            }
+            if (isRecording) stopRecording();
 
             if (currentMode === "bn-type") {
-                primaryIcon.textContent = "✍️";
-                primaryTitle.textContent = "বাংলা টেক্সট (Speech Transcript)";
-                primaryText.placeholder = "আপনি কথা বললে এখানে সরাসরি টাইপ হতে থাকবে... কিবোর্ড দিয়ে এডিট করতে পারেন।";
-                translationPane.style.display = "none";
-                workspaceGrid.classList.remove("dual-view");
+                primaryTitle.textContent = "✍️ বাংলা টেক্সট (Speech Transcript)";
+                primaryText.placeholder = "এখানে সরাসরি কথা বলে টাইপ করতে নিচে 'Start Speaking' বাটনে চাপুন...";
+                translationBox.style.display = "none";
+                workspace.classList.remove("dual-mode");
             } else if (currentMode === "en-to-bn") {
-                primaryIcon.textContent = "🗣️";
-                primaryTitle.textContent = "English Speech Input";
+                primaryTitle.textContent = "🗣️ English Speech Input";
                 primaryText.placeholder = "Speak in English... words will appear here instantly.";
-                translationTitle.textContent = "অনূদিত বাংলা ফলাফল (Bangla Translation)";
+                translationTitle.textContent = "🌐 অনূদিত বাংলা টেক্সট (Bangla Translation)";
                 translationText.placeholder = "ইংরেজি কথার বাংলা অনুবাদ এখানে দেখতে পাবেন...";
-                translationPane.style.display = "flex";
-                workspaceGrid.classList.add("dual-view");
+                translationBox.style.display = "flex";
+                workspace.classList.add("dual-mode");
             } else if (currentMode === "bn-to-en") {
-                primaryIcon.textContent = "🇧🇩";
-                primaryTitle.textContent = "মুখে বলা বাংলা টেক্সট (Bangla Speech)";
+                primaryTitle.textContent = "🇧🇩 মুখে বলা বাংলা টেক্সট (Bangla Speech)";
                 primaryText.placeholder = "বাংলায় কথা বলুন, এখানে টাইপ হতে থাকবে...";
-                translationTitle.textContent = "English Translation Output";
+                translationTitle.textContent = "🌐 English Translation Output";
                 translationText.placeholder = "Real-time English translation will appear here...";
-                translationPane.style.display = "flex";
-                workspaceGrid.classList.add("dual-view");
+                translationBox.style.display = "flex";
+                workspace.classList.add("dual-mode");
             }
         });
     });
 
-    // ── High-Speed Translation API ──
+    // ── Fast Translation API ──
     async function handleAutoTranslation(text) {
         if (!text || !text.trim()) return;
-        translationText.value = "অনুবাদ করা হচ্ছে... (Translating...)";
+        translationText.value = "অনুবাদ করা হচ্ছে...";
 
         const sourceLang = (currentMode === "en-to-bn") ? "en" : "bn";
         const targetLang = (currentMode === "en-to-bn") ? "bn" : "en";
@@ -313,13 +261,13 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
         } catch (e) {
-            console.warn("Translation API notice:", e);
+            console.warn("Translation API issue:", e);
         }
 
-        translationText.value = "অনুবাদ সার্ভার সাময়িকভাবে ব্যস্ত। একটু পর চেষ্টা করুন।";
+        translationText.value = "অনুবাদ সার্ভার সাময়িকভাবে ব্যস্ত।";
     }
 
-    // ── Stats Calculation ──
+    // ── Stats ──
     function updateStats() {
         const text = primaryText.value;
         const chars = text.length;
@@ -336,111 +284,52 @@ document.addEventListener("DOMContentLoaded", () => {
     primaryText.addEventListener("input", updateStats);
     translationText.addEventListener("input", updateTranslationStats);
 
-    // ── Punctuation Quick Buttons ──
-    puncButtons.forEach(btn => {
-        btn.addEventListener("click", () => {
-            const char = btn.getAttribute("data-char");
-            if (!char) return;
+    // ── 1-Click Copy ──
+    copyBtn.addEventListener("click", () => {
+        const activeText = (currentMode !== "bn-type" && translationText.value.trim()) 
+            ? translationText.value 
+            : primaryText.value;
 
-            const start = primaryText.selectionStart;
-            const end = primaryText.selectionEnd;
-            const currentVal = primaryText.value;
-
-            const insertVal = (char === "\\n") ? "\n" : char;
-            primaryText.value = currentVal.substring(0, start) + insertVal + currentVal.substring(end);
-            primaryText.selectionStart = primaryText.selectionEnd = start + insertVal.length;
-            primaryText.focus();
-            
-            finalTranscript = primaryText.value;
-            updateStats();
-        });
-    });
-
-    // ── Font Size Controls ──
-    if (fontIncBtn) {
-        fontIncBtn.addEventListener("click", () => {
-            if (currentFontSize < 1.6) {
-                currentFontSize += 0.1;
-                primaryText.style.fontSize = `${currentFontSize}rem`;
-                translationText.style.fontSize = `${currentFontSize}rem`;
-            }
-        });
-    }
-
-    if (fontDecBtn) {
-        fontDecBtn.addEventListener("click", () => {
-            if (currentFontSize > 0.85) {
-                currentFontSize -= 0.1;
-                primaryText.style.fontSize = `${currentFontSize}rem`;
-                translationText.style.fontSize = `${currentFontSize}rem`;
-            }
-        });
-    }
-
-    // ── Copy Actions ──
-    copyPrimaryBtn.addEventListener("click", () => {
-        if (!primaryText.value.trim()) {
+        if (!activeText.trim()) {
             showToast("কপি করার মতো টেক্সট নেই!", "⚠️");
             return;
         }
-        navigator.clipboard.writeText(primaryText.value).then(() => {
-            showToast("টেক্সট কপি করা হয়েছে!", "📋");
+
+        navigator.clipboard.writeText(activeText).then(() => {
+            showToast("টেক্সট কপি সম্পন্ন!", "📋");
         });
     });
 
-    if (copyTransBtn) {
-        copyTransBtn.addEventListener("click", () => {
-            if (!translationText.value.trim()) {
-                showToast("অনুবাদ ফলাফল খালি!", "⚠️");
-                return;
-            }
-            navigator.clipboard.writeText(translationText.value).then(() => {
-                showToast("অনুবাদ কপি করা হয়েছে!", "🌐");
-            });
-        });
-    }
+    // ── Text-to-Speech (Listen) ──
+    listenBtn.addEventListener("click", () => {
+        const activeText = (currentMode !== "bn-type" && translationText.value.trim())
+            ? translationText.value.trim()
+            : primaryText.value.trim();
 
-    // ── Text-to-Speech (Audio Voice Readout) ──
-    function speakText(text, lang) {
-        if (!('speechSynthesis' in window)) {
-            showToast("ব্রাউজারে ভয়েস সিন্থেসিস সাপোর্ট নেই", "⚠️");
+        if (!activeText) {
+            showToast("শুনার মতো কোনো টেক্সট নেই!", "⚠️");
             return;
         }
+
+        if (!('speechSynthesis' in window)) {
+            showToast("TTS ব্রাউজারে সাপোর্ট নেই", "⚠️");
+            return;
+        }
+
+        const lang = (currentMode === "bn-to-en") ? "en-US" : "bn-BD";
         window.speechSynthesis.cancel();
-        const utterance = new SpeechSynthesisUtterance(text);
+        const utterance = new SpeechSynthesisUtterance(activeText);
         utterance.lang = lang;
         utterance.rate = 0.95;
         window.speechSynthesis.speak(utterance);
-        showToast("ভয়েস অডিও বাজছে...", "🔊");
-    }
-
-    listenPrimaryBtn.addEventListener("click", () => {
-        const text = primaryText.value.trim();
-        if (!text) {
-            showToast("আগে কিছু কথা বা টেক্সট লিখুন", "⚠️");
-            return;
-        }
-        const lang = (currentMode === "en-to-bn") ? "en-US" : "bn-BD";
-        speakText(text, lang);
+        showToast("অডিও চালু হয়েছে...", "🔊");
     });
 
-    if (listenTransBtn) {
-        listenTransBtn.addEventListener("click", () => {
-            const text = translationText.value.trim();
-            if (!text) {
-                showToast("কোনো অনূদিত টেক্সট নেই", "⚠️");
-                return;
-            }
-            const lang = (currentMode === "en-to-bn") ? "bn-BD" : "en-US";
-            speakText(text, lang);
-        });
-    }
-
-    // ── Export as .txt File ──
-    downloadTxtBtn.addEventListener("click", () => {
+    // ── Download .txt ──
+    downloadBtn.addEventListener("click", () => {
         const text = primaryText.value;
         if (!text.trim()) {
-            showToast("ডাউনলোড করার মতো টেক্সট নেই", "⚠️");
+            showToast("ডাউনলোড করার মতো টেক্সট নেই!", "⚠️");
             return;
         }
         const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
@@ -452,31 +341,31 @@ document.addEventListener("DOMContentLoaded", () => {
         a.click();
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
-        showToast("ফাইল ডাউনলোড সম্পন্ন হয়েছে!", "💾");
+        showToast("ফাইল ডাউনলোড হয়েছে!", "💾");
     });
 
-    // ── 1-Click Jump to Bijoy 52 Converter ──
+    // ── Convert to Bijoy 52 ──
     convertBijoyBtn.addEventListener("click", () => {
         const text = primaryText.value;
         if (!text.trim()) {
-            showToast("আগে কিছু কথা বলে টাইপ করুন", "⚠️");
+            showToast("আগে কথা বলে বা লিখে টেক্সট তৈরি করুন!", "⚠️");
             return;
         }
         localStorage.setItem("toolx_pending_unicode", text);
-        showToast("বিজয় কনভার্টারে নিয়ে যাওয়া হচ্ছে...", "✍️");
+        showToast("বিজয় কনভার্টারে যাচ্ছি...", "✍️");
         setTimeout(() => {
             window.location.href = "bangla-unicode.html";
-        }, 300);
+        }, 250);
     });
 
     // ── Clear All ──
-    clearAllBtn.addEventListener("click", () => {
+    clearBtn.addEventListener("click", () => {
         if (isRecording) stopRecording();
         primaryText.value = "";
         translationText.value = "";
         finalTranscript = "";
         updateStats();
         if (translationStats) translationStats.textContent = "0 words";
-        showToast("সব টেক্সট মুছে ফেলা হয়েছে", "🧹");
+        showToast("সব লেখা মুছে ফেলা হয়েছে", "🧹");
     });
 });
