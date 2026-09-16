@@ -431,7 +431,7 @@ function initNavInteractions() {
                         LinkedIn: Sanjid Alam
                     </a>
                 </div>
-                <p style="font-size:0.85rem; color:var(--text-secondary);">Direct Email: support@ToolXPro.co</p>
+                <p style="font-size:0.85rem; color:var(--text-secondary);">Direct Email: ai.sanjid.alam@gmail.com</p>
             `
         },
         privacy: {
