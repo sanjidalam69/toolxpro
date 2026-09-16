@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bangla Voice Typing & Speech Translator - ToolX Pro</title>
-    <meta name="description" content="Free AI-powered real-time Bangla Voice Typing and Speech-to-Bangla Translator. Speak in Bengali or English to convert voice to text, translate instantly, and convert to Bijoy 52.">
+    <meta name="description" content="Free AI-powered real-time Bangla Voice Typing and Speech-to-Bangla Translator. Speak in Bengali or English to convert speech to clean Bangla text, translate instantly, and convert to Bijoy 52.">
     <meta name="keywords" content="bangla voice typing, speech to bangla, voice to text bangla, english to bangla voice translator, bangla speech recognition, bengali typing, voice translator, bijoy 52 converter">
     <link rel="stylesheet" href="../css/style.css">
     
@@ -19,574 +19,573 @@
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
 
     <style>
-        /* ── Voice Hub Master Container ── */
-        .speech-studio-wrapper {
-            max-width: 1060px;
+        .voice-wrapper {
+            position: relative;
+            max-width: 1080px;
             margin: 0 auto;
-            padding-bottom: 3rem;
         }
 
-        /* ── Hero Header ── */
-        .studio-hero {
-            text-align: center;
-            margin-bottom: 2rem;
-            position: relative;
+        .voice-ambient-glow {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
+            height: 220px;
+            background: radial-gradient(circle, rgba(245, 158, 11, 0.14) 0%, rgba(217, 119, 6, 0.08) 45%, transparent 70%);
+            filter: blur(50px);
+            z-index: 0;
+            pointer-events: none;
+            animation: voicePulse 8s ease-in-out infinite alternate;
         }
-        .studio-badge {
+
+        @keyframes voicePulse {
+            0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.06); }
+        }
+
+        .voice-main-card {
+            position: relative;
+            z-index: 1;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px 28px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .voice-main-card {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(245, 158, 11, 0.15);
+        }
+
+        .voice-hero-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .voice-status-pill {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            padding: 6px 16px;
-            border-radius: 999px;
-            background: rgba(245, 158, 11, 0.12);
-            border: 1px solid rgba(245, 158, 11, 0.35);
+            padding: 5px 14px;
+            border-radius: 9999px;
+            background: rgba(245, 158, 11, 0.09);
+            border: 1px solid rgba(245, 158, 11, 0.3);
             color: var(--accent);
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.1);
+            letter-spacing: 0.3px;
+            margin-bottom: 10px;
         }
-        .studio-badge .badge-dot {
+
+        .pulse-dot-amber {
             width: 8px;
             height: 8px;
-            background: var(--accent);
             border-radius: 50%;
-            display: inline-block;
-            box-shadow: 0 0 10px var(--accent);
-            animation: pulse-dot 1.8s infinite ease-in-out;
+            background: #f59e0b;
+            box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+            animation: pulseAmber 2s infinite;
         }
-        @keyframes pulse-dot {
-            0%, 100% { transform: scale(0.9); opacity: 0.8; }
-            50% { transform: scale(1.4); opacity: 1; }
+
+        @keyframes pulseAmber {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(245, 158, 11, 0); }
         }
-        .studio-hero h1 {
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
+
+        .voice-title {
+            font-family: var(--font-header);
+            font-size: 2.1rem;
             font-weight: 800;
             background: linear-gradient(135deg, var(--text-primary) 40%, var(--accent) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 0.6rem;
-            line-height: 1.25;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
         }
-        .studio-hero p {
+
+        .voice-subtitle {
+            font-size: 0.95rem;
             color: var(--text-secondary);
-            font-size: 1.05rem;
             max-width: 680px;
             margin: 0 auto;
-            line-height: 1.6;
+            line-height: 1.5;
         }
 
-        /* ── Segmented Mode Switcher Bar ── */
-        .mode-segmented-bar {
-            display: flex;
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 6px;
-            gap: 6px;
-            margin-bottom: 2rem;
-            box-shadow: var(--card-shadow);
-            backdrop-filter: var(--glass-blur);
+        /* Mode Selector Chips */
+        .modes-bar-wrapper {
+            margin-bottom: 18px;
         }
-        .mode-tab-btn {
-            flex: 1;
-            padding: 12px 16px;
-            border-radius: 12px;
-            border: 1px solid transparent;
-            background: transparent;
-            color: var(--text-secondary);
-            font-weight: 600;
-            font-size: 0.95rem;
-            cursor: pointer;
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+
+        .modes-chips-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            text-align: center;
-            white-space: nowrap;
         }
-        .mode-tab-btn:hover {
-            color: var(--text-primary);
-            background: rgba(245, 158, 11, 0.06);
-        }
-        .mode-tab-btn.active {
-            background: var(--accent-gradient);
-            color: #ffffff;
-            font-weight: 700;
-            box-shadow: 0 4px 20px rgba(245, 158, 11, 0.35);
-            border-color: rgba(255, 255, 255, 0.2);
-            transform: translateY(-1px);
-        }
+
         @media (max-width: 768px) {
-            .mode-segmented-bar {
-                flex-direction: column;
-            }
-            .mode-tab-btn {
-                white-space: normal;
-                padding: 10px 14px;
+            .modes-chips-grid {
+                grid-template-columns: 1fr;
             }
         }
 
-        /* ── Floating Studio Microphone Control Card ── */
-        .studio-mic-card {
-            background: var(--card-bg);
+        .voice-chip {
+            background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 2.2rem 1.5rem;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            box-shadow: var(--card-shadow);
-            backdrop-filter: var(--glass-blur);
-            margin-bottom: 2rem;
-            transition: var(--transition);
-        }
-        .studio-mic-card::before {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 280px;
-            height: 280px;
-            background: radial-gradient(circle, rgba(245, 158, 11, 0.12) 0%, transparent 70%);
-            z-index: 0;
-            pointer-events: none;
-        }
-        .mic-button-wrapper {
-            position: relative;
-            display: inline-block;
-            z-index: 2;
-        }
-        .mic-btn-main {
-            width: 100px;
-            height: 100px;
-            border-radius: 50%;
-            border: none;
-            background: linear-gradient(135deg, #27272a, #09090b);
-            color: #f59e0b;
-            font-size: 2.5rem;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3), 0 0 0 6px rgba(245, 158, 11, 0.15);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            outline: none;
-        }
-        [data-theme="light"] .mic-btn-main {
-            background: linear-gradient(135deg, #18181b, #3f3f46);
-            color: #ffffff;
-            box-shadow: 0 10px 30px rgba(24, 24, 27, 0.25), 0 0 0 6px rgba(217, 119, 6, 0.15);
-        }
-        .mic-btn-main:hover {
-            transform: scale(1.08);
-            box-shadow: 0 15px 35px rgba(245, 158, 11, 0.35), 0 0 0 10px rgba(245, 158, 11, 0.25);
-            color: #ffffff;
-        }
-        .mic-btn-main.recording {
-            background: linear-gradient(135deg, #ef4444, #b91c1c) !important;
-            color: #ffffff !important;
-            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
-            animation: pulse-record-ring 1.5s infinite cubic-bezier(0.4, 0, 0.6, 1);
-        }
-        @keyframes pulse-record-ring {
-            0% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7), 0 0 0 10px rgba(239, 68, 68, 0.2);
-            }
-            70% {
-                transform: scale(1.04);
-                box-shadow: 0 0 0 24px rgba(239, 68, 68, 0), 0 0 0 35px rgba(239, 68, 68, 0);
-            }
-            100% {
-                transform: scale(1);
-                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0), 0 0 0 0 rgba(239, 68, 68, 0);
-            }
-        }
-
-        .studio-status-box {
-            position: relative;
-            z-index: 2;
-            margin-top: 1.25rem;
-        }
-        .status-title {
-            font-size: 1.25rem;
-            font-weight: 700;
-            color: var(--text-primary);
+            border-radius: 12px;
+            padding: 10px 14px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-        }
-        .status-desc {
+            font-size: 0.88rem;
+            font-weight: 600;
             color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-top: 0.3rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            user-select: none;
+            outline: none;
         }
-        .recording-timer {
+
+        .voice-chip:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        .voice-chip.active {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.12), rgba(217, 119, 6, 0.08));
+            border-color: var(--accent);
+            color: var(--accent);
+            font-weight: 700;
+            box-shadow: 0 0 0 1px var(--accent);
+        }
+
+        /* Central Sleek Mic Control Strip */
+        .mic-control-strip {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 12px 18px;
+            margin-bottom: 18px;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .mic-trigger-group {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .mic-btn-circle {
+            width: 52px;
+            height: 52px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            border: none;
+            color: #ffffff;
+            font-size: 1.5rem;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            font-size: 0.9rem;
-            font-weight: 700;
-            padding: 4px 12px;
-            border-radius: 20px;
-            background: rgba(239, 68, 68, 0.15);
-            color: #ef4444;
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            margin-top: 0.75rem;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.35);
+            outline: none;
+            flex-shrink: 0;
         }
 
-        /* ── Audio Equalizer Waveform ── */
-        .waveform-container {
+        .mic-btn-circle:hover {
+            transform: scale(1.08);
+            box-shadow: 0 6px 20px rgba(245, 158, 11, 0.5);
+        }
+
+        .mic-btn-circle.recording {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+            animation: micPulseRing 1.5s infinite;
+        }
+
+        @keyframes micPulseRing {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1.04); box-shadow: 0 0 0 14px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+
+        .mic-info-block {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .mic-status-line {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mic-hint-line {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .mic-right-tools {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-left: auto;
+        }
+
+        .timer-badge {
             display: none;
             align-items: center;
-            justify-content: center;
-            gap: 5px;
-            height: 36px;
-            margin-top: 1.25rem;
-        }
-        .wave-bar {
-            width: 5px;
-            height: 8px;
-            background: var(--accent);
-            border-radius: 6px;
-            transition: height 0.1s ease;
-            animation: wave-anim 0.9s infinite ease-in-out alternate;
-        }
-        .wave-bar:nth-child(1) { animation-delay: 0.0s; height: 12px; }
-        .wave-bar:nth-child(2) { animation-delay: 0.2s; height: 24px; }
-        .wave-bar:nth-child(3) { animation-delay: 0.4s; height: 32px; }
-        .wave-bar:nth-child(4) { animation-delay: 0.1s; height: 20px; }
-        .wave-bar:nth-child(5) { animation-delay: 0.5s; height: 36px; }
-        .wave-bar:nth-child(6) { animation-delay: 0.3s; height: 26px; }
-        .wave-bar:nth-child(7) { animation-delay: 0.6s; height: 16px; }
-        .wave-bar:nth-child(8) { animation-delay: 0.15s; height: 10px; }
-        @keyframes wave-anim {
-            0% { height: 6px; }
-            100% { height: 34px; }
+            gap: 6px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.25);
+            padding: 4px 10px;
+            border-radius: 20px;
         }
 
-        /* ── Studio Editors Layout (Responsive Side-by-Side Grid) ── */
+        .wave-indicator {
+            display: none;
+            align-items: center;
+            gap: 3px;
+            height: 20px;
+        }
+
+        .mini-wave {
+            width: 3px;
+            height: 6px;
+            background: var(--accent);
+            border-radius: 3px;
+            animation: miniWaveAnim 0.8s infinite ease-in-out alternate;
+        }
+        .mini-wave:nth-child(2) { animation-delay: 0.15s; height: 14px; }
+        .mini-wave:nth-child(3) { animation-delay: 0.3s; height: 18px; }
+        .mini-wave:nth-child(4) { animation-delay: 0.45s; height: 10px; }
+        .mini-wave:nth-child(5) { animation-delay: 0.6s; height: 16px; }
+
+        @keyframes miniWaveAnim {
+            0% { height: 4px; }
+            100% { height: 20px; }
+        }
+
+        /* Workspace Grid (Single & Dual View) */
         .studio-workspace-grid {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 1.5rem;
-            margin-bottom: 2rem;
-            transition: all 0.3s ease;
+            gap: 16px;
+            margin-bottom: 16px;
         }
+
         .studio-workspace-grid.dual-view {
             grid-template-columns: 1fr 1fr;
         }
-        @media (max-width: 900px) {
+
+        @media (max-width: 850px) {
             .studio-workspace-grid.dual-view {
                 grid-template-columns: 1fr;
             }
         }
 
-        .editor-pane-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            box-shadow: var(--card-shadow);
-            backdrop-filter: var(--glass-blur);
+        .studio-pane {
             display: flex;
             flex-direction: column;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
             overflow: hidden;
-            transition: var(--transition);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+            transition: all 0.25s ease;
+            min-height: 320px;
         }
-        .editor-pane-card:hover {
-            border-color: rgba(245, 158, 11, 0.4);
+
+        .studio-pane:focus-within {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.12);
         }
-        .pane-top-header {
-            padding: 1rem 1.25rem;
-            border-bottom: 1px solid var(--border-color);
-            background: rgba(0, 0, 0, 0.02);
+
+        .pane-header {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 10px;
+            padding: 10px 14px;
+            background: rgba(0, 0, 0, 0.02);
+            border-bottom: 1px solid var(--border-color);
             flex-wrap: wrap;
-        }
-        [data-theme="dark"] .pane-top-header {
-            background: rgba(255, 255, 255, 0.02);
-        }
-        .pane-label-group {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .pane-tag-icon {
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
-            background: rgba(245, 158, 11, 0.12);
-            color: var(--accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.15rem;
-        }
-        .pane-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-        .pane-stats-badge {
-            font-size: 0.8rem;
-            font-weight: 600;
-            color: var(--text-secondary);
-            background: var(--bg-primary);
-            padding: 4px 10px;
-            border-radius: 20px;
-            border: 1px solid var(--border-color);
+            gap: 6px;
         }
 
-        /* ── Quick Punctuation Bar ── */
-        .punctuation-strip {
+        [data-theme="dark"] .pane-header {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .pane-title {
+            font-size: 0.86rem;
+            font-weight: 700;
+            color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 6px;
-            padding: 8px 1.25rem;
+        }
+
+        .pane-actions {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-pane-action {
             background: var(--bg-primary);
-            border-bottom: 1px solid var(--border-color);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: var(--transition);
+        }
+
+        .btn-pane-action:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            background: rgba(245, 158, 11, 0.08);
+        }
+
+        .pane-body {
+            position: relative;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .voice-textarea {
+            flex: 1;
+            width: 100%;
+            min-height: 220px;
+            padding: 14px 16px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: transparent;
+            border: none;
+            outline: none;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .voice-textarea::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        /* Punctuation Bar */
+        .quick-punc-strip {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 6px 14px;
+            background: var(--bg-primary);
+            border-top: 1px solid var(--border-color);
             overflow-x: auto;
         }
+
         .punc-label {
-            font-size: 0.78rem;
+            font-size: 0.75rem;
             font-weight: 700;
-            text-transform: uppercase;
             color: var(--text-secondary);
             margin-right: 4px;
             white-space: nowrap;
         }
-        .punc-btn {
-            background: var(--card-bg);
+
+        .punc-chip {
+            background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
-            padding: 4px 10px;
-            border-radius: 8px;
-            font-size: 0.85rem;
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-size: 0.8rem;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.2s ease;
+            transition: all 0.15s ease;
             white-space: nowrap;
         }
-        .punc-btn:hover {
+
+        .punc-chip:hover {
             border-color: var(--accent);
             color: var(--accent);
-            background: rgba(245, 158, 11, 0.1);
         }
 
-        /* ── Textarea Body ── */
-        .editor-textarea-wrap {
-            padding: 1.25rem;
-            flex: 1;
+        /* Pane Footer HUD & Actions */
+        .pane-footer-hud {
             display: flex;
-            flex-direction: column;
-            min-height: 220px;
-        }
-        .studio-textarea {
-            width: 100%;
-            height: 100%;
-            min-height: 180px;
-            background: transparent;
-            border: none;
-            outline: none;
-            color: var(--text-primary);
-            font-family: inherit;
-            font-size: 1.12rem;
-            line-height: 1.7;
-            resize: vertical;
-        }
-        .studio-textarea::placeholder {
-            color: var(--text-secondary);
-            opacity: 0.6;
-            font-size: 1.05rem;
-        }
-
-        /* ── Bottom Action Toolbar ── */
-        .pane-bottom-bar {
-            padding: 1rem 1.25rem;
-            border-top: 1px solid var(--border-color);
-            background: rgba(0, 0, 0, 0.02);
-            display: flex;
-            flex-wrap: wrap;
             align-items: center;
+            justify-content: space-between;
+            padding: 10px 14px;
+            background: rgba(0, 0, 0, 0.02);
+            border-top: 1px solid var(--border-color);
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            flex-wrap: wrap;
             gap: 8px;
         }
-        [data-theme="dark"] .pane-bottom-bar {
+
+        [data-theme="dark"] .pane-footer-hud {
             background: rgba(255, 255, 255, 0.02);
         }
-        .tool-action-btn {
-            padding: 8px 14px;
-            border-radius: 10px;
+
+        .footer-action-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tool-btn {
+            padding: 6px 12px;
+            border-radius: 8px;
             border: 1px solid var(--border-color);
             background: var(--card-bg);
             color: var(--text-primary);
-            font-size: 0.88rem;
+            font-size: 0.82rem;
             font-weight: 600;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
-            gap: 6px;
+            gap: 5px;
             transition: var(--transition);
         }
-        .tool-action-btn:hover {
-            background: var(--accent);
-            color: #ffffff;
+
+        .tool-btn:hover {
             border-color: var(--accent);
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(245, 158, 11, 0.25);
+            color: var(--accent);
+            transform: translateY(-1px);
         }
-        .tool-action-btn.btn-bijoy {
-            background: rgba(245, 158, 11, 0.12);
-            border-color: rgba(245, 158, 11, 0.4);
+
+        .tool-btn.btn-bijoy {
+            background: rgba(245, 158, 11, 0.1);
+            border-color: var(--accent);
             color: var(--accent);
         }
-        .tool-action-btn.btn-bijoy:hover {
+
+        .tool-btn.btn-bijoy:hover {
             background: var(--accent-gradient);
             color: #ffffff;
             border-color: transparent;
         }
-        .tool-action-btn.btn-danger {
-            margin-left: auto;
+
+        .tool-btn.btn-clear {
             color: #ef4444;
             border-color: rgba(239, 68, 68, 0.3);
-            background: rgba(239, 68, 68, 0.08);
         }
-        .tool-action-btn.btn-danger:hover {
+
+        .tool-btn.btn-clear:hover {
             background: #ef4444;
             color: #ffffff;
             border-color: #ef4444;
-            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
         }
 
-        /* ── Audio Sound Toast Notification ── */
+        /* Benefits & SEO Info Section */
+        .voice-info-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 24px;
+            box-shadow: var(--card-shadow);
+            margin-top: 24px;
+        }
+
+        .info-header-title {
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .info-header-sub {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 14px;
+        }
+
+        .info-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px;
+            transition: var(--transition);
+        }
+
+        .info-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-2px);
+        }
+
+        .info-card h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-card p {
+            font-size: 0.84rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        /* Toast */
         .studio-toast {
             position: fixed;
-            bottom: 30px;
+            bottom: 24px;
             left: 50%;
-            transform: translateX(-50%) translateY(100px);
+            transform: translateX(-50%) translateY(80px);
             background: var(--primary);
             color: #ffffff;
-            padding: 12px 24px;
+            padding: 10px 20px;
             border-radius: 999px;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.88rem;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             z-index: 9999;
             opacity: 0;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
             border: 1px solid var(--border-color);
         }
+
         .studio-toast.show {
             transform: translateX(-50%) translateY(0);
             opacity: 1;
-        }
-
-        /* ── Step by Step Usage & SEO Info Section ── */
-        .studio-guide-section {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 24px;
-            padding: 2.5rem 2rem;
-            box-shadow: var(--card-shadow);
-            backdrop-filter: var(--glass-blur);
-            margin-top: 3rem;
-        }
-        .guide-section-title {
-            text-align: center;
-            font-size: 1.5rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            margin-bottom: 0.5rem;
-        }
-        .guide-section-sub {
-            text-align: center;
-            color: var(--text-secondary);
-            font-size: 0.95rem;
-            margin-bottom: 2rem;
-        }
-        .steps-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.5rem;
-            margin-bottom: 2.5rem;
-        }
-        .step-card {
-            background: var(--bg-primary);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.5rem;
-            position: relative;
-            transition: var(--transition);
-        }
-        .step-card:hover {
-            transform: translateY(-3px);
-            border-color: var(--accent);
-            box-shadow: var(--card-shadow);
-        }
-        .step-number {
-            width: 32px;
-            height: 32px;
-            border-radius: 50%;
-            background: var(--accent-gradient);
-            color: #ffffff;
-            font-weight: 800;
-            font-size: 0.9rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1rem;
-            box-shadow: 0 4px 10px rgba(245, 158, 11, 0.3);
-        }
-        .step-card h4 {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.4rem;
-        }
-        .step-card p {
-            color: var(--text-secondary);
-            font-size: 0.88rem;
-            line-height: 1.55;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 1.25rem;
-        }
-        .feature-item {
-            display: flex;
-            gap: 14px;
-            padding: 1.25rem;
-            background: var(--bg-primary);
-            border-radius: 14px;
-            border: 1px solid var(--border-color);
-        }
-        .feature-icon-box {
-            font-size: 1.6rem;
-            line-height: 1;
-        }
-        .feature-item h5 {
-            font-size: 1rem;
-            font-weight: 700;
-            color: var(--text-primary);
-            margin-bottom: 0.3rem;
-        }
-        .feature-item p {
-            font-size: 0.86rem;
-            color: var(--text-secondary);
-            line-height: 1.5;
         }
     </style>
 </head>
@@ -600,183 +599,157 @@
             <aside id="main-sidebar"></aside>
             
             <main class="content-area">
-                <div class="speech-studio-wrapper">
-                    
-                    <!-- Tool Header -->
-                    <div class="studio-hero">
-                        <div class="studio-badge">
-                            <span class="badge-dot"></span>
-                            AI Speech Recognition & Real-time Translation
-                        </div>
-                        <h1>🎙️ Bangla Voice Typing & Speech Studio</h1>
-                        <p>
-                            মুখে বাংলায় বা ইংরেজিতে কথা বলুন—সাথে সাথে নিখুঁত বাংলা ইউনিকোড টেক্সট, রিয়েল-টাইম অনুবাদ ও বিজয় কনভার্ট করুন সম্পূর্ণ ফ্রিতে।
-                        </p>
-                    </div>
+                <div class="voice-wrapper">
+                    <div class="voice-ambient-glow"></div>
 
-                    <!-- Segmented Mode Bar -->
-                    <div class="mode-segmented-bar">
-                        <button class="mode-tab-btn active" data-mode="bn-type">
-                            <span>🇧🇩</span> বাংলা ভয়েস টাইপিং (Speech to Bangla)
-                        </button>
-                        <button class="mode-tab-btn" data-mode="en-to-bn">
-                            <span>🗣️</span> English to Bangla (কথা থেকে বাংলা অনুবাদ)
-                        </button>
-                        <button class="mode-tab-btn" data-mode="bn-to-en">
-                            <span>🔄</span> Bangla to English (বাংলা থেকে ইংরেজি অনুবাদ)
-                        </button>
-                    </div>
-
-                    <!-- Floating Studio Mic Card -->
-                    <div class="studio-mic-card">
-                        <div class="mic-button-wrapper">
-                            <button id="mic-toggle-btn" class="mic-btn-main" title="Click to Start / Stop Speaking">
-                                <span id="mic-icon">🎤</span>
-                            </button>
-                        </div>
-
-                        <div class="studio-status-box">
-                            <div id="mic-status" class="status-title">
-                                <span>কথা বলতে মাইক বাটনে ক্লিক করুন</span>
-                            </div>
-                            <div id="mic-hint" class="status-desc">
-                                মাইক্রোফোন অন করে পরিষ্কার ও সাবলীল কণ্ঠে কথা বলুন
-                            </div>
-                            <div id="recording-timer" class="recording-timer" style="display: none;">
-                                <span>🔴</span> <span id="timer-count">00:00</span>
-                            </div>
-                        </div>
-
-                        <!-- Live Audio Soundwave -->
-                        <div id="live-waveform" class="waveform-container">
-                            <div class="wave-bar"></div>
-                            <div class="wave-bar"></div>
-                            <div class="wave-bar"></div>
-                            <div class="wave-bar"></div>
-                            <div class="wave-bar"></div>
-                            <div class="wave-bar"></div>
-                            <div class="wave-bar"></div>
-                            <div class="wave-bar"></div>
-                        </div>
-                    </div>
-
-                    <!-- Studio Workspace Grid (Adapts to 1 or 2 Columns) -->
-                    <div id="workspace-grid" class="studio-workspace-grid">
+                    <!-- Main Compact Studio Card -->
+                    <div class="voice-main-card">
                         
-                        <!-- Primary Speech Transcript Pane -->
-                        <div class="editor-pane-card">
-                            <div class="pane-top-header">
-                                <div class="pane-label-group">
-                                    <div id="primary-pane-icon" class="pane-tag-icon">✍️</div>
-                                    <div id="primary-pane-title" class="pane-title">বাংলা টেক্সট (Speech Transcript)</div>
-                                </div>
-                                <div id="primary-stats" class="pane-stats-badge">0 words | 0 chars</div>
+                        <!-- Hero Header -->
+                        <div class="voice-hero-header">
+                            <div class="voice-status-pill">
+                                <span class="pulse-dot-amber"></span>
+                                Real-time Speech Recognition & Translation
                             </div>
+                            <h1 class="voice-title">🎙️ Bangla Voice Typing & Translator</h1>
+                            <p class="voice-subtitle">
+                                মুখে বাংলায় বা ইংরেজিতে কথা বলুন—রিয়েল-টাইমে নিখুঁত বাংলা ইউনিকোড টেক্সট ও অনুবাদ পেয়ে যান সম্পূর্ণ ফ্রিতে।
+                            </p>
+                        </div>
 
-                            <!-- Punctuation & Formatting Quick-strip -->
-                            <div class="punctuation-strip">
-                                <span class="punc-label">Quick Symbol:</span>
-                                <button class="punc-btn" data-char="।">। (দাঁড়ি)</button>
-                                <button class="punc-btn" data-char=",">, (কমা)</button>
-                                <button class="punc-btn" data-char="?">? (প্রশ্ন)</button>
-                                <button class="punc-btn" data-char="!">! (আশ্চর্য)</button>
-                                <button class="punc-btn" data-char=" - ">— (ড্যাশ)</button>
-                                <button class="punc-btn" data-char="\n">↵ Newline</button>
-                                <button id="font-dec-btn" class="punc-btn" style="margin-left: auto;">A-</button>
-                                <button id="font-inc-btn" class="punc-btn">A+</button>
-                            </div>
-
-                            <div class="editor-textarea-wrap">
-                                <textarea id="primary-text" class="studio-textarea" placeholder="আপনি কথা বললে এখানে সরাসরি রিয়েল-টাইমে টাইপ হতে থাকবে... আপনি চাইলে কিবোর্ড দিয়েও এডিট করতে পারেন।"></textarea>
-                            </div>
-
-                            <div class="pane-bottom-bar">
-                                <button id="copy-primary-btn" class="tool-action-btn">📋 Copy Text</button>
-                                <button id="listen-primary-btn" class="tool-action-btn">🔊 Listen</button>
-                                <button id="download-txt-btn" class="tool-action-btn">💾 Export .txt</button>
-                                <button id="convert-bijoy-btn" class="tool-action-btn btn-bijoy">✍️ Convert to Bijoy 52</button>
-                                <button id="clear-all-btn" class="tool-action-btn btn-danger">🧹 Clear</button>
+                        <!-- Mode Selector Chips Bar -->
+                        <div class="modes-bar-wrapper">
+                            <div class="modes-chips-grid">
+                                <button class="voice-chip active" data-mode="bn-type">
+                                    <span>🇧🇩</span> বাংলা ভয়েস টাইপিং (Speech to Bangla)
+                                </button>
+                                <button class="voice-chip" data-mode="en-to-bn">
+                                    <span>🗣️</span> English to Bangla (কথা থেকে অনুবাদ)
+                                </button>
+                                <button class="voice-chip" data-mode="bn-to-en">
+                                    <span>🔄</span> Bangla to English (বাংলা টু ইংরেজি)
+                                </button>
                             </div>
                         </div>
 
-                        <!-- Secondary Translation Pane (Visible when in Translation mode) -->
-                        <div id="translation-pane" class="editor-pane-card" style="display: none;">
-                            <div class="pane-top-header">
-                                <div class="pane-label-group">
-                                    <div class="pane-tag-icon">🌐</div>
-                                    <div id="translation-pane-title" class="pane-title">অনূদিত বাংলা ফলাফল (Translation Output)</div>
+                        <!-- Integrated Sleek Mic Control Strip -->
+                        <div class="mic-control-strip">
+                            <div class="mic-trigger-group">
+                                <button id="mic-toggle-btn" class="mic-btn-circle" title="Click to Start / Stop Speaking">
+                                    <span id="mic-icon">🎤</span>
+                                </button>
+                                <div class="mic-info-block">
+                                    <div id="mic-status" class="mic-status-line">কথা বলতে মাইকে ক্লিক করুন</div>
+                                    <div id="mic-hint" class="mic-hint-line">মাইক্রোফোন অন করে পরিষ্কার কণ্ঠে কথা বলুন</div>
                                 </div>
-                                <div id="translation-stats" class="pane-stats-badge">0 words</div>
                             </div>
 
-                            <div class="punctuation-strip">
-                                <span class="punc-label">Translation Hub:</span>
-                                <span style="font-size: 0.8rem; color: var(--text-secondary);">⚡ Auto-updated as you speak</span>
+                            <div class="mic-right-tools">
+                                <div id="recording-timer" class="timer-badge">
+                                    <span>🔴</span> <span id="timer-count">00:00</span>
+                                </div>
+                                <div id="live-waveform" class="wave-indicator">
+                                    <div class="mini-wave"></div>
+                                    <div class="mini-wave"></div>
+                                    <div class="mini-wave"></div>
+                                    <div class="mini-wave"></div>
+                                    <div class="mini-wave"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Studio Workspace Grid -->
+                        <div id="workspace-grid" class="studio-workspace-grid">
+                            
+                            <!-- Primary Input/Transcript Pane -->
+                            <div class="studio-pane">
+                                <div class="pane-header">
+                                    <div class="pane-title">
+                                        <span id="primary-pane-icon">✍️</span>
+                                        <span id="primary-pane-title">বাংলা টেক্সট (Speech Transcript)</span>
+                                    </div>
+                                    <div class="pane-actions">
+                                        <span id="primary-stats" class="btn-pane-action" style="cursor: default;">0 words | 0 chars</span>
+                                        <button id="font-dec-btn" class="btn-pane-action" title="Decrease font size">A-</button>
+                                        <button id="font-inc-btn" class="btn-pane-action" title="Increase font size">A+</button>
+                                    </div>
+                                </div>
+
+                                <div class="pane-body">
+                                    <textarea id="primary-text" class="voice-textarea" placeholder="আপনি কথা বললে এখানে সরাসরি টাইপ হতে থাকবে... কিবোর্ড দিয়ে এডিট করতে পারেন।"></textarea>
+                                </div>
+
+                                <!-- Quick Punctuation Insertion -->
+                                <div class="quick-punc-strip">
+                                    <span class="punc-label">Quick Symbol:</span>
+                                    <button class="punc-chip" data-char="।">। (দাঁড়ি)</button>
+                                    <button class="punc-chip" data-char=",">, (কমা)</button>
+                                    <button class="punc-chip" data-char="?">? (প্রশ্ন)</button>
+                                    <button class="punc-chip" data-char="!">! (আশ্চর্য)</button>
+                                    <button class="punc-chip" data-char=" - ">— (ড্যাশ)</button>
+                                    <button class="punc-chip" data-char="\n">↵ Newline</button>
+                                </div>
+
+                                <div class="pane-footer-hud">
+                                    <div class="footer-action-group">
+                                        <button id="copy-primary-btn" class="tool-btn">📋 Copy Text</button>
+                                        <button id="listen-primary-btn" class="tool-btn">🔊 Listen</button>
+                                        <button id="download-txt-btn" class="tool-btn">💾 Export .txt</button>
+                                        <button id="convert-bijoy-btn" class="tool-btn btn-bijoy">✍️ Convert to Bijoy 52</button>
+                                    </div>
+                                    <button id="clear-all-btn" class="tool-btn btn-clear">🧹 Clear</button>
+                                </div>
                             </div>
 
-                            <div class="editor-textarea-wrap">
-                                <textarea id="translation-text" class="studio-textarea" placeholder="অনুবাদ এখানে স্বয়ংক্রিয়ভাবে ভেসে উঠবে..."></textarea>
+                            <!-- Translation Output Pane (Appears in Translation Modes) -->
+                            <div id="translation-pane" class="studio-pane" style="display: none;">
+                                <div class="pane-header">
+                                    <div class="pane-title">
+                                        <span>🌐</span>
+                                        <span id="translation-pane-title">অনূদিত বাংলা ফলাফল (Translation Output)</span>
+                                    </div>
+                                    <div class="pane-actions">
+                                        <span id="translation-stats" class="btn-pane-action" style="cursor: default;">0 words</span>
+                                    </div>
+                                </div>
+
+                                <div class="pane-body">
+                                    <textarea id="translation-text" class="voice-textarea" placeholder="অনুবাদ এখানে স্বয়ংক্রিয়ভাবে রিয়েল-টাইমে ভেসে উঠবে..."></textarea>
+                                </div>
+
+                                <div class="pane-footer-hud">
+                                    <div class="footer-action-group">
+                                        <button id="copy-trans-btn" class="tool-btn">📋 Copy Translation</button>
+                                        <button id="listen-trans-btn" class="tool-btn">🔊 Listen</button>
+                                    </div>
+                                </div>
                             </div>
 
-                            <div class="pane-bottom-bar">
-                                <button id="copy-trans-btn" class="tool-action-btn">📋 Copy Translation</button>
-                                <button id="listen-trans-btn" class="tool-action-btn">🔊 Listen</button>
-                            </div>
                         </div>
 
                     </div>
 
-                    <!-- Step-by-Step Guide & SEO Features Info -->
-                    <div class="studio-guide-section">
-                        <h3 class="guide-section-title">🚀 কীভাবে বাংলা ভয়েস টাইপিং ব্যবহার করবেন?</h3>
-                        <p class="guide-section-sub">মাত্র ৩টি সহজ ধাপে কোনো কিবোর্ড ছাড়াই কথা বলে বাংলা লিখুন</p>
-
-                        <div class="steps-grid">
-                            <div class="step-card">
-                                <div class="step-number">1</div>
-                                <h4>মোড সিলেক্ট করুন</h4>
-                                <p>বাংলা ভয়েস টাইপিং অথবা ইংরেজি থেকে সরাসরি বাংলায় লাইভ অনুবাদ মোড বেছে নিন।</p>
+                    <!-- SEO & Benefits Information Card -->
+                    <div class="voice-info-section">
+                        <h3 class="info-header-title">🔥 কেন ToolX Pro ভয়েস টাইপিং সেরা?</h3>
+                        <p class="info-header-sub">সম্পূর্ণ নিখুঁত, আনলিমিটেড ও সরাসরি বিজয় ফন্টে কনভার্ট করার সুবিধা</p>
+                        
+                        <div class="info-grid">
+                            <div class="info-card">
+                                <h4>⚡ ১০০% নির্ভুল ও দ্রুত</h4>
+                                <p>গুগল AI স্পিচ ইঞ্জিনের মাধ্যমে কোনো ল্যাগ ছাড়াই পরিষ্কার বাংলা টাইপিং নিশ্চিত করে।</p>
                             </div>
-                            <div class="step-card">
-                                <div class="step-number">2</div>
-                                <h4>মাইকে কথা বলুন</h4>
-                                <p>বড় গোল মাইক বাটনে ক্লিক করে ব্রাউজারের অনুমতি দিয়ে পরিষ্কার কণ্ঠে কথা বলা শুরু করুন।</p>
+                            <div class="info-card">
+                                <h4>🔒 সম্পূর্ণ ফ্রি ও আনলিমিটেড</h4>
+                                <p>কোনো রেজিস্ট্রেশন বা পেইড সাবস্ক্রিপশন ছাড়াই যত ইচ্ছা কথা বলে টাইপ করুন।</p>
                             </div>
-                            <div class="step-card">
-                                <div class="step-number">3</div>
-                                <h4>কপি বা বিজয় রূপান্তর</h4>
-                                <p>লেখা সম্পন্ন হলে এক ক্লিকে কপি করুন অথবা সরাসরি ফটোশপ/ইলাস্ট্রেটরে ব্যবহারের জন্য বিজয় ৫২ তে কনভার্ট করুন।</p>
+                            <div class="info-card">
+                                <h4>🎨 বিজয় ৫২ ফন্ট সাপোর্ট</h4>
+                                <p>টাইপ করা টেক্সট ১ ক্লিকে SutonnyMJ ফন্টের বিজয় কোডে রূপান্তর করে ফটোশপে ব্যবহার করুন।</p>
                             </div>
-                        </div>
-
-                        <div class="features-grid">
-                            <div class="feature-item">
-                                <div class="feature-icon-box">⚡</div>
-                                <div>
-                                    <h5>১০০% নির্ভুল ও দ্রুত</h5>
-                                    <p>আধুনিক AI Speech Recognition ইঞ্জিনের সহায়তায় প্রমিত বাংলা ও আঞ্চলিক উচ্চারণ সঠিকভাবে শনাক্ত করে।</p>
-                                </div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-icon-box">🔒</div>
-                                <div>
-                                    <h5>সম্পূর্ণ ফ্রি ও প্রাইভেট</h5>
-                                    <p>কোনো রেজিস্ট্রেশন বা সাইন-আপ ছাড়াই আনলিমিটেড ব্যবহার করুন। আপনার ভয়েস কোনো সার্ভারে জমা থাকে না।</p>
-                                </div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-icon-box">🎨</div>
-                                <div>
-                                    <h5>বিজয় (SutonnyMJ) সাপোর্ট</h5>
-                                    <p>ভয়েসে টাইপ করা ইউনিকোড টেক্সটকে ১ ক্লিকে বিজয় ANSI কোডে কনভার্ট করে গ্রাফিক্স ডিজাইনে সরাসরি ব্যবহার করুন।</p>
-                                </div>
-                            </div>
-                            <div class="feature-item">
-                                <div class="feature-icon-box">🌐</div>
-                                <div>
-                                    <h5>দ্বিমুখী রিয়েল-টাইম অনুবাদ</h5>
-                                    <p>ইংরেজিতে কথা বললে সাথে সাথে বাংলায় অনুবাদ এবং বাংলায় কথা বললে ইংরেজিতে অনুবাদ করার সুবিধা।</p>
-                                </div>
+                            <div class="info-card">
+                                <h4>🌐 লাইভ দ্বিমুখী অনুবাদ</h4>
+                                <p>ইংরেজি কথার সাথে সাথে বাংলা অনুবাদ এবং বাংলা কথার ইংরেজি অনুবাদ পেয়ে যান।</p>
                             </div>
                         </div>
                     </div>

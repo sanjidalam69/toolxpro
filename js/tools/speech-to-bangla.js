@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const liveWaveform = document.getElementById("live-waveform");
     const recordingTimer = document.getElementById("recording-timer");
     const timerCount = document.getElementById("timer-count");
-    const modeTabs = document.querySelectorAll(".mode-tab-btn");
+    const modeChips = document.querySelectorAll(".voice-chip");
     const workspaceGrid = document.getElementById("workspace-grid");
 
     // Primary Transcript Pane
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Font Controls & Quick Symbols
     const fontIncBtn = document.getElementById("font-inc-btn");
     const fontDecBtn = document.getElementById("font-dec-btn");
-    const puncButtons = document.querySelectorAll(".punc-btn[data-char]");
+    const puncButtons = document.querySelectorAll(".punc-chip[data-char]");
 
     // Toast
     const toast = document.getElementById("studio-toast");
@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let translationTimeout = null;
     let timerInterval = null;
     let elapsedSeconds = 0;
-    let currentFontSize = 1.12; // rem
+    let currentFontSize = 1.05; // rem
 
     // ── Web Audio Chime Synthesizer ──
     function playChime(type) {
@@ -65,21 +65,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
             if (type === "start") {
                 osc.frequency.setValueAtTime(520, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.15);
-                gain.gain.setValueAtTime(0.12, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+                osc.frequency.exponentialRampToValueAtTime(880, ctx.currentTime + 0.12);
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
                 osc.start();
-                osc.stop(ctx.currentTime + 0.2);
+                osc.stop(ctx.currentTime + 0.18);
             } else if (type === "stop") {
                 osc.frequency.setValueAtTime(780, ctx.currentTime);
-                osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.15);
-                gain.gain.setValueAtTime(0.12, ctx.currentTime);
-                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+                osc.frequency.exponentialRampToValueAtTime(440, ctx.currentTime + 0.12);
+                gain.gain.setValueAtTime(0.1, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.18);
                 osc.start();
-                osc.stop(ctx.currentTime + 0.2);
+                osc.stop(ctx.currentTime + 0.18);
             }
         } catch (e) {
-            // Audio context not allowed before gesture or not supported
+            // Audio context gesture restriction or not supported
         }
     }
 
@@ -101,8 +101,8 @@ document.addEventListener("DOMContentLoaded", () => {
     const isSpeechSupported = !!SpeechRecognition;
 
     if (!isSpeechSupported) {
-        micStatus.innerHTML = `<span>⚠️ ব্রাউজারে ভয়েস সাপোর্ট নেই</span>`;
-        micHint.textContent = "ভয়েস টাইপিং সুবিধার জন্য Google Chrome, Brave বা Microsoft Edge ব্যবহার করুন।";
+        micStatus.textContent = "⚠️ ব্রাউজারে ভয়েস সাপোর্ট নেই";
+        micHint.textContent = "ভয়েস টাইপিং ব্যবহারের জন্য Chrome, Brave বা Edge ব্রাউজার ব্যবহার করুন।";
         micToggleBtn.disabled = true;
         micToggleBtn.style.opacity = "0.5";
         micToggleBtn.style.cursor = "not-allowed";
@@ -134,10 +134,10 @@ document.addEventListener("DOMContentLoaded", () => {
             playChime("start");
 
             if (currentMode === "en-to-bn") {
-                micStatus.innerHTML = `<span>🎙️ Listening in English... Speak clearly</span>`;
-                micHint.textContent = "থামাতে লাল বাটনে ক্লিক করুন";
+                micStatus.textContent = "🎙️ Listening in English... Speak clearly";
+                micHint.textContent = "কথা শেষ হলে স্টপ করতে লাল বাটনে চাপুন";
             } else {
-                micStatus.innerHTML = `<span>🎙️ বাংলায় শুনছি... কথা বলুন!</span>`;
+                micStatus.textContent = "🎙️ বাংলায় শুনছি... পরিষ্কার করে কথা বলুন";
                 micHint.textContent = "কথা বলা শেষ হলে লাল বাটনে ক্লিক করে থামান";
             }
         };
@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", () => {
             primaryText.value = fullText;
             updateStats();
 
-            // Auto-scroll textarea to bottom
+            // Auto-scroll textarea
             primaryText.scrollTop = primaryText.scrollHeight;
 
             // Trigger real-time translation if enabled
@@ -172,8 +172,8 @@ document.addEventListener("DOMContentLoaded", () => {
         recognition.onerror = (event) => {
             console.warn("Speech recognition warning/error:", event.error);
             if (event.error === "not-allowed") {
-                micStatus.innerHTML = `<span>❌ মাইক্রোফোনের পারমিশন নেই</span>`;
-                micHint.textContent = "ব্রাউজারের অ্যাড্রেস বারের লক আইকনে ক্লিক করে Microphone Allow করে পেজ রিলোড দিন।";
+                micStatus.textContent = "❌ মাইক্রোফোনের পারমিশন নেই";
+                micHint.textContent = "ব্রাউজারের অ্যাড্রেস বারের লক আইকনে ক্লিক করে Microphone Allow করুন।";
                 stopRecording();
             } else if (event.error === "no-speech") {
                 micHint.textContent = "কোনো আওয়াজ পাওয়া যায়নি, স্পষ্ট করে কথা বলুন...";
@@ -182,7 +182,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         recognition.onend = () => {
             if (isRecording) {
-                // Keep listening continuously unless explicitly stopped
                 try {
                     recognition.start();
                 } catch (e) {
@@ -241,8 +240,8 @@ document.addEventListener("DOMContentLoaded", () => {
         micToggleBtn.classList.remove("recording");
         micIcon.textContent = "🎤";
         liveWaveform.style.display = "none";
-        micStatus.innerHTML = `<span>কথা বলতে মাইক বাটনে ক্লিক করুন</span>`;
-        micHint.textContent = "মাইক্রোফোন অন করে পরিষ্কার ও সাবলীল কণ্ঠে কথা বলুন";
+        micStatus.textContent = "কথা বলতে মাইকে ক্লিক করুন";
+        micHint.textContent = "মাইক্রোফোন অন করে পরিষ্কার কণ্ঠে কথা বলুন";
     }
 
     micToggleBtn.addEventListener("click", () => {
@@ -254,11 +253,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     // ── Segmented Mode Switching ──
-    modeTabs.forEach(tab => {
-        tab.addEventListener("click", () => {
-            modeTabs.forEach(t => t.classList.remove("active"));
-            tab.classList.add("active");
-            currentMode = tab.getAttribute("data-mode");
+    modeChips.forEach(chip => {
+        chip.addEventListener("click", () => {
+            modeChips.forEach(c => c.classList.remove("active"));
+            chip.classList.add("active");
+            currentMode = chip.getAttribute("data-mode");
 
             if (isRecording) {
                 stopRecording();
@@ -267,15 +266,15 @@ document.addEventListener("DOMContentLoaded", () => {
             if (currentMode === "bn-type") {
                 primaryIcon.textContent = "✍️";
                 primaryTitle.textContent = "বাংলা টেক্সট (Speech Transcript)";
-                primaryText.placeholder = "আপনি কথা বললে এখানে সরাসরি রিয়েল-টাইমে টাইপ হতে থাকবে... আপনি চাইলে কিবোর্ড দিয়েও এডিট করতে পারেন।";
+                primaryText.placeholder = "আপনি কথা বললে এখানে সরাসরি টাইপ হতে থাকবে... কিবোর্ড দিয়ে এডিট করতে পারেন।";
                 translationPane.style.display = "none";
                 workspaceGrid.classList.remove("dual-view");
             } else if (currentMode === "en-to-bn") {
                 primaryIcon.textContent = "🗣️";
                 primaryTitle.textContent = "English Speech Input";
-                primaryText.placeholder = "Speak in English... your spoken words will appear here instantly.";
+                primaryText.placeholder = "Speak in English... words will appear here instantly.";
                 translationTitle.textContent = "অনূদিত বাংলা ফলাফল (Bangla Translation)";
-                translationText.placeholder = "ইংরেজি কথার বাংলা অনুবাদ এখানে রিয়েল-টাইমে দেখতে পাবেন...";
+                translationText.placeholder = "ইংরেজি কথার বাংলা অনুবাদ এখানে দেখতে পাবেন...";
                 translationPane.style.display = "flex";
                 workspaceGrid.classList.add("dual-view");
             } else if (currentMode === "bn-to-en") {
@@ -317,7 +316,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.warn("Translation API notice:", e);
         }
 
-        translationText.value = "অনুবাদ সার্ভার সাময়িকভাবে ব্যস্ত। অনুগ্রহ করে একটু পর চেষ্টা করুন।";
+        translationText.value = "অনুবাদ সার্ভার সাময়িকভাবে ব্যস্ত। একটু পর চেষ্টা করুন।";
     }
 
     // ── Stats Calculation ──
@@ -360,8 +359,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // ── Font Size Controls ──
     if (fontIncBtn) {
         fontIncBtn.addEventListener("click", () => {
-            if (currentFontSize < 1.8) {
-                currentFontSize += 0.15;
+            if (currentFontSize < 1.6) {
+                currentFontSize += 0.1;
                 primaryText.style.fontSize = `${currentFontSize}rem`;
                 translationText.style.fontSize = `${currentFontSize}rem`;
             }
@@ -370,8 +369,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (fontDecBtn) {
         fontDecBtn.addEventListener("click", () => {
-            if (currentFontSize > 0.9) {
-                currentFontSize -= 0.15;
+            if (currentFontSize > 0.85) {
+                currentFontSize -= 0.1;
                 primaryText.style.fontSize = `${currentFontSize}rem`;
                 translationText.style.fontSize = `${currentFontSize}rem`;
             }
@@ -385,7 +384,7 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
         navigator.clipboard.writeText(primaryText.value).then(() => {
-            showToast("টেক্সট কপি করা হয়েছে! (Copied)", "📋");
+            showToast("টেক্সট কপি করা হয়েছে!", "📋");
         });
     });
 
@@ -396,7 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 return;
             }
             navigator.clipboard.writeText(translationText.value).then(() => {
-                showToast("অনুবাদ টেক্সট কপি করা হয়েছে!", "🌐");
+                showToast("অনুবাদ কপি করা হয়েছে!", "🌐");
             });
         });
     }
@@ -441,7 +440,7 @@ document.addEventListener("DOMContentLoaded", () => {
     downloadTxtBtn.addEventListener("click", () => {
         const text = primaryText.value;
         if (!text.trim()) {
-            showToast("ডাউনলোড করার মতো কোনো টেক্সট নেই", "⚠️");
+            showToast("ডাউনলোড করার মতো টেক্সট নেই", "⚠️");
             return;
         }
         const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
@@ -460,7 +459,7 @@ document.addEventListener("DOMContentLoaded", () => {
     convertBijoyBtn.addEventListener("click", () => {
         const text = primaryText.value;
         if (!text.trim()) {
-            showToast("আগে কথা বলে বা টাইপ করে টেক্সট লিখুন", "⚠️");
+            showToast("আগে কিছু কথা বলে টাইপ করুন", "⚠️");
             return;
         }
         localStorage.setItem("toolx_pending_unicode", text);
