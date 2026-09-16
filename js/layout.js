@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", () => {
     injectGoogleAdSense();
     injectHeader(homePath, isSubFolder, isHomePage);
     injectFooter(homePath, isSubFolder, isHomePage);
-    injectSocialBarAd();
+    // injectSocialBarAd(); // Temporarily paused during Google AdSense review
     
     if (isToolPage) {
         injectSidebar(toolsPrefix);
