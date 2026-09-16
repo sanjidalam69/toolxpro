@@ -72,6 +72,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const toolsPrefix = isSubFolder ? '' : 'tools/';
     
     // Inject Layout Elements
+    injectGoogleAdSense();
     injectHeader(homePath, isSubFolder, isHomePage);
     injectFooter(homePath, isSubFolder, isHomePage);
     injectSocialBarAd();
@@ -676,6 +677,17 @@ function initStickyAndBackToTop() {
 
     window.addEventListener("scroll", handleScroll, { passive: true });
     handleScroll();
+}
+
+// Global Google AdSense Integration
+function injectGoogleAdSense() {
+    if (!document.querySelector('script[src*="adsbygoogle.js"]')) {
+        const script = document.createElement("script");
+        script.async = true;
+        script.src = "https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369";
+        script.crossOrigin = "anonymous";
+        document.head.appendChild(script);
+    }
 }
 
 
