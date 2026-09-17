@@ -100,12 +100,35 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         };
 
+        // ── Smart Punctuation Helper ──
+        function formatPunctuation(text, mode) {
+            if (mode === "en-to-bn") {
+                return text
+                    .replace(/\s*period\s*/gi, ". ")
+                    .replace(/\s*full stop\s*/gi, ". ")
+                    .replace(/\s*comma\s*/gi, ", ")
+                    .replace(/\s*question mark\s*/gi, "? ")
+                    .replace(/\s*exclamation mark\s*/gi, "! ")
+                    .replace(/\s*new line\s*/gi, "\n")
+                    .replace(/\s*new paragraph\s*/gi, "\n\n");
+            } else {
+                return text
+                    .replace(/\s*(দাঁড়ি|দাড়ি|পূর্ণচ্ছেদ)\s*/gi, "। ")
+                    .replace(/\s*কমা\s*/gi, ", ")
+                    .replace(/\s*(প্রশ্নবোধক চিহ্ন|প্রশ্নচিহ্ন|প্রশ্নবোধক)\s*/gi, "? ")
+                    .replace(/\s*(বিস্ময়সূচক চিহ্ন|আশ্চর্যবোধক চিহ্ন|বিস্ময়চিহ্ন)\s*/gi, "! ")
+                    .replace(/\s*নতুন লাইন\s*/gi, "\n")
+                    .replace(/\s*নতুন প্যারা\s*/gi, "\n\n");
+            }
+        }
+
         recognition.onresult = (event) => {
             let interim = "";
             for (let i = event.resultIndex; i < event.results.length; ++i) {
                 const part = event.results[i][0].transcript;
                 if (event.results[i].isFinal) {
-                    finalTranscript += (finalTranscript ? " " : "") + part.trim();
+                    const formattedPart = formatPunctuation(part.trim(), currentMode);
+                    finalTranscript += (finalTranscript ? " " : "") + formattedPart;
                 } else {
                     interim += part;
                 }
@@ -121,7 +144,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 clearTimeout(translationTimeout);
                 translationTimeout = setTimeout(() => {
                     handleAutoTranslation(finalTranscript.trim());
-                }, 500);
+                }, 400);
             }
         };
 
@@ -140,7 +163,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 try {
                     recognition.start();
                 } catch (e) {
-                    stopRecording();
+                    // Retry once after a brief delay if browser closed socket
+                    setTimeout(() => {
+                        if (isRecording) {
+                            try { recognition.start(); } catch(err) { stopRecording(); }
+                        }
+                    }, 250);
                 }
             } else {
                 stopRecording();

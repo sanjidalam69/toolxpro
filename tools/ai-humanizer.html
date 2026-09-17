@@ -548,29 +548,25 @@
 
         @media (max-width: 640px) {
             .humanizer-main-card { padding: 16px 12px; border-radius: 16px; }
-            .humanizer-title { font-size: 1.55rem; }
-            .humanizer-subtitle { font-size: 0.86rem; margin-bottom: 12px; }
+            .humanizer-title { font-size: 1.45rem; line-height: 1.35; }
+            .humanizer-subtitle { font-size: 0.84rem; margin-bottom: 12px; }
             .humanizer-status-pill { font-size: 0.74rem; padding: 4px 10px; }
             
             /* Mode chips horizontal touch swipe on mobile */
             .modes-bar-wrapper { margin-bottom: 14px; }
-            .modes-bar-header { flex-direction: column; align-items: flex-start; gap: 4px; }
+            .modes-bar-header { flex-direction: row; justify-content: space-between; align-items: center; gap: 4px; }
             .modes-chips-grid {
-                display: flex;
-                overflow-x: auto;
-                -webkit-overflow-scrolling: touch;
-                padding-bottom: 6px;
-                gap: 6px;
-                scrollbar-width: none;
+                display: flex !important;
+                gap: 6px !important;
+                width: 100%;
             }
-            .modes-chips-grid::-webkit-scrollbar { display: none; }
-            .human-chip { flex: 0 0 auto; padding: 8px 14px; font-size: 0.82rem; }
+            .human-chip { flex: 1 1 0; padding: 9px 8px !important; font-size: 0.8rem !important; min-height: 40px; }
 
             /* Studio Panes on Mobile */
-            .studio-pane { min-height: 280px; }
-            .human-textarea { min-height: 180px; font-size: 0.95rem; padding: 12px; }
+            .studio-pane { min-height: 260px; }
+            .human-textarea { min-height: 160px; font-size: 16px !important; /* iOS zoom prevention */ padding: 12px; }
             .pane-header { padding: 8px 10px; }
-            .btn-pane-action { padding: 4px 7px; font-size: 0.74rem; }
+            .btn-pane-action { padding: 5px 8px; font-size: 0.76rem; min-height: 32px; }
             
             /* Mobile Footer HUD & Full Width Tap Button */
             .pane-footer-hud {
@@ -587,7 +583,9 @@
                 width: 100%;
                 justify-content: center;
                 padding: 12px;
-                font-size: 0.95rem;
+                font-size: 0.96rem;
+                min-height: 46px;
+                border-radius: 12px;
             }
 
             /* Detector strip on mobile */
@@ -637,12 +635,12 @@
                                 <span>🎯 Select Humanizing Mode:</span>
                                 <span id="active-mode-display" style="color:#059669; font-weight:700; font-size:0.82rem;">Balanced</span>
                             </div>
-                            <div class="modes-chips-grid" style="display: flex; gap: 8px;">
-                                <button type="button" class="human-chip active" data-mode="standard" style="flex: 1;">
+                            <div class="modes-chips-grid">
+                                <button type="button" class="human-chip active" data-mode="standard">
                                     <span>🌿</span>
                                     <span>Balanced</span>
                                 </button>
-                                <button type="button" class="human-chip" data-mode="stealth" style="flex: 1;">
+                                <button type="button" class="human-chip" data-mode="stealth">
                                     <span>🛡️</span>
                                     <span>Max Stealth</span>
                                 </button>
