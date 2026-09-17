@@ -133,17 +133,6 @@ function updateThemeIcon(theme) {
 }
 
 
-// Inject Adsterra Social Bar / In-Page Ad Dynamically
-function injectSocialBarAd() {
-    if (!document.getElementById("adsterra-socialbar-script")) {
-        const adScript = document.createElement("script");
-        adScript.id = "adsterra-socialbar-script";
-        adScript.type = "text/javascript";
-        adScript.src = "https://pl30581150.effectivecpmnetwork.com/9a/d4/a9/9ad4a99b6bc2074f56c68c54f76384d5.js";
-        document.head.appendChild(adScript);
-    }
-}
-
 // Inject Header Navbar with Navigation Menu (Feedback 1)
 function injectHeader(homePath, isSubFolder, isHomePage) {
     const header = document.getElementById("main-header");
