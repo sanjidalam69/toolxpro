@@ -70,17 +70,17 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         row.innerHTML = `
-            <div style="flex: 2.2; min-width: 140px;">
-                <input type="text" class="form-control entry-name" value="${labelText}" placeholder="Title">
+            <div class="entry-col-name" style="flex: 2.2; min-width: 140px;">
+                <input type="text" class="form-control entry-name" value="${labelText}" placeholder="Course / Subject Title">
             </div>
-            <div style="flex: 1.2; min-width: 100px;">
+            <div class="entry-col-credits" style="flex: 1.2; min-width: 100px;">
                 <input type="number" class="form-control entry-credits" placeholder="Credits" min="0.5" max="30" step="0.5" value="${defaultCredits}" required>
             </div>
-            <div style="flex: 1.8; min-width: 140px;">
+            <div class="entry-col-grade" style="flex: 1.8; min-width: 140px;">
                 ${gradeInputHtml}
             </div>
-            <div style="flex: 0.3; text-align: right;">
-                <button class="btn-remove-entry" style="background:none; border:none; color:var(--danger); font-weight:bold; cursor:pointer; font-size:1.1rem;" title="Remove Row">❌</button>
+            <div class="entry-col-action" style="flex: 0.3; text-align: right;">
+                <button class="btn-remove-entry" style="background:none; border:none; color:var(--danger); font-weight:bold; cursor:pointer; font-size:1.1rem; min-height:44px; min-width:36px; display:inline-flex; align-items:center; justify-content:center;" title="Remove Row">❌</button>
             </div>
         `;
         

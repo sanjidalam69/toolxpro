@@ -4545,6 +4545,127 @@ pre, code {
         padding: 1rem !important;
         gap: 12px !important;
     }
+
+    /* iOS Auto-Zoom Prevention */
+    input, select, textarea, .form-control {
+        font-size: 16px !important;
+        touch-action: manipulation;
+    }
+
+    /* Form Rows Full Width on Mobile */
+    .form-row {
+        grid-template-columns: 1fr !important;
+        gap: 0.8rem !important;
+    }
+
+    /* Academic Calculators (bd-cgpa & bd-gpa) Mobile Stacked Cards */
+    .cgpa-table-headers,
+    .gpa-table-headers {
+        display: none !important;
+    }
+
+    .entry-row,
+    .subject-row {
+        display: flex !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        padding: 12px 10px !important;
+        background: var(--bg-secondary) !important;
+        border: 1px solid var(--border-color) !important;
+        border-radius: 10px !important;
+    }
+
+    .entry-col-name,
+    .gpa-col-name,
+    .entry-row > div:nth-child(1),
+    .subject-row > div:nth-child(1) {
+        flex: 1 1 100% !important;
+        min-width: 100% !important;
+        font-size: 0.95rem !important;
+    }
+
+    .entry-col-credits,
+    .entry-row > div:nth-child(2) {
+        flex: 1 1 75px !important;
+        min-width: 70px !important;
+    }
+
+    .entry-col-grade,
+    .entry-row > div:nth-child(3) {
+        flex: 2 1 120px !important;
+        min-width: 110px !important;
+    }
+
+    .gpa-col-grade,
+    .subject-row > div:nth-child(2) {
+        flex: 1 1 130px !important;
+        min-width: 120px !important;
+    }
+
+    .gpa-col-grade select,
+    .gpa-col-grade input,
+    .subject-row > div:nth-child(2) select,
+    .subject-row > div:nth-child(2) input {
+        max-width: 100% !important;
+        width: 100% !important;
+    }
+
+    .gpa-col-opt,
+    .subject-row > div:nth-child(3) {
+        flex: 1 1 auto !important;
+        display: flex !important;
+        justify-content: flex-end !important;
+        align-items: center !important;
+    }
+
+    .entry-col-action,
+    .gpa-col-action,
+    .entry-row > div:nth-child(4),
+    .subject-row > div:nth-child(4) {
+        flex: 0 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: flex-end !important;
+    }
+
+    .btn-remove-entry,
+    .btn-remove-sub {
+        min-height: 44px !important;
+        min-width: 40px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        font-size: 1.2rem !important;
+    }
+
+    /* Universal Canvas and Scanner Media Scaling */
+    canvas,
+    #output-canvas,
+    #picker-canvas,
+    #png-canvas,
+    #qr-canvas,
+    #pdf-thumb-canvas,
+    #reader,
+    #reader video {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    #comparison-container {
+        grid-template-columns: 1fr !important;
+        gap: 1rem !important;
+    }
+
+    /* File items on mobile */
+    .file-item {
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+        padding: 10px 12px !important;
+    }
+
+    .upload-area {
+        padding: 1.5rem 1rem !important;
+    }
 }
 
 /* Floating Scroll To Top Button */

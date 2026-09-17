@@ -165,21 +165,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         row.innerHTML = `
-            <div style="flex: 2.2; min-width: 170px;">
+            <div class="gpa-col-name" style="flex: 2.2; min-width: 170px;">
                 ${nameInputHtml}
             </div>
-            <div style="flex: 1.5; min-width: 140px;">
+            <div class="gpa-col-grade" style="flex: 1.5; min-width: 140px;">
                 ${inputControlHtml}
             </div>
-            <div style="flex: 1.1; text-align: center; display:flex; align-items:center; justify-content:flex-end;">
-                <label class="radio-badge">
+            <div class="gpa-col-opt" style="flex: 1.1; text-align: center; display:flex; align-items:center; justify-content:flex-end;">
+                <label class="radio-badge" style="min-height:44px; display:inline-flex; align-items:center;">
                     <input type="radio" name="fourth-sub-selector" class="sub-optional-radio" ${isOptional ? 'checked' : ''}>
                     <span>⭐ 4th Subject</span>
                 </label>
             </div>
             ${isCustom ? `
-            <div style="flex: 0.2; text-align: right;">
-                <button class="btn-remove-sub" style="background:none; border:none; color:var(--danger); font-weight:bold; cursor:pointer; font-size:1.1rem;" title="Remove Subject">❌</button>
+            <div class="gpa-col-action" style="flex: 0.2; text-align: right;">
+                <button class="btn-remove-sub" style="background:none; border:none; color:var(--danger); font-weight:bold; cursor:pointer; font-size:1.1rem; min-height:44px; min-width:36px; display:inline-flex; align-items:center; justify-content:center;" title="Remove Subject">❌</button>
             </div>` : ''}
         `;
         
