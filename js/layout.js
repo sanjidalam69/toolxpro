@@ -306,10 +306,8 @@ function injectFooter(homePath, isSubFolder, isHomePage) {
             <div>
                 <h4 class="footer-col-title">Contact Us</h4>
                 <ul class="footer-links-list">
-                    <li style="font-size:0.9rem; margin-bottom:5px;"><a href="${contactLink}" style="color:inherit; text-decoration:underline;">Contact Page</a></li>
-                    <li style="font-size:0.9rem; margin-bottom:5px;">📧 ai.sanjid.alam@gmail.com</li>
-                    <li style="font-size:0.9rem; margin-bottom:5px;">📍 Dhaka, Bangladesh</li>
-                    <li style="font-size:0.9rem; color:var(--text-secondary);">Response Time: Under 24h</li>
+                    <li><a href="${contactLink}">Contact Page</a></li>
+                    <li><a href="mailto:ai.sanjid.alam@gmail.com" title="Send Email" style="display:inline-flex; align-items:center; gap:6px;">✉️ Send Email</a></li>
                 </ul>
             </div>
         </div>
@@ -417,10 +415,10 @@ function initNavInteractions() {
                     </a>
                     <a href="https://www.linkedin.com/in/sanjid-alam-29752619b/" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; gap:10px; background:var(--bg-secondary); padding:10px 14px; border-radius:8px; border:1px solid var(--border-color); text-decoration:none; color:var(--text-primary); font-weight:600;">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="#0A66C2"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                        LinkedIn: Sanjid Alam
+                    <a href="mailto:ai.sanjid.alam@gmail.com" style="display:flex; align-items:center; gap:10px; background:var(--bg-secondary); padding:10px 14px; border-radius:8px; border:1px solid var(--border-color); text-decoration:none; color:var(--text-primary); font-weight:600;">
+                        ✉️ Email: ai.sanjid.alam@gmail.com
                     </a>
                 </div>
-                <p style="font-size:0.85rem; color:var(--text-secondary);">Direct Email: ai.sanjid.alam@gmail.com</p>
             `
         },
         privacy: {
