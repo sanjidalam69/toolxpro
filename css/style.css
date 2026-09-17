@@ -4464,6 +4464,87 @@ pre, code {
     .tool-card {
         padding: 0.85rem 0.65rem !important;
     }
+
+    /* Mobile Blog List Rows */
+    .blog-list-row {
+        padding: 12px 14px !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 10px !important;
+    }
+
+    .blog-list-row:hover {
+        transform: translateY(-2px) !important;
+    }
+
+    .blog-list-desc {
+        white-space: normal !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+        font-size: 0.82rem !important;
+    }
+
+    .blog-list-action {
+        width: 100% !important;
+        justify-content: space-between !important;
+        border-top: 1px dashed var(--border-color) !important;
+        padding-top: 6px !important;
+        margin-top: 4px !important;
+    }
+
+    /* Tool Container on Mobile */
+    .tool-container {
+        padding: 1.4rem 1rem !important;
+        border-radius: 14px !important;
+    }
+
+    .tool-title {
+        font-size: 1.45rem !important;
+    }
+
+    .tool-desc {
+        font-size: 0.88rem !important;
+    }
+
+    /* Table & Email Boxes on Mobile */
+    .tools-table th, 
+    .tools-table td {
+        padding: 8px 10px !important;
+        font-size: 0.85rem !important;
+    }
+
+    .email-highlight-box {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 1rem !important;
+        gap: 10px !important;
+    }
+
+    .email-highlight-box .copy-email-btn {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    .contact-card-box {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 1rem !important;
+        gap: 10px !important;
+    }
+
+    .contact-card-box .contact-btn-link {
+        width: 100% !important;
+        justify-content: center !important;
+    }
+
+    .dev-profile-card {
+        flex-direction: column !important;
+        align-items: stretch !important;
+        padding: 1rem !important;
+        gap: 12px !important;
+    }
 }
 
 /* Floating Scroll To Top Button */

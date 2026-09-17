@@ -315,6 +315,88 @@
             line-height: 1.5;
         }
 
+        /* ── Mobile Responsive Optimizations ── */
+        @media screen and (max-width: 600px) {
+            .voice-tool-container {
+                padding-bottom: 1.5rem;
+            }
+            .voice-header {
+                margin-bottom: 1.2rem;
+            }
+            .voice-header h1 {
+                font-size: 1.45rem;
+                flex-wrap: wrap;
+            }
+            .voice-header p {
+                font-size: 0.88rem;
+                line-height: 1.45;
+            }
+            .voice-tabs-bar {
+                padding: 6px 8px;
+                gap: 6px;
+                -webkit-overflow-scrolling: touch;
+                scrollbar-width: none;
+            }
+            .voice-tabs-bar::-webkit-scrollbar {
+                display: none;
+            }
+            .v-tab-btn {
+                padding: 6px 12px;
+                font-size: 0.82rem;
+                min-height: 38px;
+            }
+            .editor-box {
+                padding: 1rem 0.85rem;
+            }
+            .main-textarea {
+                min-height: 200px;
+                font-size: 1.05rem; /* Prevents iOS auto-zoom */
+                line-height: 1.6;
+            }
+            .voice-bottom-bar {
+                padding: 12px 10px;
+                flex-direction: column;
+                align-items: stretch;
+                gap: 12px;
+            }
+            .mic-main-group {
+                justify-content: space-between;
+                width: 100%;
+            }
+            .mic-start-btn {
+                padding: 8px 16px;
+                font-size: 0.92rem;
+                min-height: 42px;
+            }
+            .mic-status-label {
+                font-size: 0.82rem;
+            }
+            .actions-group {
+                width: 100%;
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 6px;
+            }
+            .action-icon-btn {
+                justify-content: center;
+                padding: 8px 6px;
+                font-size: 0.8rem;
+                min-height: 40px;
+                white-space: nowrap;
+            }
+            .action-icon-btn.btn-clear-red {
+                grid-column: span 3;
+            }
+            .voice-tips-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+                margin-top: 1.5rem;
+            }
+            .voice-tip-card {
+                padding: 14px;
+            }
+        }
+
         /* Toast Popup */
         .clean-toast {
             position: fixed;
