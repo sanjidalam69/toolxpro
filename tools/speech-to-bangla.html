@@ -28,21 +28,19 @@
         /* ── Header ── */
         .voice-header {
             text-align: center;
-            margin-bottom: 1.75rem;
+            margin-bottom: 1.5rem;
         }
         .voice-header h1 {
-            font-size: 2.2rem;
+            font-size: 1.85rem;
             font-weight: 800;
             color: var(--text-primary);
             margin-bottom: 0.4rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            line-height: 1.35;
+            text-align: center;
         }
         .voice-header p {
             color: var(--text-secondary);
-            font-size: 1rem;
+            font-size: 0.95rem;
             max-width: 620px;
             margin: 0 auto;
             line-height: 1.5;
@@ -58,29 +56,32 @@
             transition: var(--transition);
         }
 
-        /* ── Top Tabs (Clean Segmented Bar) ── */
+        /* ── Top Tabs (Clean Equal Segmented Bar) ── */
         .voice-tabs-bar {
             display: flex;
             background: rgba(0, 0, 0, 0.02);
             border-bottom: 1px solid var(--border-color);
-            padding: 8px 12px;
-            gap: 8px;
-            overflow-x: auto;
+            padding: 8px 10px;
+            gap: 6px;
+            width: 100%;
+            box-sizing: border-box;
         }
         [data-theme="dark"] .voice-tabs-bar {
             background: rgba(255, 255, 255, 0.02);
         }
         .v-tab-btn {
-            padding: 8px 18px;
+            flex: 1;
+            padding: 8px 10px;
             border-radius: 30px;
             border: 1px solid transparent;
             background: transparent;
             color: var(--text-secondary);
-            font-size: 0.92rem;
+            font-size: 0.88rem;
             font-weight: 600;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 6px;
             white-space: nowrap;
             transition: var(--transition);
@@ -319,36 +320,34 @@
         @media screen and (max-width: 600px) {
             .voice-tool-container {
                 padding-bottom: 1.5rem;
+                width: 100% !important;
+                max-width: 100% !important;
             }
             .voice-header {
-                margin-bottom: 1rem;
+                margin-bottom: 0.9rem;
             }
             .voice-header h1 {
-                display: block !important;
-                font-size: 1.3rem !important;
+                font-size: 1.25rem !important;
                 line-height: 1.35 !important;
                 word-wrap: break-word !important;
                 text-align: center !important;
-                margin: 0 auto 6px !important;
-            }
-            .voice-header p {
-                font-size: 0.84rem !important;
-                line-height: 1.4 !important;
+                margin: 0 auto 5px !important;
                 padding: 0 4px !important;
             }
-            .voice-tabs-bar {
-                padding: 6px 8px;
-                gap: 6px;
-                -webkit-overflow-scrolling: touch;
-                scrollbar-width: none;
+            .voice-header p {
+                font-size: 0.82rem !important;
+                line-height: 1.4 !important;
+                padding: 0 6px !important;
             }
-            .voice-tabs-bar::-webkit-scrollbar {
-                display: none;
+            .voice-tabs-bar {
+                padding: 6px;
+                gap: 4px;
             }
             .v-tab-btn {
-                padding: 6px 12px;
-                font-size: 0.82rem;
-                min-height: 38px;
+                padding: 7px 4px !important;
+                font-size: 0.78rem !important;
+                min-height: 38px !important;
+                letter-spacing: -0.2px;
             }
             .editor-box {
                 padding: 0.9rem 0.75rem;
@@ -478,16 +477,16 @@
                     <!-- Clean Main App Card -->
                     <div class="voice-app-card">
                         
-                        <!-- Top Mode Selector Tabs -->
+                        <!-- Top Mode Selector Tabs (Clean 3-Segment Bar) -->
                         <div class="voice-tabs-bar">
                             <button class="v-tab-btn active" data-mode="bn-type">
-                                🇧🇩 বাংলা ভয়েস টাইপিং
+                                🇧🇩 বাংলা টাইপিং
                             </button>
                             <button class="v-tab-btn" data-mode="en-to-bn">
-                                🗣️ English ➔ বাংলা অনুবাদ
+                                🗣️ En ➔ বাংলা
                             </button>
                             <button class="v-tab-btn" data-mode="bn-to-en">
-                                🔄 বাংলা ➔ English
+                                🔄 বাংলা ➔ En
                             </button>
                         </div>
 
@@ -497,8 +496,8 @@
                             <!-- Primary Editor Box -->
                             <div class="editor-box">
                                 <div class="editor-box-header">
-                                    <div id="primary-box-title" class="box-title">✍️ বাংলা টেক্সট (Speech Transcript)</div>
-                                    <div id="primary-stats" class="box-stats">0 words | 0 chars</div>
+                                    <div id="primary-box-title" class="box-title">✍️ বাংলা টেক্সট</div>
+                                    <div id="primary-stats" class="box-stats">0 words</div>
                                 </div>
                                 <textarea id="primary-text" class="main-textarea" placeholder="এখানে সরাসরি কথা বলে টাইপ করতে নিচে 'Start Speaking' বাটনে চাপুন..."></textarea>
                             </div>
@@ -506,7 +505,7 @@
                             <!-- Translation Box (Shown in translation modes) -->
                             <div id="translation-box" class="editor-box" style="display: none;">
                                 <div class="editor-box-header">
-                                    <div id="translation-box-title" class="box-title">🌐 অনূদিত ফলাফল (Translation)</div>
+                                    <div id="translation-box-title" class="box-title">🌐 অনুবাদ ফলাফল</div>
                                     <div id="translation-stats" class="box-stats">0 words</div>
                                 </div>
                                 <textarea id="translation-text" class="main-textarea" placeholder="অনুবাদ এখানে স্বয়ংক্রিয়ভাবে দেখাবে..."></textarea>

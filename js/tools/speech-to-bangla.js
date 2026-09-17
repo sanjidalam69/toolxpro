@@ -215,21 +215,21 @@ document.addEventListener("DOMContentLoaded", () => {
             if (isRecording) stopRecording();
 
             if (currentMode === "bn-type") {
-                primaryTitle.textContent = "✍️ বাংলা টেক্সট (Speech Transcript)";
+                primaryTitle.textContent = "✍️ বাংলা টেক্সট";
                 primaryText.placeholder = "এখানে সরাসরি কথা বলে টাইপ করতে নিচে 'Start Speaking' বাটনে চাপুন...";
                 translationBox.style.display = "none";
                 workspace.classList.remove("dual-mode");
             } else if (currentMode === "en-to-bn") {
-                primaryTitle.textContent = "🗣️ English Speech Input";
+                primaryTitle.textContent = "🗣️ English Input";
                 primaryText.placeholder = "Speak in English... words will appear here instantly.";
-                translationTitle.textContent = "🌐 অনূদিত বাংলা টেক্সট (Bangla Translation)";
+                translationTitle.textContent = "🌐 বাংলা অনুবাদ";
                 translationText.placeholder = "ইংরেজি কথার বাংলা অনুবাদ এখানে দেখতে পাবেন...";
                 translationBox.style.display = "flex";
                 workspace.classList.add("dual-mode");
             } else if (currentMode === "bn-to-en") {
-                primaryTitle.textContent = "🇧🇩 মুখে বলা বাংলা টেক্সট (Bangla Speech)";
+                primaryTitle.textContent = "🇧🇩 বাংলা টেক্সট";
                 primaryText.placeholder = "বাংলায় কথা বলুন, এখানে টাইপ হতে থাকবে...";
-                translationTitle.textContent = "🌐 English Translation Output";
+                translationTitle.textContent = "🌐 English Output";
                 translationText.placeholder = "Real-time English translation will appear here...";
                 translationBox.style.display = "flex";
                 workspace.classList.add("dual-mode");
@@ -270,9 +270,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // ── Stats ──
     function updateStats() {
         const text = primaryText.value;
-        const chars = text.length;
         const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-        primaryStats.textContent = `${words} words | ${chars} chars`;
+        primaryStats.textContent = `${words} words`;
     }
 
     function updateTranslationStats() {
