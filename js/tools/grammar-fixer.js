@@ -355,7 +355,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ── Main Proofread Button Click Handler ───────────────────────────────────
     const DEFAULT_GEMINI_KEY = "";
-    const GEMINI_MODELS = ["gemini-2.5-flash", "gemini-flash-lite-latest", "gemini-2.5-pro"];
+    const GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-2.0-flash", "gemini-2.5-pro", "gemini-1.5-flash"];
 
     async function callGeminiGrammarDirect(text, tone = "standard") {
         const apiKey = localStorage.getItem("toolx_gemini_key") || DEFAULT_GEMINI_KEY;

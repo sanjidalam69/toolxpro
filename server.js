@@ -18,6 +18,7 @@
 const express = require("express");
 const cors = require("cors");
 const { runGrammarFix } = require("./lib/grammar-core");
+const { runHumanize } = require("./lib/humanizer-core");
 
 const app = express();
 app.use(cors()); // lock this down to your real domain(s) before going live
@@ -25,7 +26,15 @@ app.use(express.json({ limit: "1mb" }));
 
 app.post("/api/grammar-fix", async (req, res) => {
   const text = (req.body?.text || "").toString();
-  const { status, data } = await runGrammarFix(text, process.env.GEMINI_API_KEY);
+  const tone = (req.body?.tone || "standard").toString();
+  const { status, data } = await runGrammarFix(text, process.env.GEMINI_API_KEY, tone);
+  res.status(status).json(data);
+});
+
+app.post("/api/ai-humanize", async (req, res) => {
+  const text = (req.body?.text || "").toString();
+  const mode = (req.body?.mode || "standard").toString();
+  const { status, data } = await runHumanize(text, process.env.GEMINI_API_KEY, mode);
   res.status(status).json(data);
 });
 
