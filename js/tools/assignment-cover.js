@@ -637,11 +637,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const urlParams = new URLSearchParams(window.location.search);
     const urlMode = urlParams.get("mode"); // 'all', 'seu', or null
 
+    if (btnBackSelection) {
+        btnBackSelection.addEventListener("click", () => {
+            window.location.href = "assignment-cover.html";
+        });
+    }
+
     if (urlMode === "seu" || urlMode === "all") {
         currentMode = urlMode;
-        if (landingSelection) landingSelection.style.display = "none";
+        if (landingSelection) {
+            landingSelection.style.display = "none";
+            landingSelection.classList.add("hidden");
+        }
         if (generatorInterface) {
             generatorInterface.style.display = "";
+            generatorInterface.classList.remove("hidden");
             setMobileView("edit");
         }
 
@@ -664,8 +674,14 @@ document.addEventListener("DOMContentLoaded", () => {
         render();
         setTimeout(resizePreview, 150);
     } else {
-        if (landingSelection) landingSelection.style.display = "block";
-        if (generatorInterface) generatorInterface.style.display = "none";
+        if (landingSelection) {
+            landingSelection.style.display = "block";
+            landingSelection.classList.remove("hidden");
+        }
+        if (generatorInterface) {
+            generatorInterface.style.display = "none";
+            generatorInterface.classList.add("hidden");
+        }
         const toolTitleEl = document.querySelector(".tool-title");
         if (toolTitleEl) toolTitleEl.textContent = "📄 Assignment Cover Generator";
     }

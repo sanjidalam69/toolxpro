@@ -19,6 +19,18 @@
             align-items: flex-start;
         }
 
+        #generator-interface.hidden,
+        #generator-interface[style*="display: none"],
+        #generator-interface[style*="display:none"] {
+            display: none !important;
+        }
+
+        #landing-selection.hidden,
+        #landing-selection[style*="display: none"],
+        #landing-selection[style*="display:none"] {
+            display: none !important;
+        }
+
         /* Mobile Segmented View Switcher */
         .mobile-view-tabs {
             display: none;
@@ -116,9 +128,19 @@
                 display: flex;
             }
             .cover-generator-grid {
-                display: flex !important;
+                display: flex;
                 flex-direction: column;
                 gap: 16px;
+            }
+            #generator-interface.hidden,
+            #generator-interface[style*="display: none"],
+            #generator-interface[style*="display:none"] {
+                display: none !important;
+            }
+            #landing-selection.hidden,
+            #landing-selection[style*="display: none"],
+            #landing-selection[style*="display:none"] {
+                display: none !important;
             }
             .cover-generator-grid.view-edit .preview-wrapper {
                 display: none !important;
@@ -1071,7 +1093,7 @@
                     </div>
 
                     <!-- Generator Interface (hidden by default, shown when ?mode= param is present) -->
-                    <div id="generator-interface" class="cover-generator-grid view-edit" style="display:none;">
+                    <div id="generator-interface" class="cover-generator-grid view-edit hidden" style="display:none;">
                         
                         <!-- Mobile View Switcher Tabs (visible < 992px) -->
                         <div class="mobile-view-tabs" id="mobile-view-tabs">
