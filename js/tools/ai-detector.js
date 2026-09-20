@@ -300,7 +300,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const apiKey = localStorage.getItem("toolx_gemini_key");
         if (!apiKey) return null;
 
-        const MODELS = ["gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-2.0-flash", "gemini-2.5-pro", "gemini-1.5-flash"];
+        const MODELS = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-flash-8b", "gemini-2.0-flash-lite", "gemini-1.5-pro"];
         const prompt = `Analyze this text for AI generation vs Human writing. Respond strictly with JSON:
 {
   "aiScore": <number 0-100>,
@@ -949,7 +949,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (!apiKey) return null;
 
         const cleanBase64 = base64Data.replace(/^data:image\/[a-zA-Z+]+;base64,/, "").trim();
-        const MODELS = ["gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-2.0-flash", "gemini-2.5-pro", "gemini-1.5-flash"];
+        const MODELS = ["gemini-1.5-flash", "gemini-2.0-flash", "gemini-1.5-flash-8b", "gemini-2.0-flash-lite", "gemini-1.5-pro"];
 
         let normMime = (mimeType || "image/jpeg").toLowerCase();
         if (normMime === "image/jpg") normMime = "image/jpeg";
