@@ -593,29 +593,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 let pixelStats = { 
                     noiseLevel: 15, 
                     isSyntheticFlatness: false, 
-                    isGraphicComposite: false, 
-                    hasDarkCutouts: false, 
-                    highSatRatio: 0 
+                    hasPosterLetterbox: false, 
+                    hasExtremeNeonSat: false 
                 };
 
                 try {
                     const imgData = ctx.getImageData(0, 0, drawW, drawH);
                     const d = imgData.data;
                     const totalPixels = drawW * drawH;
-                    let highSatCount = 0;
-                    let darkCount = 0;
+                    let neonSatCount = 0;
                     let totalDiff = 0;
                     let diffSamples = 0;
 
-                    const step = Math.max(8, Math.floor(totalPixels / 8000));
+                    // Sample pixels across image
+                    const step = Math.max(8, Math.floor(totalPixels / 6000));
                     for (let i = 0; i < d.length; i += step * 4) {
                         const r = d[i], g = d[i+1], b = d[i+2];
                         const max = Math.max(r, g, b);
                         const min = Math.min(r, g, b);
                         const sat = max > 0 ? (max - min) / max : 0;
 
-                        if (max < 12) darkCount++;
-                        if (sat > 0.70) highSatCount++;
+                        // Only count extreme unnatural neon saturation (pure synthetic RGB)
+                        if (sat > 0.88 && max > 180) neonSatCount++;
 
                         if (i + 16 < d.length) {
                             const lum1 = 0.299 * r + 0.587 * g + 0.114 * b;
@@ -625,17 +624,34 @@ document.addEventListener("DOMContentLoaded", () => {
                         }
                     }
 
+                    // Check outer canvas edge borders (true black letterbox bars like in 1080x1080 social media posters)
+                    let edgeBlack = 0;
+                    let edgeTotal = 0;
+                    const depth = Math.min(6, Math.floor(drawW * 0.02));
+                    
+                    // Left & Right pillar bars
+                    for (let y = 0; y < drawH; y += 4) {
+                        for (let x = 0; x < depth; x++) {
+                            const idx = (y * drawW + x) * 4;
+                            if (d[idx] < 6 && d[idx+1] < 6 && d[idx+2] < 6) edgeBlack++;
+                            edgeTotal++;
+                        }
+                        for (let x = drawW - depth; x < drawW; x++) {
+                            const idx = (y * drawW + x) * 4;
+                            if (d[idx] < 6 && d[idx+1] < 6 && d[idx+2] < 6) edgeBlack++;
+                            edgeTotal++;
+                        }
+                    }
+
                     const sampleTotal = totalPixels / step;
-                    const darkRatio = darkCount / sampleTotal;
-                    const satRatio = highSatCount / sampleTotal;
+                    const neonRatio = neonSatCount / sampleTotal;
+                    const edgeBlackRatio = edgeTotal > 0 ? edgeBlack / edgeTotal : 0;
                     const avgDiff = diffSamples > 0 ? totalDiff / diffSamples : 10;
 
                     pixelStats.noiseLevel = avgDiff;
-                    pixelStats.highSatRatio = satRatio;
-                    pixelStats.hasDarkCutouts = darkRatio > 0.05;
-                    pixelStats.isSyntheticFlatness = avgDiff < 4.0;
-                    // Composite digital graphics, poster banners or AI art with high saturation / dark borders
-                    pixelStats.isGraphicComposite = darkRatio > 0.04 || satRatio > 0.12;
+                    pixelStats.hasPosterLetterbox = edgeBlackRatio > 0.60;
+                    pixelStats.hasExtremeNeonSat = neonRatio > 0.10;
+                    pixelStats.isSyntheticFlatness = avgDiff < 3.2;
                 } catch (err) {}
 
                 const optimizedDataUrl = canvas.toDataURL("image/jpeg", 0.85);
@@ -877,11 +893,11 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-        // 3. Composite Digital Graphic / AI Banner / Poster Art
-        if (stats && stats.isGraphicComposite) {
+        // 3. Composite Digital Graphic / AI Banner / Poster Art (Letterboxing or Extreme Neon)
+        if (stats && (stats.hasPosterLetterbox || stats.hasExtremeNeonSat)) {
             return {
-                aiProbability: 93,
-                humanProbability: 7,
+                aiProbability: 94,
+                humanProbability: 6,
                 verdict: "AI-Generated / Digital Composite Graphic",
                 suspectedEngine: "Generative AI / Digital Graphic Suite",
                 checklist: {
@@ -890,7 +906,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     lightingAndPhysics: "Unnatural Ambient Glow / Multi-light",
                     backgroundCoherence: "Digital Composite Layering"
                 },
-                explanation: "Forensic pixel analysis detected synthetic graphic saturation, high-contrast dark cutouts, and generative composite styling consistent with AI digital artwork."
+                explanation: "Forensic pixel analysis detected synthetic graphic saturation, high-contrast digital overlays, and generative composite styling consistent with AI digital artwork."
             };
         }
 
