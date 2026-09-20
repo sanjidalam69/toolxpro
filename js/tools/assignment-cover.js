@@ -271,6 +271,161 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <div class="t-date">📅 Date of Submission: ${d.date}</div>
         `,
+
+        // 6. Clean Minimal
+        minimal: (d) => `
+            <div class="t-header">
+                <img class="t-logo" src="${logoSrc}" alt="Logo">
+                <div>
+                    ${d.uni ? '<div class="t-uni">' + d.uni + '</div>' : ''}
+                    ${d.dept ? '<div class="t-dept">' + d.dept + ' Department</div>' : ''}
+                </div>
+            </div>
+            <div class="t-badge">ASSIGNMENT</div>
+            <div class="t-topic-box">
+                <div class="t-topic-label">Assignment Topic</div>
+                ${d.topic ? '<div class="t-topic">' + d.topic + '</div>' : ''}
+                ${d.courseTitle ? '<div class="t-meta-item"><strong>Course Title:</strong> ' + d.courseTitle + '</div>' : ''}
+                ${d.courseCode  ? '<div class="t-meta-item"><strong>Course Code:</strong> ' + d.courseCode + '</div>' : ''}
+            </div>
+            <div class="t-info-row">
+                <div class="t-info-box">
+                    <div class="t-col-label">Submitted By</div>
+                    ${submittedByFields(d, 't-field')}
+                </div>
+                <div class="t-info-box">
+                    <div class="t-col-label">Submitted To</div>
+                    ${submittedToFields(d, 't-field')}
+                </div>
+            </div>
+            <div class="t-date">📅 Date of Submission: ${d.date}</div>
+        `,
+
+        // 7. Tech Geometric
+        geometric: (d) => `
+            <div class="t-geo-header">
+                <img class="t-logo" src="${logoSrc}" alt="Logo">
+                ${d.uni ? '<div class="t-uni">' + d.uni + '</div>' : ''}
+            </div>
+            <div class="t-body">
+                <div class="t-badge-row">
+                    <div class="t-badge">ASSIGNMENT</div>
+                </div>
+                <div class="t-topic-block">
+                    ${d.topic ? '<div class="t-topic">' + d.topic + '</div>' : ''}
+                    ${d.courseTitle ? '<div class="t-course-row"><strong>Course:</strong> ' + d.courseTitle + (d.courseCode ? ' (' + d.courseCode + ')' : '') + '</div>' : ''}
+                </div>
+                <div class="t-info-row">
+                    <div class="t-info-card">
+                        <div class="t-col-label">Submitted By</div>
+                        ${submittedByFields(d, 't-field')}
+                    </div>
+                    <div class="t-info-card">
+                        <div class="t-col-label">Submitted To</div>
+                        ${submittedToFields(d, 't-field')}
+                    </div>
+                </div>
+            </div>
+            <div class="t-geo-footer">
+                Date of Submission: ${d.date}
+            </div>
+        `,
+
+        // 8. Corporate Pro
+        corporate: (d) => `
+            <div class="t-header">
+                <div class="t-header-text">
+                    ${d.uni ? '<div class="t-uni">' + d.uni + '</div>' : ''}
+                    ${d.dept ? '<div class="t-dept">' + d.dept + '</div>' : ''}
+                </div>
+                <img class="t-logo" src="${logoSrc}" alt="Logo">
+            </div>
+            <div class="t-body">
+                <div class="t-badge-strip">
+                    <div class="t-badge">ASSIGNMENT REPORT</div>
+                </div>
+                <div class="t-topic-wrap">
+                    <div class="t-topic-label">Subject & Topic</div>
+                    ${d.topic ? '<div class="t-topic">' + d.topic + '</div>' : ''}
+                    ${d.courseTitle ? '<div class="t-course-row"><strong>Course Title:</strong> ' + d.courseTitle + '</div>' : ''}
+                    ${d.courseCode  ? '<div class="t-course-row"><strong>Course Code:</strong> ' + d.courseCode + '</div>' : ''}
+                </div>
+                <div class="t-info-table">
+                    <div class="t-table-card">
+                        <div class="t-col-label">Submitted By</div>
+                        <div class="t-table-body">
+                            ${submittedByFields(d, 't-field')}
+                        </div>
+                    </div>
+                    <div class="t-table-card">
+                        <div class="t-col-label">Submitted To</div>
+                        <div class="t-table-body">
+                            ${submittedToFields(d, 't-field')}
+                        </div>
+                    </div>
+                </div>
+                <div class="t-date">
+                    <span>Submission Date:</span>
+                    <span>${d.date}</span>
+                </div>
+            </div>
+        `,
+
+        // 9. Ivy Classic
+        crest: (d) => `
+            <div class="t-crest-border"></div>
+            <div class="t-crest-border-inner"></div>
+            <img class="t-logo" src="${logoSrc}" alt="Logo">
+            ${d.uni ? '<div class="t-uni">' + d.uni + '</div>' : ''}
+            <div class="t-laurel">✦ ❖ ✦</div>
+            <div class="t-badge">ASSIGNMENT</div>
+            ${d.topic ? '<div class="t-topic">"' + d.topic + '"</div>' : ''}
+            ${d.courseTitle ? '<div class="t-course-row"><strong>Course Title:</strong> ' + d.courseTitle + '</div>' : ''}
+            ${d.courseCode  ? '<div class="t-course-row"><strong>Course Code:</strong> ' + d.courseCode + '</div>' : ''}
+            <div class="t-divider-diamond">♦ ♦ ♦</div>
+            <div class="t-info-row">
+                <div>
+                    <div class="t-col-label">Submitted By</div>
+                    ${submittedByFields(d, 't-field')}
+                </div>
+                <div>
+                    <div class="t-col-label">Submitted To</div>
+                    ${submittedToFields(d, 't-field')}
+                </div>
+            </div>
+            <div class="t-date">Date of Submission: ${d.date}</div>
+        `,
+
+        // 10. Modern Wave
+        wave: (d) => `
+            <div class="t-wave-header">
+                <div class="t-logo-circle">
+                    <img class="t-logo" src="${logoSrc}" alt="Logo">
+                </div>
+                ${d.uni ? '<div class="t-uni">' + d.uni + '</div>' : ''}
+            </div>
+            <div class="t-body">
+                <div class="t-badge-wrap">
+                    <div class="t-badge">ASSIGNMENT</div>
+                </div>
+                <div class="t-topic-card">
+                    <div class="t-topic-label">Assignment Topic</div>
+                    ${d.topic ? '<div class="t-topic">' + d.topic + '</div>' : ''}
+                    ${(d.courseTitle || d.courseCode) ? '<div class="t-course-row"><strong>Course:</strong> ' + (d.courseTitle || '') + (d.courseTitle && d.courseCode ? ' (' + d.courseCode + ')' : d.courseCode) + '</div>' : ''}
+                </div>
+                <div class="t-info-row">
+                    <div class="t-info-card">
+                        <div class="t-col-label">Submitted By</div>
+                        ${submittedByFields(d, 't-field')}
+                    </div>
+                    <div class="t-info-card">
+                        <div class="t-col-label">Submitted To</div>
+                        ${submittedToFields(d, 't-field')}
+                    </div>
+                </div>
+                <div class="t-date">Date of Submission: ${d.date}</div>
+            </div>
+        `,
     };
 
     // ── Render ────────────────────────────────────────────────────────

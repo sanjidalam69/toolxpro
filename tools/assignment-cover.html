@@ -541,6 +541,345 @@
             box-shadow: 0 6px 20px rgba(0,0,0,0.12);
             box-sizing: border-box;
         }
+
+        /* ─────────────────────────────────────────────────────────────
+           TEMPLATE 6: CLEAN MINIMAL (Modern Scandinavian studio style)
+        ───────────────────────────────────────────────────────────── */
+        .tpl-minimal {
+            background: #ffffff;
+            padding: 60px 70px;
+            display: flex;
+            flex-direction: column;
+            border-left: 18px solid var(--t);
+            box-sizing: border-box;
+        }
+        .tpl-minimal .t-header {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            padding-bottom: 25px;
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 35px;
+        }
+        .tpl-minimal .t-logo { width: 95px; height: 95px; object-fit: contain; }
+        .tpl-minimal .t-uni { font-size: 2.2rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: #111; line-height: 1.2; }
+        .tpl-minimal .t-dept { font-size: 1.2rem; color: #64748b; margin-top: 4px; }
+        .tpl-minimal .t-badge {
+            display: inline-block;
+            align-self: flex-start;
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 5px;
+            text-transform: uppercase;
+            color: var(--t);
+            padding: 8px 24px;
+            border: 2px solid var(--t);
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+        .tpl-minimal .t-topic-box { margin-bottom: 30px; }
+        .tpl-minimal .t-topic-label { font-size: 1rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+        .tpl-minimal .t-topic { font-size: 1.8rem; font-weight: 800; color: #0f172a; line-height: 1.35; margin-bottom: 12px; }
+        .tpl-minimal .t-meta-item { font-size: 1.25rem; color: #475569; margin-bottom: 6px; }
+        .tpl-minimal .t-meta-item strong { color: var(--t); min-width: 120px; display: inline-block; }
+        .tpl-minimal .t-info-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            margin-top: auto;
+            padding-top: 25px;
+            border-top: 2px solid #e2e8f0;
+        }
+        .tpl-minimal .t-info-box {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--t);
+            font-size: 1.15rem;
+        }
+        .tpl-minimal .t-col-label { font-size: 1rem; font-weight: 900; letter-spacing: 1.5px; text-transform: uppercase; color: var(--t); margin-bottom: 12px; }
+        .tpl-minimal .t-field { display: flex; gap: 6px; margin-bottom: 6px; color: #334155; }
+        .tpl-minimal .t-field strong { min-width: 85px; color: #0f172a; }
+        .tpl-minimal .t-date {
+            margin-top: 25px;
+            text-align: right;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #64748b;
+        }
+
+        /* ─────────────────────────────────────────────────────────────
+           TEMPLATE 7: TECH GEOMETRIC (Angular polygons & engineering grid)
+        ───────────────────────────────────────────────────────────── */
+        .tpl-geometric {
+            background: #fafafa;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .tpl-geometric .t-geo-header {
+            background: var(--t);
+            color: #fff;
+            padding: 45px 50px 70px;
+            clip-path: polygon(0 0, 100% 0, 100% 82%, 0 100%);
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .tpl-geometric .t-logo { width: 105px; height: 105px; object-fit: contain; background: #fff; border-radius: 16px; padding: 10px; margin-bottom: 14px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); }
+        .tpl-geometric .t-uni { font-size: 2.3rem; font-weight: 900; letter-spacing: 3px; text-transform: uppercase; line-height: 1.2; }
+        .tpl-geometric .t-body { padding: 25px 60px 20px; display: flex; flex-direction: column; flex: 1; }
+        .tpl-geometric .t-badge-row { display: flex; justify-content: center; margin-bottom: 25px; }
+        .tpl-geometric .t-badge {
+            background: #111827;
+            color: #fff;
+            padding: 12px 50px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            clip-path: polygon(10px 0, 100% 0, calc(100% - 10px) 100%, 0 100%);
+        }
+        .tpl-geometric .t-topic-block {
+            text-align: center;
+            background: #fff;
+            border: 2px solid #e5e7eb;
+            border-top: 5px solid var(--t);
+            padding: 22px 30px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        }
+        .tpl-geometric .t-topic { font-size: 1.6rem; font-weight: 800; color: #111; margin-bottom: 8px; line-height: 1.35; }
+        .tpl-geometric .t-course-row { font-size: 1.25rem; color: #4b5563; }
+        .tpl-geometric .t-course-row strong { color: var(--t); }
+        .tpl-geometric .t-info-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: auto; font-size: 1.2rem; }
+        .tpl-geometric .t-info-card { background: #fff; border: 1px solid #e5e7eb; padding: 18px 20px; border-radius: 8px; }
+        .tpl-geometric .t-col-label { font-size: 1.05rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; color: var(--t); margin-bottom: 10px; border-bottom: 2px dashed var(--t); padding-bottom: 5px; }
+        .tpl-geometric .t-field { display: flex; gap: 6px; margin-bottom: 5px; }
+        .tpl-geometric .t-field strong { min-width: 90px; }
+        .tpl-geometric .t-geo-footer {
+            background: var(--t);
+            color: #fff;
+            padding: 28px 40px 18px;
+            clip-path: polygon(0 25%, 100% 0, 100% 100%, 0 100%);
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-top: 15px;
+        }
+
+        /* ─────────────────────────────────────────────────────────────
+           TEMPLATE 8: CORPORATE PRO (Executive table bands & clean bars)
+        ───────────────────────────────────────────────────────────── */
+        .tpl-corporate {
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            border-top: 16px solid var(--t);
+            border-bottom: 16px solid var(--t);
+            box-sizing: border-box;
+        }
+        .tpl-corporate .t-header {
+            padding: 40px 60px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 3px double #cbd5e1;
+        }
+        .tpl-corporate .t-header-text { flex: 1; padding-right: 20px; }
+        .tpl-corporate .t-uni { font-size: 2.3rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--t); line-height: 1.2; }
+        .tpl-corporate .t-dept { font-size: 1.25rem; color: #64748b; margin-top: 6px; text-transform: uppercase; letter-spacing: 1px; }
+        .tpl-corporate .t-logo { width: 105px; height: 105px; object-fit: contain; }
+        .tpl-corporate .t-body { padding: 35px 60px 30px; display: flex; flex-direction: column; flex: 1; }
+        .tpl-corporate .t-badge-strip {
+            background: #f1f5f9;
+            border-left: 8px solid var(--t);
+            padding: 14px 24px;
+            margin-bottom: 25px;
+        }
+        .tpl-corporate .t-badge { font-size: 1.8rem; font-weight: 900; letter-spacing: 6px; text-transform: uppercase; color: var(--t); }
+        .tpl-corporate .t-topic-wrap { margin-bottom: 25px; }
+        .tpl-corporate .t-topic-label { font-size: 1rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+        .tpl-corporate .t-topic { font-size: 1.7rem; font-weight: 800; color: #1e293b; line-height: 1.35; margin-bottom: 10px; }
+        .tpl-corporate .t-course-row { font-size: 1.25rem; color: #475569; margin-bottom: 4px; }
+        .tpl-corporate .t-course-row strong { color: var(--t); }
+        .tpl-corporate .t-info-table {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-top: auto;
+        }
+        .tpl-corporate .t-table-card {
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            overflow: hidden;
+            font-size: 1.18rem;
+        }
+        .tpl-corporate .t-col-label {
+            background: var(--t);
+            color: #fff;
+            padding: 10px 16px;
+            font-size: 1.05rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
+        .tpl-corporate .t-table-body { padding: 16px; background: #fafafa; }
+        .tpl-corporate .t-field { display: flex; gap: 6px; margin-bottom: 6px; }
+        .tpl-corporate .t-field strong { min-width: 90px; color: #334155; }
+        .tpl-corporate .t-date {
+            margin-top: 22px;
+            background: #0f172a;
+            color: #fff;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* ─────────────────────────────────────────────────────────────
+           TEMPLATE 9: IVY CLASSIC (Prestigious Oxford / Cambridge style)
+        ───────────────────────────────────────────────────────────── */
+        .tpl-crest {
+            background: #fdfbf7;
+            padding: 55px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-sizing: border-box;
+        }
+        .tpl-crest .t-crest-border {
+            position: absolute;
+            inset: 22px;
+            border: 2px solid var(--t);
+            pointer-events: none;
+        }
+        .tpl-crest .t-crest-border-inner {
+            position: absolute;
+            inset: 28px;
+            border: 1px dashed var(--t);
+            opacity: 0.6;
+            pointer-events: none;
+        }
+        .tpl-crest .t-logo { width: 125px; height: 125px; object-fit: contain; margin-bottom: 18px; position: relative; z-index: 1; }
+        .tpl-crest .t-uni { font-size: 2.7rem; font-weight: 900; letter-spacing: 4px; text-transform: uppercase; color: var(--t); margin-bottom: 8px; line-height: 1.2; position: relative; z-index: 1; }
+        .tpl-crest .t-laurel { font-size: 1.4rem; color: var(--t); margin-bottom: 15px; letter-spacing: 6px; }
+        .tpl-crest .t-badge {
+            background: transparent;
+            border-top: 2px solid var(--t);
+            border-bottom: 2px solid var(--t);
+            color: var(--t);
+            font-size: 2rem;
+            font-weight: 900;
+            letter-spacing: 8px;
+            text-transform: uppercase;
+            padding: 10px 40px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+        .tpl-crest .t-topic { font-size: 1.7rem; font-style: italic; color: #1f2937; margin-bottom: 10px; max-width: 85%; line-height: 1.4; position: relative; z-index: 1; }
+        .tpl-crest .t-course-row { font-size: 1.3rem; color: #4b5563; margin-bottom: 4px; position: relative; z-index: 1; }
+        .tpl-crest .t-course-row strong { color: var(--t); }
+        .tpl-crest .t-divider-diamond { color: var(--t); font-size: 1.2rem; margin: 15px 0; letter-spacing: 8px; }
+        .tpl-crest .t-info-row { display: grid; grid-template-columns: 1fr 1fr; width: 85%; gap: 35px; text-align: left; font-size: 1.25rem; margin-top: auto; position: relative; z-index: 1; }
+        .tpl-crest .t-col-label { font-size: 1.15rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; color: var(--t); border-bottom: 1.5px solid var(--t); padding-bottom: 6px; margin-bottom: 10px; }
+        .tpl-crest .t-field { display: flex; gap: 6px; margin-bottom: 6px; }
+        .tpl-crest .t-field strong { min-width: 100px; color: #111; }
+        .tpl-crest .t-date {
+            margin-top: 22px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #111;
+            padding-top: 14px;
+            border-top: 1.5px solid var(--t);
+            width: 75%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ─────────────────────────────────────────────────────────────
+           TEMPLATE 10: MODERN WAVE (Fluid dynamic header & modern glow)
+        ───────────────────────────────────────────────────────────── */
+        .tpl-wave {
+            background: #ffffff;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            overflow: hidden;
+        }
+        .tpl-wave .t-wave-header {
+            background: linear-gradient(135deg, var(--t) 0%, #1e1b4b 100%);
+            padding: 45px 50px 60px;
+            color: #fff;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border-bottom-left-radius: 50% 30px;
+            border-bottom-right-radius: 50% 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.12);
+        }
+        .tpl-wave .t-logo-circle {
+            width: 110px; height: 110px;
+            border-radius: 50%;
+            background: #fff;
+            padding: 10px;
+            margin-bottom: 14px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .tpl-wave .t-logo { width: 90px; height: 90px; object-fit: contain; }
+        .tpl-wave .t-uni { font-size: 2.3rem; font-weight: 900; letter-spacing: 2px; text-transform: uppercase; line-height: 1.2; }
+        .tpl-wave .t-body { padding: 30px 60px 25px; display: flex; flex-direction: column; flex: 1; }
+        .tpl-wave .t-badge-wrap { display: flex; justify-content: center; margin-bottom: 22px; }
+        .tpl-wave .t-badge {
+            background: var(--t);
+            color: #fff;
+            padding: 12px 55px;
+            font-size: 1.8rem;
+            font-weight: 900;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            border-radius: 30px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.15);
+        }
+        .tpl-wave .t-topic-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 20px 25px;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .tpl-wave .t-topic-label { font-size: 0.95rem; font-weight: 800; color: #94a3b8; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 6px; }
+        .tpl-wave .t-topic { font-size: 1.6rem; font-weight: 800; color: #0f172a; margin-bottom: 8px; line-height: 1.35; }
+        .tpl-wave .t-course-row { font-size: 1.2rem; color: #475569; }
+        .tpl-wave .t-course-row strong { color: var(--t); }
+        .tpl-wave .t-info-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: auto; font-size: 1.18rem; }
+        .tpl-wave .t-info-card { background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 18px 20px; }
+        .tpl-wave .t-col-label { font-size: 1rem; font-weight: 900; text-transform: uppercase; color: var(--t); margin-bottom: 10px; display: inline-block; border-bottom: 2px solid var(--t); padding-bottom: 4px; }
+        .tpl-wave .t-field { display: flex; gap: 6px; margin-bottom: 5px; }
+        .tpl-wave .t-field strong { min-width: 90px; color: #334155; }
+        .tpl-wave .t-date {
+            margin-top: 18px;
+            background: linear-gradient(135deg, var(--t) 0%, #1e1b4b 100%);
+            color: #fff;
+            padding: 13px;
+            border-radius: 30px;
+            text-align: center;
+            font-size: 1.25rem;
+            font-weight: bold;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+        }
     </style>
     <!-- Favicon & Brand Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any">
@@ -610,7 +949,12 @@
                                 <button class="tpl-btn" data-tpl="banner"><span class="tpl-icon">🏷️</span>Bold Banner</button>
                                 <button class="tpl-btn" data-tpl="split"><span class="tpl-icon">🌓</span>Split Dark</button>
                                 <button class="tpl-btn" data-tpl="elegant"><span class="tpl-icon">✒️</span>Elegant Border</button>
-                                <button class="tpl-btn" data-tpl="card" style="grid-column: span 2;"><span class="tpl-icon">🃏</span>Modern Card</button>
+                                <button class="tpl-btn" data-tpl="card"><span class="tpl-icon">🃏</span>Modern Card</button>
+                                <button class="tpl-btn" data-tpl="minimal"><span class="tpl-icon">📐</span>Clean Minimal</button>
+                                <button class="tpl-btn" data-tpl="geometric"><span class="tpl-icon">🔷</span>Tech Geometric</button>
+                                <button class="tpl-btn" data-tpl="corporate"><span class="tpl-icon">💼</span>Corporate Pro</button>
+                                <button class="tpl-btn" data-tpl="crest"><span class="tpl-icon">🏛️</span>Ivy Classic</button>
+                                <button class="tpl-btn" data-tpl="wave"><span class="tpl-icon">🌊</span>Modern Wave</button>
                             </div>
 
                             <!-- Theme Color & Font -->
