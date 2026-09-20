@@ -30,13 +30,10 @@
             padding: 20px;
             border-radius: 12px;
             border: 1px solid var(--border-color);
-            max-height: 85vh;
-            overflow-y: auto;
         }
         @media (max-width: 992px) {
             .controls-card {
-                max-height: none;
-                overflow-y: visible;
+                padding: 16px;
             }
         }
 
@@ -100,23 +97,19 @@
         }
         .action-buttons {
             display: flex;
-            gap: 10px;
-            margin-top: 16px;
-            position: sticky;
-            bottom: 0;
-            background: var(--bg-secondary);
-            padding-top: 10px;
-            padding-bottom: 5px;
+            gap: 12px;
+            margin-top: 24px;
+            padding-top: 18px;
             border-top: 1px solid var(--border-color);
-            z-index: 10;
         }
         @media (max-width: 576px) {
             .action-buttons {
                 flex-direction: column;
             }
         }
-        .btn-download-pdf { background: #ef4444; color: white; flex: 1; padding: 12px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; }
-        .btn-download-png { background: #10b981; color: white; flex: 1; padding: 12px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; }
+        .btn-download-pdf { background: #ef4444; color: white; flex: 1; padding: 13px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; font-size: 0.95rem; transition: transform 0.15s, opacity 0.15s; }
+        .btn-download-png { background: #10b981; color: white; flex: 1; padding: 13px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; font-size: 0.95rem; transition: transform 0.15s, opacity 0.15s; }
+        .btn-download-pdf:hover, .btn-download-png:hover { opacity: 0.92; transform: translateY(-1px); }
 
         .preview-container {
             display: flex;
@@ -130,6 +123,13 @@
             min-height: 350px;
             width: 100%;
             box-sizing: border-box;
+            position: sticky;
+            top: 20px;
+        }
+        @media (max-width: 992px) {
+            .preview-container {
+                position: static;
+            }
         }
         @media (max-width: 576px) {
             .preview-container {
