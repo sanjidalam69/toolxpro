@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             inpUni.value = "";
             inpUni.readOnly = false;
-            inpUni.placeholder = "e.g. University of Dhaka";
+            inpUni.placeholder = "";
             logoSrc = customLogoSrc || defaultLogo;
             render();
         });
