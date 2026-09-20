@@ -545,19 +545,22 @@ document.addEventListener("DOMContentLoaded", () => {
     const previewContainer = document.querySelector('.preview-container');
     const resizePreview = () => {
         if (!previewContainer || !preview) return;
-        const padding = window.innerWidth <= 576 ? 12 : 32;
-        const containerWidth = previewContainer.clientWidth || (previewContainer.parentElement ? previewContainer.parentElement.clientWidth : 360);
-        const availableWidth = Math.max(containerWidth - padding, 180);
+        const padding = window.innerWidth <= 576 ? 10 : 40;
+        const cWidth = previewContainer.clientWidth || (previewContainer.parentElement ? previewContainer.parentElement.clientWidth : 0);
+        const containerWidth = cWidth - padding;
         const paperWidth = 794;
-        const scale = (availableWidth < paperWidth) ? (availableWidth / paperWidth) : 1;
-        
-        preview.style.transform = `scale(${scale})`;
-        const computedH = Math.round(1123 * scale) + padding;
-        previewContainer.style.height = `${computedH}px`;
+        if (containerWidth > 0 && containerWidth < paperWidth) {
+            const scale = containerWidth / paperWidth;
+            preview.style.transform = `scale(${scale})`;
+            previewContainer.style.height = `${Math.round(1123 * scale) + padding}px`;
+        } else {
+            preview.style.transform = 'scale(1)';
+            previewContainer.style.height = `${1123 + padding}px`;
+        }
     };
     window.addEventListener('resize', resizePreview);
     window.addEventListener('orientationchange', () => setTimeout(resizePreview, 200));
-    setTimeout(resizePreview, 150);
+    setTimeout(resizePreview, 100);
 
     // ── Download Handlers ─────────────────────────────────────────────
     const generateCanvas = async () => {
