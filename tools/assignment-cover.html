@@ -18,10 +18,125 @@
             gap: 20px;
             align-items: flex-start;
         }
+
+        /* Mobile Segmented View Switcher */
+        .mobile-view-tabs {
+            display: none;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 16px;
+            gap: 6px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .mobile-tab-btn {
+            flex: 1;
+            padding: 11px 14px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .mobile-tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .btn-goto-preview {
+            display: none;
+            width: 100%;
+            background: linear-gradient(135deg, #2563eb, #1d4ed8);
+            color: #fff;
+            padding: 14px;
+            font-weight: 700;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.98rem;
+            margin-top: 14px;
+            text-align: center;
+            transition: opacity 0.15s, transform 0.15s;
+        }
+        .btn-goto-preview:hover { opacity: 0.92; transform: translateY(-1px); }
+
+        .preview-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            position: sticky;
+            top: 20px;
+        }
+
+        .preview-actions-bar {
+            display: none;
+            margin-top: 14px;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .btn-back-to-edit {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 12px 16px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            transition: background 0.2s;
+        }
+        .btn-back-to-edit:hover { background: var(--bg-primary); }
+
+        .preview-dl-group {
+            display: flex;
+            gap: 8px;
+            flex: 1;
+            justify-content: flex-end;
+        }
+
         @media (max-width: 992px) {
+            .mobile-view-tabs {
+                display: flex;
+            }
             .cover-generator-grid {
-                grid-template-columns: 1fr;
-                gap: 25px;
+                display: flex !important;
+                flex-direction: column;
+                gap: 16px;
+            }
+            .cover-generator-grid.view-edit .preview-wrapper {
+                display: none !important;
+            }
+            .cover-generator-grid.view-edit .controls-card {
+                display: block !important;
+            }
+            .cover-generator-grid.view-preview .controls-card {
+                display: none !important;
+            }
+            .cover-generator-grid.view-preview .preview-wrapper {
+                display: flex !important;
+                position: static;
+            }
+            .btn-goto-preview {
+                display: block;
+            }
+            .preview-actions-bar {
+                display: flex;
             }
         }
 
@@ -30,6 +145,7 @@
             padding: 20px;
             border-radius: 12px;
             border: 1px solid var(--border-color);
+            box-sizing: border-box;
         }
         @media (max-width: 992px) {
             .controls-card {
@@ -64,6 +180,7 @@
             background: var(--bg-primary);
             color: var(--text-primary);
             transition: all 0.2s;
+            touch-action: manipulation;
         }
         .tpl-btn:hover { border-color: var(--primary); }
         .tpl-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; }
@@ -87,14 +204,26 @@
 
         .form-control-sm {
             width: 100%;
-            padding: 8px 10px;
+            padding: 9px 12px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
             background: var(--bg-primary);
             color: var(--text-primary);
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             box-sizing: border-box;
         }
+        @media (max-width: 768px) {
+            .form-control-sm {
+                font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
+                padding: 10px 12px;
+            }
+            .tpl-btn {
+                min-height: 48px;
+                font-size: 0.76rem;
+                padding: 8px 4px;
+            }
+        }
+
         .action-buttons {
             display: flex;
             gap: 12px;
@@ -106,9 +235,20 @@
             .action-buttons {
                 flex-direction: column;
             }
+            .preview-dl-group {
+                width: 100%;
+            }
+            .preview-actions-bar {
+                flex-direction: column;
+                gap: 8px;
+            }
+            .btn-back-to-edit {
+                width: 100%;
+                justify-content: center;
+            }
         }
-        .btn-download-pdf { background: #ef4444; color: white; flex: 1; padding: 13px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; font-size: 0.95rem; transition: transform 0.15s, opacity 0.15s; }
-        .btn-download-png { background: #10b981; color: white; flex: 1; padding: 13px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; font-size: 0.95rem; transition: transform 0.15s, opacity 0.15s; }
+        .btn-download-pdf { background: #ef4444; color: white; flex: 1; padding: 13px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; font-size: 0.95rem; transition: transform 0.15s, opacity 0.15s; touch-action: manipulation; }
+        .btn-download-png { background: #10b981; color: white; flex: 1; padding: 13px; font-weight: bold; border-radius: 8px; border: none; cursor: pointer; font-size: 0.95rem; transition: transform 0.15s, opacity 0.15s; touch-action: manipulation; }
         .btn-download-pdf:hover, .btn-download-png:hover { opacity: 0.92; transform: translateY(-1px); }
 
         .preview-container {
@@ -120,20 +260,12 @@
             border-radius: 12px;
             border: 1px solid var(--border-color);
             overflow: hidden;
-            min-height: 350px;
             width: 100%;
             box-sizing: border-box;
-            position: sticky;
-            top: 20px;
-        }
-        @media (max-width: 992px) {
-            .preview-container {
-                position: static;
-            }
         }
         @media (max-width: 576px) {
             .preview-container {
-                padding: 10px 5px;
+                padding: 10px 4px;
                 border-radius: 8px;
             }
         }
@@ -936,13 +1068,23 @@
                     </div>
 
                     <!-- Generator Interface (hidden by default, shown when ?mode= param is present) -->
-                    <div id="generator-interface" class="cover-generator-grid" style="display:none;">
+                    <div id="generator-interface" class="cover-generator-grid view-edit" style="display:none;">
                         
+                        <!-- Mobile View Switcher Tabs (visible < 992px) -->
+                        <div class="mobile-view-tabs" id="mobile-view-tabs">
+                            <button type="button" class="mobile-tab-btn active" id="tab-btn-edit">
+                                <span>✏️</span> Edit Details
+                            </button>
+                            <button type="button" class="mobile-tab-btn" id="tab-btn-preview">
+                                <span>👁️</span> Live Preview
+                            </button>
+                        </div>
+
                         <!-- Left: Form Controls -->
                         <div class="controls-card">
                             <!-- Switch mode header -->
                             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; padding-bottom:10px; border-bottom:1px solid var(--border-color);">
-                                <button id="btn-back-selection" style="background:none; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.9rem;">
+                                <button id="btn-back-selection" style="background:none; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.9rem; display:flex; align-items:center; gap:4px;">
                                     &larr; Switch University Mode
                                 </button>
                             </div>
@@ -967,11 +1109,11 @@
                             <div class="input-grid">
                                 <div>
                                     <label class="form-label">Theme Color</label>
-                                    <input type="color" id="inp-color" class="form-control-sm" value="#1e3a8a" style="height:38px; padding:2px;">
+                                    <input type="color" id="inp-color" class="form-control-sm" value="#1e3a8a" style="height:38px; padding:2px; cursor:pointer;">
                                 </div>
                                 <div>
                                     <label class="form-label">Font Family</label>
-                                    <select id="inp-font" class="form-control-sm">
+                                    <select id="inp-font" class="form-control-sm" style="cursor:pointer;">
                                         <option value="'Times New Roman', Times, serif">Times New Roman</option>
                                         <option value="Arial, Helvetica, sans-serif">Arial</option>
                                         <option value="'Georgia', serif">Georgia</option>
@@ -988,8 +1130,11 @@
                                     <input type="text" id="inp-uni" class="form-control-sm" value="" placeholder="">
                                 </div>
                                 <div>
-                                    <label class="form-label">Upload Logo</label>
-                                    <input type="file" id="inp-logo" accept="image/*" class="form-control-sm">
+                                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                                        <label class="form-label" style="margin-bottom:0;">Upload Logo</label>
+                                        <button type="button" id="btn-reset-logo" style="display:none; background:none; border:none; color:#ef4444; font-size:0.78rem; font-weight:700; cursor:pointer; padding:0 4px;">✖ Reset</button>
+                                    </div>
+                                    <input type="file" id="inp-logo" accept="image/*" class="form-control-sm" style="margin-top:4px;">
                                 </div>
                             </div>
 
@@ -1052,10 +1197,16 @@
                             <h3 class="form-section-title">📅 Submission</h3>
                             <div class="input-grid full">
                                 <div>
-                                    <label class="form-label">Date of Submission</label>
-                                    <input type="text" id="inp-date" class="form-control-sm" value="" placeholder="">
+                                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                                        <label class="form-label" style="margin-bottom:0;">Date of Submission</label>
+                                        <button type="button" id="btn-today-date" style="background:none; border:none; color:var(--primary); font-size:0.8rem; font-weight:700; cursor:pointer; padding:0 4px;">📅 Today</button>
+                                    </div>
+                                    <input type="text" id="inp-date" class="form-control-sm" value="" placeholder="e.g. 20 September 2026" style="margin-top:4px;">
                                 </div>
                             </div>
+
+                            <!-- Mobile Quick View Preview Button -->
+                            <button type="button" id="btn-goto-preview" class="btn-goto-preview">👁️ View Full Preview (A4)</button>
 
                             <!-- Actions -->
                             <div class="action-buttons">
@@ -1064,9 +1215,20 @@
                             </div>
                         </div>
 
-                        <!-- Right: Live Preview -->
-                        <div class="preview-container">
-                            <div id="a4-preview"></div>
+                        <!-- Right: Live Preview Wrapper -->
+                        <div class="preview-wrapper">
+                            <div class="preview-container">
+                                <div id="a4-preview"></div>
+                            </div>
+                            
+                            <!-- Mobile Preview Actions Bar -->
+                            <div class="preview-actions-bar">
+                                <button type="button" id="btn-back-to-edit" class="btn-back-to-edit">✏️ Edit Details</button>
+                                <div class="preview-dl-group">
+                                    <button id="btn-preview-dl-png" class="btn-download-png">🖼️ PNG</button>
+                                    <button id="btn-preview-dl-pdf" class="btn-download-pdf">⬇️ PDF (A4)</button>
+                                </div>
+                            </div>
                         </div>
 
                     </div>

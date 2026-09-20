@@ -458,89 +458,189 @@ document.addEventListener("DOMContentLoaded", () => {
     [inpUni, inpTopic, inpCourseTitle, inpCourseCode,
      inpStudentName, inpStudentId, inpDept, inpSemester,
      inpSection, inpTeacherName, inpTeacherDesig, inpDate
-    ].forEach(el => el.addEventListener("input", render));
-
-    inpColor.addEventListener("input", render);
-    inpFont.addEventListener("change", render);
-
-    // ── Logo Upload ───────────────────────────────────────────────────
-    inpLogo.addEventListener("change", (e) => {
-        const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                customLogoSrc = event.target.result;
-                logoSrc = customLogoSrc;
-                render();
-            };
-            reader.readAsDataURL(file);
-        }
+    ].forEach(el => {
+        if (el) el.addEventListener("input", render);
     });
+
+    if (inpColor) inpColor.addEventListener("input", render);
+    if (inpFont) inpFont.addEventListener("change", render);
+
+    // ── Logo Upload & Reset ───────────────────────────────────────────
+    const btnResetLogo = document.getElementById("btn-reset-logo");
+    if (inpLogo) {
+        inpLogo.addEventListener("change", (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    customLogoSrc = event.target.result;
+                    logoSrc = customLogoSrc;
+                    if (btnResetLogo) btnResetLogo.style.display = "inline-block";
+                    render();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
+
+    if (btnResetLogo) {
+        btnResetLogo.addEventListener("click", () => {
+            customLogoSrc = null;
+            if (inpLogo) inpLogo.value = "";
+            logoSrc = (currentMode === "seu" ? seuLogo : defaultLogo);
+            btnResetLogo.style.display = "none";
+            render();
+        });
+    }
+
+    // ── Insert Today Date Helper ──────────────────────────────────────
+    const btnTodayDate = document.getElementById("btn-today-date");
+    if (btnTodayDate) {
+        btnTodayDate.addEventListener("click", () => {
+            const now = new Date();
+            const formatted = now.toLocaleDateString("en-GB", {
+                day: "numeric",
+                month: "long",
+                year: "numeric"
+            });
+            inpDate.value = formatted;
+            render();
+        });
+    }
+
+    // ── Mobile View Tabs & Navigation ─────────────────────────────────
+    const tabBtnEdit = document.getElementById("tab-btn-edit");
+    const tabBtnPreview = document.getElementById("tab-btn-preview");
+    const btnGotoPreview = document.getElementById("btn-goto-preview");
+    const btnBackToEdit = document.getElementById("btn-back-to-edit");
+
+    function setMobileView(view) {
+        if (!generatorInterface) return;
+        if (view === "preview") {
+            generatorInterface.classList.remove("view-edit");
+            generatorInterface.classList.add("view-preview");
+            if (tabBtnEdit) tabBtnEdit.classList.remove("active");
+            if (tabBtnPreview) tabBtnPreview.classList.add("active");
+            // Trigger recalculation after DOM display change
+            requestAnimationFrame(() => {
+                resizePreview();
+                setTimeout(resizePreview, 50);
+            });
+            window.scrollTo({ top: generatorInterface.offsetTop - 15, behavior: "smooth" });
+        } else {
+            generatorInterface.classList.remove("view-preview");
+            generatorInterface.classList.add("view-edit");
+            if (tabBtnPreview) tabBtnPreview.classList.remove("active");
+            if (tabBtnEdit) tabBtnEdit.classList.add("active");
+            window.scrollTo({ top: generatorInterface.offsetTop - 15, behavior: "smooth" });
+        }
+    }
+
+    if (tabBtnEdit) tabBtnEdit.addEventListener("click", () => setMobileView("edit"));
+    if (tabBtnPreview) tabBtnPreview.addEventListener("click", () => setMobileView("preview"));
+    if (btnGotoPreview) btnGotoPreview.addEventListener("click", () => setMobileView("preview"));
+    if (btnBackToEdit) btnBackToEdit.addEventListener("click", () => setMobileView("edit"));
 
     // ── Preview Scaling ───────────────────────────────────────────────
     const previewContainer = document.querySelector('.preview-container');
     const resizePreview = () => {
         if (!previewContainer || !preview) return;
-        const padding = window.innerWidth <= 576 ? 10 : 40;
-        const containerWidth = previewContainer.clientWidth - padding;
+        const padding = window.innerWidth <= 576 ? 12 : 32;
+        const containerWidth = previewContainer.clientWidth || (previewContainer.parentElement ? previewContainer.parentElement.clientWidth : 360);
+        const availableWidth = Math.max(containerWidth - padding, 180);
         const paperWidth = 794;
-        if (containerWidth > 0 && containerWidth < paperWidth) {
-            const scale = containerWidth / paperWidth;
-            preview.style.transform = `scale(${scale})`;
-            previewContainer.style.height = `${(1123 * scale) + padding}px`;
-        } else {
-            preview.style.transform = 'scale(1)';
-            previewContainer.style.height = `${1123 + padding}px`;
-        }
+        const scale = (availableWidth < paperWidth) ? (availableWidth / paperWidth) : 1;
+        
+        preview.style.transform = `scale(${scale})`;
+        const computedH = Math.round(1123 * scale) + padding;
+        previewContainer.style.height = `${computedH}px`;
     };
     window.addEventListener('resize', resizePreview);
     window.addEventListener('orientationchange', () => setTimeout(resizePreview, 200));
     setTimeout(resizePreview, 150);
 
-    // ── Download ──────────────────────────────────────────────────────
+    // ── Download Handlers ─────────────────────────────────────────────
     const generateCanvas = async () => {
         const originalTransform = preview.style.transform;
         preview.style.transform = 'scale(1)';
-        await new Promise(r => setTimeout(r, 80));
+        await new Promise(r => setTimeout(r, 100));
         const canvas = await html2canvas(preview, {
-            scale: 2, useCORS: true, backgroundColor: "#ffffff", logging: false
+            scale: 2,
+            useCORS: true,
+            backgroundColor: "#ffffff",
+            logging: false,
+            width: 794,
+            height: 1123,
+            windowWidth: 1000,
+            scrollX: 0,
+            scrollY: 0
         });
         preview.style.transform = originalTransform;
         return canvas;
     };
 
-    document.getElementById("btn-dl-png").addEventListener("click", async () => {
-        const btn = document.getElementById("btn-dl-png");
-        btn.textContent = "⏳ Generating...";
-        const canvas = await generateCanvas();
-        const link = document.createElement("a");
-        link.download = "assignment-cover.png";
-        link.href = canvas.toDataURL("image/png");
-        link.click();
-        btn.textContent = "🖼️ Download PNG";
-    });
+    const downloadPNG = async () => {
+        const btns = [document.getElementById("btn-dl-png"), document.getElementById("btn-preview-dl-png")].filter(Boolean);
+        btns.forEach(b => { b.disabled = true; b.textContent = "⏳ Generating PNG..."; });
+        try {
+            const canvas = await generateCanvas();
+            const link = document.createElement("a");
+            link.download = `assignment-cover-${currentTemplate}.png`;
+            link.href = canvas.toDataURL("image/png");
+            link.click();
+        } catch (err) {
+            console.error(err);
+            alert("Failed to generate PNG. Please try again.");
+        } finally {
+            btns.forEach(b => {
+                b.disabled = false;
+                b.textContent = b.id === "btn-preview-dl-png" ? "🖼️ PNG" : "🖼️ Download PNG";
+            });
+        }
+    };
 
-    document.getElementById("btn-dl-pdf").addEventListener("click", async () => {
-        const btn = document.getElementById("btn-dl-pdf");
-        btn.textContent = "⏳ Generating...";
-        const canvas = await generateCanvas();
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
-        const imgData = canvas.toDataURL("image/jpeg", 1.0);
-        pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
-        pdf.save("assignment-cover.pdf");
-        btn.textContent = "⬇️ Download PDF (A4)";
-    });
+    const downloadPDF = async () => {
+        const btns = [document.getElementById("btn-dl-pdf"), document.getElementById("btn-preview-dl-pdf")].filter(Boolean);
+        btns.forEach(b => { b.disabled = true; b.textContent = "⏳ Generating PDF..."; });
+        try {
+            const canvas = await generateCanvas();
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+            const imgData = canvas.toDataURL("image/jpeg", 0.98);
+            pdf.addImage(imgData, "JPEG", 0, 0, 210, 297);
+            pdf.save(`assignment-cover-${currentTemplate}.pdf`);
+        } catch (err) {
+            console.error(err);
+            alert("Failed to generate PDF. Please try again.");
+        } finally {
+            btns.forEach(b => {
+                b.disabled = false;
+                b.textContent = b.id === "btn-preview-dl-pdf" ? "⬇️ PDF (A4)" : "⬇️ Download PDF (A4)";
+            });
+        }
+    };
+
+    const btnDlPng = document.getElementById("btn-dl-png");
+    const btnPreviewDlPng = document.getElementById("btn-preview-dl-png");
+    const btnDlPdf = document.getElementById("btn-dl-pdf");
+    const btnPreviewDlPdf = document.getElementById("btn-preview-dl-pdf");
+
+    if (btnDlPng) btnDlPng.addEventListener("click", downloadPNG);
+    if (btnPreviewDlPng) btnPreviewDlPng.addEventListener("click", downloadPNG);
+    if (btnDlPdf) btnDlPdf.addEventListener("click", downloadPDF);
+    if (btnPreviewDlPdf) btnPreviewDlPdf.addEventListener("click", downloadPDF);
 
     // ── Initial Render & Page Mode Setup ──────────────────────────────
-    // Must be here (after all const/function definitions) so templates, render, resizePreview are all available
     const urlParams = new URLSearchParams(window.location.search);
     const urlMode = urlParams.get("mode"); // 'all', 'seu', or null
 
     if (urlMode === "seu" || urlMode === "all") {
-        // Show generator, hide landing
+        currentMode = urlMode;
         if (landingSelection) landingSelection.style.display = "none";
-        if (generatorInterface) generatorInterface.style.display = "grid";
+        if (generatorInterface) {
+            generatorInterface.style.display = "";
+            setMobileView("edit");
+        }
 
         const toolTitleEl = document.querySelector(".tool-title");
         if (urlMode === "seu") {
@@ -561,7 +661,6 @@ document.addEventListener("DOMContentLoaded", () => {
         render();
         setTimeout(resizePreview, 150);
     } else {
-        // No mode param → show landing, hide generator
         if (landingSelection) landingSelection.style.display = "block";
         if (generatorInterface) generatorInterface.style.display = "none";
         const toolTitleEl = document.querySelector(".tool-title");
