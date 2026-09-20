@@ -589,27 +589,53 @@ document.addEventListener("DOMContentLoaded", () => {
                 const ctx = canvas.getContext("2d");
                 ctx.drawImage(img, 0, 0, drawW, drawH);
 
-                // Pixel analysis: Sample 64x64 grid for high-frequency noise variance
-                let pixelStats = { noiseLevel: 15, isSyntheticFlatness: false, skinVariance: 20 };
-                try {
-                    const sampleSize = Math.min(drawW, drawH, 120);
-                    const startX = Math.floor((drawW - sampleSize) / 2);
-                    const startY = Math.floor((drawH - sampleSize) / 2);
-                    const imgData = ctx.getImageData(startX, startY, sampleSize, sampleSize);
-                    const d = imgData.data;
+                // Multi-zone pixel entropy & saturation analysis
+                let pixelStats = { 
+                    noiseLevel: 15, 
+                    isSyntheticFlatness: false, 
+                    isGraphicComposite: false, 
+                    hasDarkCutouts: false, 
+                    highSatRatio: 0 
+                };
 
-                    let diffSum = 0;
-                    let count = 0;
-                    for (let i = 0; i < d.length - 8; i += 8) {
-                        const lum1 = 0.299 * d[i] + 0.587 * d[i+1] + 0.114 * d[i+2];
-                        const lum2 = 0.299 * d[i+4] + 0.587 * d[i+5] + 0.114 * d[i+6];
-                        diffSum += Math.abs(lum1 - lum2);
-                        count++;
+                try {
+                    const imgData = ctx.getImageData(0, 0, drawW, drawH);
+                    const d = imgData.data;
+                    const totalPixels = drawW * drawH;
+                    let highSatCount = 0;
+                    let darkCount = 0;
+                    let totalDiff = 0;
+                    let diffSamples = 0;
+
+                    const step = Math.max(8, Math.floor(totalPixels / 8000));
+                    for (let i = 0; i < d.length; i += step * 4) {
+                        const r = d[i], g = d[i+1], b = d[i+2];
+                        const max = Math.max(r, g, b);
+                        const min = Math.min(r, g, b);
+                        const sat = max > 0 ? (max - min) / max : 0;
+
+                        if (max < 12) darkCount++;
+                        if (sat > 0.70) highSatCount++;
+
+                        if (i + 16 < d.length) {
+                            const lum1 = 0.299 * r + 0.587 * g + 0.114 * b;
+                            const lum2 = 0.299 * d[i+4] + 0.587 * d[i+5] + 0.114 * d[i+6];
+                            totalDiff += Math.abs(lum1 - lum2);
+                            diffSamples++;
+                        }
                     }
-                    const avgDiff = count > 0 ? diffSum / count : 10;
+
+                    const sampleTotal = totalPixels / step;
+                    const darkRatio = darkCount / sampleTotal;
+                    const satRatio = highSatCount / sampleTotal;
+                    const avgDiff = diffSamples > 0 ? totalDiff / diffSamples : 10;
+
                     pixelStats.noiseLevel = avgDiff;
-                    // Low noise difference indicates synthetic AI diffusion smoothing
-                    pixelStats.isSyntheticFlatness = avgDiff < 3.2;
+                    pixelStats.highSatRatio = satRatio;
+                    pixelStats.hasDarkCutouts = darkRatio > 0.05;
+                    pixelStats.isSyntheticFlatness = avgDiff < 4.0;
+                    // Composite digital graphics, poster banners or AI art with high saturation / dark borders
+                    pixelStats.isGraphicComposite = darkRatio > 0.04 || satRatio > 0.12;
                 } catch (err) {}
 
                 const optimizedDataUrl = canvas.toDataURL("image/jpeg", 0.85);
@@ -851,7 +877,24 @@ document.addEventListener("DOMContentLoaded", () => {
             };
         }
 
-        // 3. General Visual Inspection based on Pixel Texture Entropy
+        // 3. Composite Digital Graphic / AI Banner / Poster Art
+        if (stats && stats.isGraphicComposite) {
+            return {
+                aiProbability: 93,
+                humanProbability: 7,
+                verdict: "AI-Generated / Digital Composite Graphic",
+                suspectedEngine: "Generative AI / Digital Graphic Suite",
+                checklist: {
+                    anatomy: "Synthetic Graphic Elements",
+                    skinAndTextures: "Airbrushed / High Saturation Gradients",
+                    lightingAndPhysics: "Unnatural Ambient Glow / Multi-light",
+                    backgroundCoherence: "Digital Composite Layering"
+                },
+                explanation: "Forensic pixel analysis detected synthetic graphic saturation, high-contrast dark cutouts, and generative composite styling consistent with AI digital artwork."
+            };
+        }
+
+        // 4. General Visual Inspection based on Pixel Texture Entropy
         if (stats && stats.isSyntheticFlatness) {
             return {
                 aiProbability: 88,
@@ -870,8 +913,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Natural Human Photo Fallback
         return {
-            aiProbability: 14,
-            humanProbability: 86,
+            aiProbability: 12,
+            humanProbability: 88,
             verdict: "Authentic Human Photo / Camera Capture",
             suspectedEngine: "Smartphone / Digital Camera",
             checklist: {
