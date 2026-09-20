@@ -50,13 +50,19 @@ document.addEventListener("DOMContentLoaded", () => {
     let speechUtterance = null;
 
     // ── Mode Chip Selection ──────────────────────────────────────────────────
+    const toneTitles = {
+        standard: "Grammar & Spell Fix",
+        paraphrase: "Paraphrase & Rewrite",
+        formal: "Professional Polish"
+    };
+
     modeChips.forEach(chip => {
         chip.addEventListener("click", () => {
             modeChips.forEach(c => c.classList.remove("active"));
             chip.classList.add("active");
             selectedTone = chip.getAttribute("data-tone") || "standard";
             
-            const toneName = chip.querySelector("span:last-child")?.textContent || selectedTone;
+            const toneName = chip.getAttribute("data-title") || toneTitles[selectedTone] || chip.querySelector("span:last-child")?.textContent || selectedTone;
             if (activeModeLabel) {
                 activeModeLabel.textContent = toneName;
             }
