@@ -107,8 +107,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function field(label, value, cls) {
-        // Label always shows, value shows only when filled
-        return `<div class="${cls}"><strong>${label}</strong> <span>: ${value || ''}</span></div>`;
+        // Label and colon always show, value shows when filled with clean wrap
+        return `<div class="${cls}"><strong class="t-label">${label}</strong><span class="t-colon">:</span><span class="t-val">${value || ''}</span></div>`;
     }
 
     function submittedByFields(d, fieldClass) {
