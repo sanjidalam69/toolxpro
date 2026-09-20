@@ -19,10 +19,11 @@ const express = require("express");
 const cors = require("cors");
 const { runGrammarFix } = require("./lib/grammar-core");
 const { runHumanize } = require("./lib/humanizer-core");
+const { runTextDetect, runImageDetect } = require("./lib/detector-core");
 
 const app = express();
 app.use(cors()); // lock this down to your real domain(s) before going live
-app.use(express.json({ limit: "1mb" }));
+app.use(express.json({ limit: "15mb" }));
 
 app.post("/api/grammar-fix", async (req, res) => {
   const text = (req.body?.text || "").toString();
@@ -36,6 +37,20 @@ app.post("/api/ai-humanize", async (req, res) => {
   const mode = (req.body?.mode || "standard").toString();
   const { status, data } = await runHumanize(text, process.env.GEMINI_API_KEY, mode);
   res.status(status).json(data);
+});
+
+app.post("/api/ai-detect", async (req, res) => {
+  const type = req.body?.type || "text";
+  if (type === "image") {
+    const imageData = req.body?.image || "";
+    const mimeType = req.body?.mimeType || "image/jpeg";
+    const { status, data } = await runImageDetect(imageData, mimeType, process.env.GEMINI_API_KEY);
+    res.status(status).json(data);
+  } else {
+    const text = (req.body?.text || "").toString();
+    const { status, data } = await runTextDetect(text, process.env.GEMINI_API_KEY);
+    res.status(status).json(data);
+  }
 });
 
 app.get("/health", (req, res) => res.json({ ok: true }));

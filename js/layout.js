@@ -6,6 +6,7 @@ const CATEGORIES_DATA = [
         icon: '🤖',
         isAi: true,
         tools: [
+            { id: 'ai-detector', name: 'AI Text & Image Detector', desc: 'Scan and detect AI-generated text (ChatGPT, Claude) and AI photos (Midjourney, DALL-E) instantly.', path: 'ai-detector.html' },
             { id: 'ai-humanizer', name: 'AI Text Humanizer', desc: 'Elevate AI drafts into polished human writing with natural nuance and effortless flow.', path: 'ai-humanizer.html' },
             { id: 'speech-to-bangla', name: 'Bangla Voice Typing & Translator', desc: 'Speak in Bengali or English to convert speech into clean Bangla text with real-time translation.', path: 'speech-to-bangla.html' },
             { id: 'grammar-fixer', name: 'AI Grammar & Spell Fixer', desc: 'Check and fix spelling, grammar mistakes, punctuation, and refine writing tone instantly.', path: 'grammar-fixer.html' },

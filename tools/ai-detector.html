@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free AI Detector - Text & Image AI Checker | ToolX Pro</title>
+    <meta name="description" content="Free multi-modal AI Detector. Check whether text was written by ChatGPT, Claude, Gemini or DeepSeek, and scan images to detect Midjourney, DALL-E or Stable Diffusion generation.">
+    <meta name="keywords" content="ai detector, free ai checker, ai text detector, ai image detector, chatgpt detector, midjourney detector, dall-e checker, deepfake detector, turnitin ai detector alternative">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Canonical & Open Graph -->
+    <link rel="canonical" href="https://toolxpro.live/tools/ai-detector.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolxpro.live/tools/ai-detector.html">
+    <meta property="og:title" content="Free AI Detector - Text & Image AI Checker | ToolX Pro">
+    <meta property="og:description" content="Check if text is written by ChatGPT/Claude and scan images to detect Midjourney/DALL-E generation. 100% free with no limits.">
+    <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
+
+    <!-- Favicon & Brand Icons -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#F57C00">
+
+    <style>
+        .detector-wrapper {
+            position: relative;
+            max-width: 980px;
+            margin: 0 auto;
+        }
+
+        .detector-ambient-glow {
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 85%;
+            height: 240px;
+            background: radial-gradient(circle, rgba(239, 68, 68, 0.12) 0%, rgba(124, 58, 237, 0.09) 45%, transparent 70%);
+            filter: blur(50px);
+            z-index: 0;
+            pointer-events: none;
+            animation: pulseDetectorGlow 8s ease-in-out infinite alternate;
+        }
+
+        @keyframes pulseDetectorGlow {
+            0% { opacity: 0.6; transform: translateX(-50%) scale(0.95); }
+            100% { opacity: 1; transform: translateX(-50%) scale(1.06); }
+        }
+
+        .detector-card {
+            position: relative;
+            z-index: 1;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.04);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            transition: var(--transition);
+        }
+
+        [data-theme="dark"] .detector-card {
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(239, 68, 68, 0.15);
+        }
+
+        .detector-hero-header {
+            text-align: center;
+            margin-bottom: 22px;
+        }
+
+        .detector-title {
+            font-family: var(--font-header);
+            font-size: 2.1rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--text-primary) 30%, #ef4444 70%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .detector-subtitle {
+            font-size: 0.94rem;
+            color: var(--text-secondary);
+            max-width: 680px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        /* Mode Switcher Tabs */
+        .detector-mode-tabs {
+            display: flex;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 6px;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .tab-mode-btn {
+            flex: 1;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 10px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .tab-mode-btn:hover {
+            color: var(--text-primary);
+            background: rgba(0, 0, 0, 0.03);
+        }
+
+        [data-theme="dark"] .tab-mode-btn:hover {
+            background: rgba(255, 255, 255, 0.04);
+        }
+
+        .tab-mode-btn.active {
+            background: var(--card-bg);
+            color: var(--text-primary);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+            border: 1px solid var(--border-color);
+        }
+
+        .tab-panel {
+            display: none;
+        }
+
+        .tab-panel.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Text Input Canvas */
+        .text-input-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.25s ease;
+        }
+
+        .text-input-box:focus-within {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.15);
+        }
+
+        .box-header-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            background: rgba(0, 0, 0, 0.02);
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .box-title-label {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .box-actions-group {
+            display: flex;
+            gap: 6px;
+        }
+
+        .btn-mini-pill {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.78rem;
+            font-weight: 600;
+            padding: 5px 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            transition: var(--transition);
+        }
+
+        .btn-mini-pill:hover {
+            border-color: #ef4444;
+            color: #ef4444;
+        }
+
+        .detector-textarea {
+            width: 100%;
+            min-height: 180px;
+            max-height: 480px;
+            padding: 16px;
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: var(--text-primary);
+            background: transparent;
+            border: none;
+            outline: none;
+            resize: vertical;
+            font-family: inherit;
+        }
+
+        .detector-textarea::placeholder {
+            color: var(--text-secondary);
+            opacity: 0.6;
+        }
+
+        .box-footer-hud {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 16px;
+            background: rgba(0, 0, 0, 0.02);
+            border-top: 1px solid var(--border-color);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        /* Image Dropzone */
+        .image-dropzone {
+            background: var(--bg-secondary);
+            border: 2px dashed var(--border-color);
+            border-radius: 16px;
+            padding: 36px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .image-dropzone:hover, .image-dropzone.dragover {
+            border-color: #ef4444;
+            background: rgba(239, 68, 68, 0.03);
+        }
+
+        .dropzone-icon {
+            font-size: 2.8rem;
+            margin-bottom: 12px;
+            display: inline-block;
+            filter: drop-shadow(0 4px 10px rgba(239, 68, 68, 0.2));
+        }
+
+        .dropzone-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+
+        .dropzone-subtitle {
+            font-size: 0.86rem;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+        }
+
+        .dropzone-btn-row {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .image-preview-card {
+            display: none;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 16px;
+            margin-top: 16px;
+            position: relative;
+        }
+
+        .preview-img-container {
+            max-height: 340px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000000;
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .preview-img-container img {
+            max-width: 100%;
+            max-height: 340px;
+            object-fit: contain;
+        }
+
+        .preview-info-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-top: 12px;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Primary Scan Button */
+        .btn-scan-main {
+            width: 100%;
+            padding: 15px 28px;
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 40%, #7c3aed 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 14px;
+            font-size: 1.05rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 18px;
+            box-shadow: 0 6px 20px rgba(239, 68, 68, 0.3);
+            transition: all 0.25s ease;
+        }
+
+        .btn-scan-main:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 26px rgba(239, 68, 68, 0.45);
+        }
+
+        .btn-scan-main:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Results Display Hub */
+        .detector-results-hub {
+            display: none;
+            margin-top: 24px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 22px;
+            animation: slideUp 0.35s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .gauge-score-dashboard {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 18px 22px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .score-gauge-ring {
+            width: 76px;
+            height: 76px;
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            font-size: 1.45rem;
+            border: 5px solid #ef4444;
+            color: #ef4444;
+            box-shadow: 0 0 16px rgba(239, 68, 68, 0.2);
+            flex-shrink: 0;
+            transition: all 0.4s ease;
+        }
+
+        .score-gauge-ring.human-safe {
+            border-color: #10b981;
+            color: #10b981;
+            box-shadow: 0 0 16px rgba(16, 185, 129, 0.2);
+        }
+
+        .score-gauge-ring.mixed-warn {
+            border-color: #f59e0b;
+            color: #f59e0b;
+            box-shadow: 0 0 16px rgba(245, 158, 11, 0.2);
+        }
+
+        .score-title-box h3 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+
+        .score-title-box p {
+            font-size: 0.86rem;
+            color: var(--text-secondary);
+            max-width: 480px;
+            line-height: 1.45;
+        }
+
+        .metrics-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+            margin-bottom: 18px;
+        }
+
+        .metric-mini-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 12px 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .metric-mini-label {
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+        }
+
+        .metric-mini-value {
+            font-size: 0.95rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        /* Sentence Heatmap */
+        .heatmap-container {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 18px;
+            line-height: 1.85;
+            font-size: 1.02rem;
+            margin-bottom: 18px;
+            max-height: 380px;
+            overflow-y: auto;
+        }
+
+        .heat-sentence {
+            padding: 2px 4px;
+            border-radius: 4px;
+            margin: 0 2px;
+            transition: var(--transition);
+        }
+
+        .heat-sentence.heat-ai {
+            background: rgba(239, 68, 68, 0.18);
+            border-bottom: 2px solid #ef4444;
+            color: var(--text-primary);
+        }
+
+        .heat-sentence.heat-mixed {
+            background: rgba(245, 158, 11, 0.18);
+            border-bottom: 2px solid #f59e0b;
+            color: var(--text-primary);
+        }
+
+        .heat-sentence.heat-human {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--text-primary);
+        }
+
+        .heat-legend-bar {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+        }
+
+        .legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        /* Image Forensic Breakdown */
+        .forensic-breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 18px;
+        }
+
+        .forensic-item-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .forensic-item-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .forensic-badge {
+            font-size: 0.76rem;
+            font-weight: 800;
+            padding: 3px 8px;
+            border-radius: 6px;
+        }
+
+        .badge-ai-alert {
+            background: rgba(239, 68, 68, 0.12);
+            color: #ef4444;
+        }
+
+        .badge-human-ok, .badge-human-safe {
+            background: rgba(16, 185, 129, 0.12);
+            color: #10b981;
+        }
+
+        /* Results Action Footer */
+        .results-footer-actions {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding-top: 14px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .btn-action-tool {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            font-weight: 700;
+            padding: 10px 16px;
+            border-radius: 10px;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .btn-action-tool:hover {
+            border-color: #ef4444;
+            transform: translateY(-1px);
+        }
+
+        .btn-humanizer-cta {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #ffffff !important;
+            border: none;
+        }
+
+        .btn-humanizer-cta:hover {
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+        }
+
+        /* Mobile Optimizations */
+        @media screen and (max-width: 680px) {
+            .detector-card {
+                padding: 16px 12px;
+                border-radius: 16px;
+            }
+            .detector-title {
+                font-size: 1.35rem;
+                line-height: 1.35;
+            }
+            .detector-subtitle {
+                font-size: 0.84rem;
+            }
+            .detector-mode-tabs {
+                padding: 4px;
+                gap: 4px;
+            }
+            .tab-mode-btn {
+                padding: 8px 6px;
+                font-size: 0.8rem;
+            }
+            .detector-textarea {
+                min-height: 150px;
+                font-size: 16px !important;
+                padding: 12px;
+            }
+            .btn-scan-main {
+                padding: 13px;
+                font-size: 0.96rem;
+                min-height: 48px;
+                border-radius: 12px;
+            }
+            .gauge-score-dashboard {
+                flex-direction: column;
+                text-align: center;
+                padding: 16px 12px;
+            }
+            .forensic-breakdown-grid {
+                grid-template-columns: 1fr;
+                gap: 8px;
+            }
+            .results-footer-actions {
+                display: grid;
+                grid-template-columns: 1fr;
+                gap: 8px;
+                width: 100%;
+            }
+            .results-footer-actions button, .results-footer-actions a {
+                width: 100%;
+                justify-content: center;
+                min-height: 44px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <header id="main-header"></header>
+        
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+            
+            <main class="content-area">
+                <div class="detector-wrapper">
+                    <div class="detector-ambient-glow"></div>
+
+                    <div class="detector-card">
+                        
+                        <!-- Hero Header -->
+                        <div class="detector-hero-header">
+                            <h1 class="detector-title">🛡️ AI Text & Image Detector</h1>
+                            <p class="detector-subtitle">Verify authenticity in seconds. Detect ChatGPT/Claude text & inspect Midjourney/DALL-E generated photos with zero limits.</p>
+                        </div>
+
+                        <!-- Mode Switcher Tabs -->
+                        <div class="detector-mode-tabs">
+                            <button type="button" class="tab-mode-btn active" id="tab-btn-text" data-mode="text">
+                                <span>📝</span>
+                                <span>AI Text Detector</span>
+                            </button>
+                            <button type="button" class="tab-mode-btn" id="tab-btn-image" data-mode="image">
+                                <span>🖼️</span>
+                                <span>AI Image & Photo Detector</span>
+                            </button>
+                        </div>
+
+                        <!-- ═══════════════════════════════════════════════════════
+                             TAB 1: AI TEXT DETECTOR
+                             ═══════════════════════════════════════════════════════ -->
+                        <div id="panel-text" class="tab-panel active">
+                            <div class="text-input-box">
+                                <div class="box-header-bar">
+                                    <div class="box-title-label">
+                                        <span>📝 Input Text to Scan</span>
+                                    </div>
+                                    <div class="box-actions-group">
+                                        <button type="button" id="paste-text-btn" class="btn-mini-pill">📋 Paste</button>
+                                        <button type="button" id="sample-text-btn" class="btn-mini-pill">💡 Sample AI</button>
+                                        <button type="button" id="clear-text-btn" class="btn-mini-pill">🧹 Clear</button>
+                                    </div>
+                                </div>
+
+                                <textarea id="text-input" class="detector-textarea" placeholder="Paste your essay, article, or paragraph here... AI Detector will scan perplexity, burstiness, syntax patterns, and signature AI phrases in real time." maxlength="10000"></textarea>
+
+                                <div class="box-footer-hud">
+                                    <span id="text-word-count">📝 0 words</span>
+                                    <span id="text-char-count">0 / 10,000 chars</span>
+                                </div>
+                            </div>
+
+                            <button type="button" id="scan-text-btn" class="btn-scan-main">
+                                <span id="scan-text-icon">🔍</span>
+                                <span id="scan-text-label">Scan for AI-Generated Text</span>
+                            </button>
+
+                            <div id="text-status" style="margin-top:12px; font-size:0.9rem; text-align:center; font-weight:700;"></div>
+
+                            <!-- Text Detection Results Hub -->
+                            <div id="text-results-hub" class="detector-results-hub">
+                                <div class="gauge-score-dashboard">
+                                    <div class="score-gauge-ring" id="text-gauge-ring">
+                                        <span id="text-ai-percent">94%</span>
+                                    </div>
+                                    <div class="score-title-box">
+                                        <h3 id="text-verdict-title">Entirely AI-Generated Content</h3>
+                                        <p id="text-verdict-desc">High uniformity in sentence construction and predictable semantic choices characteristic of Large Language Models (ChatGPT / Claude).</p>
+                                    </div>
+                                </div>
+
+                                <div class="metrics-cards-grid">
+                                    <div class="metric-mini-card">
+                                        <span class="metric-mini-label">Perplexity</span>
+                                        <span class="metric-mini-value" id="metric-perplexity">Low (AI)</span>
+                                    </div>
+                                    <div class="metric-mini-card">
+                                        <span class="metric-mini-label">Burstiness</span>
+                                        <span class="metric-mini-value" id="metric-burstiness">Uniform</span>
+                                    </div>
+                                    <div class="metric-mini-card">
+                                        <span class="metric-mini-label">Repetition Pattern</span>
+                                        <span class="metric-mini-value" id="metric-repetition">High</span>
+                                    </div>
+                                </div>
+
+                                <!-- Heatmap View -->
+                                <div class="heat-legend-bar">
+                                    <span>Sentence Heatmap:</span>
+                                    <span class="legend-item"><span class="legend-dot" style="background:#ef4444;"></span> 🔴 Likely AI</span>
+                                    <span class="legend-item"><span class="legend-dot" style="background:#f59e0b;"></span> 🟡 Mixed / Edited</span>
+                                    <span class="legend-item"><span class="legend-dot" style="background:#10b981;"></span> 🟢 Human Writing</span>
+                                </div>
+
+                                <div id="text-heatmap-box" class="heatmap-container"></div>
+
+                                <div class="results-footer-actions">
+                                    <button type="button" id="copy-report-btn" class="btn-action-tool">📋 Copy Report</button>
+                                    <a href="ai-humanizer.html" class="btn-action-tool btn-humanizer-cta">🛡️ Bypass AI? Humanize Text ➔</a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- ═══════════════════════════════════════════════════════
+                             TAB 2: AI IMAGE DETECTOR
+                             ═══════════════════════════════════════════════════════ -->
+                        <div id="panel-image" class="tab-panel">
+                            
+                            <div class="image-dropzone" id="image-dropzone">
+                                <span class="dropzone-icon">🖼️</span>
+                                <h3 class="dropzone-title">Drop your image here or click to browse</h3>
+                                <p class="dropzone-subtitle">Supports JPG, PNG, WebP (Scans Midjourney, DALL-E, Flux, Stable Diffusion & Deepfakes)</p>
+                                
+                                <div class="dropzone-btn-row">
+                                    <button type="button" class="btn-mini-pill" id="browse-img-btn" style="padding:8px 16px; font-size:0.86rem; background:var(--bg-primary);">📁 Choose File</button>
+                                    <button type="button" class="btn-mini-pill" id="sample-ai-img-btn" style="padding:8px 16px; font-size:0.86rem;">💡 Sample AI Art</button>
+                                </div>
+                                <input type="file" id="image-file-input" accept="image/jpeg,image/png,image/webp" style="display:none;">
+                            </div>
+
+                            <!-- Image Preview Card -->
+                            <div id="image-preview-card" class="image-preview-card">
+                                <div class="preview-img-container">
+                                    <img id="preview-img-tag" src="" alt="Image to analyze">
+                                </div>
+                                <div class="preview-info-bar">
+                                    <span id="preview-meta-info">File: 0 KB</span>
+                                    <button type="button" id="remove-img-btn" class="btn-mini-pill" style="color:#ef4444;">🗑️ Remove Image</button>
+                                </div>
+                            </div>
+
+                            <button type="button" id="scan-image-btn" class="btn-scan-main" disabled>
+                                <span id="scan-img-icon">🔍</span>
+                                <span id="scan-img-label">Scan Image for AI Generation</span>
+                            </button>
+
+                            <div id="image-status" style="margin-top:12px; font-size:0.9rem; text-align:center; font-weight:700;"></div>
+
+                            <!-- Image Detection Results Hub -->
+                            <div id="image-results-hub" class="detector-results-hub">
+                                <div class="gauge-score-dashboard">
+                                    <div class="score-gauge-ring" id="image-gauge-ring">
+                                        <span id="image-ai-percent">96%</span>
+                                    </div>
+                                    <div class="score-title-box">
+                                        <h3 id="image-verdict-title">AI-Generated Image Detected</h3>
+                                        <p id="image-suspected-engine">Suspected Generator: Midjourney / Diffusion Model</p>
+                                    </div>
+                                </div>
+
+                                <div class="forensic-breakdown-grid">
+                                    <div class="forensic-item-card">
+                                        <div class="forensic-item-header">
+                                            <span>👤 Anatomy & Hands</span>
+                                            <span class="forensic-badge badge-ai-alert" id="badge-anatomy">AI Artifacts</span>
+                                        </div>
+                                        <span style="font-size:0.82rem; color:var(--text-secondary);">Anomalies in finger geometry, knuckle folds, or eye reflections.</span>
+                                    </div>
+
+                                    <div class="forensic-item-card">
+                                        <div class="forensic-item-header">
+                                            <span>🎨 Skin & Textures</span>
+                                            <span class="forensic-badge badge-ai-alert" id="badge-skin">Airbrushed / Synthetic</span>
+                                        </div>
+                                        <span style="font-size:0.82rem; color:var(--text-secondary);">Excessive diffusion smoothing, wax-like sheen, or blurred hair strands.</span>
+                                    </div>
+
+                                    <div class="forensic-item-card">
+                                        <div class="forensic-item-header">
+                                            <span>💡 Lighting & Shadows</span>
+                                            <span class="forensic-badge badge-ai-alert" id="badge-lighting">Unnatural Highlights</span>
+                                        </div>
+                                        <span style="font-size:0.82rem; color:var(--text-secondary);">Physically inconsistent multi-directional ambient glow.</span>
+                                    </div>
+
+                                    <div class="forensic-item-card">
+                                        <div class="forensic-item-header">
+                                            <span>📐 Background Coherence</span>
+                                            <span class="forensic-badge badge-ai-alert" id="badge-background">Melting / Distorted</span>
+                                        </div>
+                                        <span style="font-size:0.82rem; color:var(--text-secondary);">Warped architecture, illegible pseudo-text, or floating artifacts.</span>
+                                    </div>
+                                </div>
+
+                                <div style="background:var(--bg-primary); border:1px solid var(--border-color); border-radius:12px; padding:16px; margin-bottom:18px;">
+                                    <h4 style="font-size:0.92rem; font-weight:700; margin-bottom:4px; color:var(--text-primary);">🔬 Forensic Analysis Explanation:</h4>
+                                    <p id="image-explanation-text" style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6;">
+                                        Analysis shows characteristic diffusion noise, synthetic skin textures, and physically inconsistent lighting typical of modern generative AI synthesis.
+                                    </p>
+                                </div>
+
+                                <div class="results-footer-actions">
+                                    <button type="button" id="copy-image-report-btn" class="btn-action-tool">📋 Copy Analysis Report</button>
+                                    <button type="button" id="new-image-scan-btn" class="btn-action-tool">🔄 Scan Another Image</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+            </main>
+        </div>
+        
+        <footer id="main-footer"></footer>
+    </div>
+    
+    <script src="../js/layout.js"></script>
+    <script src="../js/tools/ai-detector.js"></script>
+</body>
+</html>
