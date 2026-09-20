@@ -130,7 +130,10 @@ document.addEventListener("DOMContentLoaded", () => {
         clearTextBtn.addEventListener("click", () => {
             textInput.value = "";
             updateTextHUD();
-            if (textResultsHub) textResultsHub.classList.remove("active");
+            if (textResultsHub) {
+                textResultsHub.classList.remove("active");
+                textResultsHub.style.display = "none";
+            }
             if (textStatus) textStatus.textContent = "";
             lastTextReport = null;
         });
@@ -378,6 +381,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Reveal Results
+        textResultsHub.style.display = "block";
         textResultsHub.classList.add("active");
         textResultsHub.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
@@ -704,7 +708,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (imageDropzone) imageDropzone.style.display = "none";
         if (imagePreviewCard) imagePreviewCard.style.display = "block";
         if (scanImageBtn) scanImageBtn.disabled = false;
-        if (imageResultsHub) imageResultsHub.classList.remove("active");
+        if (imageResultsHub) {
+            imageResultsHub.classList.remove("active");
+            imageResultsHub.style.display = "none";
+        }
     }
 
     // Remove Image
@@ -718,7 +725,10 @@ document.addEventListener("DOMContentLoaded", () => {
             if (imagePreviewCard) imagePreviewCard.style.display = "none";
             if (imageDropzone) imageDropzone.style.display = "block";
             if (scanImageBtn) scanImageBtn.disabled = true;
-            if (imageResultsHub) imageResultsHub.classList.remove("active");
+            if (imageResultsHub) {
+                imageResultsHub.classList.remove("active");
+                imageResultsHub.style.display = "none";
+            }
             if (imageStatus) imageStatus.textContent = "";
             lastImageReport = null;
         });
@@ -882,6 +892,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         // Reveal Hub
+        imageResultsHub.style.display = "block";
         imageResultsHub.classList.add("active");
         imageResultsHub.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
