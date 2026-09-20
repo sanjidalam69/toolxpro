@@ -492,7 +492,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const imageDropzone = document.getElementById("image-dropzone");
     const imageFileInput = document.getElementById("image-file-input");
     const browseImgBtn = document.getElementById("browse-img-btn");
-    const sampleAiImgBtn = document.getElementById("sample-ai-img-btn");
     const imagePreviewCard = document.getElementById("image-preview-card");
     const previewImgTag = document.getElementById("preview-img-tag");
     const previewMetaInfo = document.getElementById("preview-meta-info");
@@ -529,10 +528,8 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     if (imageDropzone && imageFileInput) {
-        imageDropzone.addEventListener("click", (e) => {
-            if (e.target !== sampleAiImgBtn && !sampleAiImgBtn?.contains(e.target)) {
-                imageFileInput.click();
-            }
+        imageDropzone.addEventListener("click", () => {
+            imageFileInput.click();
         });
 
         // Drag & Drop
