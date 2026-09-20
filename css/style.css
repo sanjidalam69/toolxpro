@@ -32,19 +32,6 @@
     --border-radius: 16px;
 }
 
-/* ── Permanently Hide Netlify Floating Drawer / Badge ── */
-#netlify-drawer,
-[data-netlify-drawer],
-.netlify-badge,
-iframe[title*="Netlify"],
-iframe[id*="netlify"],
-div[class*="netlify-drawer"],
-netlify-drawer {
-    display: none !important;
-    visibility: hidden !important;
-    opacity: 0 !important;
-    pointer-events: none !important;
-}
 
 [data-theme="dark"] {
     /* Color Palette - Dark Mode (Sleek Obsidian & Amber Gold) */
@@ -3246,7 +3233,7 @@ select.form-control {
 }
 
 /* =========================================================
-   1:1 PIXEL-PERFECT NETLIFY HERO SECTION MATCH (v34.0)
+   1:1 PIXEL-PERFECT HERO SECTION MATCH (v34.0)
    ========================================================= */
 
 .dashboard-header {

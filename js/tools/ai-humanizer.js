@@ -1,5 +1,5 @@
 // ToolX Pro - AI Text Humanizer & Detector Bypass
-// Dual Engine: Gemini AI (Netlify Function) + High-Performance Client-Side Humanizer Fallback
+// Dual Engine: Gemini AI (Cloudflare Pages Function) + High-Performance Client-Side Humanizer Fallback
 
 document.addEventListener("DOMContentLoaded", () => {
     // DOM Elements
@@ -451,7 +451,7 @@ Respond strictly with valid JSON only, no markdown backticks, no preamble:
             try {
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 15000);
-                const res = await fetch("/.netlify/functions/ai-humanize", {
+                const res = await fetch("/api/ai-humanize", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     signal: controller.signal,

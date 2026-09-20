@@ -7,12 +7,9 @@ document.addEventListener("DOMContentLoaded", () => {
     // ═══════════════════════════════════════════════════════════════════════
     function getApiEndpoint() {
         if (window.location.protocol === "file:") {
-            return "https://toolxpro.live/.netlify/functions/ai-detect";
+            return "https://toolxpro.live/api/ai-detect";
         }
-        if (window.location.hostname === "localhost" || window.location.port === "3000" || window.location.port === "3001") {
-            return "/api/ai-detect";
-        }
-        return "/.netlify/functions/ai-detect";
+        return "/api/ai-detect";
     }
 
     // ═══════════════════════════════════════════════════════════════════════

@@ -1,0 +1,5 @@
+# Cloudflare Pages Redirects & Rewrites
+# Rewrites legacy Netlify function paths to standard /api/ endpoints
+/.netlify/functions/grammar-fix /api/grammar-fix 200
+/.netlify/functions/ai-humanize /api/ai-humanize 200
+/.netlify/functions/ai-detect /api/ai-detect 200

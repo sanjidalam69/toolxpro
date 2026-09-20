@@ -1,5 +1,5 @@
 // ToolX Pro - AI Grammar & Tone Co-Pilot
-// Supports Netlify Function (Gemini AI) + Client-Side Fallback Engine + Smart Voice TTS
+// Supports Cloudflare Pages Function (Gemini AI) + Client-Side Fallback Engine + Smart Voice TTS
 
 document.addEventListener("DOMContentLoaded", () => {
     // DOM Elements
@@ -448,12 +448,12 @@ You must respond ONLY with a valid JSON object matching this schema:
 
         let resultData = null;
 
-        // 1. Try Primary Netlify Gemini Function (only on http/https)
+        // 1. Try Primary Cloudflare Pages Gemini Function (only on http/https)
         if (window.location.protocol.startsWith("http")) {
             try {
                 const controller = new AbortController();
                 const timeoutId = setTimeout(() => controller.abort(), 3500);
-                const res = await fetch("/.netlify/functions/grammar-fix", {
+                const res = await fetch("/api/grammar-fix", {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     signal: controller.signal,

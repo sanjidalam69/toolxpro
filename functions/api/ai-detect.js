@@ -1,5 +1,5 @@
-// lib/detector-core.js
-// Multi-Modal AI Content Detector (Text & Image) powered by Gemini AI
+// functions/api/ai-detect.js
+// Cloudflare Pages Function for AI Content & Image Detector (Gemini Vision AI)
 
 const MAX_TEXT_CHARS = 10000;
 const MODELS = [
@@ -12,9 +12,6 @@ const MODELS = [
   "gemini-2.0-flash-lite"
 ];
 
-/**
- * AI Text Detection Engine
- */
 const TEXT_SYSTEM_PROMPT = `You are an expert, unbiased AI Content Detector.
 Analyze the provided text and determine whether it was authored by an AI language model (ChatGPT, Claude, Gemini, DeepSeek, LLaMA) or a human.
 
@@ -50,71 +47,6 @@ Respond strictly with valid JSON only, without markdown fences or preamble:
   ]
 }`;
 
-async function runTextDetect(text, apiKey) {
-  if (!text || !text.trim()) {
-    return { status: 400, data: { error: "No text provided" } };
-  }
-
-  if (text.length > MAX_TEXT_CHARS) {
-    return {
-      status: 400,
-      data: { error: `Text too long. Max ${MAX_TEXT_CHARS} characters, got ${text.length}.` },
-    };
-  }
-
-  if (!apiKey) {
-    return { status: 500, data: { error: "Server misconfigured: GEMINI_API_KEY not set." } };
-  }
-
-  let lastError = null;
-
-  for (const model of MODELS) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: TEXT_SYSTEM_PROMPT }] },
-          contents: [{ role: "user", parts: [{ text }] }],
-          generationConfig: {
-            temperature: 0.1,
-            responseMimeType: "application/json",
-          },
-        }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const raw = (data.candidates?.[0]?.content?.parts?.[0]?.text || "").trim();
-        const jsonMatch = raw.match(/\{[\s\S]*\}/);
-
-        let parsed;
-        if (jsonMatch) {
-          try {
-            parsed = JSON.parse(jsonMatch[0]);
-          } catch (e) {}
-        }
-
-        if (parsed && (parsed.aiScore !== undefined || parsed.verdict)) {
-          return { status: 200, data: parsed };
-        }
-      } else {
-        const errText = await response.text();
-        lastError = `Model ${model} returned ${response.status}: ${errText}`;
-      }
-    } catch (err) {
-      lastError = err.message;
-    }
-  }
-
-  return { status: 502, data: { error: "Service temporarily busy, please try again.", details: lastError } };
-}
-
-/**
- * AI Image Detection Engine
- */
 const IMAGE_SYSTEM_PROMPT = `You are a world-class forensic AI Image, Deepfake & Graphic Media Detector.
 Carefully examine the visual features, composition, typography, and optical properties of the provided image to determine its exact category:
 
@@ -162,89 +94,133 @@ Respond strictly with valid JSON only, without markdown fences or preamble:
   "explanation": "<2-3 concise sentences detailing the specific visual, structural, and forensic findings in this image>"
 }`;
 
-async function runImageDetect(base64Data, mimeType = "image/jpeg", apiKey) {
-  if (!base64Data) {
-    return { status: 400, data: { error: "No image data provided" } };
-  }
+export async function onRequestPost(context) {
+  const { request, env } = context;
+  const apiKey = env.GEMINI_API_KEY || "";
 
-  if (!apiKey) {
-    return { status: 500, data: { error: "Server misconfigured: GEMINI_API_KEY not set." } };
-  }
+  const corsHeaders = {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Content-Type": "application/json",
+  };
 
-  // Clean pure base64
-  const cleanedBase64 = base64Data.replace(/^data:image\/[a-zA-Z+]+;base64,/, "").trim();
+  try {
+    const body = await request.json();
+    const type = body.type || "text";
 
-  // Normalize mime type for Gemini API
-  let normMime = (mimeType || "image/jpeg").toLowerCase();
-  if (normMime === "image/jpg") normMime = "image/jpeg";
-  if (!["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"].includes(normMime)) {
-    normMime = "image/jpeg";
-  }
-
-  let lastError = null;
-
-  for (const model of MODELS) {
-    const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-
-    try {
-      const response = await fetch(url, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          system_instruction: { parts: [{ text: IMAGE_SYSTEM_PROMPT }] },
-          contents: [
-            {
-              role: "user",
-              parts: [
-                {
-                  inlineData: {
-                    mimeType: normMime,
-                    data: cleanedBase64
-                  }
-                },
-                {
-                  text: "Perform deep forensic analysis on this image to accurately determine whether it is a human-designed digital graphic / social media news poster, an authentic camera photograph, human artwork, or an AI-generated synthetic image (Midjourney, DALL-E, Flux, Stable Diffusion). Output strictly JSON."
-                }
-              ]
-            }
-          ],
-          generationConfig: {
-            temperature: 0.1,
-            responseMimeType: "application/json",
-          },
-        }),
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        const raw = (data.candidates?.[0]?.content?.parts?.[0]?.text || "").trim();
-        const jsonMatch = raw.match(/\{[\s\S]*\}/);
-
-        let parsed;
-        if (jsonMatch) {
-          try {
-            parsed = JSON.parse(jsonMatch[0]);
-          } catch (e) {}
-        }
-
-        if (parsed && (parsed.aiProbability !== undefined || parsed.verdict)) {
-          return { status: 200, data: parsed };
-        }
-      } else {
-        const errText = await response.text();
-        lastError = `Model ${model} returned ${response.status}: ${errText}`;
-      }
-    } catch (err) {
-      lastError = err.message;
+    if (!apiKey) {
+      return new Response(JSON.stringify({ error: "Server GEMINI_API_KEY not configured." }), { status: 500, headers: corsHeaders });
     }
-  }
 
-  return { status: 502, data: { error: "Image analysis temporarily busy, please try again.", details: lastError } };
+    if (type === "image") {
+      const imageData = (body.image || "").toString();
+      const mimeType = (body.mimeType || "image/jpeg").toLowerCase();
+
+      if (!imageData) {
+        return new Response(JSON.stringify({ error: "No image data provided" }), { status: 400, headers: corsHeaders });
+      }
+
+      const cleanedBase64 = imageData.replace(/^data:image\/[a-zA-Z+]+;base64,/, "").trim();
+      let normMime = mimeType === "image/jpg" ? "image/jpeg" : mimeType;
+      if (!["image/jpeg", "image/png", "image/webp", "image/heic", "image/heif"].includes(normMime)) {
+        normMime = "image/jpeg";
+      }
+
+      for (const model of MODELS) {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              system_instruction: { parts: [{ text: IMAGE_SYSTEM_PROMPT }] },
+              contents: [{
+                role: "user",
+                parts: [
+                  { inlineData: { mimeType: normMime, data: cleanedBase64 } },
+                  { text: "Perform forensic analysis on this image to accurately determine whether it is a human-designed digital graphic / social media news poster, an authentic camera photograph, human artwork, or an AI-generated synthetic image. Output strictly JSON." }
+                ]
+              }],
+              generationConfig: {
+                temperature: 0.1,
+                responseMimeType: "application/json",
+              },
+            }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            const raw = (data.candidates?.[0]?.content?.parts?.[0]?.text || "").trim();
+            const jsonMatch = raw.match(/\{[\s\S]*\}/);
+            let parsed;
+            if (jsonMatch) {
+              try { parsed = JSON.parse(jsonMatch[0]); } catch (e) {}
+            }
+            if (parsed && (parsed.aiProbability !== undefined || parsed.verdict)) {
+              return new Response(JSON.stringify(parsed), { status: 200, headers: corsHeaders });
+            }
+          }
+        } catch (err) {}
+      }
+
+      return new Response(JSON.stringify({ error: "Image analysis temporarily busy, please try again." }), { status: 502, headers: corsHeaders });
+
+    } else {
+      const text = (body.text || "").toString();
+      if (!text || !text.trim()) {
+        return new Response(JSON.stringify({ error: "No text provided" }), { status: 400, headers: corsHeaders });
+      }
+
+      if (text.length > MAX_TEXT_CHARS) {
+        return new Response(JSON.stringify({ error: `Text too long. Max ${MAX_TEXT_CHARS} characters.` }), { status: 400, headers: corsHeaders });
+      }
+
+      for (const model of MODELS) {
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
+        try {
+          const response = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              system_instruction: { parts: [{ text: TEXT_SYSTEM_PROMPT }] },
+              contents: [{ role: "user", parts: [{ text }] }],
+              generationConfig: {
+                temperature: 0.1,
+                responseMimeType: "application/json",
+              },
+            }),
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            const raw = (data.candidates?.[0]?.content?.parts?.[0]?.text || "").trim();
+            const jsonMatch = raw.match(/\{[\s\S]*\}/);
+            let parsed;
+            if (jsonMatch) {
+              try { parsed = JSON.parse(jsonMatch[0]); } catch (e) {}
+            }
+            if (parsed && (parsed.aiScore !== undefined || parsed.verdict)) {
+              return new Response(JSON.stringify(parsed), { status: 200, headers: corsHeaders });
+            }
+          }
+        } catch (err) {}
+      }
+
+      return new Response(JSON.stringify({ error: "Text analysis temporarily busy, please try again." }), { status: 502, headers: corsHeaders });
+    }
+  } catch (err) {
+    return new Response(JSON.stringify({ error: "Invalid JSON payload" }), { status: 400, headers: corsHeaders });
+  }
 }
 
-module.exports = {
-  runTextDetect,
-  runImageDetect,
-  MAX_TEXT_CHARS
-};
-
+export async function onRequestOptions() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+    },
+  });
+}
