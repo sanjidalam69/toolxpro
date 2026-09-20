@@ -23,7 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Quick Action Buttons
     const pasteBtn = document.getElementById("paste-btn");
-    const sampleBtn = document.getElementById("sample-btn");
     const clearBtn = document.getElementById("clear-btn");
 
     // Results Hub Elements

@@ -49,7 +49,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const textWordCount = document.getElementById("text-word-count");
     const textCharCount = document.getElementById("text-char-count");
     const pasteTextBtn = document.getElementById("paste-text-btn");
-    const sampleTextBtn = document.getElementById("sample-text-btn");
     const clearTextBtn = document.getElementById("clear-text-btn");
     const scanTextBtn = document.getElementById("scan-text-btn");
     const scanTextIcon = document.getElementById("scan-text-icon");
@@ -70,26 +69,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const MAX_TEXT_CHARS = 10000;
     let lastTextReport = null;
-
-    // Sample Texts (AI & Human)
-    const SAMPLE_TEXTS = [
-        {
-            type: "ai",
-            title: "ChatGPT Essay on Education",
-            text: "In today's fast-paced digital era, artificial intelligence stands as a paramount testament to human innovation. It is crucial to delve into the multifaceted tapestry of modern pedagogical paradigms. Furthermore, educational technologies play a pivotal role in seamlessly transforming traditional classrooms into dynamic learning hubs. In conclusion, it is worth noting that navigating this evolving landscape requires a holistic approach to foster academic excellence."
-        },
-        {
-            type: "ai",
-            title: "AI Business Strategy",
-            text: "Effective corporate leadership is the cornerstone of sustainable organizational growth. Furthermore, harnessing the power of cutting-edge analytics enables enterprises to streamline operational efficiencies. In the realm of global commerce, adopting a multifaceted strategy paves the way for unprecedented market leadership. In conclusion, delving into cross-cultural synergies is crucial for modern enterprise resilience."
-        },
-        {
-            type: "human",
-            title: "Authentic Human Narrative",
-            text: "I spent three hours yesterday debugging a single line of CSS that wouldn't center. It turned out someone had added an invisible overflow hidden property inside a nested wrapper div three weeks ago. Honestly, sometimes writing code feels less like engineering and more like detective work on a cold case."
-        }
-    ];
-    let currentSampleIndex = 0;
 
     // Live Text HUD
     function updateTextHUD() {
@@ -124,17 +103,6 @@ document.addEventListener("DOMContentLoaded", () => {
             } catch (err) {
                 textInput.focus();
             }
-        });
-    }
-
-    // Sample Text Loader
-    if (sampleTextBtn) {
-        sampleTextBtn.addEventListener("click", () => {
-            const sample = SAMPLE_TEXTS[currentSampleIndex % SAMPLE_TEXTS.length];
-            currentSampleIndex++;
-            textInput.value = sample.text;
-            updateTextHUD();
-            showStatus(textStatus, `Loaded sample: ${sample.title}`, "#10b981");
         });
     }
 
@@ -734,53 +702,6 @@ document.addEventListener("DOMContentLoaded", () => {
             showStatus(imageStatus, "✅ Image loaded ready for forensic scan.", "#10b981");
         };
         reader.readAsDataURL(file);
-    }
-
-    // Sample AI Image Generator (Creates an artistic Midjourney test sample)
-    if (sampleAiImgBtn) {
-        sampleAiImgBtn.addEventListener("click", async (e) => {
-            e.stopPropagation();
-            originalFileName = "Sample_Midjourney_Cyberpunk_Art.png";
-            detectedCameraMeta = { isCameraExif: false, cameraBrand: "", hasAiTags: true, detectedSoftware: "Midjourney v6" };
-            canvasPixelStats = { noiseLevel: 1.5, isSyntheticFlatness: true };
-            
-            const canvas = document.createElement("canvas");
-            canvas.width = 768;
-            canvas.height = 768;
-            const ctx = canvas.getContext("2d");
-
-            // Cyberpunk / Midjourney-like ethereal gradient
-            const grad = ctx.createRadialGradient(384, 384, 40, 384, 384, 420);
-            grad.addColorStop(0, "#c084fc");
-            grad.addColorStop(0.3, "#ec4899");
-            grad.addColorStop(0.7, "#3b82f6");
-            grad.addColorStop(1, "#030712");
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, 768, 768);
-
-            // AI Neon Geometry Rings
-            ctx.strokeStyle = "rgba(255, 255, 255, 0.4)";
-            ctx.lineWidth = 4;
-            for (let i = 0; i < 7; i++) {
-                ctx.beginPath();
-                ctx.arc(384, 384, 90 + i * 40, 0, Math.PI * 2);
-                ctx.stroke();
-            }
-
-            // Synth Text Watermark
-            ctx.fillStyle = "#ffffff";
-            ctx.font = "bold 28px Inter, sans-serif";
-            ctx.textAlign = "center";
-            ctx.fillText("🎨 Sample AI Generative Image", 384, 360);
-            ctx.font = "16px Inter, sans-serif";
-            ctx.fillStyle = "rgba(255, 255, 255, 0.85)";
-            ctx.fillText("Midjourney v6 / Flux Synthesis Test", 384, 400);
-
-            currentImageDataUrl = canvas.toDataURL("image/jpeg", 0.90);
-            currentImageMime = "image/jpeg";
-            showImagePreview(currentImageDataUrl, "Sample_Midjourney_Art.png (768×768px, 115 KB)");
-            showStatus(imageStatus, "💡 Sample AI image loaded! Click 'Scan Image' below.", "#10b981");
-        });
     }
 
     // Show Preview Card

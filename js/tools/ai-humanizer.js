@@ -19,7 +19,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Action Buttons
     const pasteBtn = document.getElementById("paste-btn");
-    const sampleBtn = document.getElementById("sample-btn");
     const uploadBtn = document.getElementById("upload-btn");
     const fileInput = document.getElementById("file-input");
     const clearBtn = document.getElementById("clear-btn");
@@ -48,13 +47,6 @@ document.addEventListener("DOMContentLoaded", () => {
     let isSpeaking = false;
     let speechUtterance = null;
     let lastChanges = [];
-
-    // ── Sample AI Text (Typical robotic ChatGPT output) ──────────────────────
-    const sampleAiTexts = [
-        "In today's fast-paced digital era, the importance of artificial intelligence cannot be overstated. It is crucial to delve into the multifaceted tapestry of modern technology. Furthermore, AI serves as a paramount beacon of innovation, seamlessly transforming various industries. In conclusion, it is worth noting that navigating this dynamic landscape requires a holistic approach to foster sustainable growth.",
-        "Education stands as a testament to human progress. Moreover, modern pedagogical paradigms utilize diverse methodologies to elevate student engagement. It is paramount to acknowledge that technology plays a pivotal role in unlocking new horizons of academic excellence.",
-        "Effective communication is a cornerstone of business success. Furthermore, delving into cross-cultural nuances fosters seamless collaboration among global teams. In conclusion, adopting a multifaceted strategy is crucial to revolutionize corporate productivity."
-    ];
 
     // ── Mode Switcher ────────────────────────────────────────────────────────
     modeChips.forEach(chip => {
