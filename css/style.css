@@ -53,7 +53,96 @@
     --glass-border: 1px solid rgba(245, 158, 11, 0.15);
     --success: #34d399;
     --warning: #f59e0b;
-    --danger: #f87171;
+}
+
+/* ── Tool & Blog Top Navigation / Back Button ── */
+.tool-nav-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    max-width: var(--container-max-width, 1000px);
+    margin: 0 auto 1.25rem auto;
+    padding: 0 4px;
+    flex-wrap: wrap;
+    gap: 10px;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.back-to-home-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 18px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+    border-radius: 30px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: var(--transition);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.back-to-home-btn:hover {
+    border-color: var(--primary);
+    color: var(--primary);
+    transform: translateX(-3px);
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.18);
+}
+
+.back-to-home-btn svg {
+    transition: transform 0.2s ease;
+}
+
+.back-to-home-btn:hover svg {
+    transform: translateX(-3px);
+}
+
+.tool-breadcrumb-trail {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.84rem;
+    color: var(--text-secondary);
+}
+
+.tool-breadcrumb-trail a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.tool-breadcrumb-trail a:hover {
+    color: var(--primary);
+}
+
+.tool-breadcrumb-trail .crumb-sep {
+    opacity: 0.5;
+    font-size: 0.75rem;
+}
+
+.tool-breadcrumb-trail .crumb-active {
+    color: var(--text-primary);
+    font-weight: 600;
+    max-width: 220px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 576px) {
+    .tool-nav-top-bar {
+        margin-bottom: 0.85rem;
+    }
+    .back-to-home-btn {
+        padding: 6px 14px;
+        font-size: 0.82rem;
+    }
+    .tool-breadcrumb-trail {
+        display: none;
+    }
 }
 
 * {

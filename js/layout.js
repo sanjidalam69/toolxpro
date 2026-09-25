@@ -76,6 +76,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Inject Layout Elements
     injectGoogleAdSense();
     injectHeader(homePath, isSubFolder, isHomePage);
+    injectToolBackButton(homePath, isSubFolder, isHomePage);
     injectFooter(homePath, isSubFolder, isHomePage);
     // injectSocialBarAd(); // Temporarily paused during Google AdSense review
     
@@ -131,6 +132,80 @@ function updateThemeIcon(theme) {
             themeBtn.setAttribute("title", "Switch to Dark Mode");
         }
     }
+}
+
+// Inject Top Navigation & Back Button on Tool and Blog Pages
+function injectToolBackButton(homePath, isSubFolder, isHomePage) {
+    if (isHomePage) return;
+    
+    const path = window.location.pathname.toLowerCase();
+    const isToolPage = path.includes('/tools/');
+    const isBlogPage = path.includes('/blog/');
+    
+    if (!isToolPage && !isBlogPage) return;
+    
+    // Prevent double injection
+    if (document.querySelector(".tool-nav-top-bar")) return;
+    
+    const contentArea = isToolPage 
+        ? document.querySelector(".content-area") 
+        : document.querySelector(".main-wrapper, .blog-article-container, .content-area");
+        
+    if (!contentArea) return;
+    
+    // Extract current file name from URL path
+    const pathParts = window.location.pathname.split('/');
+    const lastPart = pathParts[pathParts.length - 1].toLowerCase();
+    const cleanFileName = lastPart.replace('.html', '');
+    
+    let categoryName = 'Tools';
+    let toolName = document.title ? document.title.split('-')[0].split('|')[0].trim() : 'Tool';
+    let backUrl = `${homePath}#tools-container`;
+    let backLabel = 'Back to All Tools';
+    
+    if (isToolPage) {
+        for (const cat of CATEGORIES_DATA) {
+            const found = cat.tools.find(t => {
+                if (!t.path) return false;
+                const toolClean = t.path.toLowerCase().replace('.html', '');
+                return toolClean === cleanFileName || t.path.toLowerCase() === lastPart;
+            });
+            if (found) {
+                categoryName = cat.name;
+                toolName = found.name;
+                break;
+            }
+        }
+    } else if (isBlogPage) {
+        categoryName = 'Blog';
+        backUrl = `${homePath}#blog-container`;
+        backLabel = 'Back to All Articles';
+        const h1 = document.querySelector('h1');
+        if (h1 && h1.textContent.trim()) {
+            toolName = h1.textContent.trim();
+        }
+    }
+    
+    const navBar = document.createElement("div");
+    navBar.className = "tool-nav-top-bar";
+    navBar.innerHTML = `
+        <a href="${backUrl}" class="back-to-home-btn" title="${backLabel}">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="19" y1="12" x2="5" y2="12"></line>
+                <polyline points="12 19 5 12 12 5"></polyline>
+            </svg>
+            <span>${backLabel}</span>
+        </a>
+        <nav class="tool-breadcrumb-trail" aria-label="Breadcrumb">
+            <a href="${homePath}">Home</a>
+            <span class="crumb-sep">/</span>
+            <a href="${backUrl}">${categoryName}</a>
+            <span class="crumb-sep">/</span>
+            <span class="crumb-active" title="${toolName}">${toolName}</span>
+        </nav>
+    `;
+    
+    contentArea.insertBefore(navBar, contentArea.firstChild);
 }
 
 
