@@ -64,11 +64,11 @@ const CATEGORIES_DATA = [
     }
 ];
 
-document.addEventListener("DOMContentLoaded", () => {
+function initLayout() {
     // Detect Path Depth & Page Type
     const path = window.location.pathname.toLowerCase();
-    const isSubFolder = path.includes('/tools/') || path.includes('/blog/');
-    const isToolPage = path.includes('/tools/');
+    const isSubFolder = path.includes('/tools/') || path.includes('/blog/') || path.includes('tools/') || path.includes('blog/');
+    const isToolPage = path.includes('/tools/') || path.includes('tools/');
     const isHomePage = path.endsWith('/index.html') || path.endsWith('/') || path === '' || (!path.includes('.html') && !isSubFolder);
     const homePath = isSubFolder ? '../index.html' : 'index.html';
     const toolsPrefix = isSubFolder ? '' : 'tools/';
@@ -98,7 +98,13 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Initialize Mobile Navigation Drawer (Feedback UI)
     initMobileDrawer(homePath, isSubFolder, isHomePage);
-});
+}
+
+if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initLayout);
+} else {
+    initLayout();
+}
 
 // Theme Handling
 function initTheme() {
