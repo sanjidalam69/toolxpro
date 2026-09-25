@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Converter - ToolX Pro</title>
-    <meta name="description" content="Convert images between JPG, PNG, and WebP formats instantly and securely without server uploads.">
+    <title>Image Converter - Free Online JPG, PNG & WebP Image Converter | ToolX Pro</title>
+    <meta name="description" content="Convert images between JPG, PNG, and WebP formats instantly in your browser. Free client-side image converter with transparency support and zero file size limits.">
+    <link rel="canonical" href="https://toolxpro.live/tools/image-converter.html">
     <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolxpro.live/tools/image-converter.html">
+    <meta property="og:title" content="Image Converter - Free Online JPG, PNG & WebP Converter | ToolX Pro">
+    <meta property="og:description" content="Convert pictures from PNG to JPG, JPG to WebP, and WebP to PNG without quality degradation.">
+    <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
+
     <!-- Favicon & Brand Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
@@ -15,6 +27,56 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#F57C00">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Online Image Format Converter",
+          "url": "https://toolxpro.live/tools/image-converter.html",
+          "applicationCategory": "MultimediaApplication",
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What happens to a transparent PNG when converted to JPG?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Because the standard JPEG format does not support alpha-channel transparency, transparent background pixels are rendered on a clean solid white background."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Why should I convert my website images to WebP?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "WebP delivers 25% to 35% smaller file sizes than PNG or JPEG while maintaining equal visual sharpness, drastically reducing page load times and mobile data consumption."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is there any limit to the number of photos I can convert?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. You can convert unlimited images for free. Processing is done directly in your browser without waiting in server queues."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <div id="app-container">
@@ -26,8 +88,8 @@
             <main class="content-area">
                 <div class="tool-container">
                     <div class="tool-header">
-                        <h1 class="tool-title">🔁 Image Converter</h1>
-                        <p class="tool-desc">Change image file formats (e.g. PNG to JPG, JPG to WebP) easily and locally.</p>
+                        <h1 class="tool-title">🔁 High-Fidelity Image Converter</h1>
+                        <p class="tool-desc">Convert images between JPG, PNG, and WebP formats instantly with pixel-perfect accuracy. Completely private with zero server uploads.</p>
                     </div>
                     
                     <div class="tool-body">
@@ -35,26 +97,26 @@
                         <div class="upload-area" id="drop-area">
                             <span class="upload-icon">🔁</span>
                             <h3 style="font-size:1.1rem; font-weight:600;">Drag & drop your image here or click to browse</h3>
-                            <p style="font-size:0.85rem; color:var(--text-secondary);">Supports all standard image formats</p>
+                            <p style="font-size:0.85rem; color:var(--text-secondary);">Supports all standard image formats: PNG, JPG, JPEG, WebP, BMP</p>
                             <input type="file" id="image-upload" accept="image/*" style="display:none;">
                         </div>
 
                         <!-- Converter Settings -->
                         <div id="settings-area" style="display:none; margin-top:1.5rem; animation: fadeIn 0.3s;">
-                            <div style="display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:space-between; background:var(--bg-secondary); padding:1rem; border-radius:8px; border:1px solid var(--border-color);">
+                            <div style="display:flex; flex-wrap:wrap; gap:20px; align-items:center; justify-content:space-between; background:var(--bg-secondary); padding:1rem; border-radius:12px; border:1px solid var(--border-color);">
                                 <div style="display:flex; align-items:center; gap:10px;">
-                                    <img id="image-preview" style="max-height:80px; max-width:80px; border-radius:8px; object-fit:cover; border:1px solid var(--border-color);">
+                                    <img id="image-preview" style="max-height:80px; max-width:80px; border-radius:8px; object-fit:cover; border:1px solid var(--border-color);" alt="Preview">
                                     <div>
                                         <p id="file-name" style="font-weight:600; font-size:0.95rem; word-break:break-all;"></p>
                                         <p id="file-details" style="font-size:0.85rem; color:var(--text-secondary);"></p>
                                     </div>
                                 </div>
                                 <div class="form-group" style="margin-bottom:0; min-width:200px; flex:1;">
-                                    <label for="format-select">Select Target Format:</label>
-                                    <select id="format-select" class="form-control" style="margin-top:5px;">
-                                        <option value="image/jpeg">JPG / JPEG</option>
-                                        <option value="image/png">PNG (Supports Transparency)</option>
-                                        <option value="image/webp">WebP (Modern Web Format)</option>
+                                    <label for="format-select" style="font-weight:600;">Select Target Format:</label>
+                                    <select id="format-select" class="form-control" style="margin-top:6px;">
+                                        <option value="image/jpeg">JPG / JPEG (Universal Photo Standard)</option>
+                                        <option value="image/png">PNG (Lossless & Alpha Transparency)</option>
+                                        <option value="image/webp">WebP (Next-Gen High-Speed Web Format)</option>
                                     </select>
                                 </div>
                             </div>
@@ -64,10 +126,73 @@
                     </div>
                     
                     <div id="results" class="results-card">
-                        <h2 class="results-title">📊 Converted Image</h2>
+                        <h2 class="results-title">📊 Converted Image Results</h2>
                         <div class="results-content" id="results-content">
                             <!-- Injected by JS -->
                         </div>
+                    </div>
+
+                    <!-- ═══════════════════════════════════════════════════════
+                         AUTHORITATIVE EDITORIAL GUIDE & FORMAT COMPARISON
+                         ═══════════════════════════════════════════════════════ -->
+                    <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
+                        
+                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            🔄 Choosing the Right Image Format for Your Needs
+                        </h2>
+                        <p style="margin-bottom: 1.2rem;">
+                            Digital image formats serve different engineering and aesthetic purposes. Selecting the correct file extension prevents unwanted compression artifacts, preserves transparency, and avoids upload rejections on formal application portals.
+                        </p>
+
+                        <div style="overflow-x: auto; margin: 1rem 0;">
+                            <table style="width: 100%; border-collapse: collapse; border: 1px solid var(--border-color); font-size: 0.95rem;">
+                                <thead>
+                                    <tr style="background: var(--bg-secondary); border-bottom: 2px solid var(--border-color);">
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Format</th>
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Compression Type</th>
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Transparency Support</th>
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Ideal Use Case</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">JPEG / JPG</td>
+                                        <td style="padding: 10px;">Lossy (DCT)</td>
+                                        <td style="padding: 10px; color: var(--danger);">No (Solid Background)</td>
+                                        <td style="padding: 10px;">Camera photos, wallpaper, email attachments</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">PNG</td>
+                                        <td style="padding: 10px;">Lossless (Deflate)</td>
+                                        <td style="padding: 10px; color: var(--success); font-weight: 600;">Yes (Alpha Channel)</td>
+                                        <td style="padding: 10px;">Logos, UI badges, charts, screenshots with text</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px; font-weight: 600;">WebP</td>
+                                        <td style="padding: 10px;">Lossy & Lossless</td>
+                                        <td style="padding: 10px; color: var(--success); font-weight: 600;">Yes (Alpha Channel)</td>
+                                        <td style="padding: 10px;">High-speed websites, eCommerce product catalogs</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- FAQ Section -->
+                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                            ❓ Frequently Asked Questions (FAQ)
+                        </h2>
+                        
+                        <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How do I convert iPhone HEIC photos to JPG or PNG?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Modern browsers automatically decode standard image buffers. Simply drag and drop your exported image into the drop zone, choose JPG or PNG, and click Convert to download a universal format.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Will converting reduce the original resolution?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No. The converter renders your image at 100% original canvas pixel dimensions, ensuring your image remains sharp and uncropped.</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </main>

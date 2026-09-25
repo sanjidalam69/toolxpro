@@ -3,11 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image to PDF - ToolX Pro</title>
-    <meta name="description" content="Convert and compile multiple images (JPG, PNG, WebP) into a single clean PDF document online.">
+    <title>Image to PDF Converter - Merge JPG & PNG Pictures into PDF Online | ToolX Pro</title>
+    <meta name="description" content="Convert and combine multiple JPG, PNG, and WebP images into a single professional PDF document. Free client-side compiler with custom page sizes (A4, Letter), margins, and orientation.">
+    <link rel="canonical" href="https://toolxpro.live/tools/image-to-pdf.html">
     <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
+
     <!-- Load jsPDF from CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolxpro.live/tools/image-to-pdf.html">
+    <meta property="og:title" content="Image to PDF Converter - Merge Pictures into PDF | ToolX Pro">
+    <meta property="og:description" content="Compile pictures, handwritten notes, receipts, and certificates into a single organized PDF.">
+    <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
+
     <!-- Favicon & Brand Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
@@ -17,6 +30,56 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#F57C00">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Image to PDF Converter",
+          "url": "https://toolxpro.live/tools/image-to-pdf.html",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Can I convert multiple images into a single multi-page PDF?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. You can select and upload multiple JPG, PNG, or WebP files simultaneously. The converter will organize each image onto consecutive pages in your desired sequence."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is my image upload safe and private?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, 100% private. All PDF compilation is performed directly inside your local web browser memory using client-side JavaScript. No images or generated documents are sent to any remote server."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the best page size for printing?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A4 is the universal standard for academic papers, official certificates, and international office printing. Choose Letter for North American print requirements."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <div id="app-container">
@@ -28,8 +91,8 @@
             <main class="content-area">
                 <div class="tool-container">
                     <div class="tool-header">
-                        <h1 class="tool-title">📄 Image to PDF</h1>
-                        <p class="tool-desc">Arrange your uploaded pictures and compile them into a clean PDF document.</p>
+                        <h1 class="tool-title">📄 High-Speed Image to PDF Converter</h1>
+                        <p class="tool-desc">Combine and compile multiple JPG, PNG, and WebP images into a single clean PDF document with customizable page sizes, margins, and orientation.</p>
                     </div>
                     
                     <div class="tool-body">
@@ -37,41 +100,41 @@
                         <div class="upload-area" id="drop-area">
                             <span class="upload-icon">📄</span>
                             <h3 style="font-size:1.1rem; font-weight:600;">Drag & drop multiple images here or click to browse</h3>
-                            <p style="font-size:0.85rem; color:var(--text-secondary);">Supports: JPG, JPEG, PNG, WebP (You can select multiple files at once)</p>
+                            <p style="font-size:0.85rem; color:var(--text-secondary);">Supports: JPG, JPEG, PNG, WebP (Select multiple files at once)</p>
                             <input type="file" id="image-upload" accept="image/*" multiple style="display:none;">
                         </div>
 
                         <!-- Settings & Preview Area -->
                         <div id="settings-area" style="display:none; margin-top:1.5rem; animation: fadeIn 0.3s;">
                             <!-- PDF Settings Form -->
-                            <div class="form-row" style="background:var(--bg-secondary); padding:1rem; border-radius:8px; border:1px solid var(--border-color); margin-bottom:1.2rem;">
+                            <div class="form-row" style="background:var(--bg-secondary); padding:1rem; border-radius:12px; border:1px solid var(--border-color); margin-bottom:1.2rem;">
                                 <div class="form-group">
-                                    <label for="pdf-page-size">Page Size:</label>
+                                    <label for="pdf-page-size" style="font-weight:600;">Page Format:</label>
                                     <select id="pdf-page-size" class="form-control">
-                                        <option value="a4">A4 (Standard)</option>
-                                        <option value="letter">Letter</option>
-                                        <option value="fit">Auto Fit (Match Image Size)</option>
+                                        <option value="a4">A4 (Standard 210 × 297 mm)</option>
+                                        <option value="letter">Letter (8.5 × 11 in)</option>
+                                        <option value="fit">Auto Fit (Exact Image Bounds)</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="pdf-orientation">Orientation:</label>
+                                    <label for="pdf-orientation" style="font-weight:600;">Page Orientation:</label>
                                     <select id="pdf-orientation" class="form-control">
                                         <option value="p">Portrait (Vertical)</option>
                                         <option value="l">Landscape (Horizontal)</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="pdf-margin">Margin:</label>
+                                    <label for="pdf-margin" style="font-weight:600;">Border Margin:</label>
                                     <select id="pdf-margin" class="form-control">
-                                        <option value="0">No Margin (0px)</option>
+                                        <option value="0">No Margin (Full Bleed)</option>
                                         <option value="10">Small Margin (10px)</option>
-                                        <option value="20">Standard Margin (20px)</option>
+                                        <option value="20" selected>Standard Margin (20px)</option>
                                     </select>
                                 </div>
                             </div>
 
                             <!-- Uploaded Images List -->
-                            <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:8px;">Uploaded Images:</h3>
+                            <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:8px;">Uploaded Images to Compile:</h3>
                             <div class="file-list" id="images-list">
                                 <!-- Dynamically added images list -->
                             </div>
@@ -85,6 +148,45 @@
                         <div class="results-content" id="results-content">
                             <!-- Injected by JS -->
                         </div>
+                    </div>
+
+                    <!-- ═══════════════════════════════════════════════════════
+                         AUTHORITATIVE EDITORIAL GUIDE & STUDENT/OFFICE WORKFLOWS
+                         ═══════════════════════════════════════════════════════ -->
+                    <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
+                        
+                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            📑 Streamlining Document Submission with Image to PDF
+                        </h2>
+                        <p style="margin-bottom: 1.2rem;">
+                            Converting mobile photos of physical papers into a unified PDF file is an essential workflow for students submitting coursework assignments, remote workers filing expense receipts, and professionals submitting legal documentation for verification portals.
+                        </p>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+                            🌟 Best Practices for High-Quality Document Scans
+                        </h3>
+                        <ol style="padding-left: 1.4rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem;">
+                            <li><strong>Ensure Even Overhead Lighting:</strong> Avoid casting harsh shadows over paper text while photographing with your smartphone.</li>
+                            <li><strong>Align Aspect Ratios:</strong> When compiling portrait document pages, select the <em>A4 Portrait</em> option with standard 20px margins for uniform printable output.</li>
+                            <li><strong>Maintain Chronological Order:</strong> Upload multi-page lecture notes in sequential order so your final compiled PDF reads naturally from cover to conclusion.</li>
+                        </ol>
+
+                        <!-- FAQ Section -->
+                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                            ❓ Frequently Asked Questions (FAQ)
+                        </h2>
+                        
+                        <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How many pictures can I merge into one PDF?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">You can combine dozens of images in a single session. Because computation runs locally, performance depends only on your device's memory.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Will the text in the images be searchable?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">This tool creates high-fidelity raster bitmap PDFs preserving exact handwriting, diagrams, and signatures. To extract editable text, you can use our PDF to Word or OCR utilities.</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </main>

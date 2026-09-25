@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Word & Character Counter - ToolX Pro</title>
-    <meta name="description" content="Calculate the number of words, characters, sentences, lines, and reading time of your text in real-time.">
+    <title>Word & Character Counter - Free Real-Time Text Length & Readability Tool | ToolX Pro</title>
+    <meta name="description" content="Free online word counter, character counter, sentence counter, and estimated reading time calculator. Perfect for essays, social media posts, blog articles, and SEO meta tags.">
+    <link rel="canonical" href="https://toolxpro.live/tools/word-counter.html">
     <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolxpro.live/tools/word-counter.html">
+    <meta property="og:title" content="Word & Character Counter - Free Real-Time Text Analytics | ToolX Pro">
+    <meta property="og:description" content="Count words, characters with/without spaces, sentences, lines, and reading duration in real-time.">
+    <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
+
     <!-- Favicon & Brand Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
@@ -15,6 +27,56 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#F57C00">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Word and Character Counter",
+          "url": "https://toolxpro.live/tools/word-counter.html",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How is reading time estimated?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Reading time is calculated based on the standard average adult reading speed of 200 to 225 words per minute (WPM)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the character limit for Twitter / X, Facebook, and Instagram?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Twitter/X has a 280-character limit for standard users, Instagram captions support up to 2,200 characters, and Facebook posts allow up to 63,206 characters."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are my typed documents private and secure?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, 100% of the counting happens locally inside your web browser. No text is ever uploaded or stored on any server."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <div id="app-container">
@@ -27,13 +89,13 @@
                 <div class="tool-container">
                     <div class="tool-header">
                         <h1 class="tool-title">🔤 Word & Character Counter</h1>
-                        <p class="tool-desc">Type or paste your text below to get instant word count, character count, and other metrics.</p>
+                        <p class="tool-desc">Type, paste, or draft your text below to get instant real-time word count, character count, sentence metrics, and estimated reading time.</p>
                     </div>
                     
                     <div class="tool-body">
                         <div class="form-group">
-                            <label for="text-input">Your Text:</label>
-                            <textarea id="text-input" class="form-control" rows="8" placeholder="Start typing here..." style="resize:vertical;"></textarea>
+                            <label for="text-input">Your Text Content:</label>
+                            <textarea id="text-input" class="form-control" rows="8" placeholder="Start typing or paste your content here..." style="resize:vertical; min-height:160px; font-size:1rem; line-height:1.6;"></textarea>
                         </div>
                         
                         <div style="display:flex; justify-content:flex-end; gap:10px;">
@@ -42,35 +104,123 @@
                     </div>
                     
                     <!-- Stats Dashboard -->
-                    <div id="stats-dashboard" style="margin-top:1rem; border-top:1px solid var(--border-color); padding-top:1.5rem;">
-                        <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:12px; color:var(--primary);">📊 Text Analytics:</h3>
+                    <div id="stats-dashboard" style="margin-top:1.5rem; border-top:1px solid var(--border-color); padding-top:1.5rem;">
+                        <h3 style="font-size:1.15rem; font-weight:700; margin-bottom:14px; color:var(--primary);">📊 Real-Time Text Analytics:</h3>
                         
                         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap:12px;">
-                            <div style="background:var(--bg-secondary); padding:12px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
-                                <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:4px;">Words</p>
-                                <b id="word-count" style="font-size:1.4rem; color:var(--primary);">0</b>
+                            <div style="background:var(--bg-secondary); padding:14px 10px; border-radius:12px; border:1px solid var(--border-color); text-align:center;">
+                                <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:4px; font-weight:600;">Words</p>
+                                <b id="word-count" style="font-size:1.5rem; color:var(--primary);">0</b>
                             </div>
-                            <div style="background:var(--bg-secondary); padding:12px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
-                                <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:4px;">Characters</p>
-                                <b id="char-count" style="font-size:1.4rem;">0</b>
+                            <div style="background:var(--bg-secondary); padding:14px 10px; border-radius:12px; border:1px solid var(--border-color); text-align:center;">
+                                <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:4px; font-weight:600;">Characters</p>
+                                <b id="char-count" style="font-size:1.5rem;">0</b>
                             </div>
-                            <div style="background:var(--bg-secondary); padding:12px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
-                                <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:4px;">No Spaces</p>
-                                <b id="nospace-char-count" style="font-size:1.4rem;">0</b>
+                            <div style="background:var(--bg-secondary); padding:14px 10px; border-radius:12px; border:1px solid var(--border-color); text-align:center;">
+                                <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:4px; font-weight:600;">No Spaces</p>
+                                <b id="nospace-char-count" style="font-size:1.5rem;">0</b>
                             </div>
-                            <div style="background:var(--bg-secondary); padding:12px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
-                                <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:4px;">Lines</p>
-                                <b id="line-count" style="font-size:1.4rem;">0</b>
+                            <div style="background:var(--bg-secondary); padding:14px 10px; border-radius:12px; border:1px solid var(--border-color); text-align:center;">
+                                <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:4px; font-weight:600;">Lines</p>
+                                <b id="line-count" style="font-size:1.5rem;">0</b>
                             </div>
-                            <div style="background:var(--bg-secondary); padding:12px; border-radius:8px; border:1px solid var(--border-color); text-align:center;">
-                                <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:4px;">Sentences</p>
-                                <b id="sentence-count" style="font-size:1.4rem;">0</b>
+                            <div style="background:var(--bg-secondary); padding:14px 10px; border-radius:12px; border:1px solid var(--border-color); text-align:center;">
+                                <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:4px; font-weight:600;">Sentences</p>
+                                <b id="sentence-count" style="font-size:1.5rem;">0</b>
                             </div>
-                            <div style="background:var(--bg-secondary); padding:12px; border-radius:8px; border:1px solid var(--border-color); text-align:center; border-left:4px solid var(--accent);">
-                                <p style="font-size:0.8rem; color:var(--text-secondary); margin-bottom:4px;">Reading Time</p>
-                                <b id="read-time" style="font-size:1.1rem; color:var(--accent);">0 sec</b>
+                            <div style="background:var(--bg-secondary); padding:14px 10px; border-radius:12px; border:1px solid var(--border-color); text-align:center; border-left:4px solid var(--accent);">
+                                <p style="font-size:0.82rem; color:var(--text-secondary); margin-bottom:4px; font-weight:600;">Reading Time</p>
+                                <b id="read-time" style="font-size:1.15rem; color:var(--accent);">0 sec</b>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- ═══════════════════════════════════════════════════════
+                         AUTHORITATIVE EDITORIAL GUIDE & CHARACTER LIMIT TABLE
+                         ═══════════════════════════════════════════════════════ -->
+                    <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
+                        
+                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            📝 Why Accurate Word & Character Counting Matters
+                        </h2>
+                        <p style="margin-bottom: 1.2rem;">
+                            Whether you are a student writing an academic thesis, a digital marketer crafting high-converting Google Ads, or an author drafting an article, adhering to strict length requirements is essential. Word and character limits enforce concise communication, optimize SEO search snippets, and comply with platform restrictions.
+                        </p>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+                            🌐 Universal Character & Word Limits Across Platforms
+                        </h3>
+                        <div style="overflow-x: auto; margin: 1rem 0;">
+                            <table style="width: 100%; border-collapse: collapse; border: 1px solid var(--border-color); font-size: 0.95rem;">
+                                <thead>
+                                    <tr style="background: var(--bg-secondary); border-bottom: 2px solid var(--border-color);">
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Platform / Use Case</th>
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Recommended Limit</th>
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Maximum Hard Limit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">Google Search Title Tag (SEO)</td>
+                                        <td style="padding: 10px; color: var(--success);">50 – 60 Characters</td>
+                                        <td style="padding: 10px;">~600px visible width</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">Google Meta Description (SEO)</td>
+                                        <td style="padding: 10px; color: var(--success);">140 – 160 Characters</td>
+                                        <td style="padding: 10px;">~960px visible width</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">Twitter / X Post</td>
+                                        <td style="padding: 10px; color: var(--success);">70 – 120 Characters</td>
+                                        <td style="padding: 10px;">280 Characters (Standard)</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">Instagram Caption</td>
+                                        <td style="padding: 10px; color: var(--success);">125 – 150 Characters (above fold)</td>
+                                        <td style="padding: 10px;">2,200 Characters (30 Hashtags)</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">LinkedIn Post</td>
+                                        <td style="padding: 10px; color: var(--success);">150 – 300 Words</td>
+                                        <td style="padding: 10px;">3,000 Characters</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px; font-weight: 600;">Standard Academic Essay Page</td>
+                                        <td style="padding: 10px; color: var(--success);">250 Words (Double Spaced)</td>
+                                        <td style="padding: 10px;">500 Words (Single Spaced)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+                            ⏱️ How Estimated Reading Time Works
+                        </h3>
+                        <p style="margin-bottom: 1rem;">
+                            Reading speed varies among individuals, but cognitive research indicates that the average literate adult reads English at approximately <strong>200 to 250 words per minute (WPM)</strong> for non-technical material. For spoken audio (such as podcasts, speeches, or video scripts), the standard comfortable speaking pace is <strong>130 to 150 words per minute</strong>.
+                        </p>
+
+                        <!-- FAQ Section -->
+                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                            ❓ Frequently Asked Questions (FAQ)
+                        </h2>
+                        
+                        <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: What is the difference between character count with and without spaces?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">"Characters with spaces" includes every letter, number, punctuation mark, whitespace, and newline. "Characters without spaces" (No Spaces) counts only visible typographic glyphs, which is often used in freelance copywriting rate calculations.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How are sentence boundaries detected?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Sentences are identified by standard terminal punctuation marks: periods (.), exclamation marks (!), and question marks (?), excluding common abbreviations like "e.g.", "Dr.", or "U.S.".</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Is there any limit to the amount of text I can paste?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No limit. You can paste entire book chapters, dissertation manuscripts, or large code files. Processing is executed instantly inside your local browser memory.</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </main>

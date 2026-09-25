@@ -3,11 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>QR Code Generator - ToolX Pro</title>
-    <meta name="description" content="Generate high-quality customized QR codes for websites, links, texts, or phone numbers and download them as PNG.">
+    <title>QR Code Generator - Create Free Custom High-Resolution QR Codes | ToolX Pro</title>
+    <meta name="description" content="Generate high-resolution custom QR codes for websites, WiFi credentials, vCards, SMS, and text messages. Free vector PNG download with custom color palette options.">
+    <link rel="canonical" href="https://toolxpro.live/tools/qr-generator.html">
     <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
+
     <!-- Load QRious Library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/qrious/4.0.2/qrious.min.js"></script>
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolxpro.live/tools/qr-generator.html">
+    <meta property="og:title" content="QR Code Generator - Create Free High-Res QR Codes | ToolX Pro">
+    <meta property="og:description" content="Instant custom QR code generator with HD PNG download and color customization.">
+    <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
+
     <!-- Favicon & Brand Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
@@ -17,6 +30,56 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#F57C00">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Custom QR Code Generator",
+          "url": "https://toolxpro.live/tools/qr-generator.html",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Do generated QR codes ever expire?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. These are static standard QR codes where data is encoded directly into the 2D matrix pattern. They will work indefinitely as long as your destination URL or content remains valid."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What image resolution should I select for printing?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "For physical business cards, posters, and flyers, select the 500x500 (HD Quality) option to ensure crisp edges that scan reliably under all camera lighting conditions."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I encode WiFi credentials into a QR code?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, using the standard format: WIFI:S:MyNetworkName;T:WPA;P:MyPassword;;. When scanned by smartphone cameras, it will prompt users to connect instantly."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <div id="app-container">
@@ -28,24 +91,24 @@
             <main class="content-area">
                 <div class="tool-container">
                     <div class="tool-header">
-                        <h1 class="tool-title">🔳 QR Code Generator</h1>
-                        <p class="tool-desc">Enter your website URL or text contents below to instantly generate a custom QR code.</p>
+                        <h1 class="tool-title">🔳 High-Resolution QR Code Generator</h1>
+                        <p class="tool-desc">Enter your website URL, text content, contact details, or WiFi credentials to generate high-definition, customizable QR codes instantly.</p>
                     </div>
                     
                     <div class="tool-body">
                         <div class="form-group">
                             <label for="qr-text">Website Link or Text Content:</label>
-                            <textarea id="qr-text" class="form-control" rows="3" placeholder="e.g. https://google.com or enter any message..." required></textarea>
+                            <textarea id="qr-text" class="form-control" rows="3" placeholder="e.g. https://toolxpro.live or enter any message..." required></textarea>
                         </div>
                         
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="qr-size">QR Code Size (px):</label>
+                                <label for="qr-size">QR Code Output Resolution:</label>
                                 <select id="qr-size" class="form-control">
-                                    <option value="150">150 × 150 (Small)</option>
-                                    <option value="250" selected>250 × 250 (Medium)</option>
-                                    <option value="350">350 × 350 (Large)</option>
-                                    <option value="500">500 × 500 (HD Quality)</option>
+                                    <option value="150">150 × 150 px (Small / Thumbnail)</option>
+                                    <option value="250" selected>250 × 250 px (Standard Web)</option>
+                                    <option value="350">350 × 350 px (Large / Presentation)</option>
+                                    <option value="500">500 × 500 px (HD Print Quality)</option>
                                 </select>
                             </div>
                             <div class="form-group">
@@ -58,11 +121,77 @@
                     </div>
                     
                     <div id="results" class="results-card" style="text-align:center;">
-                        <h2 class="results-title" style="justify-content:center;">📊 Your QR Code</h2>
+                        <h2 class="results-title" style="justify-content:center;">📊 Your Generated QR Code</h2>
                         <div class="results-content" id="results-content" style="display:flex; flex-direction:column; align-items:center; gap:15px; margin-top:1rem;">
                             <canvas id="qr-canvas"></canvas>
                             <button id="download-btn" class="btn btn-primary" style="width:auto; min-width:200px;">📥 Download Image (PNG)</button>
                         </div>
+                    </div>
+
+                    <!-- ═══════════════════════════════════════════════════════
+                         AUTHORITATIVE EDITORIAL GUIDE & SPECIFICATIONS
+                         ═══════════════════════════════════════════════════════ -->
+                    <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
+                        
+                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            📱 What is a Quick Response (QR) Code?
+                        </h2>
+                        <p style="margin-bottom: 1.2rem;">
+                            Invented in 1994 by Masahiro Hara of Denso Wave, the Quick Response (QR) code is a two-dimensional matrix barcode capable of encoding up to several hundred times more alphanumeric data than conventional linear UPC barcodes. Modern smartphones feature native optical camera scanners that instantly parse and trigger web links, digital business cards, and payment requests.
+                        </p>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+                            ⚙️ Key Anatomical Elements of a QR Code
+                        </h3>
+                        <ol style="padding-left: 1.4rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem;">
+                            <li><strong>Finder Patterns (Positioning Eyes):</strong> The three distinctive square concentric boxes located at the top-left, top-right, and bottom-left corners help camera sensors detect orientation and angle of perspective.</li>
+                            <li><strong>Timing Patterns:</strong> Alternating black and white module lines between finder patterns establish the coordinate grid spacing.</li>
+                            <li><strong>Reed-Solomon Error Correction:</strong> Built-in mathematical redundancy allows the barcode to remain fully readable even if up to 30% of the surface area is scratched, obscured, or torn.</li>
+                            <li><strong>Quiet Zone:</strong> The essential blank margin surrounding the outer perimeter that prevents background graphics from interfering with optical decoding.</li>
+                        </ol>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+                            🎯 Popular Formats You Can Encode
+                        </h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.2rem 0;">
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">🌐 Website URLs</h4>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">Direct customers directly to landing pages, restaurant menus, product documentation, or promotional links.</p>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">📶 Instant WiFi Access</h4>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">Allow guests and office visitors to join secure wireless networks without typing complex passwords.</p>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">📇 vCard Contact Cards</h4>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">Encode name, organization, email, and phone number directly onto printed corporate business cards.</p>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">💳 Payment Gateways</h4>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">Generate merchant payment prompts, crypto wallet strings, and digital invoices for instant settlement.</p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Section -->
+                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                            ❓ Frequently Asked Questions (FAQ)
+                        </h2>
+                        
+                        <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: What is the recommended contrast ratio for custom colored QR codes?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Always maintain high contrast between the dark foreground code and the light background (e.g., black or dark navy against crisp white). Avoid inverted light colors on dark backgrounds as some older scanner lenses struggle with negative polarity.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: What is the minimum recommended physical print size?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">For standard short URLs (under 40 characters), a minimum print size of 2 cm × 2 cm (0.8 in × 0.8 in) is recommended for reliable smartphone scanning at standard reading distance.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Is there any scan count limit?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No limit. These are static, non-expiring QR codes with unlimited lifetime scans.</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </main>

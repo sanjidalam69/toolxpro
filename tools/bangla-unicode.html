@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bangla Unicode & Bijoy Converter - ToolX Pro</title>
-    <meta name="description" content="Convert Bijoy keyboard legacy ASCII/ANSI typing to Unicode Bangla and vice-versa for Photoshop, Illustrator, and web publishing.">
+    <title>Bangla Unicode to Bijoy Converter - Convert SutonnyMJ ANSI Online | ToolX Pro</title>
+    <meta name="description" content="Convert Bangla text between Unicode (Avro, Web, Mobile) and Bijoy ANSI (SutonnyMJ, Adobe Photoshop, Illustrator) with 100% conjunct character accuracy. Free online converter.">
+    <link rel="canonical" href="https://toolxpro.live/tools/bangla-unicode.html">
     <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolxpro.live/tools/bangla-unicode.html">
+    <meta property="og:title" content="Bangla Unicode to Bijoy Converter | ToolX Pro">
+    <meta property="og:description" content="Seamless bidirectional Bangla encoding conversion between Unicode and Bijoy ANSI SutonnyMJ.">
+    <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
+
     <!-- Favicon & Brand Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
@@ -15,6 +27,56 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#F57C00">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Bangla Unicode and Bijoy Converter",
+          "url": "https://toolxpro.live/tools/bangla-unicode.html",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "Why does Unicode Bangla appear broken in Adobe Photoshop or Illustrator?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Older graphic design software and legacy print fonts (like SutonnyMJ) use 8-bit ANSI glyph code tables rather than UTF-8 Unicode. Converting Unicode to Bijoy ANSI produces the exact glyph stream needed for SutonnyMJ fonts."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does this tool support complex Bangla conjunct characters (Juktakhor)?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. Our conversion mapping contains comprehensive rules for complex ligatures (যেমন: ক্ষ, ঞ্জ, ষ্ণ, ক্ত, ঙ্গ, ত্ত) ensuring zero typographical errors."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I convert text typed on Avro Keyboard or mobile phones?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. All modern mobile devices, Facebook posts, and Avro Phonetic typings produce standard Unicode Bangla. Paste it into the Unicode box and click 'Unicode to Bijoy ANSI' for print design."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <div id="app-container">
@@ -26,15 +88,15 @@
             <main class="content-area">
                 <div class="tool-container">
                     <div class="tool-header">
-                        <h1 class="tool-title">✍️ Bangla Unicode & Bijoy Converter</h1>
-                        <p class="tool-desc">Convert between standard Unicode (mobile/web readable Bangla) and Bijoy ANSI (SutonnyMJ font coding for design tools).</p>
+                        <h1 class="tool-title">✍️ Bangla Unicode & Bijoy ANSI Converter</h1>
+                        <p class="tool-desc">Convert between standard Unicode (mobile and web-readable Bangla) and Bijoy ANSI (SutonnyMJ font coding for graphic design and print media).</p>
                     </div>
                     
                     <div class="tool-body">
                         <!-- Unicode Textarea -->
                         <div class="form-group">
-                            <label for="unicode-text">Unicode Text (Standard web-friendly Bangla):</label>
-                            <textarea id="unicode-text" class="form-control" rows="6" placeholder="Type or paste Unicode Bangla here..." style="resize:vertical;"></textarea>
+                            <label for="unicode-text" style="font-weight:600;">Unicode Bangla (Standard Web, Mobile, Facebook & Avro):</label>
+                            <textarea id="unicode-text" class="form-control" rows="6" placeholder="এখানে ইউনিকোড বাংলা লিখুন বা পেস্ট করুন..." style="resize:vertical; font-size:1.05rem; line-height:1.6;"></textarea>
                         </div>
                         
                         <!-- Conversion Controls -->
@@ -45,8 +107,8 @@
 
                         <!-- Bijoy Textarea -->
                         <div class="form-group">
-                            <label for="bijoy-text">Bijoy ANSI Text (SutonnyMJ font compatible code):</label>
-                            <textarea id="bijoy-text" class="form-control" rows="6" placeholder="Paste Bijoy ANSI text code here..." style="resize:vertical; font-family:var(--font-en);"></textarea>
+                            <label for="bijoy-text" style="font-weight:600;">Bijoy ANSI Code (SutonnyMJ / SutonnyOMJ Font Compatible):</label>
+                            <textarea id="bijoy-text" class="form-control" rows="6" placeholder="Paste Bijoy ANSI text code here..." style="resize:vertical; font-family:var(--font-en); font-size:1.05rem; line-height:1.6;"></textarea>
                         </div>
 
                         <div class="bangla-actions-row" style="display:flex; justify-content:space-between; gap:10px; margin-top:1.5rem; border-top: 1px solid var(--border-color); padding-top:1.5rem; flex-wrap:wrap;">
@@ -54,6 +116,68 @@
                             <button id="copy-bijoy-btn" class="btn btn-secondary" style="width:auto; flex:1; min-width:130px;">📋 Copy Bijoy</button>
                             <button id="clear-btn" class="btn btn-secondary" style="width:auto; flex:1; min-width:100px;">🧹 Clear</button>
                         </div>
+                    </div>
+
+                    <!-- ═══════════════════════════════════════════════════════
+                         AUTHORITATIVE EDITORIAL GUIDE & ENCODING STANDARDS
+                         ═══════════════════════════════════════════════════════ -->
+                    <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
+                        
+                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            🔤 Unicode vs Bijoy ANSI Encoding in Bengali Typography
+                        </h2>
+                        <p style="margin-bottom: 1.2rem;">
+                            Bengali digital typography uses two major character encoding paradigms: standard international UTF-8 Unicode and legacy ANSI ASCII font encodings. Understanding how to transition between them is essential for publishers, graphic designers, newspaper editors, and government document typists.
+                        </p>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+                            🖥️ Comparison of Bangla Typing Standards
+                        </h3>
+                        <div style="overflow-x: auto; margin: 1rem 0;">
+                            <table style="width: 100%; border-collapse: collapse; border: 1px solid var(--border-color); font-size: 0.95rem;">
+                                <thead>
+                                    <tr style="background: var(--bg-secondary); border-bottom: 2px solid var(--border-color);">
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Feature</th>
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Unicode Bangla</th>
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Bijoy ANSI (SutonnyMJ)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">Encoding System</td>
+                                        <td style="padding: 10px;">Universal UTF-8 (Hex U+0980 to U+09FF)</td>
+                                        <td style="padding: 10px;">8-bit ASCII ANSI Code Page 1252</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">Primary Environment</td>
+                                        <td style="padding: 10px;">Web browsers, Android/iOS smartphones, Google Docs</td>
+                                        <td style="padding: 10px;">Adobe Photoshop, Illustrator, InDesign, Print Press</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px; font-weight: 600;">Typical Fonts</td>
+                                        <td style="padding: 10px;">Kalpurush, SolaimanLipi, Noto Serif Bengali</td>
+                                        <td style="padding: 10px;">SutonnyMJ, SutonnyOMJ, Siyam Rupali ANSI</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- FAQ Section -->
+                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                            ❓ Frequently Asked Questions (FAQ)
+                        </h2>
+                        
+                        <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How do I use converted Bijoy text in Adobe Photoshop?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">1. Paste your Unicode text and click "Unicode to Bijoy ANSI ⬇️". 2. Click "Copy Bijoy". 3. Open Adobe Photoshop, select the Text Tool, choose the "SutonnyMJ" font, and paste the clipboard content.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Why does Bijoy text look like gibberish in English web browsers?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Bijoy ANSI maps Bengali glyphs over standard Latin ASCII character slots. When viewed with standard English fonts (Arial, Times New Roman), it renders as Latin characters. It requires the SutonnyMJ font to display as Bengali letters.</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </main>

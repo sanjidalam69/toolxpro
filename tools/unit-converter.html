@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Unit Converter - ToolX Pro</title>
-    <meta name="description" content="Convert between different measurement units including length, weight, and temperature instantly.">
+    <title>Unit Converter - Free Online Length, Weight & Temperature Converter | ToolX Pro</title>
+    <meta name="description" content="Convert between metric and imperial measurement units including meters, feet, inches, kilometers, miles, kilograms, pounds, Celsius, Fahrenheit, and Kelvin. Fast and accurate online converter.">
+    <link rel="canonical" href="https://toolxpro.live/tools/unit-converter.html">
     <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolxpro.live/tools/unit-converter.html">
+    <meta property="og:title" content="Unit Converter - Length, Weight & Temperature | ToolX Pro">
+    <meta property="og:description" content="Instant multi-unit conversion between metric and imperial systems.">
+    <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
+
     <!-- Favicon & Brand Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
@@ -15,6 +27,56 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#F57C00">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Universal Unit Converter",
+          "url": "https://toolxpro.live/tools/unit-converter.html",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do I convert Celsius to Fahrenheit?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Multiply temperature in Celsius by 9/5 (1.8) and add 32: °F = (°C × 1.8) + 32."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How many kilograms are in one pound?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "1 pound (lb) is equal to approximately 0.453592 kilograms (kg), and 1 kilogram is equal to approximately 2.20462 pounds."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How many feet are in a meter?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "1 meter equals approximately 3.28084 feet or 39.3701 inches."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <div id="app-container">
@@ -26,17 +88,17 @@
             <main class="content-area">
                 <div class="tool-container">
                     <div class="tool-header">
-                        <h1 class="tool-title">📐 Unit Converter</h1>
-                        <p class="tool-desc">Quickly convert values between various units of length, weight, and temperature.</p>
+                        <h1 class="tool-title">📐 Universal Unit Converter</h1>
+                        <p class="tool-desc">Quickly convert values between various international metric and imperial units of length, weight, and temperature in real-time.</p>
                     </div>
                     
                     <div class="tool-body">
                         <!-- Select Measurement Category -->
                         <div class="form-group" style="max-width:300px; margin-bottom:1.5rem;">
-                            <label for="converter-category">Select Unit Category:</label>
+                            <label for="converter-category" style="font-weight:600;">Select Unit Category:</label>
                             <select id="converter-category" class="form-control">
-                                <option value="length">📏 Length</option>
-                                <option value="weight">⚖️ Weight</option>
+                                <option value="length">📏 Length & Distance</option>
+                                <option value="weight">⚖️ Weight & Mass</option>
                                 <option value="temp">🌡️ Temperature</option>
                             </select>
                         </div>
@@ -44,25 +106,73 @@
                         <!-- Converter Inputs -->
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="input-val">From Value:</label>
+                                <label for="input-val" style="font-weight:600;">From Value:</label>
                                 <input type="number" id="input-val" class="form-control" placeholder="Enter value..." value="1" step="any" required>
                             </div>
                             <div class="form-group">
-                                <label for="from-unit">From Unit:</label>
+                                <label for="from-unit" style="font-weight:600;">From Unit:</label>
                                 <select id="from-unit" class="form-control"></select>
                             </div>
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
-                                <label for="output-val">To Value:</label>
-                                <input type="text" id="output-val" class="form-control" readonly style="font-weight:bold; color:var(--primary); background:var(--bg-secondary);">
+                                <label for="output-val" style="font-weight:600;">Converted Value:</label>
+                                <input type="text" id="output-val" class="form-control" readonly style="font-weight:bold; color:var(--primary); background:var(--bg-secondary); font-size:1.1rem;">
                             </div>
                             <div class="form-group">
-                                <label for="to-unit">To Unit:</label>
+                                <label for="to-unit" style="font-weight:600;">To Unit:</label>
                                 <select id="to-unit" class="form-control"></select>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- ═══════════════════════════════════════════════════════
+                         AUTHORITATIVE EDITORIAL GUIDE & CONVERSION FORMULAS
+                         ═══════════════════════════════════════════════════════ -->
+                    <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
+                        
+                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            🌐 Metric (SI) vs Imperial Measurement Systems
+                        </h2>
+                        <p style="margin-bottom: 1.2rem;">
+                            The International System of Units (SI Metric) is decimal-based and used across global science, engineering, and commerce. In contrast, the US Customary / Imperial system is standard in North America. Converting between these systems with mathematical precision is essential for construction, cooking, navigation, and international shipping.
+                        </p>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+                            🌡️ Temperature Conversion Formulas
+                        </h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.2rem 0;">
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">Celsius to Fahrenheit:</h4>
+                                <code style="font-size: 0.95rem; font-weight: bold; color: var(--text-primary);">°F = (°C × 1.8) + 32</code>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">Fahrenheit to Celsius:</h4>
+                                <code style="font-size: 0.95rem; font-weight: bold; color: var(--text-primary);">°C = (°F - 32) / 1.8</code>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">Celsius to Kelvin:</h4>
+                                <code style="font-size: 0.95rem; font-weight: bold; color: var(--text-primary);">K = °C + 273.15</code>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Section -->
+                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                            ❓ Frequently Asked Questions (FAQ)
+                        </h2>
+                        
+                        <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How many centimeters are in an inch?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">By international standard treaty definition, exactly 1 inch = 2.54 centimeters.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Does the calculator calculate floating-point decimals accurately?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. The conversion engine uses IEEE 754 floating-point standards with automated rounding to deliver clean, precise numbers without binary floating artifacts.</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </main>

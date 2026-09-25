@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Passport Photo Maker & Grid Generator - ToolX Pro</title>
-    <meta name="description" content="Create official passport size photos (2x2 inch, 35x45mm), change background color to white or blue, and generate printable A4 sheets online for free.">
-    <link rel="stylesheet" href="../css/style.css?v=26.0">
+    <title>Passport Photo Maker - Create Official 2x2 & 35x45mm Photo Sheets | ToolX Pro</title>
+    <meta name="description" content="Free online passport size photo maker. Crop to official biometric dimensions (2x2 inch, 35x45mm, stamp size), replace background color (white, light blue), and create printable A4 photo sheets.">
+    <link rel="canonical" href="https://toolxpro.live/tools/passport-photo.html">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolxpro.live/tools/passport-photo.html">
+    <meta property="og:title" content="Passport Photo Maker - Create Official Photo Sheets | ToolX Pro">
+    <meta property="og:description" content="Create compliant passport and visa photos with background adjustment and multi-copy A4 grid templates.">
+    <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
+
     <!-- Favicon & Brand Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
@@ -15,6 +27,56 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#F57C00">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Passport Photo Maker & Grid Generator",
+          "url": "https://toolxpro.live/tools/passport-photo.html",
+          "applicationCategory": "MultimediaApplication",
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What are the standard dimensions for passport photos in Bangladesh and Europe?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The international standard for Bangladesh, the UK, Schengen Europe, and Australia is 35mm wide by 45mm high (35x45 mm), with head height occupying approximately 70% to 80% of the vertical frame."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What is the standard US Visa and Passport photo size?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "The US Department of State requires a square 2 x 2 inch (51 x 51 mm) photograph with a plain white background."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I print the generated A4 sheet at home or at a photo studio?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. The generated sheet is rendered at 300 DPI print resolution. You can print it on standard glossy photo paper using any home inkjet printer or local print shop."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <div id="app-container">
@@ -27,41 +89,41 @@
                 <div class="tool-container">
                     <div class="tool-header">
                         <h1 class="tool-title">📸 Passport Photo Maker & A4 Sheet Generator</h1>
-                        <p class="tool-desc">Upload your photo, set custom background colors, crop to official passport dimensions, and print a sheet of 8 to 12 photos in seconds!</p>
+                        <p class="tool-desc">Upload your portrait, set official background colors, crop to government passport standards, and download printable multi-copy sheets in seconds.</p>
                     </div>
                     
                     <div class="tool-body">
                         <div class="form-group">
-                            <label for="photo-upload">Upload Photo (JPG, PNG, WebP):</label>
+                            <label for="photo-upload" style="font-weight:600;">Upload Portrait Photo (JPG, PNG, WebP):</label>
                             <input type="file" id="photo-upload" accept="image/*" class="form-control">
                         </div>
 
                         <div id="editor-controls" style="display:none; margin-top:1.5rem; flex-direction:column; gap:1.2rem;">
                             <div class="form-row">
                                 <div class="form-group">
-                                    <label for="size-preset">Photo Size Standard:</label>
+                                    <label for="size-preset" style="font-weight:600;">Standard Dimension Preset:</label>
                                     <select id="size-preset" class="form-control">
-                                        <option value="passport-us">2 x 2 inch (US / International Standard)</option>
-                                        <option value="passport-bd" selected>35 x 45 mm (Bangladesh / European Standard)</option>
+                                        <option value="passport-us">2 x 2 inch / 51 x 51 mm (US & Visa Standard)</option>
+                                        <option value="passport-bd" selected>35 x 45 mm (Bangladesh, UK & Schengen Europe)</option>
                                         <option value="stamp">Stamp Size (25 x 30 mm)</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="bg-color">Background Color:</label>
+                                    <label for="bg-color" style="font-weight:600;">Official Background Color:</label>
                                     <select id="bg-color" class="form-control">
                                         <option value="keep">Original Background</option>
-                                        <option value="#ffffff" selected>White (Standard Official)</option>
-                                        <option value="#0055ff">Light Blue (BD Exam / Official)</option>
-                                        <option value="#e2e8f0">Light Gray</option>
+                                        <option value="#ffffff" selected>White (Standard International)</option>
+                                        <option value="#0055ff">Light Blue (BD Govt & Academic Exam)</option>
+                                        <option value="#e2e8f0">Light Gray (Neutral Studio)</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="grid-copies">A4 Sheet Copies:</label>
+                                    <label for="grid-copies" style="font-weight:600;">Printable Sheet Copies:</label>
                                     <select id="grid-copies" class="form-control">
                                         <option value="1">Single Photo Only</option>
-                                        <option value="8" selected>8 Copies (A4 Sheet)</option>
-                                        <option value="12">12 Copies (A4 Sheet)</option>
-                                        <option value="16">16 Copies (A4 Sheet)</option>
+                                        <option value="8" selected>8 Copies (A4 Sheet Grid)</option>
+                                        <option value="12">12 Copies (A4 Sheet Grid)</option>
+                                        <option value="16">16 Copies (A4 Sheet Grid)</option>
                                     </select>
                                 </div>
                             </div>
@@ -74,12 +136,94 @@
                         <h2 class="results-title">✨ Preview & Download</h2>
                         <div class="results-content" style="text-align:center;">
                             <div id="canvas-container" style="margin:1.5rem 0; overflow-x:auto; display:flex; justify-content:center;">
-                                <canvas id="output-canvas" style="border:1px solid var(--border-color); border-radius:8px; max-width:100%; height:auto; box-shadow:var(--card-shadow);"></canvas>
+                                <canvas id="output-canvas" style="border:1px solid var(--border-color); border-radius:12px; max-width:100%; height:auto; box-shadow:var(--card-shadow);"></canvas>
                             </div>
                             <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
                                 <a id="download-btn" class="btn btn-primary" download="passport-photos.png" style="width:auto; text-decoration:none;">📥 Download High Quality Photo Sheet</a>
                             </div>
                         </div>
+                    </div>
+
+                    <!-- ═══════════════════════════════════════════════════════
+                         AUTHORITATIVE EDITORIAL GUIDE & BIOMETRIC COMPLIANCE
+                         ═══════════════════════════════════════════════════════ -->
+                    <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
+                        
+                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            🛂 Official Passport & Visa Photo Guidelines
+                        </h2>
+                        <p style="margin-bottom: 1.2rem;">
+                            Government immigration departments (such as the US Department of State, UK Visas and Immigration, and the Department of Immigration & Passports Bangladesh) enforce strict biometric specifications. Submitting non-compliant photographs with incorrect head ratios, shadowed backgrounds, or improper dimensions is the leading cause of visa delays.
+                        </p>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+                            📐 International Passport Photo Dimension Matrix
+                        </h3>
+                        <div style="overflow-x: auto; margin: 1rem 0;">
+                            <table style="width: 100%; border-collapse: collapse; border: 1px solid var(--border-color); font-size: 0.95rem;">
+                                <thead>
+                                    <tr style="background: var(--bg-secondary); border-bottom: 2px solid var(--border-color);">
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Country / Agency</th>
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Dimensions</th>
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Head Height Ratio</th>
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Standard Background</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">United States (Passport / Visa)</td>
+                                        <td style="padding: 10px;">2 x 2 inches (51 x 51 mm)</td>
+                                        <td style="padding: 10px;">50% – 69% (1 to 1.4 inches)</td>
+                                        <td style="padding: 10px;">Plain White</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">Bangladesh (MRP & e-Passport)</td>
+                                        <td style="padding: 10px;">35 x 45 mm</td>
+                                        <td style="padding: 10px;">70% – 80% (31 to 36 mm)</td>
+                                        <td style="padding: 10px;">White / Light Blue</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">UK & Schengen Visa</td>
+                                        <td style="padding: 10px;">35 x 45 mm</td>
+                                        <td style="padding: 10px;">70% – 80% (29 to 34 mm)</td>
+                                        <td style="padding: 10px;">Plain Light Gray / White</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px; font-weight: 600;">Standard Stamp Size</td>
+                                        <td style="padding: 10px;">25 x 30 mm</td>
+                                        <td style="padding: 10px;">70%</td>
+                                        <td style="padding: 10px;">White / Blue</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+                            ✅ Essential Checklist for 100% Approval
+                        </h3>
+                        <ol style="padding-left: 1.4rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem;">
+                            <li><strong>Pose Directly Toward the Camera:</strong> Maintain full frontal facial view with both ears visible and shoulders level.</li>
+                            <li><strong>Neutral Facial Expression:</strong> Keep both eyes open, mouth closed, and avoid exaggerated smiles or frowns.</li>
+                            <li><strong>Eyeglasses & Headwear:</strong> Eyeglasses are prohibited in US and modern biometric visas to eliminate glare. Religious head coverings are permitted if they do not obscure facial contours.</li>
+                            <li><strong>Eliminate Shadows:</strong> Ensure balanced lighting across your forehead and cheekbones to prevent background shadows.</li>
+                        </ol>
+
+                        <!-- FAQ Section -->
+                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                            ❓ Frequently Asked Questions (FAQ)
+                        </h2>
+                        
+                        <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Can I take the initial photo with my smartphone?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. Stand approximately 4 to 5 feet away from a plain wall under bright natural light. Take a portrait photo and upload it here to auto-align and format.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How do I print the downloaded A4 sheet?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Open the downloaded PNG image and choose "Print". In your printer settings dialog, ensure scaling is set to <strong>"100%" or "Actual Size"</strong> (do not select "Fit to Printable Area") to ensure exact physical millimeter dimensions.</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </main>

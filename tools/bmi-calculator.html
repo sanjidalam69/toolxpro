@@ -3,9 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMI Calculator - ToolX Pro</title>
-    <meta name="description" content="Calculate your Body Mass Index (BMI) and check your health weight classification using metric or imperial units.">
+    <title>BMI Calculator - Free Body Mass Index & Ideal Weight Calculator | ToolX Pro</title>
+    <meta name="description" content="Calculate your Body Mass Index (BMI), ideal body weight, and health classification using metric or imperial units. Includes WHO classification standards and health recommendations.">
+    <link rel="canonical" href="https://toolxpro.live/tools/bmi-calculator.html">
     <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolxpro.live/tools/bmi-calculator.html">
+    <meta property="og:title" content="BMI Calculator - Free Body Mass Index & Ideal Weight Calculator | ToolX Pro">
+    <meta property="og:description" content="Check your BMI category, healthy weight range, and prime metabolic guidance using our free medical screening calculator.">
+    <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
+
     <!-- Favicon & Brand Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
@@ -15,6 +27,56 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#F57C00">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Body Mass Index (BMI) Calculator",
+          "url": "https://toolxpro.live/tools/bmi-calculator.html",
+          "applicationCategory": "HealthApplication",
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What is a healthy BMI range for adults?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "According to the World Health Organization (WHO), a BMI between 18.5 and 24.9 is considered normal or healthy weight for adults over age 20."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How is BMI calculated using the Metric formula?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "In the metric system, BMI equals weight in kilograms divided by the square of height in meters: BMI = weight (kg) / [height (m)]²."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can BMI differentiate between muscle mass and body fat?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No, BMI is a general screening indicator and does not distinguish between lean muscle tissue, bone density, and adipose fat tissue. Athletes and bodybuilders may have high BMIs despite very low body fat."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <div id="app-container">
@@ -26,8 +88,8 @@
             <main class="content-area">
                 <div class="tool-container">
                     <div class="tool-header">
-                        <h1 class="tool-title">⚖️ BMI Calculator</h1>
-                        <p class="tool-desc">Calculate your Body Mass Index (BMI) to understand if your weight is in a healthy range.</p>
+                        <h1 class="tool-title">⚖️ Body Mass Index (BMI) Calculator</h1>
+                        <p class="tool-desc">Calculate your Body Mass Index (BMI) and discover whether your weight falls into the healthy, underweight, or overweight category.</p>
                     </div>
                     
                     <div class="tool-body">
@@ -52,13 +114,13 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="weight-kg-ft">Weight (kg):</label>
-                                    <input type="number" id="weight-kg-ft" class="form-control" placeholder="" min="1" step="any">
+                                    <input type="number" id="weight-kg-ft" class="form-control" placeholder="e.g. 68" min="1" step="any">
                                 </div>
                                 <div class="form-group">
                                     <label>Height (feet & inches):</label>
                                     <div style="display:flex; gap:10px;">
-                                        <input type="number" id="height-feet-kg" class="form-control" placeholder="Feet" min="0">
-                                        <input type="number" id="height-inches-kg" class="form-control" placeholder="Inches" min="0" max="11">
+                                        <input type="number" id="height-feet-kg" class="form-control" placeholder="Feet (e.g. 5)" min="0">
+                                        <input type="number" id="height-inches-kg" class="form-control" placeholder="Inches (e.g. 9)" min="0" max="11">
                                     </div>
                                 </div>
                             </div>
@@ -69,11 +131,11 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="weight-metric">Weight (kg):</label>
-                                    <input type="number" id="weight-metric" class="form-control" placeholder="" min="1" step="any">
+                                    <input type="number" id="weight-metric" class="form-control" placeholder="e.g. 68" min="1" step="any">
                                 </div>
                                 <div class="form-group">
                                     <label for="height-metric">Height (cm):</label>
-                                    <input type="number" id="height-metric" class="form-control" placeholder="" min="1" step="any">
+                                    <input type="number" id="height-metric" class="form-control" placeholder="e.g. 175" min="1" step="any">
                                 </div>
                             </div>
                         </div>
@@ -83,7 +145,7 @@
                             <div class="form-row">
                                 <div class="form-group">
                                     <label for="weight-imperial">Weight (lbs):</label>
-                                    <input type="number" id="weight-imperial" class="form-control" placeholder="" min="1" step="any">
+                                    <input type="number" id="weight-imperial" class="form-control" placeholder="e.g. 150" min="1" step="any">
                                 </div>
                                 <div class="form-group">
                                     <label>Height (feet & inches):</label>
@@ -103,6 +165,107 @@
                         <div class="results-content" id="results-content">
                             <!-- Injected by JS -->
                         </div>
+                    </div>
+
+                    <!-- ═══════════════════════════════════════════════════════
+                         AUTHORITATIVE HEALTH GUIDE & CLINICAL CLASSIFICATIONS
+                         ═══════════════════════════════════════════════════════ -->
+                    <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
+                        
+                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            🩺 What is Body Mass Index (BMI)?
+                        </h2>
+                        <p style="margin-bottom: 1.2rem;">
+                            Body Mass Index (BMI) is a standardized anthropometric measurement developed by Belgian statistician Adolphe Quetelet. It provides a simple numeric screening indicator to categorize individuals based on their tissue mass (muscle, fat, and bone) relative to their stature. Medical practitioners, insurance providers, and public health organizations worldwide use BMI to assess population-level cardiometabolic risk.
+                        </p>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+                            📐 Mathematical Formulas for BMI Calculation
+                        </h3>
+                        <p style="margin-bottom: 1rem;">
+                            The calculation requires only two variables: weight and height. Depending on your preferred unit system, the formula is expressed as:
+                        </p>
+
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin: 1.2rem 0;">
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-left: 4px solid var(--primary); border-radius: 12px; padding: 1.2rem;">
+                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">International Metric Formula:</h4>
+                                <code style="font-size: 1.05rem; font-weight: bold; color: var(--text-primary); display: block; margin-top: 0.4rem;">BMI = Weight (kg) / [Height (m)]²</code>
+                                <span style="font-size: 0.85rem; color: var(--text-secondary); display: block; margin-top: 0.5rem;">Example: 70 kg ÷ (1.75 m × 1.75 m) = 22.86 (Normal)</span>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-left: 4px solid var(--secondary); border-radius: 12px; padding: 1.2rem;">
+                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--secondary); margin-bottom: 0.4rem;">Imperial Formula (US System):</h4>
+                                <code style="font-size: 1.05rem; font-weight: bold; color: var(--text-primary); display: block; margin-top: 0.4rem;">BMI = [Weight (lbs) / (Height (in))²] × 703</code>
+                                <span style="font-size: 0.85rem; color: var(--text-secondary); display: block; margin-top: 0.5rem;">Example: (154 lbs ÷ 69 in²) × 703 = 22.74 (Normal)</span>
+                            </div>
+                        </div>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+                            📊 World Health Organization (WHO) Adult Classifications
+                        </h3>
+                        <div style="overflow-x: auto; margin: 1rem 0;">
+                            <table style="width: 100%; border-collapse: collapse; border: 1px solid var(--border-color); font-size: 0.95rem;">
+                                <thead>
+                                    <tr style="background: var(--bg-secondary); border-bottom: 2px solid var(--border-color);">
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">BMI Range</th>
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">WHO Classification</th>
+                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Cardiovascular & Metabolic Risk</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; color: var(--warning); font-weight: 600;">&lt; 18.5</td>
+                                        <td style="padding: 10px;">Underweight</td>
+                                        <td style="padding: 10px;">Increased risk for nutritional deficiency & immune fatigue</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color); background: var(--primary-glow);">
+                                        <td style="padding: 10px; color: var(--success); font-weight: 700;">18.5 – 24.9</td>
+                                        <td style="padding: 10px; font-weight: 600;">Normal / Healthy Weight</td>
+                                        <td style="padding: 10px;">Lowest risk for chronic metabolic disorders</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; color: var(--warning); font-weight: 600;">25.0 – 29.9</td>
+                                        <td style="padding: 10px;">Overweight (Pre-obese)</td>
+                                        <td style="padding: 10px;">Moderate risk for hypertension, type 2 diabetes</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; color: var(--danger); font-weight: 600;">30.0 – 34.9</td>
+                                        <td style="padding: 10px;">Obesity Class I</td>
+                                        <td style="padding: 10px;">High clinical risk</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; color: var(--danger); font-weight: 600;">35.0 – 39.9</td>
+                                        <td style="padding: 10px;">Obesity Class II</td>
+                                        <td style="padding: 10px;">Very high clinical risk</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 10px; color: var(--danger); font-weight: 700;">≥ 40.0</td>
+                                        <td style="padding: 10px;">Obesity Class III (Severe)</td>
+                                        <td style="padding: 10px;">Extremely high risk for serious complications</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- FAQ Section -->
+                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                            ❓ Frequently Asked Questions (FAQ)
+                        </h2>
+                        
+                        <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: What are the main limitations of BMI?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">BMI cannot differentiate between body fat and lean muscle tissue. For bodybuilders, strength athletes, and pregnant women, BMI may overestimate body fat. Conversely, in elderly individuals with muscle loss (sarcopenia), BMI may underestimate visceral fat.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Does Asian population BMI criteria differ?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. The WHO Asian cutoff points are lower due to higher risk of diabetes and cardiovascular disease at lower body weights: Normal is 18.5 – 22.9, Overweight is 23.0 – 27.4, and Obese is 27.5+.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How can I reach a healthy BMI?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Focus on a balanced whole-food diet rich in dietary fiber and lean protein, engage in 150 minutes of aerobic exercise weekly, incorporate resistance training, stay hydrated, and ensure 7-8 hours of quality sleep.</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </main>

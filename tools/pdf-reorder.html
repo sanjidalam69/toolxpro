@@ -3,10 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Page Reorder & Delete Pages - ToolX Pro</title>
-    <meta name="description" content="Reorder, delete, and organize pages of your PDF document online for free in your browser.">
-    <link rel="stylesheet" href="../css/style.css?v=26.0">
+    <title>PDF Page Reorder & Delete Pages Online - Free PDF Organizer | ToolX Pro</title>
+    <meta name="description" content="Reorder, delete, and rearrange pages in any PDF document online for free. Custom page sequence ordering and extraction without file size limits or server uploads.">
+    <link rel="canonical" href="https://toolxpro.live/tools/pdf-reorder.html">
+    <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolxpro.live/tools/pdf-reorder.html">
+    <meta property="og:title" content="PDF Page Reorder & Delete Pages Online | ToolX Pro">
+    <meta property="og:description" content="Reorder, extract, and delete PDF pages directly inside your web browser.">
+    <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
+
     <!-- Favicon & Brand Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
@@ -16,6 +29,56 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#F57C00">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "PDF Page Reorder and Organizer",
+          "url": "https://toolxpro.live/tools/pdf-reorder.html",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do I delete unwanted pages from a PDF?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Simply enter only the page numbers you want to keep in the 'Page Sequence' input field. Any omitted page numbers will be excluded from the newly generated PDF."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I reverse the order of pages?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. For a 5-page PDF, entering '5, 4, 3, 2, 1' will export the document in reverse chronological sequence."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is my original PDF overwritten?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Your local original file remains untouched. The tool creates and downloads a brand new organized PDF copy."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <div id="app-container">
@@ -27,22 +90,22 @@
             <main class="content-area">
                 <div class="tool-container">
                     <div class="tool-header">
-                        <h1 class="tool-title">📑 PDF Page Reorder & Remove Pages</h1>
-                        <p class="tool-desc">Upload a PDF file, delete unwanted pages, or enter desired page order to save a newly organized PDF.</p>
+                        <h1 class="tool-title">📑 PDF Page Reorder & Page Deleter</h1>
+                        <p class="tool-desc">Upload any PDF file to delete unwanted pages, extract custom ranges, or rearrange page sequences into a newly organized PDF.</p>
                     </div>
                     
                     <div class="tool-body">
                         <div class="form-group">
-                            <label for="pdf-upload">Upload PDF File:</label>
+                            <label for="pdf-upload" style="font-weight:600;">Upload PDF Document:</label>
                             <input type="file" id="pdf-upload" accept="application/pdf" class="form-control">
                         </div>
 
                         <div id="pdf-editor-panel" style="display:none; margin-top:1.5rem; flex-direction:column; gap:1.2rem;">
                             <div class="form-group">
-                                <label for="page-order-input">Page Sequence / Kept Pages (e.g. 1, 3, 2, 5):</label>
-                                <input type="text" id="page-order-input" class="form-control" placeholder="1, 2, 3...">
-                                <div style="font-size:0.82rem; color:var(--text-secondary); margin-top:4px;">
-                                    Total Pages in Document: <strong id="total-pages-count">0</strong>. Enter comma-separated page numbers you wish to keep in order.
+                                <label for="page-order-input" style="font-weight:600;">Custom Page Sequence / Kept Pages (e.g. 1, 3, 2, 5):</label>
+                                <input type="text" id="page-order-input" class="form-control" placeholder="e.g. 1, 3, 4, 2">
+                                <div style="font-size:0.85rem; color:var(--text-secondary); margin-top:6px;">
+                                    Total Pages Detected: <strong id="total-pages-count" style="color:var(--primary);">0</strong>. Enter comma-separated page numbers you wish to retain in sequence.
                                 </div>
                             </div>
 
@@ -53,9 +116,48 @@
                     <div id="results" class="results-card" style="display:none; margin-top:2rem;">
                         <h2 class="results-title">✅ PDF Successfully Organized</h2>
                         <div class="results-content" style="text-align:center;">
-                            <p style="font-size:1.1rem; margin-bottom:1.5rem; color:var(--success);">Your PDF pages have been reordered and exported!</p>
+                            <p style="font-size:1.05rem; margin-bottom:1.5rem; color:var(--success); font-weight:600;">Your PDF pages have been reordered and exported!</p>
                             <a id="download-reordered-pdf" class="btn btn-primary" download="organized.pdf" style="width:auto; text-decoration:none;">📥 Download Organized PDF</a>
                         </div>
+                    </div>
+
+                    <!-- ═══════════════════════════════════════════════════════
+                         AUTHORITATIVE EDITORIAL GUIDE & SCAN CORRECTION
+                         ═══════════════════════════════════════════════════════ -->
+                    <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
+                        
+                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            ✂️ Cleaning and Restructuring Multi-Page PDF Files
+                        </h2>
+                        <p style="margin-bottom: 1.2rem;">
+                            Automatic document feeders (ADF) on office scanners often capture documents out of order or include unwanted blank separator sheets. Reorganizing and pruning unnecessary pages produces a streamlined, professional document suitable for clients and examination boards.
+                        </p>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+                            📋 Typical Scenarios for PDF Page Reordering
+                        </h3>
+                        <ol style="padding-left: 1.4rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem;">
+                            <li><strong>Duplex Scan Fixes:</strong> When two-sided scanning captures odd pages (1, 3, 5) followed by even pages (6, 4, 2), enter the interleaved sequence to restore natural reading order.</li>
+                            <li><strong>Removing Blank Divider Pages:</strong> Easily strip out blank trailing pages generated during scanner feeds.</li>
+                            <li><strong>Extracting Executive Summaries:</strong> Create concise summary packets by extracting only key pages (e.g. pages 1, 2, and 12) from large annual reports.</li>
+                        </ol>
+
+                        <!-- FAQ Section -->
+                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                            ❓ Frequently Asked Questions (FAQ)
+                        </h2>
+                        
+                        <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Can I duplicate a page within the document?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. Entering a sequence such as "1, 2, 2, 3" will duplicate page 2 twice in the resulting PDF output.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Is my document data sent to external cloud servers?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No. The rearrangement logic runs 100% locally within your browser sandbox via client-side WebAssembly.</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </main>

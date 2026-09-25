@@ -3,11 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>PDF Merge - ToolX Pro</title>
-    <meta name="description" content="Combine and merge multiple PDF documents into a single file quickly, securely, and completely in your browser.">
+    <title>Merge PDF Files Online - Combine Multiple PDFs for Free | ToolX Pro</title>
+    <meta name="description" content="Combine and merge multiple PDF documents into a single organized file online. Free, fast, and completely private client-side PDF merger with custom page reordering.">
+    <link rel="canonical" href="https://toolxpro.live/tools/pdf-merge.html">
     <link rel="stylesheet" href="../css/style.css">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
+
     <!-- Load pdf-lib from CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+    <!-- Open Graph / Social -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolxpro.live/tools/pdf-merge.html">
+    <meta property="og:title" content="Merge PDF Files Online - Combine Multiple PDFs | ToolX Pro">
+    <meta property="og:description" content="Merge unlimited PDF documents together in custom order directly inside your web browser.">
+    <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
+
     <!-- Favicon & Brand Icons -->
     <link rel="icon" href="/favicon.ico" sizes="any">
     <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
@@ -17,6 +30,56 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#F57C00">
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "PDF Document Merger",
+          "url": "https://toolxpro.live/tools/pdf-merge.html",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          }
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How do I change the sequence of merged PDFs?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Once files are uploaded, use the directional arrow buttons in the file list to arrange documents in your exact preferred reading order before clicking Merge."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Will merging PDFs degrade original vector quality or images?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. The pdf-lib engine extracts and stitches raw page object trees losslessly without re-rendering or downscaling embedded graphics."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is there a limit on how many PDF pages I can merge?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "You can merge dozens of files containing hundreds of total pages. Since processing runs in your local browser memory, there are no artificial file count restrictions."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <div id="app-container">
@@ -28,8 +91,8 @@
             <main class="content-area">
                 <div class="tool-container">
                     <div class="tool-header">
-                        <h1 class="tool-title">📎 PDF Merge</h1>
-                        <p class="tool-desc">Select multiple PDF files, arrange them in your preferred order, and combine them into a single PDF.</p>
+                        <h1 class="tool-title">📎 High-Speed PDF Merger</h1>
+                        <p class="tool-desc">Select multiple PDF files, arrange them in your preferred sequence, and combine them into a single consolidated document without cloud uploads.</p>
                     </div>
                     
                     <div class="tool-body">
@@ -37,14 +100,14 @@
                         <div class="upload-area" id="drop-area">
                             <span class="upload-icon">📎</span>
                             <h3 style="font-size:1.1rem; font-weight:600;">Drag & drop multiple PDFs here or click to browse</h3>
-                            <p style="font-size:0.85rem; color:var(--text-secondary);">Supports: .pdf (Select multiple files at once)</p>
+                            <p style="font-size:0.85rem; color:var(--text-secondary);">Supports: .pdf (Select multiple documents at once)</p>
                             <input type="file" id="pdf-upload" accept="application/pdf" multiple style="display:none;">
                         </div>
 
                         <!-- Settings & Preview Area -->
                         <div id="settings-area" style="display:none; margin-top:1.5rem; animation: fadeIn 0.3s;">
                             <!-- Uploaded PDFs List -->
-                            <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:8px;">Uploaded PDF Files:</h3>
+                            <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:8px;">Uploaded PDF Documents to Combine:</h3>
                             <div class="file-list" id="pdfs-list">
                                 <!-- Dynamically added PDFs list -->
                             </div>
@@ -58,6 +121,54 @@
                         <div class="results-content" id="results-content">
                             <!-- Injected by JS -->
                         </div>
+                    </div>
+
+                    <!-- ═══════════════════════════════════════════════════════
+                         AUTHORITATIVE EDITORIAL GUIDE & USE CASES
+                         ═══════════════════════════════════════════════════════ -->
+                    <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
+                        
+                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            📚 Combining Multiple Documents into Unified PDF Files
+                        </h2>
+                        <p style="margin-bottom: 1.2rem;">
+                            Merging multiple digital files into a single unified PDF simplifies distribution, eliminates messy multi-attachment email chains, and complies with job submission guidelines where recruiters require resume, cover letter, and academic transcripts in a single document packet.
+                        </p>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+                            💼 Primary Professional Use Cases
+                        </h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.2rem 0;">
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">🎓 Student Assignment Portfolios</h4>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">Stitch cover pages, assignment text, laboratory data sheets, and bibliography appendices together.</p>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">💼 Job Application Dossiers</h4>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">Consolidate your curriculum vitae (CV), recommendation letters, and certification diplomas.</p>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">📊 Monthly Invoices & Billing</h4>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">Aggregate vendor receipts, payment slips, and tax statements into a single annual accounting bundle.</p>
+                            </div>
+                        </div>
+
+                        <!-- FAQ Section -->
+                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                            ❓ Frequently Asked Questions (FAQ)
+                        </h2>
+                        
+                        <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Will merged PDF pages maintain their original orientation?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. The merger respects individual page rotation metadata. Portrait and landscape pages coexist seamlessly within the merged output.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Does ToolX Pro view my personal contract files?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No. The merger runs completely offline inside your browser environment. Your files are never sent over the internet or indexed by third parties.</p>
+                            </div>
+                        </div>
+
                     </div>
                 </div>
             </main>
