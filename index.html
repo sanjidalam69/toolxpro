@@ -11,7 +11,8 @@
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
 
-    <!-- Open Graph / Facebook (SEO Sharing cards) -->
+    <!-- Canonical & Open Graph -->
+    <link rel="canonical" href="https://toolxpro.live/">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://toolxpro.live/">
     <meta property="og:title" content="ToolX Pro - Free Web Utility Tools Hub">
@@ -26,14 +27,50 @@
     <meta property="twitter:image" content="https://toolxpro.live/images/icon-512.png">
 
     <!-- Favicon & Brand Icons -->
-    <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="shortcut icon" href="/favicon.ico">
     <link rel="icon" type="image/png" sizes="48x48" href="/images/favicon-48x48.png">
     <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png">
     <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192x192.png">
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#F57C00">
+
+    <!-- Schema.org WebSite & Organization Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebSite",
+          "@id": "https://toolxpro.live/#website",
+          "url": "https://toolxpro.live/",
+          "name": "ToolX Pro",
+          "description": "Free, privacy-first online utility tools hub for students, creators, and professionals.",
+          "publisher": {
+            "@id": "https://toolxpro.live/#organization"
+          }
+        },
+        {
+          "@type": "Organization",
+          "@id": "https://toolxpro.live/#organization",
+          "name": "ToolX Pro",
+          "url": "https://toolxpro.live/",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://toolxpro.live/images/icon-512.png",
+            "width": 512,
+            "height": 512
+          },
+          "image": "https://toolxpro.live/images/icon-512.png",
+          "founder": {
+            "@type": "Person",
+            "name": "Sanjid Alam"
+          }
+        }
+      ]
+    }
+    </script>
 </head>
 <body>
     <div id="app-container">
