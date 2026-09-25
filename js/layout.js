@@ -145,8 +145,8 @@ function injectToolBackButton(homePath, isSubFolder, isHomePage) {
     if (isHomePage) return;
     
     const path = window.location.pathname.toLowerCase();
-    const isToolPage = path.includes('/tools/');
-    const isBlogPage = path.includes('/blog/');
+    const isToolPage = path.includes('/tools/') || path.includes('tools/');
+    const isBlogPage = path.includes('/blog/') || path.includes('blog/');
     
     if (!isToolPage && !isBlogPage) return;
     
