@@ -440,18 +440,9 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>`;
     }
 
-    // ── Clean Signature Footer Line ────────────────────────────────────
+    // ── Signature Footer Line (Removed per user request) ──────────────
     function renderSignatureLine(d) {
-        return `
-            <div style="margin-top:auto; padding-top:28px; display:flex; justify-content:space-between; align-items:flex-end;">
-                <div style="font-size:12px; color:#64748b;">
-                    <span>Report Submission Date: ${d.dateSubmit.html}</span>
-                </div>
-                <div style="text-align:center; min-width:200px;">
-                    <div style="border-bottom:1.5px solid #334155; width:100%; height:20px;"></div>
-                    <div style="font-size:12px; font-weight:700; color:#334155; margin-top:4px;">Signature of Faculty Member</div>
-                </div>
-            </div>`;
+        return "";
     }
 
     // ── 10 Template Renderers (Clean & Spacious Without Rubric) ────────
