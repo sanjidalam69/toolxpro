@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Free Lab Report Cover Page Generator - A4 Print Ready | ToolX Pro</title>
-    <meta name="description" content="Generate custom print-ready Lab Report cover pages for University and College engineering, physics, chemistry, and CS labs. Includes Experiment No, dates, and grading rubric.">
-    <meta name="keywords" content="lab report cover page generator, university lab report front page, engineering lab report cover, experiment no front page maker, lab sheet cover page pdf, buet du seu nsu lab report">
+    <title>Lab Report Cover Page Generator - A4 Print Ready | ToolX Pro</title>
+    <meta name="description" content="Generate custom print-ready Lab Report cover pages for All Universities & Southeast University (SEU). Includes Experiment No, dates, and grading rubric.">
+    <meta name="keywords" content="lab report cover page generator, university lab report front page, seu lab report cover, experiment no front page maker, lab sheet cover page pdf, buet du seu nsu lab report">
     <link rel="canonical" href="https://toolxpro.live/tools/lab-report-cover.html">
     <link rel="stylesheet" href="../css/style.css?v=55.0">
 
     <!-- Open Graph / Social Media -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://toolxpro.live/tools/lab-report-cover.html">
-    <meta property="og:title" content="Free Lab Report Cover Page Generator - ToolX Pro">
+    <meta property="og:title" content="Lab Report Cover Page Generator - ToolX Pro">
     <meta property="og:description" content="Design and download instant print-ready A4 Lab Report front pages with experiment number, dates, student ID, and faculty evaluation rubric.">
     <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
 
@@ -62,10 +62,10 @@
             },
             {
               "@type": "Question",
-              "name": "Can I upload my own University or College logo?",
+              "name": "Can I generate Southeast University (SEU) specific lab covers?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes! You can choose from pre-configured university presets (SEU, BUET, DU, NSU, BRAC, etc.) or click 'Upload Custom Logo' to add any school, college, or university crest directly from your device."
+                "text": "Yes! We provide a dedicated Southeast University (SEU) mode pre-configured with the official SEU crest logo, navy blue styling, and standard university layout."
               }
             },
             {
@@ -87,6 +87,18 @@
             max-width: 1280px;
             margin: 0 auto;
             width: 100%;
+        }
+
+        #landing-selection.hidden,
+        #landing-selection[style*="display: none"],
+        #landing-selection[style*="display:none"] {
+            display: none !important;
+        }
+
+        #generator-interface.hidden,
+        #generator-interface[style*="display: none"],
+        #generator-interface[style*="display:none"] {
+            display: none !important;
         }
 
         .lab-generator-grid {
@@ -140,7 +152,7 @@
         }
 
         .form-section-title {
-            font-size: 0.96rem;
+            font-size: 0.94rem;
             font-weight: 800;
             color: var(--primary);
             margin: 18px 0 10px;
@@ -370,23 +382,6 @@
             box-sizing: border-box;
         }
 
-        /* Print Override */
-        @media print {
-            body * { visibility: hidden !important; }
-            #a4-preview, #a4-preview * { visibility: visible !important; }
-            #a4-preview {
-                position: fixed !important;
-                left: 0 !important;
-                top: 0 !important;
-                width: 100% !important;
-                height: 100% !important;
-                transform: none !important;
-                box-shadow: none !important;
-                margin: 0 !important;
-                padding: 0 !important;
-            }
-        }
-
         /* Universal Field Alignment */
         .lab-field-row {
             display: flex;
@@ -433,10 +428,39 @@
             .action-buttons { flex-direction: column; }
         }
 
+        .f-hint {
+            color: #94a3b8;
+            font-style: italic;
+            font-weight: 500;
+        }
+
+        @media print {
+            body * {
+                visibility: hidden !important;
+            }
+            #a4-preview, #a4-preview * {
+                visibility: visible !important;
+            }
+            #a4-preview {
+                position: fixed !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                transform: none !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 15mm !important;
+            }
+            @page {
+                size: A4 portrait;
+                margin: 0;
+            }
+        }
+
         /* ── Template Styles ── */
-        /* Template 1: Engineering Standard (Dual Border) */
         .tpl-eng-border {
-            border: 12px solid var(--t-color, #1e3a8a);
+            border: 12px solid var(--t-color, #003366);
             padding: 30px 45px;
             display: flex;
             flex-direction: column;
@@ -445,11 +469,10 @@
         .tpl-eng-border .inner-border {
             position: absolute;
             inset: 8px;
-            border: 2px solid var(--t-color, #1e3a8a);
+            border: 2px solid var(--t-color, #003366);
             pointer-events: none;
         }
 
-        /* Template 2: Modern Tech Accent */
         .tpl-modern-tech {
             padding: 40px 50px;
             display: flex;
@@ -459,7 +482,6 @@
             border-bottom: 12px solid var(--t-color, #0284c7);
         }
 
-        /* Template 3: Scientific Matrix */
         .tpl-lab-matrix {
             padding: 40px 50px;
             display: flex;
@@ -468,7 +490,6 @@
             border: 3px solid #334155;
         }
 
-        /* Template 4: Formal Crest */
         .tpl-formal-crest {
             padding: 36px 48px;
             display: flex;
@@ -477,7 +498,6 @@
             border: 10px double var(--t-color, #991b1b);
         }
 
-        /* Template 5: Emerald Laboratory */
         .tpl-emerald-bio {
             padding: 40px 50px;
             display: flex;
@@ -487,7 +507,6 @@
             border-right: 2px solid var(--t-color, #059669);
         }
 
-        /* Template 6: Monochrome Ink-Saver (Black & White) */
         .tpl-monochrome-print {
             padding: 40px 50px;
             display: flex;
@@ -502,7 +521,6 @@
             pointer-events: none;
         }
 
-        /* Template 7: Executive Navy Banner */
         .tpl-executive-navy {
             padding: 0;
             display: flex;
@@ -510,7 +528,6 @@
             justify-content: space-between;
         }
 
-        /* Template 8: Cyber Circuit */
         .tpl-circuit-dark {
             padding: 40px 50px;
             display: flex;
@@ -519,7 +536,6 @@
             border: 4px solid var(--t-color, #0f766e);
         }
 
-        /* Template 9: Evaluation Focus */
         .tpl-evaluation-focus {
             padding: 34px 44px;
             display: flex;
@@ -528,7 +544,6 @@
             border: 4px solid var(--t-color, #4338ca);
         }
 
-        /* Template 10: Minimalist Sharp */
         .tpl-minimalist-sharp {
             padding: 44px 54px;
             display: flex;
@@ -548,271 +563,295 @@
             <main class="content-area">
                 <div class="lab-generator-wrapper">
                     
-                    <!-- Mobile View Switcher -->
-                    <div class="mobile-view-tabs" id="mobile-tabs">
-                        <button type="button" class="mobile-tab-btn active" id="tab-btn-edit">
-                            <span>✏️</span> Edit Details
-                        </button>
-                        <button type="button" class="mobile-tab-btn" id="tab-btn-preview">
-                            <span>👁️</span> Live A4 Preview
-                        </button>
-                    </div>
-
-                    <div class="lab-generator-grid view-edit" id="generator-grid">
-                        
-                        <!-- Left Controls Column -->
-                        <div class="controls-card">
-                            
-                            <!-- Section: Template & Theme -->
-                            <div class="form-section-title">
-                                <span>🎨</span> 1. Select Template & Theme
-                            </div>
-
-                            <div class="form-group-lab">
-                                <label>Lab Report Template:</label>
-                                <div class="template-picker">
-                                    <button type="button" class="tpl-btn active" data-tpl="eng-border">
-                                        <span class="tpl-icon">📐</span>
-                                        <span>Engineering Border</span>
-                                    </button>
-                                    <button type="button" class="tpl-btn" data-tpl="modern-tech">
-                                        <span class="tpl-icon">⚡</span>
-                                        <span>Modern Tech</span>
-                                    </button>
-                                    <button type="button" class="tpl-btn" data-tpl="lab-matrix">
-                                        <span class="tpl-icon">📊</span>
-                                        <span>Scientific Matrix</span>
-                                    </button>
-                                    <button type="button" class="tpl-btn" data-tpl="formal-crest">
-                                        <span class="tpl-icon">🏛️</span>
-                                        <span>Formal Crest</span>
-                                    </button>
-                                    <button type="button" class="tpl-btn" data-tpl="emerald-bio">
-                                        <span class="tpl-icon">🧪</span>
-                                        <span>Emerald Bio-Lab</span>
-                                    </button>
-                                    <button type="button" class="tpl-btn" data-tpl="monochrome-print">
-                                        <span class="tpl-icon">🖨️</span>
-                                        <span>Ink-Saver (B&W)</span>
-                                    </button>
-                                    <button type="button" class="tpl-btn" data-tpl="executive-navy">
-                                        <span class="tpl-icon">👔</span>
-                                        <span>Executive Navy</span>
-                                    </button>
-                                    <button type="button" class="tpl-btn" data-tpl="circuit-dark">
-                                        <span class="tpl-icon">🔌</span>
-                                        <span>Circuit Cyber</span>
-                                    </button>
-                                    <button type="button" class="tpl-btn" data-tpl="evaluation-focus">
-                                        <span class="tpl-icon">📝</span>
-                                        <span>Faculty Rubric Box</span>
-                                    </button>
-                                    <button type="button" class="tpl-btn" data-tpl="minimalist-sharp">
-                                        <span class="tpl-icon">✨</span>
-                                        <span>Minimalist Sharp</span>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <div class="input-grid">
-                                <div class="form-group-lab">
-                                    <label for="inp-color">Accent Color:</label>
-                                    <select id="inp-color" class="form-control-sm">
-                                        <option value="#1e3a8a" selected>Navy Blue (Standard)</option>
-                                        <option value="#0284c7">Sky Blue / Tech Cyan</option>
-                                        <option value="#991b1b">Academic Crimson Red</option>
-                                        <option value="#059669">Emerald Lab Green</option>
-                                        <option value="#6b21a8">Royal Purple</option>
-                                        <option value="#d97706">Amber Gold</option>
-                                        <option value="#111827">Pitch Black / Slate</option>
-                                    </select>
-                                </div>
-                                <div class="form-group-lab">
-                                    <label for="inp-font">Typography:</label>
-                                    <select id="inp-font" class="form-control-sm">
-                                        <option value="'Times New Roman', Times, serif" selected>Classic Serif (Times)</option>
-                                        <option value="'Inter', 'Segoe UI', sans-serif">Modern Clean (Inter)</option>
-                                        <option value="'Roboto', 'Helvetica Neue', sans-serif">Technical Sans (Roboto)</option>
-                                        <option value="'Georgia', serif">Academic Serif (Georgia)</option>
-                                        <option value="'Courier New', monospace">Engineering Mono</option>
-                                    </select>
-                                </div>
-                            </div>
-
-                            <!-- Section: University & Institution -->
-                            <div class="form-section-title">
-                                <span>🏛️</span> 2. University & Department
-                            </div>
-
-                            <div class="form-group-lab">
-                                <label for="preset-uni">University Preset:</label>
-                                <select id="preset-uni" class="form-control-sm">
-                                    <option value="custom" selected>Custom / All Universities</option>
-                                    <option value="seu">Southeast University (SEU)</option>
-                                    <option value="buet">BUET (Engineering Standard)</option>
-                                    <option value="du">University of Dhaka (DU)</option>
-                                    <option value="nu">National University (NU)</option>
-                                    <option value="nsu">North South University (NSU)</option>
-                                    <option value="brac">BRAC University (BRACU)</option>
-                                    <option value="aiub">AIUB</option>
-                                    <option value="aust">AUST</option>
-                                    <option value="diu">Daffodil Int. University (DIU)</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group-lab">
-                                <label for="inp-uni-name">University Name:</label>
-                                <input type="text" id="inp-uni-name" class="form-control-sm" value="SOUTHEAST UNIVERSITY" placeholder="e.g. SOUTHEAST UNIVERSITY">
-                            </div>
-
-                            <div class="form-group-lab">
-                                <label for="inp-dept-name">Department Name:</label>
-                                <input type="text" id="inp-dept-name" class="form-control-sm" value="Department of Computer Science & Engineering" placeholder="e.g. Department of Computer Science & Engineering">
-                            </div>
-
-                            <div class="input-grid">
-                                <div class="form-group-lab">
-                                    <label for="inp-logo-file">Upload Logo (PNG/JPG):</label>
-                                    <input type="file" id="inp-logo-file" class="form-control-sm" accept="image/*">
-                                </div>
-                                <div class="form-group-lab">
-                                    <label for="btn-reset-logo">Logo Actions:</label>
-                                    <button type="button" id="btn-reset-logo" class="form-control-sm" style="cursor:pointer; font-weight:700;">🔄 Reset Logo</button>
-                                </div>
-                            </div>
-
-                            <!-- Section: Course & Lab Experiment -->
-                            <div class="form-section-title">
-                                <span>🧪</span> 3. Lab Experiment Details
-                            </div>
-
-                            <div class="input-grid">
-                                <div class="form-group-lab">
-                                    <label for="inp-course-title">Course Title / Name:</label>
-                                    <input type="text" id="inp-course-title" class="form-control-sm" value="Data Structures & Algorithms Laboratory" placeholder="e.g. Electrical Circuit Lab">
-                                </div>
-                                <div class="form-group-lab">
-                                    <label for="inp-course-code">Course Code:</label>
-                                    <input type="text" id="inp-course-code" class="form-control-sm" value="CSE 2102" placeholder="e.g. CSE-2102 / EEE-1202">
-                                </div>
-                            </div>
-
-                            <div class="input-grid">
-                                <div class="form-group-lab">
-                                    <label for="inp-exp-no">Experiment No.:</label>
-                                    <input type="text" id="inp-exp-no" class="form-control-sm" value="01" placeholder="e.g. 01, 02, 03">
-                                </div>
-                                <div class="form-group-lab">
-                                    <label for="inp-date-perform">Date of Performance:</label>
-                                    <input type="text" id="inp-date-perform" class="form-control-sm" value="15 October, 2026" placeholder="DD Month, YYYY">
-                                </div>
-                            </div>
-
-                            <div class="form-group-lab">
-                                <label for="inp-exp-name">Experiment Name / Title:</label>
-                                <textarea id="inp-exp-name" class="form-control-sm" rows="2" placeholder="e.g. Implementation and Performance Analysis of Graph Traversal Algorithms (BFS & DFS)">Implementation and Performance Analysis of Graph Traversal Algorithms (BFS and DFS)</textarea>
-                            </div>
-
-                            <div class="form-group-lab">
-                                <label for="inp-date-submit">Date of Submission:</label>
-                                <input type="text" id="inp-date-submit" class="form-control-sm" value="22 October, 2026" placeholder="DD Month, YYYY">
-                            </div>
-
-                            <!-- Section: Submitted By (Student) -->
-                            <div class="form-section-title">
-                                <span>🎓</span> 4. Submitted By (Student Info)
-                            </div>
-
-                            <div class="input-grid">
-                                <div class="form-group-lab">
-                                    <label for="inp-student-name">Student Name:</label>
-                                    <input type="text" id="inp-student-name" class="form-control-sm" value="Sanjid Alam" placeholder="e.g. Sanjid Alam">
-                                </div>
-                                <div class="form-group-lab">
-                                    <label for="inp-student-id">Student ID:</label>
-                                    <input type="text" id="inp-student-id" class="form-control-sm" value="2022000000001" placeholder="e.g. 2022000000001">
-                                </div>
-                            </div>
-
-                            <div class="input-grid">
-                                <div class="form-group-lab">
-                                    <label for="inp-student-section">Section:</label>
-                                    <input type="text" id="inp-student-section" class="form-control-sm" value="01 (A)" placeholder="e.g. 01 / A">
-                                </div>
-                                <div class="form-group-lab">
-                                    <label for="inp-student-batch">Batch / Semester:</label>
-                                    <input type="text" id="inp-student-batch" class="form-control-sm" value="56th Batch (Fall 2026)" placeholder="e.g. 56th Batch / 5th Sem">
-                                </div>
-                            </div>
-
-                            <div class="form-group-lab">
-                                <label for="inp-student-group">Group / Roll (Optional):</label>
-                                <input type="text" id="inp-student-group" class="form-control-sm" value="Group: B-02" placeholder="e.g. Group B-02 (leave blank if none)">
-                            </div>
-
-                            <!-- Section: Submitted To (Faculty) -->
-                            <div class="form-section-title">
-                                <span>👨‍🏫</span> 5. Submitted To (Faculty / Instructor)
-                            </div>
-
-                            <div class="form-group-lab">
-                                <label for="inp-teacher-name">Faculty / Instructor Name:</label>
-                                <input type="text" id="inp-teacher-name" class="form-control-sm" value="Dr. Md. Rafiqul Islam" placeholder="e.g. Dr. Md. Rafiqul Islam">
-                            </div>
-
-                            <div class="input-grid">
-                                <div class="form-group-lab">
-                                    <label for="inp-teacher-desig">Designation:</label>
-                                    <input type="text" id="inp-teacher-desig" class="form-control-sm" value="Assistant Professor" placeholder="e.g. Assistant Professor / Lecturer">
-                                </div>
-                                <div class="form-group-lab">
-                                    <label for="inp-teacher-dept">Department:</label>
-                                    <input type="text" id="inp-teacher-dept" class="form-control-sm" value="Department of CSE" placeholder="e.g. Department of CSE">
-                                </div>
-                            </div>
-
-                            <!-- Section: Faculty Evaluation & Remarks -->
-                            <div class="form-section-title">
-                                <span>📋</span> 6. Faculty Evaluation Box
-                            </div>
-
-                            <label class="checkbox-label-toggle">
-                                <input type="checkbox" id="toggle-eval-box" checked>
-                                <span>Include Faculty Evaluation & Signature Box</span>
-                            </label>
-
-                            <!-- Actions -->
-                            <div class="action-buttons">
-                                <button type="button" id="btn-download-pdf" class="btn-dl-pdf">
-                                    <span>📄</span> Download A4 PDF
-                                </button>
-                                <button type="button" id="btn-download-png" class="btn-dl-png">
-                                    <span>🖼️</span> Download HD PNG
-                                </button>
-                                <button type="button" id="btn-direct-print" class="btn-direct-print" title="Direct Print to A4 Paper">
-                                    <span>🖨️</span> Print
-                                </button>
-                            </div>
-
+                    <div class="tool-container">
+                        <div class="tool-header">
+                            <h1 class="tool-title">🧪 Lab Report Cover Generator</h1>
+                            <p class="tool-desc">Create professional, print-ready A4 Lab Report front pages in seconds. Choose your university mode to start.</p>
                         </div>
 
-                        <!-- Right Preview Column -->
-                        <div class="preview-wrapper">
-                            <div class="preview-toolbar">
-                                <span>📄 Live A4 Canvas Preview (794 x 1123 px)</span>
-                                <div class="zoom-controls">
-                                    <span>Zoom:</span>
-                                    <button type="button" class="zoom-btn" data-scale="0.6">60%</button>
-                                    <button type="button" class="zoom-btn" data-scale="0.8">80%</button>
-                                    <button type="button" class="zoom-btn active" data-scale="auto">Fit</button>
+                        <!-- Landing Selection Screen (Dual Cards like Assignment Cover) -->
+                        <div id="landing-selection" class="tools-section" style="margin-top: 15px; max-width: 850px; margin-left: auto; margin-right: auto;">
+                            <div class="tools-grid" style="grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;">
+
+                                <!-- Card 1: All Universities -->
+                                <a href="lab-report-cover.html?mode=all" class="tool-card">
+                                    <span class="tool-badge badge-popular">Popular</span>
+                                    <div class="tool-card-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">🧪</div>
+                                    <h3 class="tool-card-title">Lab Report Cover (All Universities)</h3>
+                                    <p class="tool-card-desc">Create custom lab report front pages for any university or college with custom logo upload and 10 templates.</p>
+                                    <div class="card-action">Open Tool &rarr;</div>
+                                </a>
+
+                                <!-- Card 2: Southeast University -->
+                                <a href="lab-report-cover.html?mode=seu" class="tool-card">
+                                    <span class="tool-badge badge-popular" style="background: rgba(0, 51, 102, 0.15); color: #003366;">SEU Special</span>
+                                    <div class="tool-card-icon" style="background: rgba(0, 51, 102, 0.1); color: #003366;">🏛️</div>
+                                    <h3 class="tool-card-title">Lab Report Cover (SEU)</h3>
+                                    <p class="tool-card-desc">Instant lab report generator pre-loaded with official Southeast University logo and SEU standard layout.</p>
+                                    <div class="card-action">Open Tool &rarr;</div>
+                                </a>
+
+                            </div>
+                        </div>
+
+                        <!-- Generator Interface (shown when ?mode= is present) -->
+                        <div id="generator-interface" class="lab-generator-grid view-edit hidden" style="display:none;">
+                            
+                            <!-- Mobile View Switcher Tabs -->
+                            <div class="mobile-view-tabs" id="mobile-tabs">
+                                <button type="button" class="mobile-tab-btn active" id="tab-btn-edit">
+                                    <span>✏️</span> Edit Details
+                                </button>
+                                <button type="button" class="mobile-tab-btn" id="tab-btn-preview">
+                                    <span>👁️</span> Live A4 Preview
+                                </button>
+                            </div>
+
+                            <!-- Left Controls Column -->
+                            <div class="controls-card">
+                                
+                                <!-- Switch mode header -->
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; padding-bottom:10px; border-bottom:1px solid var(--border-color);">
+                                    <button id="btn-back-selection" style="background:none; border:none; color:var(--primary); font-weight:700; cursor:pointer; font-size:0.9rem; display:flex; align-items:center; gap:4px;">
+                                        &larr; Switch University Mode
+                                    </button>
+                                </div>
+
+                                <!-- Section: Template & Theme -->
+                                <div class="form-section-title">
+                                    <span>🎨</span> 1. Select Template & Theme
+                                </div>
+
+                                <div class="form-group-lab">
+                                    <label>Lab Report Template:</label>
+                                    <div class="template-picker">
+                                        <button type="button" class="tpl-btn active" data-tpl="eng-border">
+                                            <span class="tpl-icon">📐</span>
+                                            <span>Engineering Border</span>
+                                        </button>
+                                        <button type="button" class="tpl-btn" data-tpl="modern-tech">
+                                            <span class="tpl-icon">⚡</span>
+                                            <span>Modern Tech</span>
+                                        </button>
+                                        <button type="button" class="tpl-btn" data-tpl="lab-matrix">
+                                            <span class="tpl-icon">📊</span>
+                                            <span>Scientific Matrix</span>
+                                        </button>
+                                        <button type="button" class="tpl-btn" data-tpl="formal-crest">
+                                            <span class="tpl-icon">🏛️</span>
+                                            <span>Formal Crest</span>
+                                        </button>
+                                        <button type="button" class="tpl-btn" data-tpl="emerald-bio">
+                                            <span class="tpl-icon">🧪</span>
+                                            <span>Emerald Bio-Lab</span>
+                                        </button>
+                                        <button type="button" class="tpl-btn" data-tpl="monochrome-print">
+                                            <span class="tpl-icon">🖨️</span>
+                                            <span>Ink-Saver (B&W)</span>
+                                        </button>
+                                        <button type="button" class="tpl-btn" data-tpl="executive-navy">
+                                            <span class="tpl-icon">👔</span>
+                                            <span>Executive Navy</span>
+                                        </button>
+                                        <button type="button" class="tpl-btn" data-tpl="circuit-dark">
+                                            <span class="tpl-icon">🔌</span>
+                                            <span>Circuit Cyber</span>
+                                        </button>
+                                        <button type="button" class="tpl-btn" data-tpl="evaluation-focus">
+                                            <span class="tpl-icon">📝</span>
+                                            <span>Faculty Rubric Box</span>
+                                        </button>
+                                        <button type="button" class="tpl-btn" data-tpl="minimalist-sharp">
+                                            <span class="tpl-icon">✨</span>
+                                            <span>Minimalist Sharp</span>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div class="input-grid">
+                                    <div class="form-group-lab">
+                                        <label for="inp-color">Accent Color:</label>
+                                        <select id="inp-color" class="form-control-sm">
+                                            <option value="#003366" selected>SEU Blue / Navy</option>
+                                            <option value="#0284c7">Tech Sky Blue</option>
+                                            <option value="#991b1b">Academic Crimson</option>
+                                            <option value="#059669">Emerald Lab Green</option>
+                                            <option value="#6b21a8">Royal Purple</option>
+                                            <option value="#d97706">Amber Gold</option>
+                                            <option value="#111827">Pitch Black / Slate</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group-lab">
+                                        <label for="inp-font">Typography:</label>
+                                        <select id="inp-font" class="form-control-sm">
+                                            <option value="'Times New Roman', Times, serif" selected>Classic Serif (Times)</option>
+                                            <option value="'Inter', 'Segoe UI', sans-serif">Modern Clean (Inter)</option>
+                                            <option value="'Roboto', 'Helvetica Neue', sans-serif">Technical Sans (Roboto)</option>
+                                            <option value="'Georgia', serif">Academic Serif (Georgia)</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <!-- Section: University & Department -->
+                                <div class="form-section-title">
+                                    <span>🏛️</span> 2. University & Department
+                                </div>
+
+                                <div class="form-group-lab" id="wrapper-uni-name">
+                                    <label for="inp-uni-name">University Name:</label>
+                                    <input type="text" id="inp-uni-name" class="form-control-sm" placeholder="e.g. SOUTHEAST UNIVERSITY">
+                                </div>
+
+                                <div class="form-group-lab">
+                                    <label for="inp-dept-name">Department Name:</label>
+                                    <input type="text" id="inp-dept-name" class="form-control-sm" placeholder="e.g. Department of Computer Science & Engineering">
+                                </div>
+
+                                <div class="input-grid" id="wrapper-logo-upload">
+                                    <div class="form-group-lab">
+                                        <label for="inp-logo-file">Upload Custom Logo:</label>
+                                        <input type="file" id="inp-logo-file" class="form-control-sm" accept="image/*">
+                                    </div>
+                                    <div class="form-group-lab">
+                                        <label for="btn-reset-logo">Logo Actions:</label>
+                                        <button type="button" id="btn-reset-logo" class="form-control-sm" style="cursor:pointer; font-weight:700;">🔄 Reset Logo</button>
+                                    </div>
+                                </div>
+
+                                <!-- Section: Course & Lab Experiment -->
+                                <div class="form-section-title">
+                                    <span>🧪</span> 3. Lab Experiment Details
+                                </div>
+
+                                <div class="input-grid">
+                                    <div class="form-group-lab">
+                                        <label for="inp-course-title">Course Title / Name:</label>
+                                        <input type="text" id="inp-course-title" class="form-control-sm" placeholder="e.g. Data Structures & Algorithms Lab">
+                                    </div>
+                                    <div class="form-group-lab">
+                                        <label for="inp-course-code">Course Code:</label>
+                                        <input type="text" id="inp-course-code" class="form-control-sm" placeholder="e.g. CSE 2102">
+                                    </div>
+                                </div>
+
+                                <div class="input-grid">
+                                    <div class="form-group-lab">
+                                        <label for="inp-exp-no">Experiment No.:</label>
+                                        <input type="text" id="inp-exp-no" class="form-control-sm" placeholder="e.g. 01, 02, 03">
+                                    </div>
+                                    <div class="form-group-lab">
+                                        <label for="inp-date-perform">Date of Performance:</label>
+                                        <input type="text" id="inp-date-perform" class="form-control-sm" placeholder="e.g. 15 October, 2026">
+                                    </div>
+                                </div>
+
+                                <div class="form-group-lab">
+                                    <label for="inp-exp-name">Experiment Name / Title:</label>
+                                    <textarea id="inp-exp-name" class="form-control-sm" rows="2" placeholder="e.g. Implementation and Performance Analysis of Graph Traversal Algorithms (BFS and DFS)"></textarea>
+                                </div>
+
+                                <div class="form-group-lab">
+                                    <label for="inp-date-submit">Date of Submission:</label>
+                                    <input type="text" id="inp-date-submit" class="form-control-sm" placeholder="e.g. 22 October, 2026">
+                                </div>
+
+                                <!-- Section: Submitted By (Student) -->
+                                <div class="form-section-title">
+                                    <span>🎓</span> 4. Submitted By (Student Info)
+                                </div>
+
+                                <div class="input-grid">
+                                    <div class="form-group-lab">
+                                        <label for="inp-student-name">Student Name:</label>
+                                        <input type="text" id="inp-student-name" class="form-control-sm" placeholder="e.g. Sanjid Alam">
+                                    </div>
+                                    <div class="form-group-lab">
+                                        <label for="inp-student-id">Student ID:</label>
+                                        <input type="text" id="inp-student-id" class="form-control-sm" placeholder="e.g. 2022000000001">
+                                    </div>
+                                </div>
+
+                                <div class="input-grid">
+                                    <div class="form-group-lab">
+                                        <label for="inp-student-section">Section:</label>
+                                        <input type="text" id="inp-student-section" class="form-control-sm" placeholder="e.g. 01 / A">
+                                    </div>
+                                    <div class="form-group-lab">
+                                        <label for="inp-student-batch">Batch / Semester:</label>
+                                        <input type="text" id="inp-student-batch" class="form-control-sm" placeholder="e.g. 56th Batch / 5th Sem">
+                                    </div>
+                                </div>
+
+                                <div class="form-group-lab">
+                                    <label for="inp-student-group">Group / Roll (Optional):</label>
+                                    <input type="text" id="inp-student-group" class="form-control-sm" placeholder="e.g. Group: B-02 (optional)">
+                                </div>
+
+                                <!-- Section: Submitted To (Faculty) -->
+                                <div class="form-section-title">
+                                    <span>👨‍🏫</span> 5. Submitted To (Faculty / Instructor)
+                                </div>
+
+                                <div class="form-group-lab">
+                                    <label for="inp-teacher-name">Faculty / Instructor Name:</label>
+                                    <input type="text" id="inp-teacher-name" class="form-control-sm" placeholder="e.g. Dr. Md. Rafiqul Islam">
+                                </div>
+
+                                <div class="input-grid">
+                                    <div class="form-group-lab">
+                                        <label for="inp-teacher-desig">Designation:</label>
+                                        <input type="text" id="inp-teacher-desig" class="form-control-sm" placeholder="e.g. Assistant Professor / Lecturer">
+                                    </div>
+                                    <div class="form-group-lab">
+                                        <label for="inp-teacher-dept">Department:</label>
+                                        <input type="text" id="inp-teacher-dept" class="form-control-sm" placeholder="e.g. Department of CSE">
+                                    </div>
+                                </div>
+
+                                <!-- Section: Faculty Evaluation & Remarks -->
+                                <div class="form-section-title">
+                                    <span>📋</span> 6. Faculty Evaluation Box
+                                </div>
+
+                                <label class="checkbox-label-toggle">
+                                    <input type="checkbox" id="toggle-eval-box" checked>
+                                    <span>Include Faculty Evaluation & Signature Box</span>
+                                </label>
+
+                                <!-- Actions -->
+                                <div class="action-buttons">
+                                    <button type="button" id="btn-download-pdf" class="btn-dl-pdf">
+                                        <span>📄</span> Download A4 PDF
+                                    </button>
+                                    <button type="button" id="btn-download-png" class="btn-dl-png">
+                                        <span>🖼️</span> Download HD PNG
+                                    </button>
+                                    <button type="button" id="btn-direct-print" class="btn-direct-print" title="Direct Print to A4 Paper">
+                                        <span>🖨️</span> Print
+                                    </button>
+                                </div>
+
+                            </div>
+
+                            <!-- Right Preview Column -->
+                            <div class="preview-wrapper">
+                                <div class="preview-toolbar">
+                                    <span>📄 Live A4 Canvas Preview (794 x 1123 px)</span>
+                                    <div class="zoom-controls">
+                                        <span>Zoom:</span>
+                                        <button type="button" class="zoom-btn" data-scale="0.6">60%</button>
+                                        <button type="button" class="zoom-btn" data-scale="0.8">80%</button>
+                                        <button type="button" class="zoom-btn active" data-scale="auto">Fit</button>
+                                    </div>
+                                </div>
+
+                                <div class="preview-container" id="preview-outer-container">
+                                    <div id="a4-preview">
+                                        <!-- Rendered dynamically by lab-report-cover.js -->
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="preview-container" id="preview-outer-container">
-                                <div id="a4-preview">
-                                    <!-- Rendered dynamically by lab-report-cover.js -->
-                                </div>
-                            </div>
                         </div>
 
                     </div>
@@ -848,49 +887,6 @@
                             </div>
                         </div>
 
-                        <h3 style="font-size: 1.3rem; font-weight: 700; margin: 2rem 0 0.8rem; color: var(--text-primary);">
-                            📊 Essential Components Checklist for University Lab Reports
-                        </h3>
-
-                        <div style="overflow-x: auto; margin-bottom: 2rem;">
-                            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; background: var(--bg-secondary); border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);">
-                                <thead>
-                                    <tr style="background: var(--bg-primary); border-bottom: 2px solid var(--border-color);">
-                                        <th style="padding: 12px 16px; color: var(--text-primary);">Field Name</th>
-                                        <th style="padding: 12px 16px; color: var(--text-primary);">Importance & Purpose</th>
-                                        <th style="padding: 12px 16px; color: var(--text-primary);">Example Value</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr style="border-bottom: 1px solid var(--border-color);">
-                                        <td style="padding: 12px 16px; font-weight: 700;">University & Crest</td>
-                                        <td style="padding: 12px 16px; color: var(--text-secondary);">Identifies the institutional affiliation and department.</td>
-                                        <td style="padding: 12px 16px; color: var(--text-secondary);">SOUTHEAST UNIVERSITY / BUET / DU</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid var(--border-color);">
-                                        <td style="padding: 12px 16px; font-weight: 700;">Course Code & Title</td>
-                                        <td style="padding: 12px 16px; color: var(--text-secondary);">Links the practical lab to the corresponding theoretical syllabus.</td>
-                                        <td style="padding: 12px 16px; color: var(--text-secondary);">CSE 2102: Data Structures Lab</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid var(--border-color);">
-                                        <td style="padding: 12px 16px; font-weight: 700;">Experiment No. & Title</td>
-                                        <td style="padding: 12px 16px; color: var(--text-secondary);">Identifies the specific laboratory experiment conducted.</td>
-                                        <td style="padding: 12px 16px; color: var(--text-secondary);">Exp 01: BFS and DFS Graph Traversal</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid var(--border-color);">
-                                        <td style="padding: 12px 16px; font-weight: 700;">Performance & Submission Dates</td>
-                                        <td style="padding: 12px 16px; color: var(--text-secondary);">Records chronological execution and verifies on-time hand-in.</td>
-                                        <td style="padding: 12px 16px; color: var(--text-secondary);">Perf: 15 Oct 2026 | Sub: 22 Oct 2026</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="padding: 12px 16px; font-weight: 700;">Student & Faculty Metadata</td>
-                                        <td style="padding: 12px 16px; color: var(--text-secondary);">Provides student identification (Name, ID, Section, Batch) and recipient instructor info.</td>
-                                        <td style="padding: 12px 16px; color: var(--text-secondary);">Sanjid Alam (ID: 2022000000001)</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
                         <!-- FAQ Accordion -->
                         <div class="faq-section" style="margin-top: 2.5rem;">
                             <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">
@@ -906,8 +902,8 @@
                                     <div class="faq-answer">The 'Ink-Saver (B&W)' template is specifically designed with crisp pure-black borders, zero heavy color fills, and optimized typography to save printer ink and produce high-contrast, razor-sharp output on any basic laser printer.</div>
                                 </div>
                                 <div class="faq-item">
-                                    <div class="faq-question">Can I use this generator on my smartphone? <span>+</span></div>
-                                    <div class="faq-answer">Yes! The generator includes a dedicated mobile segmented tab switcher ('Edit Details' vs 'Live A4 Preview') that allows you to easily enter your course information on any mobile device and preview or download your PDF with zero distortion.</div>
+                                    <div class="faq-question">Can I use this generator for Southeast University (SEU)? <span>+</span></div>
+                                    <div class="faq-answer">Yes! Click the 'Lab Report Cover (SEU)' card on the home screen to open the generator pre-loaded with the official Southeast University emblem and CSE/EEE department presets.</div>
                                 </div>
                                 <div class="faq-item">
                                     <div class="faq-question">Is this service free to use? <span>+</span></div>
