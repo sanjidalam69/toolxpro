@@ -1,0 +1,933 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Free Lab Report Cover Page Generator - A4 Print Ready | ToolX Pro</title>
+    <meta name="description" content="Generate custom print-ready Lab Report cover pages for University and College engineering, physics, chemistry, and CS labs. Includes Experiment No, dates, and grading rubric.">
+    <meta name="keywords" content="lab report cover page generator, university lab report front page, engineering lab report cover, experiment no front page maker, lab sheet cover page pdf, buet du seu nsu lab report">
+    <link rel="canonical" href="https://toolxpro.live/tools/lab-report-cover.html">
+    <link rel="stylesheet" href="../css/style.css?v=55.0">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolxpro.live/tools/lab-report-cover.html">
+    <meta property="og:title" content="Free Lab Report Cover Page Generator - ToolX Pro">
+    <meta property="og:description" content="Design and download instant print-ready A4 Lab Report front pages with experiment number, dates, student ID, and faculty evaluation rubric.">
+    <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
+
+    <!-- PDF & Canvas Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+    <!-- Schema.org Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "name": "Lab Report Cover Page Generator",
+          "url": "https://toolxpro.live/tools/lab-report-cover.html",
+          "applicationCategory": "EducationalApplication",
+          "operatingSystem": "All",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "description": "Free online generator to create custom, professional, and print-ready A4 Lab Report cover pages for engineering, science, and computer science students."
+        },
+        {
+          "@type": "FAQPage",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "What information should be included on a university lab report cover page?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A standard university lab report cover page must include: University Name and Logo, Department, Course Title and Course Code, Experiment Number, Experiment Title/Name, Date of Performance, Date of Submission, Student Information (Name, ID, Section, Batch, Group), and Instructor Information (Faculty Name, Designation, Department)."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I download the lab report cover page in A4 PDF format?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. You can instantly download a vector-sharp, high-resolution A4 PDF document (210mm x 297mm) ready for printing or digital submission, or export as an HD PNG image."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I upload my own University or College logo?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! You can choose from pre-configured university presets (SEU, BUET, DU, NSU, BRAC, etc.) or click 'Upload Custom Logo' to add any school, college, or university crest directly from your device."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Is there an option to include a faculty grading or marks evaluation box?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. You can enable the 'Include Faculty Evaluation / Marks Box' toggle, which places an official grading matrix with score fields, faculty signature, date, and remarks lines on the cover page."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
+
+    <style>
+        .lab-generator-wrapper {
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .lab-generator-grid {
+            display: grid;
+            grid-template-columns: 420px 1fr;
+            gap: 22px;
+            align-items: flex-start;
+        }
+
+        /* Mobile Segmented View Switcher */
+        .mobile-view-tabs {
+            display: none;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 4px;
+            margin-bottom: 16px;
+            gap: 6px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+        .mobile-tab-btn {
+            flex: 1;
+            padding: 11px 14px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .mobile-tab-btn.active {
+            background: var(--primary);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        }
+
+        .controls-card {
+            background: var(--bg-secondary);
+            padding: 22px;
+            border-radius: 14px;
+            border: 1px solid var(--border-color);
+            box-sizing: border-box;
+            box-shadow: var(--card-shadow);
+        }
+
+        .form-section-title {
+            font-size: 0.96rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 18px 0 10px;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .form-section-title:first-child { margin-top: 0; }
+
+        /* Template Picker Grid */
+        .template-picker {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .tpl-btn {
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 9px 6px;
+            cursor: pointer;
+            text-align: center;
+            font-size: 0.78rem;
+            font-weight: 600;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.2s;
+            touch-action: manipulation;
+        }
+        .tpl-btn:hover { border-color: var(--primary); }
+        .tpl-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; }
+        .tpl-btn .tpl-icon { font-size: 1.3rem; display: block; margin-bottom: 2px; }
+
+        .input-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+        .input-grid.full { grid-template-columns: 1fr; }
+
+        .form-group-lab {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+        .form-group-lab label {
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .form-control-sm {
+            width: 100%;
+            padding: 9px 12px;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-size: 0.88rem;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+        .form-control-sm:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .checkbox-label-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.86rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            cursor: pointer;
+            padding: 8px 10px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            margin-top: 6px;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+            flex-wrap: wrap;
+        }
+        .btn-dl-pdf {
+            background: linear-gradient(135deg, #ef4444, #dc2626);
+            color: white;
+            flex: 1;
+            min-width: 120px;
+            padding: 12px;
+            font-weight: 700;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.92rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: transform 0.15s, opacity 0.15s;
+        }
+        .btn-dl-png {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            flex: 1;
+            min-width: 120px;
+            padding: 12px;
+            font-weight: 700;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            font-size: 0.92rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: transform 0.15s, opacity 0.15s;
+        }
+        .btn-direct-print {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+            padding: 12px 16px;
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.92rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s;
+        }
+        .btn-direct-print:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        .btn-dl-pdf:hover, .btn-dl-png:hover {
+            opacity: 0.92;
+            transform: translateY(-1px);
+        }
+
+        /* Preview Area */
+        .preview-wrapper {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            min-width: 0;
+            position: sticky;
+            top: 20px;
+        }
+
+        .preview-toolbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px 10px 0 0;
+            padding: 8px 14px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+        }
+
+        .zoom-controls {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .zoom-btn {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 4px;
+            padding: 3px 8px;
+            font-size: 0.76rem;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .zoom-btn.active {
+            background: var(--primary);
+            color: #fff;
+            border-color: var(--primary);
+        }
+
+        .preview-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background: #cbd5e1;
+            padding: 24px;
+            border-radius: 0 0 12px 12px;
+            border: 1px solid var(--border-color);
+            border-top: none;
+            overflow: hidden;
+            min-height: 480px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        [data-theme="dark"] .preview-container {
+            background: #1e293b;
+        }
+
+        /* ── Base A4 Paper (Standard 794px x 1123px = 96 DPI A4) ── */
+        #a4-preview {
+            width: 794px;
+            height: 1123px;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+            transform-origin: top center;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+            background: #ffffff;
+            color: #111827;
+            box-sizing: border-box;
+        }
+
+        /* Print Override */
+        @media print {
+            body * { visibility: hidden !important; }
+            #a4-preview, #a4-preview * { visibility: visible !important; }
+            #a4-preview {
+                position: fixed !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100% !important;
+                height: 100% !important;
+                transform: none !important;
+                box-shadow: none !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+        }
+
+        /* Universal Field Alignment */
+        .lab-field-row {
+            display: flex;
+            align-items: baseline;
+            gap: 4px;
+            margin-bottom: 5px;
+            line-height: 1.35;
+            font-size: 13.5px;
+        }
+        .lab-field-row .f-label {
+            flex-shrink: 0;
+            min-width: 90px;
+            font-weight: 700;
+        }
+        .lab-field-row .f-colon {
+            flex-shrink: 0;
+            margin-right: 4px;
+            font-weight: 700;
+        }
+        .lab-field-row .f-val {
+            flex: 1;
+            min-width: 0;
+            overflow-wrap: break-word;
+        }
+
+        /* Responsive Layout Overhauls */
+        @media (max-width: 992px) {
+            .mobile-view-tabs { display: flex; }
+            .lab-generator-grid {
+                display: flex;
+                flex-direction: column;
+                gap: 16px;
+            }
+            .lab-generator-grid.view-edit .preview-wrapper { display: none !important; }
+            .lab-generator-grid.view-edit .controls-card { display: block !important; }
+            .lab-generator-grid.view-preview .controls-card { display: none !important; }
+            .lab-generator-grid.view-preview .preview-wrapper { display: flex !important; position: static; }
+        }
+
+        @media (max-width: 576px) {
+            .input-grid { grid-template-columns: 1fr !important; }
+            .controls-card { padding: 14px; }
+            .preview-container { padding: 10px 5px; }
+            .action-buttons { flex-direction: column; }
+        }
+
+        /* ── Template Styles ── */
+        /* Template 1: Engineering Standard (Dual Border) */
+        .tpl-eng-border {
+            border: 12px solid var(--t-color, #1e3a8a);
+            padding: 30px 45px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .tpl-eng-border .inner-border {
+            position: absolute;
+            inset: 8px;
+            border: 2px solid var(--t-color, #1e3a8a);
+            pointer-events: none;
+        }
+
+        /* Template 2: Modern Tech Accent */
+        .tpl-modern-tech {
+            padding: 40px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-top: 16px solid var(--t-color, #0284c7);
+            border-bottom: 12px solid var(--t-color, #0284c7);
+        }
+
+        /* Template 3: Scientific Matrix */
+        .tpl-lab-matrix {
+            padding: 40px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 3px solid #334155;
+        }
+
+        /* Template 4: Formal Crest */
+        .tpl-formal-crest {
+            padding: 36px 48px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 10px double var(--t-color, #991b1b);
+        }
+
+        /* Template 5: Emerald Laboratory */
+        .tpl-emerald-bio {
+            padding: 40px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border-left: 14px solid var(--t-color, #059669);
+            border-right: 2px solid var(--t-color, #059669);
+        }
+
+        /* Template 6: Monochrome Ink-Saver (Black & White) */
+        .tpl-monochrome-print {
+            padding: 40px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 2px solid #000000;
+        }
+        .tpl-monochrome-print .inner-line {
+            position: absolute;
+            inset: 6px;
+            border: 1px solid #000000;
+            pointer-events: none;
+        }
+
+        /* Template 7: Executive Navy Banner */
+        .tpl-executive-navy {
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        /* Template 8: Cyber Circuit */
+        .tpl-circuit-dark {
+            padding: 40px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 4px solid var(--t-color, #0f766e);
+        }
+
+        /* Template 9: Evaluation Focus */
+        .tpl-evaluation-focus {
+            padding: 34px 44px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 4px solid var(--t-color, #4338ca);
+        }
+
+        /* Template 10: Minimalist Sharp */
+        .tpl-minimalist-sharp {
+            padding: 44px 54px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <!-- Header dynamically injected by layout.js -->
+        <header id="main-header"></header>
+
+        <div class="main-wrapper">
+            <aside id="main-sidebar"></aside>
+
+            <main class="content-area">
+                <div class="lab-generator-wrapper">
+                    
+                    <!-- Mobile View Switcher -->
+                    <div class="mobile-view-tabs" id="mobile-tabs">
+                        <button type="button" class="mobile-tab-btn active" id="tab-btn-edit">
+                            <span>✏️</span> Edit Details
+                        </button>
+                        <button type="button" class="mobile-tab-btn" id="tab-btn-preview">
+                            <span>👁️</span> Live A4 Preview
+                        </button>
+                    </div>
+
+                    <div class="lab-generator-grid view-edit" id="generator-grid">
+                        
+                        <!-- Left Controls Column -->
+                        <div class="controls-card">
+                            
+                            <!-- Section: Template & Theme -->
+                            <div class="form-section-title">
+                                <span>🎨</span> 1. Select Template & Theme
+                            </div>
+
+                            <div class="form-group-lab">
+                                <label>Lab Report Template:</label>
+                                <div class="template-picker">
+                                    <button type="button" class="tpl-btn active" data-tpl="eng-border">
+                                        <span class="tpl-icon">📐</span>
+                                        <span>Engineering Border</span>
+                                    </button>
+                                    <button type="button" class="tpl-btn" data-tpl="modern-tech">
+                                        <span class="tpl-icon">⚡</span>
+                                        <span>Modern Tech</span>
+                                    </button>
+                                    <button type="button" class="tpl-btn" data-tpl="lab-matrix">
+                                        <span class="tpl-icon">📊</span>
+                                        <span>Scientific Matrix</span>
+                                    </button>
+                                    <button type="button" class="tpl-btn" data-tpl="formal-crest">
+                                        <span class="tpl-icon">🏛️</span>
+                                        <span>Formal Crest</span>
+                                    </button>
+                                    <button type="button" class="tpl-btn" data-tpl="emerald-bio">
+                                        <span class="tpl-icon">🧪</span>
+                                        <span>Emerald Bio-Lab</span>
+                                    </button>
+                                    <button type="button" class="tpl-btn" data-tpl="monochrome-print">
+                                        <span class="tpl-icon">🖨️</span>
+                                        <span>Ink-Saver (B&W)</span>
+                                    </button>
+                                    <button type="button" class="tpl-btn" data-tpl="executive-navy">
+                                        <span class="tpl-icon">👔</span>
+                                        <span>Executive Navy</span>
+                                    </button>
+                                    <button type="button" class="tpl-btn" data-tpl="circuit-dark">
+                                        <span class="tpl-icon">🔌</span>
+                                        <span>Circuit Cyber</span>
+                                    </button>
+                                    <button type="button" class="tpl-btn" data-tpl="evaluation-focus">
+                                        <span class="tpl-icon">📝</span>
+                                        <span>Faculty Rubric Box</span>
+                                    </button>
+                                    <button type="button" class="tpl-btn" data-tpl="minimalist-sharp">
+                                        <span class="tpl-icon">✨</span>
+                                        <span>Minimalist Sharp</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="input-grid">
+                                <div class="form-group-lab">
+                                    <label for="inp-color">Accent Color:</label>
+                                    <select id="inp-color" class="form-control-sm">
+                                        <option value="#1e3a8a" selected>Navy Blue (Standard)</option>
+                                        <option value="#0284c7">Sky Blue / Tech Cyan</option>
+                                        <option value="#991b1b">Academic Crimson Red</option>
+                                        <option value="#059669">Emerald Lab Green</option>
+                                        <option value="#6b21a8">Royal Purple</option>
+                                        <option value="#d97706">Amber Gold</option>
+                                        <option value="#111827">Pitch Black / Slate</option>
+                                    </select>
+                                </div>
+                                <div class="form-group-lab">
+                                    <label for="inp-font">Typography:</label>
+                                    <select id="inp-font" class="form-control-sm">
+                                        <option value="'Times New Roman', Times, serif" selected>Classic Serif (Times)</option>
+                                        <option value="'Inter', 'Segoe UI', sans-serif">Modern Clean (Inter)</option>
+                                        <option value="'Roboto', 'Helvetica Neue', sans-serif">Technical Sans (Roboto)</option>
+                                        <option value="'Georgia', serif">Academic Serif (Georgia)</option>
+                                        <option value="'Courier New', monospace">Engineering Mono</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Section: University & Institution -->
+                            <div class="form-section-title">
+                                <span>🏛️</span> 2. University & Department
+                            </div>
+
+                            <div class="form-group-lab">
+                                <label for="preset-uni">University Preset:</label>
+                                <select id="preset-uni" class="form-control-sm">
+                                    <option value="custom" selected>Custom / All Universities</option>
+                                    <option value="seu">Southeast University (SEU)</option>
+                                    <option value="buet">BUET (Engineering Standard)</option>
+                                    <option value="du">University of Dhaka (DU)</option>
+                                    <option value="nu">National University (NU)</option>
+                                    <option value="nsu">North South University (NSU)</option>
+                                    <option value="brac">BRAC University (BRACU)</option>
+                                    <option value="aiub">AIUB</option>
+                                    <option value="aust">AUST</option>
+                                    <option value="diu">Daffodil Int. University (DIU)</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group-lab">
+                                <label for="inp-uni-name">University Name:</label>
+                                <input type="text" id="inp-uni-name" class="form-control-sm" value="SOUTHEAST UNIVERSITY" placeholder="e.g. SOUTHEAST UNIVERSITY">
+                            </div>
+
+                            <div class="form-group-lab">
+                                <label for="inp-dept-name">Department Name:</label>
+                                <input type="text" id="inp-dept-name" class="form-control-sm" value="Department of Computer Science & Engineering" placeholder="e.g. Department of Computer Science & Engineering">
+                            </div>
+
+                            <div class="input-grid">
+                                <div class="form-group-lab">
+                                    <label for="inp-logo-file">Upload Logo (PNG/JPG):</label>
+                                    <input type="file" id="inp-logo-file" class="form-control-sm" accept="image/*">
+                                </div>
+                                <div class="form-group-lab">
+                                    <label for="btn-reset-logo">Logo Actions:</label>
+                                    <button type="button" id="btn-reset-logo" class="form-control-sm" style="cursor:pointer; font-weight:700;">🔄 Reset Logo</button>
+                                </div>
+                            </div>
+
+                            <!-- Section: Course & Lab Experiment -->
+                            <div class="form-section-title">
+                                <span>🧪</span> 3. Lab Experiment Details
+                            </div>
+
+                            <div class="input-grid">
+                                <div class="form-group-lab">
+                                    <label for="inp-course-title">Course Title / Name:</label>
+                                    <input type="text" id="inp-course-title" class="form-control-sm" value="Data Structures & Algorithms Laboratory" placeholder="e.g. Electrical Circuit Lab">
+                                </div>
+                                <div class="form-group-lab">
+                                    <label for="inp-course-code">Course Code:</label>
+                                    <input type="text" id="inp-course-code" class="form-control-sm" value="CSE 2102" placeholder="e.g. CSE-2102 / EEE-1202">
+                                </div>
+                            </div>
+
+                            <div class="input-grid">
+                                <div class="form-group-lab">
+                                    <label for="inp-exp-no">Experiment No.:</label>
+                                    <input type="text" id="inp-exp-no" class="form-control-sm" value="01" placeholder="e.g. 01, 02, 03">
+                                </div>
+                                <div class="form-group-lab">
+                                    <label for="inp-date-perform">Date of Performance:</label>
+                                    <input type="text" id="inp-date-perform" class="form-control-sm" value="15 October, 2026" placeholder="DD Month, YYYY">
+                                </div>
+                            </div>
+
+                            <div class="form-group-lab">
+                                <label for="inp-exp-name">Experiment Name / Title:</label>
+                                <textarea id="inp-exp-name" class="form-control-sm" rows="2" placeholder="e.g. Implementation and Performance Analysis of Graph Traversal Algorithms (BFS & DFS)">Implementation and Performance Analysis of Graph Traversal Algorithms (BFS and DFS)</textarea>
+                            </div>
+
+                            <div class="form-group-lab">
+                                <label for="inp-date-submit">Date of Submission:</label>
+                                <input type="text" id="inp-date-submit" class="form-control-sm" value="22 October, 2026" placeholder="DD Month, YYYY">
+                            </div>
+
+                            <!-- Section: Submitted By (Student) -->
+                            <div class="form-section-title">
+                                <span>🎓</span> 4. Submitted By (Student Info)
+                            </div>
+
+                            <div class="input-grid">
+                                <div class="form-group-lab">
+                                    <label for="inp-student-name">Student Name:</label>
+                                    <input type="text" id="inp-student-name" class="form-control-sm" value="Sanjid Alam" placeholder="e.g. Sanjid Alam">
+                                </div>
+                                <div class="form-group-lab">
+                                    <label for="inp-student-id">Student ID:</label>
+                                    <input type="text" id="inp-student-id" class="form-control-sm" value="2022000000001" placeholder="e.g. 2022000000001">
+                                </div>
+                            </div>
+
+                            <div class="input-grid">
+                                <div class="form-group-lab">
+                                    <label for="inp-student-section">Section:</label>
+                                    <input type="text" id="inp-student-section" class="form-control-sm" value="01 (A)" placeholder="e.g. 01 / A">
+                                </div>
+                                <div class="form-group-lab">
+                                    <label for="inp-student-batch">Batch / Semester:</label>
+                                    <input type="text" id="inp-student-batch" class="form-control-sm" value="56th Batch (Fall 2026)" placeholder="e.g. 56th Batch / 5th Sem">
+                                </div>
+                            </div>
+
+                            <div class="form-group-lab">
+                                <label for="inp-student-group">Group / Roll (Optional):</label>
+                                <input type="text" id="inp-student-group" class="form-control-sm" value="Group: B-02" placeholder="e.g. Group B-02 (leave blank if none)">
+                            </div>
+
+                            <!-- Section: Submitted To (Faculty) -->
+                            <div class="form-section-title">
+                                <span>👨‍🏫</span> 5. Submitted To (Faculty / Instructor)
+                            </div>
+
+                            <div class="form-group-lab">
+                                <label for="inp-teacher-name">Faculty / Instructor Name:</label>
+                                <input type="text" id="inp-teacher-name" class="form-control-sm" value="Dr. Md. Rafiqul Islam" placeholder="e.g. Dr. Md. Rafiqul Islam">
+                            </div>
+
+                            <div class="input-grid">
+                                <div class="form-group-lab">
+                                    <label for="inp-teacher-desig">Designation:</label>
+                                    <input type="text" id="inp-teacher-desig" class="form-control-sm" value="Assistant Professor" placeholder="e.g. Assistant Professor / Lecturer">
+                                </div>
+                                <div class="form-group-lab">
+                                    <label for="inp-teacher-dept">Department:</label>
+                                    <input type="text" id="inp-teacher-dept" class="form-control-sm" value="Department of CSE" placeholder="e.g. Department of CSE">
+                                </div>
+                            </div>
+
+                            <!-- Section: Faculty Evaluation & Remarks -->
+                            <div class="form-section-title">
+                                <span>📋</span> 6. Faculty Evaluation Box
+                            </div>
+
+                            <label class="checkbox-label-toggle">
+                                <input type="checkbox" id="toggle-eval-box" checked>
+                                <span>Include Faculty Evaluation & Signature Box</span>
+                            </label>
+
+                            <!-- Actions -->
+                            <div class="action-buttons">
+                                <button type="button" id="btn-download-pdf" class="btn-dl-pdf">
+                                    <span>📄</span> Download A4 PDF
+                                </button>
+                                <button type="button" id="btn-download-png" class="btn-dl-png">
+                                    <span>🖼️</span> Download HD PNG
+                                </button>
+                                <button type="button" id="btn-direct-print" class="btn-direct-print" title="Direct Print to A4 Paper">
+                                    <span>🖨️</span> Print
+                                </button>
+                            </div>
+
+                        </div>
+
+                        <!-- Right Preview Column -->
+                        <div class="preview-wrapper">
+                            <div class="preview-toolbar">
+                                <span>📄 Live A4 Canvas Preview (794 x 1123 px)</span>
+                                <div class="zoom-controls">
+                                    <span>Zoom:</span>
+                                    <button type="button" class="zoom-btn" data-scale="0.6">60%</button>
+                                    <button type="button" class="zoom-btn" data-scale="0.8">80%</button>
+                                    <button type="button" class="zoom-btn active" data-scale="auto">Fit</button>
+                                </div>
+                            </div>
+
+                            <div class="preview-container" id="preview-outer-container">
+                                <div id="a4-preview">
+                                    <!-- Rendered dynamically by lab-report-cover.js -->
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- In-depth Educational Guide & AdSense Content Section -->
+                    <div class="tool-content-body" style="margin-top: 3.5rem; border-top: 1px solid var(--border-color); padding-top: 2.5rem;">
+                        <h2 style="font-size: 1.6rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-primary);">
+                            📖 Comprehensive Guide to Academic Lab Report Cover Pages
+                        </h2>
+                        
+                        <p style="line-height: 1.7; color: var(--text-secondary); margin-bottom: 1.25rem;">
+                            A professional lab report cover page (also known as a front sheet or title page) is the essential first impression of any scientific or engineering laboratory work. Whether you are submitting a physics experiment, an organic chemistry synthesis, or a computer science algorithm benchmark, formatting your cover page accurately according to university guidelines ensures that your submission is recognized, evaluated, and archived properly.
+                        </p>
+
+                        <div class="editorial-feature-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin: 1.8rem 0;">
+                            <div class="editorial-card" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px;">
+                                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 6px;">📐 1. Standard A4 Formatting</h3>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55;">
+                                    All official university submissions require standardized ISO 216 A4 dimensions (210mm × 297mm). Our tool produces pixel-perfect 300 DPI vector output ready for physical spiral binding, clip files, or LMS upload.
+                                </p>
+                            </div>
+                            <div class="editorial-card" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px;">
+                                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 6px;">📅 2. Dual-Date Documentation</h3>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55;">
+                                    Unlike general assignments, lab experiments require both <strong>Date of Performance</strong> (when the hands-on lab was conducted) and <strong>Date of Submission</strong> (the official submission deadline).
+                                </p>
+                            </div>
+                            <div class="editorial-card" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 18px;">
+                                <h3 style="font-size: 1.1rem; font-weight: 700; color: var(--primary); margin-bottom: 6px;">📝 3. Faculty Marking Rubric</h3>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.55;">
+                                    Many professors mandate an evaluation table directly on the cover page for grading performance, data accuracy, discussion quality, and formal signature authorization.
+                                </p>
+                            </div>
+                        </div>
+
+                        <h3 style="font-size: 1.3rem; font-weight: 700; margin: 2rem 0 0.8rem; color: var(--text-primary);">
+                            📊 Essential Components Checklist for University Lab Reports
+                        </h3>
+
+                        <div style="overflow-x: auto; margin-bottom: 2rem;">
+                            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.9rem; background: var(--bg-secondary); border-radius: 8px; overflow: hidden; border: 1px solid var(--border-color);">
+                                <thead>
+                                    <tr style="background: var(--bg-primary); border-bottom: 2px solid var(--border-color);">
+                                        <th style="padding: 12px 16px; color: var(--text-primary);">Field Name</th>
+                                        <th style="padding: 12px 16px; color: var(--text-primary);">Importance & Purpose</th>
+                                        <th style="padding: 12px 16px; color: var(--text-primary);">Example Value</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 12px 16px; font-weight: 700;">University & Crest</td>
+                                        <td style="padding: 12px 16px; color: var(--text-secondary);">Identifies the institutional affiliation and department.</td>
+                                        <td style="padding: 12px 16px; color: var(--text-secondary);">SOUTHEAST UNIVERSITY / BUET / DU</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 12px 16px; font-weight: 700;">Course Code & Title</td>
+                                        <td style="padding: 12px 16px; color: var(--text-secondary);">Links the practical lab to the corresponding theoretical syllabus.</td>
+                                        <td style="padding: 12px 16px; color: var(--text-secondary);">CSE 2102: Data Structures Lab</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 12px 16px; font-weight: 700;">Experiment No. & Title</td>
+                                        <td style="padding: 12px 16px; color: var(--text-secondary);">Identifies the specific laboratory experiment conducted.</td>
+                                        <td style="padding: 12px 16px; color: var(--text-secondary);">Exp 01: BFS and DFS Graph Traversal</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 12px 16px; font-weight: 700;">Performance & Submission Dates</td>
+                                        <td style="padding: 12px 16px; color: var(--text-secondary);">Records chronological execution and verifies on-time hand-in.</td>
+                                        <td style="padding: 12px 16px; color: var(--text-secondary);">Perf: 15 Oct 2026 | Sub: 22 Oct 2026</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 12px 16px; font-weight: 700;">Student & Faculty Metadata</td>
+                                        <td style="padding: 12px 16px; color: var(--text-secondary);">Provides student identification (Name, ID, Section, Batch) and recipient instructor info.</td>
+                                        <td style="padding: 12px 16px; color: var(--text-secondary);">Sanjid Alam (ID: 2022000000001)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- FAQ Accordion -->
+                        <div class="faq-section" style="margin-top: 2.5rem;">
+                            <h3 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 1rem; color: var(--text-primary);">
+                                ❓ Frequently Asked Questions (FAQ)
+                            </h3>
+                            <div class="faq-container">
+                                <div class="faq-item">
+                                    <div class="faq-question">Why does a lab report require two dates (Performance & Submission)? <span>+</span></div>
+                                    <div class="faq-answer">In scientific and engineering coursework, practical experiments are performed in the physical lab on a specific day, whereas the written analysis, calculations, error graphs, and final discussion are compiled and submitted several days later. Recording both dates ensures academic integrity and proves timely submission.</div>
+                                </div>
+                                <div class="faq-item">
+                                    <div class="faq-question">Which template is best for black-and-white printing? <span>+</span></div>
+                                    <div class="faq-answer">The 'Ink-Saver (B&W)' template is specifically designed with crisp pure-black borders, zero heavy color fills, and optimized typography to save printer ink and produce high-contrast, razor-sharp output on any basic laser printer.</div>
+                                </div>
+                                <div class="faq-item">
+                                    <div class="faq-question">Can I use this generator on my smartphone? <span>+</span></div>
+                                    <div class="faq-answer">Yes! The generator includes a dedicated mobile segmented tab switcher ('Edit Details' vs 'Live A4 Preview') that allows you to easily enter your course information on any mobile device and preview or download your PDF with zero distortion.</div>
+                                </div>
+                                <div class="faq-item">
+                                    <div class="faq-question">Is this service free to use? <span>+</span></div>
+                                    <div class="faq-answer">Yes, ToolX Pro's Lab Report Cover Page Generator is 100% free with no watermarks, no registration, and unlimited PDF/PNG downloads.</div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+            </main>
+        </div>
+
+        <!-- Footer dynamically injected by layout.js -->
+        <footer id="main-footer"></footer>
+    </div>
+
+    <!-- Core Layout & Script -->
+    <script src="../js/layout.js?v=55.0"></script>
+    <script src="../js/tools/lab-report-cover.js"></script>
+</body>
+</html>

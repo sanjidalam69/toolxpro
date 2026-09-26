@@ -20,6 +20,7 @@ const CATEGORIES_DATA = [
         icon: '🎓',
         tools: [
             { id: 'assignment-cover', name: 'Assignment Cover Generator', desc: 'Create and download custom print-ready assignment cover pages for All Universities or Southeast University.', path: 'assignment-cover.html' },
+            { id: 'lab-report-cover', name: 'Lab Report Cover Generator', desc: 'Create and download print-ready Lab Report front pages with experiment details, dates, and faculty grading rubric.', path: 'lab-report-cover.html' },
             { id: 'bd-gpa', name: 'SSC & HSC GPA Calculator', desc: 'Calculate your SSC/HSC board exam GPA with official 4th subject bonus rules (5.00 Scale).', path: 'bd-gpa.html' },
             { id: 'bd-cgpa', name: 'BD University CGPA Calculator', desc: 'Calculate Cumulative CGPA & Semester GPA for National University, Public & Private Universities (UGC 4.00 Scale).', path: 'bd-cgpa.html' }
         ]
