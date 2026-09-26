@@ -278,22 +278,42 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // ── Mobile View Switchers ──────────────────────────────────────────
-    if (tabBtnEdit && tabBtnPreview && generatorInterface) {
-        tabBtnEdit.addEventListener("click", () => {
-            tabBtnEdit.classList.add("active");
-            tabBtnPreview.classList.remove("active");
-            generatorInterface.classList.remove("view-preview");
-            generatorInterface.classList.add("view-edit");
-        });
+    // ── Mobile View Switchers & Quick Action Bar ───────────────────────
+    const btnGotoPreview    = document.getElementById("btn-goto-preview");
+    const btnBackToEdit     = document.getElementById("btn-back-to-edit");
+    const btnPreviewDlPdf   = document.getElementById("btn-preview-dl-pdf");
+    const btnPreviewDlPng   = document.getElementById("btn-preview-dl-png");
 
-        tabBtnPreview.addEventListener("click", () => {
-            tabBtnPreview.classList.add("active");
-            tabBtnEdit.classList.remove("active");
-            generatorInterface.classList.remove("view-edit");
-            generatorInterface.classList.add("view-preview");
-            updatePreviewScale();
-        });
+    function switchToEditView() {
+        if (!generatorInterface) return;
+        if (tabBtnEdit) tabBtnEdit.classList.add("active");
+        if (tabBtnPreview) tabBtnPreview.classList.remove("active");
+        generatorInterface.classList.remove("view-preview");
+        generatorInterface.classList.add("view-edit");
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function switchToPreviewView() {
+        if (!generatorInterface) return;
+        if (tabBtnPreview) tabBtnPreview.classList.add("active");
+        if (tabBtnEdit) tabBtnEdit.classList.remove("active");
+        generatorInterface.classList.remove("view-edit");
+        generatorInterface.classList.add("view-preview");
+        requestAnimationFrame(() => updatePreviewScale());
+        setTimeout(updatePreviewScale, 60);
+        window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    if (tabBtnEdit) tabBtnEdit.addEventListener("click", switchToEditView);
+    if (tabBtnPreview) tabBtnPreview.addEventListener("click", switchToPreviewView);
+    if (btnGotoPreview) btnGotoPreview.addEventListener("click", switchToPreviewView);
+    if (btnBackToEdit) btnBackToEdit.addEventListener("click", switchToEditView);
+
+    if (btnPreviewDlPdf && btnDlPdf) {
+        btnPreviewDlPdf.addEventListener("click", () => btnDlPdf.click());
+    }
+    if (btnPreviewDlPng && btnDlPng) {
+        btnPreviewDlPng.addEventListener("click", () => btnDlPng.click());
     }
 
     // ── Responsive Scale Calculation ───────────────────────────────────
