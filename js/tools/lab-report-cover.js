@@ -26,11 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const inpStudentId      = document.getElementById("inp-student-id");
     const inpStudentSection = document.getElementById("inp-student-section");
     const inpStudentBatch   = document.getElementById("inp-student-batch");
-    const inpStudentGroup   = document.getElementById("inp-student-group");
-
+    
     // Group Report Inputs
-    const inpGroupName      = document.getElementById("inp-group-name");
     const inpGroupSec       = document.getElementById("inp-group-sec");
+    const inpGroupBatch     = document.getElementById("inp-group-batch");
     const groupMembersCont  = document.getElementById("group-members-container");
     const btnAddMember      = document.getElementById("btn-add-member");
 
@@ -258,8 +257,8 @@ document.addEventListener("DOMContentLoaded", () => {
         inpColor, inpFont, inpUniName, inpDeptName,
         inpCourseTitle, inpCourseCode, inpExpNo, inpExpName,
         inpDatePerform, inpDateSubmit,
-        inpStudentName, inpStudentId, inpStudentSection, inpStudentBatch, inpStudentGroup,
-        inpGroupName, inpGroupSec,
+        inpStudentName, inpStudentId, inpStudentSection, inpStudentBatch,
+        inpGroupSec, inpGroupBatch,
         inpTeacherName, inpTeacherDesig, inpTeacherDept
     ];
 
@@ -376,10 +375,9 @@ document.addEventListener("DOMContentLoaded", () => {
             studentId:      getVal(inpStudentId, "Student ID"),
             section:        getVal(inpStudentSection, "Section"),
             batch:          getVal(inpStudentBatch, "Batch / Semester"),
-            group:          getVal(inpStudentGroup, "Group / Roll (Optional)"),
             // Group
-            groupName:      getVal(inpGroupName, "Group 01"),
-            groupSec:       getVal(inpGroupSec, "Sec: 01, Batch: 56th"),
+            groupSec:       getVal(inpGroupSec, "01 / A"),
+            groupBatch:     getVal(inpGroupBatch, "56th Batch"),
             members:        getGroupMembersData(),
             // Faculty
             teacherName:    getVal(inpTeacherName, "Faculty / Instructor Name"),
@@ -476,8 +474,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <!-- Main Lab Report Badge & Course -->
                 <div style="text-align:center; position:relative; z-index:2; margin:22px 0 16px;">
-                    <div style="display:inline-block; border:2.5px solid ${d.color}; background:${d.color}; color:#ffffff; padding:6px 32px; font-size:18px; font-weight:800; letter-spacing:3px; text-transform:uppercase; border-radius:4px;">
-                        LABORATORY REPORT
+                    <div style="display:inline-block; border:2.5px solid ${d.color}; background:${d.color}; color:#ffffff; padding:6px 32px; font-size:18px; font-weight:800; letter-spacing:3px;  border-radius:4px;">
+                        Lab Report
                     </div>
                     <div style="margin-top:14px; font-size:17px; font-weight:700; color:#1e293b;">
                         <span>Course Title: </span><span>${d.courseTitle.html}</span>
@@ -595,7 +593,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <!-- Matrix Table for Experiment Info -->
                 <div style="margin:16px 0 12px; border:2px solid #334155; overflow:hidden;">
                     <div style="background:${d.color}; color:#ffffff; font-size:15px; font-weight:800; text-align:center; padding:6px; letter-spacing:2px;">
-                        LABORATORY EXPERIMENT SHEET
+                        Lab Report Sheet
                     </div>
                     <div style="display:grid; grid-template-columns:1fr 1fr; border-bottom:1px solid #334155;">
                         <div style="padding:8px 12px; border-right:1px solid #334155; font-size:14px;">
@@ -665,7 +663,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <!-- Document Header -->
                 <div style="margin:16px 0;">
-                    <div style="font-size:20px; font-weight:900; letter-spacing:3px; color:${d.color}; text-transform:uppercase;">LABORATORY REPORT</div>
+                    <div style="font-size:20px; font-weight:900; letter-spacing:3px; color:${d.color}; ">Lab Report</div>
                     <div style="font-size:16px; font-weight:700; color:#1e293b; margin-top:4px;">
                         ${d.courseTitle.html} (${d.courseCode.html})
                     </div>
@@ -716,7 +714,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <div style="margin:16px 0 12px;">
-                    <div style="font-size:13px; font-weight:800; color:${d.color}; text-transform:uppercase; letter-spacing:2px;">PRACTICAL LABORATORY REPORT</div>
+                    <div style="font-size:13px; font-weight:800; color:${d.color};  letter-spacing:2px;">PRACTICAL Lab Report</div>
                     <div style="font-size:20px; font-weight:800; color:#0f172a; margin-top:3px;">${d.courseTitle.html}</div>
                     <div style="font-size:14.5px; font-weight:700; color:${d.color};">Course Code: ${d.courseCode.html}</div>
                 </div>
@@ -759,8 +757,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <div style="text-align:center; position:relative; z-index:2; margin:16px 0 12px;">
-                    <div style="display:inline-block; border:2px solid #000000; padding:4px 24px; font-size:16px; font-weight:900; letter-spacing:3px; text-transform:uppercase;">
-                        LABORATORY REPORT
+                    <div style="display:inline-block; border:2px solid #000000; padding:4px 24px; font-size:16px; font-weight:900; letter-spacing:3px; ">
+                        Lab Report
                     </div>
                     <div style="margin-top:10px; font-size:15px; font-weight:800;">
                         <span>Course: </span><span>${d.courseTitle.html}</span> (${d.courseCode.html})
@@ -810,7 +808,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 <div style="padding:28px 48px; display:flex; flex-direction:column; justify-content:space-between; flex:1;">
                     <div style="text-align:center;">
-                        <div style="font-size:19px; font-weight:900; letter-spacing:3px; color:${d.color}; text-transform:uppercase;">LABORATORY REPORT</div>
+                        <div style="font-size:19px; font-weight:900; letter-spacing:3px; color:${d.color}; ">Lab Report</div>
                         <div style="font-size:15.5px; font-weight:700; color:#334155; margin-top:4px;">
                             ${d.courseTitle.html} (${d.courseCode.html})
                         </div>
@@ -860,8 +858,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <div style="margin:18px 0 12px; text-align:center;">
-                    <div style="display:inline-block; border:1px solid ${d.color}; background:#f0fdfa; color:${d.color}; font-size:15px; font-weight:800; letter-spacing:2px; padding:4px 20px; border-radius:4px; text-transform:uppercase;">
-                        SYSTEM LAB REPORT
+                    <div style="display:inline-block; border:1px solid ${d.color}; background:#f0fdfa; color:${d.color}; font-size:15px; font-weight:800; letter-spacing:2px; padding:4px 20px; border-radius:4px; ">
+                        Lab Report
                     </div>
                     <div style="font-size:17px; font-weight:800; margin-top:8px; color:#1e293b;">${d.courseTitle.html}</div>
                     <div style="font-size:14px; font-weight:700; color:${d.color};">Code: ${d.courseCode.html}</div>
@@ -904,7 +902,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <div style="text-align:center; margin:16px 0;">
-                    <div style="font-size:18px; font-weight:900; letter-spacing:3px; color:${d.color}; text-transform:uppercase;">LABORATORY REPORT</div>
+                    <div style="font-size:18px; font-weight:900; letter-spacing:3px; color:${d.color}; ">Lab Report</div>
                     <div style="font-size:16px; font-weight:700; color:#1e293b; margin-top:4px;">
                         ${d.courseTitle.html} (${d.courseCode.html})
                     </div>
@@ -949,7 +947,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
 
                 <div style="margin:20px 0 14px;">
-                    <div style="font-size:13px; font-weight:800; letter-spacing:3px; color:${d.color}; text-transform:uppercase;">LABORATORY REPORT</div>
+                    <div style="font-size:13px; font-weight:800; letter-spacing:3px; color:${d.color}; ">Lab Report</div>
                     <div style="font-size:20px; font-weight:800; color:#0f172a; margin:4px 0;">${d.courseTitle.html}</div>
                     <div style="font-size:14.5px; font-weight:700; color:#64748b;">Course Code: ${d.courseCode.html}</div>
                 </div>
