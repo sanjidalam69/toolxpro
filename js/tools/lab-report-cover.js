@@ -15,12 +15,26 @@ document.addEventListener("DOMContentLoaded", () => {
     const inpDatePerform    = document.getElementById("inp-date-perform");
     const inpDateSubmit     = document.getElementById("inp-date-submit");
 
+    // Submission Type Elements
+    const btnTypeIndiv      = document.getElementById("btn-type-indiv");
+    const btnTypeGroup      = document.getElementById("btn-type-group");
+    const containerIndiv    = document.getElementById("container-individual");
+    const containerGroup    = document.getElementById("container-group");
+
+    // Individual Student Inputs
     const inpStudentName    = document.getElementById("inp-student-name");
     const inpStudentId      = document.getElementById("inp-student-id");
     const inpStudentSection = document.getElementById("inp-student-section");
     const inpStudentBatch   = document.getElementById("inp-student-batch");
     const inpStudentGroup   = document.getElementById("inp-student-group");
 
+    // Group Report Inputs
+    const inpGroupName      = document.getElementById("inp-group-name");
+    const inpGroupSec       = document.getElementById("inp-group-sec");
+    const groupMembersCont  = document.getElementById("group-members-container");
+    const btnAddMember      = document.getElementById("btn-add-member");
+
+    // Faculty Inputs
     const inpTeacherName    = document.getElementById("inp-teacher-name");
     const inpTeacherDesig   = document.getElementById("inp-teacher-desig");
     const inpTeacherDept    = document.getElementById("inp-teacher-dept");
@@ -43,9 +57,10 @@ document.addEventListener("DOMContentLoaded", () => {
     const tabBtnPreview     = document.getElementById("tab-btn-preview");
     const zoomBtns          = document.querySelectorAll(".zoom-btn");
 
-    let currentTemplate = "eng-border";
-    let currentMode     = "all"; // 'all' or 'seu'
-    let currentScale    = "auto";
+    let currentTemplate     = "eng-border";
+    let currentMode         = "all"; // 'all' or 'seu'
+    let submissionType      = "individual"; // 'individual' or 'group'
+    let currentScale        = "auto";
 
     // ── Logos ──────────────────────────────────────────────────────────
     const defaultLogo = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23f1f5f9' stroke='%23cbd5e1' stroke-width='2'/%3E%3Cpath d='M50 20 L68 45 L32 45 Z' fill='%23003366'/%3E%3Crect x='44' y='45' width='12' height='26' fill='%23003366'/%3E%3Cpath d='M30 73 L70 73 L64 80 L36 80 Z' fill='%23003366'/%3E%3Ctext x='50' y='92' font-size='8' font-weight='bold' text-anchor='middle' fill='%23003366' font-family='serif'%3EUNIVERSITY LOGO%3C/text%3E%3C/svg%3E";
@@ -107,6 +122,104 @@ document.addEventListener("DOMContentLoaded", () => {
         if (toolTitleEl) toolTitleEl.textContent = "🧪 Lab Report Cover Generator";
     }
 
+    // ── Submission Type (Individual vs Group) Toggle ────────────────────
+    if (btnTypeIndiv && btnTypeGroup) {
+        btnTypeIndiv.addEventListener("click", () => {
+            submissionType = "individual";
+            btnTypeIndiv.classList.add("active");
+            btnTypeIndiv.style.background = "var(--primary)";
+            btnTypeIndiv.style.color = "#fff";
+            btnTypeIndiv.style.borderColor = "var(--primary)";
+
+            btnTypeGroup.classList.remove("active");
+            btnTypeGroup.style.background = "var(--bg-primary)";
+            btnTypeGroup.style.color = "var(--text-primary)";
+            btnTypeGroup.style.borderColor = "var(--border-color)";
+
+            if (containerIndiv) containerIndiv.style.display = "block";
+            if (containerGroup) containerGroup.style.display = "none";
+            renderPreview();
+        });
+
+        btnTypeGroup.addEventListener("click", () => {
+            submissionType = "group";
+            btnTypeGroup.classList.add("active");
+            btnTypeGroup.style.background = "var(--primary)";
+            btnTypeGroup.style.color = "#fff";
+            btnTypeGroup.style.borderColor = "var(--primary)";
+
+            btnTypeIndiv.classList.remove("active");
+            btnTypeIndiv.style.background = "var(--bg-primary)";
+            btnTypeIndiv.style.color = "var(--text-primary)";
+            btnTypeIndiv.style.borderColor = "var(--border-color)";
+
+            if (containerIndiv) containerIndiv.style.display = "none";
+            if (containerGroup) containerGroup.style.display = "block";
+            renderPreview();
+        });
+    }
+
+    // ── Group Members Dynamic Management ────────────────────────────────
+    function updateMemberNumbers() {
+        if (!groupMembersCont) return;
+        const rows = groupMembersCont.querySelectorAll(".group-member-row");
+        rows.forEach((row, idx) => {
+            const numSpan = row.querySelector(".member-num");
+            if (numSpan) numSpan.textContent = `${idx + 1}.`;
+        });
+    }
+
+    function bindMemberRowEvents(row) {
+        const inputs = row.querySelectorAll("input");
+        inputs.forEach(inp => {
+            inp.addEventListener("input", renderPreview);
+            inp.addEventListener("change", renderPreview);
+        });
+
+        const btnRemove = row.querySelector(".btn-remove-member");
+        if (btnRemove) {
+            btnRemove.addEventListener("click", () => {
+                const totalRows = groupMembersCont.querySelectorAll(".group-member-row").length;
+                if (totalRows > 1) {
+                    row.remove();
+                    updateMemberNumbers();
+                    renderPreview();
+                } else {
+                    // Just clear values if only 1 row left
+                    inputs.forEach(inp => inp.value = "");
+                    renderPreview();
+                }
+            });
+        }
+    }
+
+    if (groupMembersCont) {
+        const initialRows = groupMembersCont.querySelectorAll(".group-member-row");
+        initialRows.forEach(row => bindMemberRowEvents(row));
+    }
+
+    if (btnAddMember && groupMembersCont) {
+        btnAddMember.addEventListener("click", () => {
+            const totalRows = groupMembersCont.querySelectorAll(".group-member-row").length;
+            if (totalRows >= 8) {
+                alert("Maximum 8 group members allowed.");
+                return;
+            }
+            const newRow = document.createElement("div");
+            newRow.className = "group-member-row";
+            newRow.style.cssText = "display:flex; gap:6px; align-items:center;";
+            newRow.innerHTML = `
+                <span class="member-num" style="font-size:0.8rem; font-weight:800; color:var(--text-secondary); width:18px;">${totalRows + 1}.</span>
+                <input type="text" class="form-control-sm inp-member-name" placeholder="Member Name" style="flex:1;">
+                <input type="text" class="form-control-sm inp-member-id" placeholder="Student ID" style="width:130px;">
+                <button type="button" class="btn-remove-member" style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer; padding:0 4px;" title="Remove">&times;</button>
+            `;
+            groupMembersCont.appendChild(newRow);
+            bindMemberRowEvents(newRow);
+            renderPreview();
+        });
+    }
+
     // ── Logo Upload & Reset ────────────────────────────────────────────
     if (inpLogoFile) {
         inpLogoFile.addEventListener("change", (e) => {
@@ -149,6 +262,7 @@ document.addEventListener("DOMContentLoaded", () => {
         inpCourseTitle, inpCourseCode, inpExpNo, inpExpName,
         inpDatePerform, inpDateSubmit,
         inpStudentName, inpStudentId, inpStudentSection, inpStudentBatch, inpStudentGroup,
+        inpGroupName, inpGroupSec,
         inpTeacherName, inpTeacherDesig, inpTeacherDept,
         toggleEvalBox
     ];
@@ -194,7 +308,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         let scale = 1;
         if (currentScale === "auto") {
-            const containerWidth = previewOuter.clientWidth - 48; // padding offset
+            const containerWidth = previewOuter.clientWidth - 48;
             scale = Math.min(1, Math.max(0.32, containerWidth / 794));
         } else {
             scale = parseFloat(currentScale) || 1;
@@ -202,7 +316,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         preview.style.transform = `scale(${scale})`;
         
-        // Adjust outer container height to fit scaled A4 paper
         const renderedHeight = 1123 * scale;
         previewOuter.style.minHeight = `${renderedHeight + 40}px`;
     }
@@ -229,89 +342,162 @@ document.addEventListener("DOMContentLoaded", () => {
         return { raw: "", html: `<span class="f-hint">[${placeholder}]</span>`, isPlaceholder: true };
     }
 
+    function getGroupMembersData() {
+        const members = [];
+        if (!groupMembersCont) return members;
+        const rows = groupMembersCont.querySelectorAll(".group-member-row");
+        rows.forEach((row, idx) => {
+            const nameInp = row.querySelector(".inp-member-name");
+            const idInp   = row.querySelector(".inp-member-id");
+            const nameVal = nameInp ? nameInp.value.trim() : "";
+            const idVal   = idInp ? idInp.value.trim() : "";
+            
+            members.push({
+                index: idx + 1,
+                name: nameVal ? { raw: nameVal, html: escapeHtml(nameVal), isPlaceholder: false } : { raw: "", html: `<span class="f-hint">[Student Name ${idx + 1}]</span>`, isPlaceholder: true },
+                id: idVal ? { raw: idVal, html: escapeHtml(idVal), isPlaceholder: false } : { raw: "", html: `<span class="f-hint">[ID]</span>`, isPlaceholder: true }
+            });
+        });
+        return members;
+    }
+
     function getData() {
         return {
-            color:       inpColor ? inpColor.value : "#003366",
-            font:        inpFont ? inpFont.value : "'Times New Roman', Times, serif",
-            logo:        activeLogo,
-            uni:         getVal(inpUniName, (currentMode === "seu" ? "SOUTHEAST UNIVERSITY" : "UNIVERSITY NAME")),
-            dept:        getVal(inpDeptName, "Department of Computer Science & Engineering"),
-            courseTitle: getVal(inpCourseTitle, "Course Title / Laboratory Course"),
-            courseCode:  getVal(inpCourseCode, "Course Code"),
-            expNo:       getVal(inpExpNo, "01"),
-            expName:     getVal(inpExpName, "Title / Name of the Experiment"),
-            datePerform: getVal(inpDatePerform, "DD Month, YYYY"),
-            dateSubmit:  getVal(inpDateSubmit, "DD Month, YYYY"),
-            studentName: getVal(inpStudentName, "Student Name"),
-            studentId:   getVal(inpStudentId, "Student ID"),
-            section:     getVal(inpStudentSection, "Section"),
-            batch:       getVal(inpStudentBatch, "Batch / Semester"),
-            group:       getVal(inpStudentGroup, "Group / Roll (Optional)"),
-            teacherName: getVal(inpTeacherName, "Faculty / Instructor Name"),
-            teacherDesig:getVal(inpTeacherDesig, "Designation"),
-            teacherDept: getVal(inpTeacherDept, "Department"),
-            showRubric:  toggleEvalBox ? toggleEvalBox.checked : true
+            color:          inpColor ? inpColor.value : "#003366",
+            font:           inpFont ? inpFont.value : "'Times New Roman', Times, serif",
+            logo:           activeLogo,
+            uni:            getVal(inpUniName, (currentMode === "seu" ? "SOUTHEAST UNIVERSITY" : "UNIVERSITY NAME")),
+            dept:           getVal(inpDeptName, "Department of Computer Science & Engineering"),
+            courseTitle:    getVal(inpCourseTitle, "Course Title / Laboratory Course"),
+            courseCode:     getVal(inpCourseCode, "Course Code"),
+            expNo:          getVal(inpExpNo, "01"),
+            expName:        getVal(inpExpName, "Title / Name of the Experiment"),
+            datePerform:    getVal(inpDatePerform, "DD Month, YYYY"),
+            dateSubmit:     getVal(inpDateSubmit, "DD Month, YYYY"),
+            submissionType: submissionType,
+            // Individual
+            studentName:    getVal(inpStudentName, "Student Name"),
+            studentId:      getVal(inpStudentId, "Student ID"),
+            section:        getVal(inpStudentSection, "Section"),
+            batch:          getVal(inpStudentBatch, "Batch / Semester"),
+            group:          getVal(inpStudentGroup, "Group / Roll (Optional)"),
+            // Group
+            groupName:      getVal(inpGroupName, "Group 01"),
+            groupSec:       getVal(inpGroupSec, "Sec: 01, Batch: 56th"),
+            members:        getGroupMembersData(),
+            // Faculty
+            teacherName:    getVal(inpTeacherName, "Faculty / Instructor Name"),
+            teacherDesig:   getVal(inpTeacherDesig, "Designation"),
+            teacherDept:    getVal(inpTeacherDept, "Department"),
+            showRubric:     toggleEvalBox ? toggleEvalBox.checked : true
         };
     }
 
     // ── Field Row Builder ──────────────────────────────────────────────
     function fieldRow(label, dataObj, customStyle = "") {
-        return `<div class="lr-row" style="display:flex; align-items:baseline; margin-bottom:6px; font-size:14px; line-height:1.4; ${customStyle}">
-            <span class="lr-label" style="font-weight:700; min-width:115px; flex-shrink:0;">${label}</span>
+        return `<div class="lr-row" style="display:flex; align-items:baseline; margin-bottom:5px; font-size:13.5px; line-height:1.35; ${customStyle}">
+            <span class="lr-label" style="font-weight:700; min-width:110px; flex-shrink:0;">${label}</span>
             <span class="lr-colon" style="font-weight:700; margin-right:6px;">:</span>
             <span class="lr-val" style="flex:1; word-break:break-word;">${dataObj.html}</span>
         </div>`;
+    }
+
+    // ── Modular Submitted By Renderer (Handles Individual vs Group) ────
+    function renderSubmittedBy(d, accentColor) {
+        if (d.submissionType === "group") {
+            return `
+                <div>
+                    <div style="font-size:13.5px; font-weight:800; color:${accentColor}; text-transform:uppercase; margin-bottom:4px; letter-spacing:0.5px;">
+                        👥 Submitted By (Team):
+                    </div>
+                    <div style="font-size:13.5px; font-weight:700; color:#1e293b; margin-bottom:2px;">
+                        <span>Group: </span><span>${d.groupName.html}</span>
+                    </div>
+                    ${d.groupSec.raw ? `<div style="font-size:12.5px; font-weight:600; color:#475569; margin-bottom:4px;"><span>${d.groupSec.html}</span></div>` : ''}
+                    <table style="width:100%; border-collapse:collapse; font-size:11.5px; margin-top:4px; background:#ffffff; border:1px solid #cbd5e1; border-radius:4px; overflow:hidden;">
+                        <thead>
+                            <tr style="background:#f1f5f9; border-bottom:1px solid #cbd5e1;">
+                                <th style="padding:3px 4px; text-align:left; border-right:1px solid #cbd5e1; width:18px;">#</th>
+                                <th style="padding:3px 6px; text-align:left; border-right:1px solid #cbd5e1;">Member Name</th>
+                                <th style="padding:3px 6px; text-align:left; width:95px;">Student ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${d.members.map(m => `
+                                <tr style="border-bottom:1px solid #e2e8f0;">
+                                    <td style="padding:3px 4px; font-weight:700; color:#64748b; border-right:1px solid #e2e8f0; text-align:center;">${m.index}</td>
+                                    <td style="padding:3px 6px; font-weight:600; border-right:1px solid #e2e8f0;">${m.name.html}</td>
+                                    <td style="padding:3px 6px;">${m.id.html}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>`;
+        }
+
+        // Individual Mode
+        return `
+            <div>
+                <div style="font-size:13.5px; font-weight:800; color:${accentColor}; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">
+                    👤 Submitted By:
+                </div>
+                ${fieldRow("Student Name", d.studentName)}
+                ${fieldRow("Student ID", d.studentId)}
+                ${fieldRow("Section", d.section)}
+                ${fieldRow("Batch", d.batch)}
+                ${d.group.raw ? fieldRow("Group", d.group) : ""}
+            </div>`;
     }
 
     // ── Faculty Evaluation Rubric Component ────────────────────────────
     function renderRubricBox(d, accentColor) {
         if (!d.showRubric) return "";
         return `
-        <div class="lr-rubric-box" style="margin-top:14px; border:1.5px solid ${accentColor}; border-radius:6px; overflow:hidden; background:#ffffff;">
-            <div style="background:${accentColor}; color:#ffffff; font-size:11px; font-weight:800; text-transform:uppercase; letter-spacing:1px; padding:4px 10px; text-align:center;">
+        <div class="lr-rubric-box" style="margin-top:12px; border:1.5px solid ${accentColor}; border-radius:6px; overflow:hidden; background:#ffffff;">
+            <div style="background:${accentColor}; color:#ffffff; font-size:10.5px; font-weight:800; text-transform:uppercase; letter-spacing:1px; padding:3px 10px; text-align:center;">
                 Faculty Evaluation & Marks Rubric
             </div>
-            <table style="width:100%; border-collapse:collapse; font-size:11px; text-align:left;">
+            <table style="width:100%; border-collapse:collapse; font-size:10.5px; text-align:left;">
                 <thead>
                     <tr style="background:#f8fafc; border-bottom:1px solid #cbd5e1;">
-                        <th style="padding:4px 8px; border-right:1px solid #cbd5e1; font-weight:700; width:46%;">Assessment Criteria</th>
-                        <th style="padding:4px 8px; border-right:1px solid #cbd5e1; font-weight:700; text-align:center; width:18%;">Max Marks</th>
-                        <th style="padding:4px 8px; border-right:1px solid #cbd5e1; font-weight:700; text-align:center; width:18%;">Obtained</th>
-                        <th style="padding:4px 8px; font-weight:700; text-align:center; width:18%;">Remarks</th>
+                        <th style="padding:3px 8px; border-right:1px solid #cbd5e1; font-weight:700; width:46%;">Assessment Criteria</th>
+                        <th style="padding:3px 8px; border-right:1px solid #cbd5e1; font-weight:700; text-align:center; width:18%;">Max Marks</th>
+                        <th style="padding:3px 8px; border-right:1px solid #cbd5e1; font-weight:700; text-align:center; width:18%;">Obtained</th>
+                        <th style="padding:3px 8px; font-weight:700; text-align:center; width:18%;">Remarks</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr style="border-bottom:1px solid #e2e8f0;">
-                        <td style="padding:4px 8px; border-right:1px solid #e2e8f0;">Lab Performance & Experimentation</td>
-                        <td style="padding:4px 8px; border-right:1px solid #e2e8f0; text-align:center;">10</td>
-                        <td style="padding:4px 8px; border-right:1px solid #e2e8f0;"></td>
-                        <td rowspan="3" style="padding:4px 8px; vertical-align:top; font-size:10px; color:#64748b; text-align:center;"></td>
+                        <td style="padding:3px 8px; border-right:1px solid #e2e8f0;">Lab Performance & Experimentation</td>
+                        <td style="padding:3px 8px; border-right:1px solid #e2e8f0; text-align:center;">10</td>
+                        <td style="padding:3px 8px; border-right:1px solid #e2e8f0;"></td>
+                        <td rowspan="3" style="padding:3px 8px; vertical-align:top; font-size:9.5px; color:#64748b; text-align:center;"></td>
                     </tr>
                     <tr style="border-bottom:1px solid #e2e8f0;">
-                        <td style="padding:4px 8px; border-right:1px solid #e2e8f0;">Report Quality, Graphs & Calculations</td>
-                        <td style="padding:4px 8px; border-right:1px solid #e2e8f0; text-align:center;">10</td>
-                        <td style="padding:4px 8px; border-right:1px solid #e2e8f0;"></td>
+                        <td style="padding:3px 8px; border-right:1px solid #e2e8f0;">Report Quality, Graphs & Calculations</td>
+                        <td style="padding:3px 8px; border-right:1px solid #e2e8f0; text-align:center;">10</td>
+                        <td style="padding:3px 8px; border-right:1px solid #e2e8f0;"></td>
                     </tr>
                     <tr style="border-bottom:1px solid #cbd5e1;">
-                        <td style="padding:4px 8px; border-right:1px solid #e2e8f0;">Viva-Voce / Technical Discussion</td>
-                        <td style="padding:4px 8px; border-right:1px solid #e2e8f0; text-align:center;">10</td>
-                        <td style="padding:4px 8px; border-right:1px solid #e2e8f0;"></td>
+                        <td style="padding:3px 8px; border-right:1px solid #e2e8f0;">Viva-Voce / Technical Discussion</td>
+                        <td style="padding:3px 8px; border-right:1px solid #e2e8f0; text-align:center;">10</td>
+                        <td style="padding:3px 8px; border-right:1px solid #e2e8f0;"></td>
                     </tr>
                     <tr style="background:#f8fafc; font-weight:700;">
-                        <td style="padding:4px 8px; border-right:1px solid #cbd5e1;">Total Marks</td>
-                        <td style="padding:4px 8px; border-right:1px solid #cbd5e1; text-align:center;">30</td>
-                        <td style="padding:4px 8px; border-right:1px solid #cbd5e1;"></td>
+                        <td style="padding:3px 8px; border-right:1px solid #cbd5e1;">Total Marks</td>
+                        <td style="padding:3px 8px; border-right:1px solid #cbd5e1; text-align:center;">30</td>
+                        <td style="padding:3px 8px; border-right:1px solid #cbd5e1;"></td>
                         <td></td>
                     </tr>
                 </tbody>
             </table>
-            <div style="display:flex; justify-content:space-between; align-items:flex-end; padding:12px 16px 6px;">
-                <div style="font-size:11px; color:#475569;">
+            <div style="display:flex; justify-content:space-between; align-items:flex-end; padding:8px 16px 4px;">
+                <div style="font-size:10px; color:#475569;">
                     <span>Signature Date: _______________</span>
                 </div>
-                <div style="text-align:center; min-width:180px;">
-                    <div style="border-bottom:1px solid #334155; width:100%; height:16px;"></div>
-                    <div style="font-size:10.5px; font-weight:700; color:#334155; margin-top:2px;">Evaluator's Signature</div>
+                <div style="text-align:center; min-width:170px;">
+                    <div style="border-bottom:1px solid #334155; width:100%; height:14px;"></div>
+                    <div style="font-size:10px; font-weight:700; color:#334155; margin-top:2px;">Evaluator's Signature</div>
                 </div>
             </div>
         </div>`;
@@ -327,59 +513,54 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="inner-border" style="border-color:${d.color};"></div>
                 
                 <!-- Top University Header -->
-                <div style="text-align:center; position:relative; z-index:2; margin-top:10px;">
-                    <img src="${d.logo}" alt="University Logo" style="max-height:85px; max-width:150px; object-fit:contain; margin-bottom:8px;">
-                    <div style="font-size:22px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:${d.color}; line-height:1.25;">${d.uni.html}</div>
-                    <div style="font-size:14px; font-weight:600; color:#334155; margin-top:4px;">${d.dept.html}</div>
+                <div style="text-align:center; position:relative; z-index:2; margin-top:6px;">
+                    <img src="${d.logo}" alt="University Logo" style="max-height:80px; max-width:140px; object-fit:contain; margin-bottom:6px;">
+                    <div style="font-size:21px; font-weight:800; text-transform:uppercase; letter-spacing:1px; color:${d.color}; line-height:1.2;">${d.uni.html}</div>
+                    <div style="font-size:13.5px; font-weight:600; color:#334155; margin-top:3px;">${d.dept.html}</div>
                 </div>
 
                 <!-- Main Lab Report Badge & Course -->
-                <div style="text-align:center; position:relative; z-index:2; margin:14px 0 10px;">
-                    <div style="display:inline-block; border:2px solid ${d.color}; background:${d.color}; color:#ffffff; padding:5px 28px; font-size:17px; font-weight:800; letter-spacing:3px; text-transform:uppercase; border-radius:4px;">
+                <div style="text-align:center; position:relative; z-index:2; margin:10px 0 8px;">
+                    <div style="display:inline-block; border:2px solid ${d.color}; background:${d.color}; color:#ffffff; padding:4px 24px; font-size:16px; font-weight:800; letter-spacing:3px; text-transform:uppercase; border-radius:4px;">
                         LABORATORY REPORT
                     </div>
-                    <div style="margin-top:12px; font-size:16px; font-weight:700; color:#1e293b;">
+                    <div style="margin-top:8px; font-size:15px; font-weight:700; color:#1e293b;">
                         <span>Course Title: </span><span>${d.courseTitle.html}</span>
                     </div>
-                    <div style="margin-top:2px; font-size:14.5px; font-weight:700; color:${d.color};">
+                    <div style="margin-top:2px; font-size:14px; font-weight:700; color:${d.color};">
                         <span>Course Code: </span><span>${d.courseCode.html}</span>
                     </div>
                 </div>
 
                 <!-- Experiment Details Box -->
-                <div style="border:1.5px solid ${d.color}; border-radius:6px; padding:12px 18px; background:#f8fafc; position:relative; z-index:2;">
-                    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:6px; border-bottom:1px dashed #cbd5e1; padding-bottom:4px;">
-                        <div style="font-size:15px; font-weight:800; color:${d.color};">
+                <div style="border:1.5px solid ${d.color}; border-radius:6px; padding:10px 16px; background:#f8fafc; position:relative; z-index:2;">
+                    <div style="display:flex; justify-content:space-between; align-items:baseline; margin-bottom:4px; border-bottom:1px dashed #cbd5e1; padding-bottom:3px;">
+                        <div style="font-size:14px; font-weight:800; color:${d.color};">
                             <span>Experiment No.: </span><span>${d.expNo.html}</span>
                         </div>
-                        <div style="font-size:12.5px; font-weight:600; color:#475569;">
+                        <div style="font-size:12px; font-weight:600; color:#475569;">
                             <span>Date of Performance: </span><span>${d.datePerform.html}</span>
                         </div>
                     </div>
-                    <div style="margin-top:6px;">
-                        <span style="font-weight:700; font-size:14px; color:#1e293b;">Experiment Name: </span>
-                        <span style="font-size:14px; font-weight:600; color:#0f172a; line-height:1.4;">${d.expName.html}</span>
+                    <div style="margin-top:4px;">
+                        <span style="font-weight:700; font-size:13.5px; color:#1e293b;">Experiment Name: </span>
+                        <span style="font-size:13.5px; font-weight:600; color:#0f172a; line-height:1.35;">${d.expName.html}</span>
                     </div>
-                    <div style="margin-top:6px; font-size:12.5px; font-weight:600; color:#475569; text-align:right;">
+                    <div style="margin-top:4px; font-size:12px; font-weight:600; color:#475569; text-align:right;">
                         <span>Date of Submission: </span><span>${d.dateSubmit.html}</span>
                     </div>
                 </div>
 
                 <!-- Two-Column Submitted By / Submitted To -->
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; position:relative; z-index:2; margin-top:10px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; position:relative; z-index:2; margin-top:8px;">
                     <!-- Student Col -->
                     <div style="border-left:3px solid ${d.color}; padding-left:12px;">
-                        <div style="font-size:14px; font-weight:800; color:${d.color}; text-transform:uppercase; margin-bottom:8px; letter-spacing:0.5px;">Submitted By:</div>
-                        ${fieldRow("Student Name", d.studentName)}
-                        ${fieldRow("Student ID", d.studentId)}
-                        ${fieldRow("Section", d.section)}
-                        ${fieldRow("Batch", d.batch)}
-                        ${d.group.raw ? fieldRow("Group", d.group) : ""}
+                        ${renderSubmittedBy(d, d.color)}
                     </div>
 
                     <!-- Faculty Col -->
                     <div style="border-left:3px solid #64748b; padding-left:12px;">
-                        <div style="font-size:14px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:8px; letter-spacing:0.5px;">Submitted To:</div>
+                        <div style="font-size:13.5px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">👨‍🏫 Submitted To:</div>
                         ${fieldRow("Faculty Name", d.teacherName)}
                         ${fieldRow("Designation", d.teacherDesig)}
                         ${fieldRow("Department", d.teacherDept)}
@@ -397,48 +578,43 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="tpl-modern-tech" style="width:100%; height:100%; box-sizing:border-box; font-family:${d.font}; color:#0f172a; position:relative; background:#ffffff; border-top-color:${d.color}; border-bottom-color:${d.color};">
                 
                 <!-- Top Header -->
-                <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #e2e8f0; padding-bottom:14px;">
+                <div style="display:flex; align-items:center; justify-content:space-between; border-bottom:2px solid #e2e8f0; padding-bottom:12px;">
                     <div style="flex:1; padding-right:16px;">
-                        <div style="font-size:21px; font-weight:800; text-transform:uppercase; color:${d.color}; letter-spacing:0.5px;">${d.uni.html}</div>
-                        <div style="font-size:13.5px; font-weight:600; color:#475569; margin-top:2px;">${d.dept.html}</div>
+                        <div style="font-size:20px; font-weight:800; text-transform:uppercase; color:${d.color}; letter-spacing:0.5px;">${d.uni.html}</div>
+                        <div style="font-size:13px; font-weight:600; color:#475569; margin-top:2px;">${d.dept.html}</div>
                     </div>
-                    <img src="${d.logo}" alt="Logo" style="max-height:80px; max-width:130px; object-fit:contain;">
+                    <img src="${d.logo}" alt="Logo" style="max-height:75px; max-width:120px; object-fit:contain;">
                 </div>
 
                 <!-- Lab Report Banner -->
-                <div style="margin:16px 0 10px; background:linear-gradient(90deg, ${d.color}, #334155); color:#ffffff; padding:10px 20px; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
+                <div style="margin:12px 0 8px; background:linear-gradient(90deg, ${d.color}, #334155); color:#ffffff; padding:8px 18px; border-radius:6px; display:flex; justify-content:space-between; align-items:center;">
                     <div>
-                        <div style="font-size:18px; font-weight:800; letter-spacing:2px; text-transform:uppercase;">LAB REPORT</div>
-                        <div style="font-size:13px; opacity:0.9;">${d.courseTitle.html} (${d.courseCode.html})</div>
+                        <div style="font-size:16px; font-weight:800; letter-spacing:2px; text-transform:uppercase;">LAB REPORT</div>
+                        <div style="font-size:12.5px; opacity:0.9;">${d.courseTitle.html} (${d.courseCode.html})</div>
                     </div>
-                    <div style="background:rgba(255,255,255,0.2); padding:4px 12px; border-radius:4px; font-size:14px; font-weight:800;">
+                    <div style="background:rgba(255,255,255,0.2); padding:3px 10px; border-radius:4px; font-size:13px; font-weight:800;">
                         EXP #${d.expNo.html}
                     </div>
                 </div>
 
                 <!-- Experiment Info -->
-                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:14px 18px;">
-                    <div style="font-size:14px; font-weight:700; color:#475569; text-transform:uppercase;">Experiment Title</div>
-                    <div style="font-size:15px; font-weight:700; color:#0f172a; margin:4px 0 10px; line-height:1.35;">${d.expName.html}</div>
-                    <div style="display:flex; justify-content:space-between; font-size:13px; font-weight:600; color:#475569; border-top:1px dashed #cbd5e1; padding-top:6px;">
+                <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px 16px;">
+                    <div style="font-size:13px; font-weight:700; color:#475569; text-transform:uppercase;">Experiment Title</div>
+                    <div style="font-size:14px; font-weight:700; color:#0f172a; margin:3px 0 8px; line-height:1.35;">${d.expName.html}</div>
+                    <div style="display:flex; justify-content:space-between; font-size:12px; font-weight:600; color:#475569; border-top:1px dashed #cbd5e1; padding-top:4px;">
                         <span>📅 Performed: ${d.datePerform.html}</span>
                         <span>🚀 Submitted: ${d.dateSubmit.html}</span>
                     </div>
                 </div>
 
                 <!-- Info Grid -->
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:22px; margin-top:10px;">
-                    <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; padding:12px 16px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-                        <div style="font-size:13px; font-weight:800; color:${d.color}; text-transform:uppercase; margin-bottom:8px; border-bottom:1px solid #e2e8f0; padding-bottom:4px;">👨‍🎓 Student Details</div>
-                        ${fieldRow("Name", d.studentName)}
-                        ${fieldRow("ID", d.studentId)}
-                        ${fieldRow("Section", d.section)}
-                        ${fieldRow("Batch", d.batch)}
-                        ${d.group.raw ? fieldRow("Group", d.group) : ""}
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:8px;">
+                    <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:10px 14px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                        ${renderSubmittedBy(d, d.color)}
                     </div>
 
-                    <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:8px; padding:12px 16px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
-                        <div style="font-size:13px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:8px; border-bottom:1px solid #e2e8f0; padding-bottom:4px;">👨‍🏫 Faculty Details</div>
+                    <div style="background:#ffffff; border:1px solid #e2e8f0; border-radius:6px; padding:10px 14px; box-shadow:0 1px 3px rgba(0,0,0,0.05);">
+                        <div style="font-size:13px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:6px; border-bottom:1px solid #e2e8f0; padding-bottom:2px;">👨‍🏫 Faculty Details</div>
                         ${fieldRow("Name", d.teacherName)}
                         ${fieldRow("Designation", d.teacherDesig)}
                         ${fieldRow("Department", d.teacherDept)}
@@ -455,66 +631,59 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="tpl-lab-matrix" style="width:100%; height:100%; box-sizing:border-box; font-family:${d.font}; color:#0f172a; position:relative; background:#ffffff;">
                 
                 <!-- University Title Box -->
-                <div style="text-align:center; border:2px solid #334155; padding:14px; background:#f8fafc;">
-                    <img src="${d.logo}" alt="Logo" style="max-height:75px; max-width:130px; object-fit:contain; margin-bottom:6px;">
-                    <div style="font-size:22px; font-weight:900; text-transform:uppercase; color:${d.color}; letter-spacing:1px;">${d.uni.html}</div>
-                    <div style="font-size:14px; font-weight:700; color:#475569; margin-top:2px;">${d.dept.html}</div>
+                <div style="text-align:center; border:2px solid #334155; padding:10px; background:#f8fafc;">
+                    <img src="${d.logo}" alt="Logo" style="max-height:70px; max-width:120px; object-fit:contain; margin-bottom:4px;">
+                    <div style="font-size:20px; font-weight:900; text-transform:uppercase; color:${d.color}; letter-spacing:1px;">${d.uni.html}</div>
+                    <div style="font-size:13.5px; font-weight:700; color:#475569; margin-top:2px;">${d.dept.html}</div>
                 </div>
 
                 <!-- Matrix Table for Experiment Info -->
-                <div style="margin:14px 0 10px; border:2px solid #334155; overflow:hidden;">
-                    <div style="background:${d.color}; color:#ffffff; font-size:15px; font-weight:800; text-align:center; padding:6px; letter-spacing:2px;">
+                <div style="margin:10px 0 6px; border:2px solid #334155; overflow:hidden;">
+                    <div style="background:${d.color}; color:#ffffff; font-size:14px; font-weight:800; text-align:center; padding:5px; letter-spacing:2px;">
                         LABORATORY EXPERIMENT SHEET
                     </div>
                     <div style="display:grid; grid-template-columns:1fr 1fr; border-bottom:1px solid #334155;">
-                        <div style="padding:8px 12px; border-right:1px solid #334155; font-size:13.5px;">
+                        <div style="padding:6px 10px; border-right:1px solid #334155; font-size:13px;">
                             <strong>Course Title: </strong>${d.courseTitle.html}
                         </div>
-                        <div style="padding:8px 12px; font-size:13.5px;">
+                        <div style="padding:6px 10px; font-size:13px;">
                             <strong>Course Code: </strong>${d.courseCode.html}
                         </div>
                     </div>
-                    <div style="display:grid; grid-template-columns:140px 1fr; border-bottom:1px solid #334155;">
-                        <div style="padding:8px 12px; border-right:1px solid #334155; font-size:13.5px; font-weight:700; background:#f1f5f9;">
+                    <div style="display:grid; grid-template-columns:130px 1fr; border-bottom:1px solid #334155;">
+                        <div style="padding:6px 10px; border-right:1px solid #334155; font-size:13px; font-weight:700; background:#f1f5f9;">
                             Experiment No.
                         </div>
-                        <div style="padding:8px 12px; font-size:14px; font-weight:700; color:${d.color};">
+                        <div style="padding:6px 10px; font-size:13.5px; font-weight:700; color:${d.color};">
                             ${d.expNo.html}
                         </div>
                     </div>
-                    <div style="display:grid; grid-template-columns:140px 1fr; border-bottom:1px solid #334155;">
-                        <div style="padding:8px 12px; border-right:1px solid #334155; font-size:13.5px; font-weight:700; background:#f1f5f9;">
+                    <div style="display:grid; grid-template-columns:130px 1fr; border-bottom:1px solid #334155;">
+                        <div style="padding:6px 10px; border-right:1px solid #334155; font-size:13px; font-weight:700; background:#f1f5f9;">
                             Experiment Name
                         </div>
-                        <div style="padding:8px 12px; font-size:14px; font-weight:600;">
+                        <div style="padding:6px 10px; font-size:13.5px; font-weight:600;">
                             ${d.expName.html}
                         </div>
                     </div>
                     <div style="display:grid; grid-template-columns:1fr 1fr;">
-                        <div style="padding:8px 12px; border-right:1px solid #334155; font-size:13px;">
-                            <strong>Date of Performance: </strong>${d.datePerform.html}
+                        <div style="padding:6px 10px; border-right:1px solid #334155; font-size:12.5px;">
+                            <strong>Date Performed: </strong>${d.datePerform.html}
                         </div>
-                        <div style="padding:8px 12px; font-size:13px;">
-                            <strong>Date of Submission: </strong>${d.dateSubmit.html}
+                        <div style="padding:6px 10px; font-size:12.5px;">
+                            <strong>Date Submitted: </strong>${d.dateSubmit.html}
                         </div>
                     </div>
                 </div>
 
                 <!-- Matrix Columns for Submitted By & To -->
-                <div style="display:grid; grid-template-columns:1fr 1fr; border:2px solid #334155; margin-top:8px;">
-                    <div style="padding:14px; border-right:2px solid #334155;">
-                        <div style="font-size:14px; font-weight:800; color:${d.color}; text-transform:uppercase; margin-bottom:8px; border-bottom:1px solid #cbd5e1; padding-bottom:4px;">
-                            Submitted By (Student)
-                        </div>
-                        ${fieldRow("Name", d.studentName)}
-                        ${fieldRow("ID", d.studentId)}
-                        ${fieldRow("Section", d.section)}
-                        ${fieldRow("Batch", d.batch)}
-                        ${d.group.raw ? fieldRow("Group", d.group) : ""}
+                <div style="display:grid; grid-template-columns:1fr 1fr; border:2px solid #334155; margin-top:6px;">
+                    <div style="padding:10px 12px; border-right:2px solid #334155;">
+                        ${renderSubmittedBy(d, d.color)}
                     </div>
-                    <div style="padding:14px;">
-                        <div style="font-size:14px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:8px; border-bottom:1px solid #cbd5e1; padding-bottom:4px;">
-                            Submitted To (Faculty)
+                    <div style="padding:10px 12px;">
+                        <div style="font-size:13.5px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:6px; border-bottom:1px solid #cbd5e1; padding-bottom:2px;">
+                            👨‍🏫 Submitted To (Faculty)
                         </div>
                         ${fieldRow("Name", d.teacherName)}
                         ${fieldRow("Designation", d.teacherDesig)}
@@ -532,47 +701,42 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="tpl-formal-crest" style="width:100%; height:100%; box-sizing:border-box; font-family:${d.font}; color:#0f172a; position:relative; background:#ffffff; border-color:${d.color}; text-align:center;">
                 
                 <!-- University Crest & Names -->
-                <div style="margin-top:10px;">
-                    <img src="${d.logo}" alt="Logo" style="max-height:90px; max-width:140px; object-fit:contain; margin-bottom:8px;">
-                    <div style="font-size:23px; font-weight:800; text-transform:uppercase; color:${d.color}; letter-spacing:1px; line-height:1.2;">${d.uni.html}</div>
-                    <div style="font-size:14.5px; font-weight:600; color:#475569; margin-top:4px;">${d.dept.html}</div>
-                    <div style="width:80px; height:2px; background:${d.color}; margin:12px auto 0;"></div>
+                <div style="margin-top:6px;">
+                    <img src="${d.logo}" alt="Logo" style="max-height:80px; max-width:130px; object-fit:contain; margin-bottom:6px;">
+                    <div style="font-size:22px; font-weight:800; text-transform:uppercase; color:${d.color}; letter-spacing:1px; line-height:1.2;">${d.uni.html}</div>
+                    <div style="font-size:13.5px; font-weight:600; color:#475569; margin-top:3px;">${d.dept.html}</div>
+                    <div style="width:70px; height:2px; background:${d.color}; margin:10px auto 0;"></div>
                 </div>
 
                 <!-- Document Header -->
-                <div style="margin:14px 0;">
-                    <div style="font-size:20px; font-weight:900; letter-spacing:3px; color:${d.color}; text-transform:uppercase;">LABORATORY REPORT</div>
-                    <div style="font-size:15px; font-weight:700; color:#1e293b; margin-top:4px;">
+                <div style="margin:10px 0;">
+                    <div style="font-size:18px; font-weight:900; letter-spacing:3px; color:${d.color}; text-transform:uppercase;">LABORATORY REPORT</div>
+                    <div style="font-size:14.5px; font-weight:700; color:#1e293b; margin-top:3px;">
                         ${d.courseTitle.html} (${d.courseCode.html})
                     </div>
                 </div>
 
                 <!-- Experiment Showcase -->
-                <div style="border-top:1px solid #cbd5e1; border-bottom:1px solid #cbd5e1; padding:12px 20px; margin:10px 0; background:#fcfcfc;">
-                    <div style="font-size:15px; font-weight:800; color:${d.color};">
+                <div style="border-top:1px solid #cbd5e1; border-bottom:1px solid #cbd5e1; padding:10px 16px; margin:8px 0; background:#fcfcfc;">
+                    <div style="font-size:14px; font-weight:800; color:${d.color};">
                         <span>Experiment No: </span><span>${d.expNo.html}</span>
                     </div>
-                    <div style="font-size:15px; font-weight:700; color:#0f172a; margin:6px 0; line-height:1.35;">
+                    <div style="font-size:14px; font-weight:700; color:#0f172a; margin:4px 0; line-height:1.35;">
                         ${d.expName.html}
                     </div>
-                    <div style="display:flex; justify-content:space-around; font-size:12.5px; font-weight:600; color:#475569; margin-top:6px;">
-                        <span>Date of Performance: ${d.datePerform.html}</span>
-                        <span>Date of Submission: ${d.dateSubmit.html}</span>
+                    <div style="display:flex; justify-content:space-around; font-size:12px; font-weight:600; color:#475569; margin-top:4px;">
+                        <span>Date Performed: ${d.datePerform.html}</span>
+                        <span>Date Submitted: ${d.dateSubmit.html}</span>
                     </div>
                 </div>
 
                 <!-- Two Columns Details -->
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; text-align:left; margin:10px 0;">
-                    <div style="border-right:1px solid #e2e8f0; padding-right:14px;">
-                        <div style="font-size:13.5px; font-weight:800; color:${d.color}; text-transform:uppercase; margin-bottom:6px; border-bottom:1px solid ${d.color}; padding-bottom:2px;">Submitted By:</div>
-                        ${fieldRow("Name", d.studentName)}
-                        ${fieldRow("ID", d.studentId)}
-                        ${fieldRow("Section", d.section)}
-                        ${fieldRow("Batch", d.batch)}
-                        ${d.group.raw ? fieldRow("Group", d.group) : ""}
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; text-align:left; margin:8px 0;">
+                    <div style="border-right:1px solid #e2e8f0; padding-right:12px;">
+                        ${renderSubmittedBy(d, d.color)}
                     </div>
                     <div style="padding-left:6px;">
-                        <div style="font-size:13.5px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:6px; border-bottom:1px solid #334155; padding-bottom:2px;">Submitted To:</div>
+                        <div style="font-size:13px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:6px; border-bottom:1px solid #334155; padding-bottom:2px;">👨‍🏫 Submitted To:</div>
                         ${fieldRow("Name", d.teacherName)}
                         ${fieldRow("Designation", d.teacherDesig)}
                         ${fieldRow("Department", d.teacherDept)}
@@ -588,40 +752,35 @@ document.addEventListener("DOMContentLoaded", () => {
         "emerald-bio": (d) => `
             <div class="tpl-emerald-bio" style="width:100%; height:100%; box-sizing:border-box; font-family:${d.font}; color:#0f172a; position:relative; background:#ffffff; border-left-color:${d.color}; border-right-color:${d.color};">
                 
-                <div style="display:flex; align-items:center; justify-content:space-between; margin-top:6px; padding-bottom:12px; border-bottom:2px solid ${d.color};">
+                <div style="display:flex; align-items:center; justify-content:space-between; margin-top:4px; padding-bottom:10px; border-bottom:2px solid ${d.color};">
                     <div>
-                        <div style="font-size:21px; font-weight:800; text-transform:uppercase; color:${d.color};">${d.uni.html}</div>
-                        <div style="font-size:13.5px; font-weight:600; color:#475569; margin-top:2px;">${d.dept.html}</div>
+                        <div style="font-size:20px; font-weight:800; text-transform:uppercase; color:${d.color};">${d.uni.html}</div>
+                        <div style="font-size:13px; font-weight:600; color:#475569; margin-top:2px;">${d.dept.html}</div>
                     </div>
-                    <img src="${d.logo}" alt="Logo" style="max-height:80px; max-width:130px; object-fit:contain;">
+                    <img src="${d.logo}" alt="Logo" style="max-height:75px; max-width:120px; object-fit:contain;">
                 </div>
 
-                <div style="margin:16px 0 10px;">
-                    <div style="font-size:13px; font-weight:800; color:${d.color}; text-transform:uppercase; letter-spacing:2px;">SCIENCE & ENGINEERING PRACTICAL REPORT</div>
-                    <div style="font-size:20px; font-weight:800; color:#0f172a; margin-top:2px;">${d.courseTitle.html}</div>
-                    <div style="font-size:14px; font-weight:700; color:${d.color};">Course Code: ${d.courseCode.html}</div>
+                <div style="margin:12px 0 8px;">
+                    <div style="font-size:12.5px; font-weight:800; color:${d.color}; text-transform:uppercase; letter-spacing:2px;">PRACTICAL LABORATORY REPORT</div>
+                    <div style="font-size:18px; font-weight:800; color:#0f172a; margin-top:2px;">${d.courseTitle.html}</div>
+                    <div style="font-size:13.5px; font-weight:700; color:${d.color};">Course Code: ${d.courseCode.html}</div>
                 </div>
 
-                <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:12px 18px; margin-bottom:10px;">
-                    <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid #bbf7d0; padding-bottom:4px;">
-                        <span style="font-size:14.5px; font-weight:800; color:${d.color};">EXPERIMENT #${d.expNo.html}</span>
-                        <span style="font-size:12.5px; font-weight:600; color:#166534;">Performance Date: ${d.datePerform.html}</span>
+                <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:6px; padding:10px 14px; margin-bottom:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:baseline; border-bottom:1px solid #bbf7d0; padding-bottom:3px;">
+                        <span style="font-size:14px; font-weight:800; color:${d.color};">EXPERIMENT #${d.expNo.html}</span>
+                        <span style="font-size:12px; font-weight:600; color:#166534;">Performance Date: ${d.datePerform.html}</span>
                     </div>
-                    <div style="font-size:14.5px; font-weight:700; color:#0f172a; margin:6px 0;">${d.expName.html}</div>
+                    <div style="font-size:14px; font-weight:700; color:#0f172a; margin:4px 0;">${d.expName.html}</div>
                     <div style="font-size:12px; font-weight:600; color:#166534; text-align:right;">Submission Date: ${d.dateSubmit.html}</div>
                 </div>
 
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
-                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px 14px;">
-                        <div style="font-size:13px; font-weight:800; color:${d.color}; text-transform:uppercase; margin-bottom:6px;">Student Information</div>
-                        ${fieldRow("Name", d.studentName)}
-                        ${fieldRow("ID", d.studentId)}
-                        ${fieldRow("Section", d.section)}
-                        ${fieldRow("Batch", d.batch)}
-                        ${d.group.raw ? fieldRow("Group", d.group) : ""}
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px;">
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px 12px;">
+                        ${renderSubmittedBy(d, d.color)}
                     </div>
-                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:12px 14px;">
-                        <div style="font-size:13px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:6px;">Evaluator Information</div>
+                    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:6px; padding:10px 12px;">
+                        <div style="font-size:13px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:6px;">👨‍🏫 Evaluator Details</div>
                         ${fieldRow("Name", d.teacherName)}
                         ${fieldRow("Designation", d.teacherDesig)}
                         ${fieldRow("Department", d.teacherDept)}
@@ -638,45 +797,40 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="tpl-monochrome-print" style="width:100%; height:100%; box-sizing:border-box; font-family:${d.font}; color:#000000; position:relative; background:#ffffff;">
                 <div class="inner-line"></div>
 
-                <div style="text-align:center; position:relative; z-index:2; margin-top:8px;">
-                    <img src="${d.logo}" alt="Logo" style="max-height:80px; max-width:130px; object-fit:contain; filter:grayscale(100%); margin-bottom:6px;">
-                    <div style="font-size:22px; font-weight:900; text-transform:uppercase; letter-spacing:1px; line-height:1.2;">${d.uni.html}</div>
-                    <div style="font-size:14px; font-weight:700; margin-top:3px;">${d.dept.html}</div>
+                <div style="text-align:center; position:relative; z-index:2; margin-top:6px;">
+                    <img src="${d.logo}" alt="Logo" style="max-height:75px; max-width:120px; object-fit:contain; filter:grayscale(100%); margin-bottom:4px;">
+                    <div style="font-size:21px; font-weight:900; text-transform:uppercase; letter-spacing:1px; line-height:1.2;">${d.uni.html}</div>
+                    <div style="font-size:13.5px; font-weight:700; margin-top:3px;">${d.dept.html}</div>
                 </div>
 
-                <div style="text-align:center; position:relative; z-index:2; margin:14px 0 10px;">
-                    <div style="display:inline-block; border:2px solid #000000; padding:4px 24px; font-size:16px; font-weight:900; letter-spacing:3px; text-transform:uppercase;">
+                <div style="text-align:center; position:relative; z-index:2; margin:10px 0 8px;">
+                    <div style="display:inline-block; border:2px solid #000000; padding:3px 20px; font-size:15px; font-weight:900; letter-spacing:3px; text-transform:uppercase;">
                         LABORATORY REPORT
                     </div>
-                    <div style="margin-top:10px; font-size:15px; font-weight:800;">
+                    <div style="margin-top:8px; font-size:14.5px; font-weight:800;">
                         <span>Course: </span><span>${d.courseTitle.html}</span> (${d.courseCode.html})
                     </div>
                 </div>
 
-                <div style="border:1.5px solid #000000; padding:10px 16px; position:relative; z-index:2;">
-                    <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:800; border-bottom:1px solid #000000; padding-bottom:4px;">
+                <div style="border:1.5px solid #000000; padding:8px 14px; position:relative; z-index:2;">
+                    <div style="display:flex; justify-content:space-between; font-size:13.5px; font-weight:800; border-bottom:1px solid #000000; padding-bottom:3px;">
                         <span>EXPERIMENT NO: ${d.expNo.html}</span>
                         <span>DATE: ${d.datePerform.html}</span>
                     </div>
-                    <div style="margin:8px 0; font-size:14.5px; font-weight:700;">
+                    <div style="margin:6px 0; font-size:14px; font-weight:700;">
                         <span>Experiment Name: </span><span>${d.expName.html}</span>
                     </div>
-                    <div style="font-size:12.5px; font-weight:700; text-align:right;">
+                    <div style="font-size:12px; font-weight:700; text-align:right;">
                         <span>Date of Submission: ${d.dateSubmit.html}</span>
                     </div>
                 </div>
 
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; position:relative; z-index:2; margin-top:10px;">
-                    <div style="border:1px solid #000000; padding:10px 14px;">
-                        <div style="font-size:13px; font-weight:900; text-transform:uppercase; margin-bottom:6px; border-bottom:1px solid #000000; padding-bottom:2px;">Submitted By:</div>
-                        ${fieldRow("Name", d.studentName)}
-                        ${fieldRow("ID", d.studentId)}
-                        ${fieldRow("Section", d.section)}
-                        ${fieldRow("Batch", d.batch)}
-                        ${d.group.raw ? fieldRow("Group", d.group) : ""}
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; position:relative; z-index:2; margin-top:8px;">
+                    <div style="border:1px solid #000000; padding:8px 12px;">
+                        ${renderSubmittedBy(d, "#000000")}
                     </div>
-                    <div style="border:1px solid #000000; padding:10px 14px;">
-                        <div style="font-size:13px; font-weight:900; text-transform:uppercase; margin-bottom:6px; border-bottom:1px solid #000000; padding-bottom:2px;">Submitted To:</div>
+                    <div style="border:1px solid #000000; padding:8px 12px;">
+                        <div style="font-size:13px; font-weight:900; text-transform:uppercase; margin-bottom:6px; border-bottom:1px solid #000000; padding-bottom:2px;">👨‍🏫 Submitted To:</div>
                         ${fieldRow("Name", d.teacherName)}
                         ${fieldRow("Designation", d.teacherDesig)}
                         ${fieldRow("Department", d.teacherDept)}
@@ -693,44 +847,39 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="tpl-executive-navy" style="width:100%; height:100%; box-sizing:border-box; font-family:${d.font}; color:#0f172a; position:relative; background:#ffffff;">
                 
                 <!-- Full Navy Header -->
-                <div style="background:${d.color}; color:#ffffff; padding:28px 40px; text-align:center;">
-                    <img src="${d.logo}" alt="Logo" style="max-height:75px; max-width:130px; object-fit:contain; margin-bottom:8px; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
-                    <div style="font-size:22px; font-weight:800; text-transform:uppercase; letter-spacing:1px; line-height:1.2;">${d.uni.html}</div>
-                    <div style="font-size:13.5px; opacity:0.9; margin-top:4px;">${d.dept.html}</div>
+                <div style="background:${d.color}; color:#ffffff; padding:22px 36px; text-align:center;">
+                    <img src="${d.logo}" alt="Logo" style="max-height:70px; max-width:120px; object-fit:contain; margin-bottom:6px; filter:drop-shadow(0 2px 4px rgba(0,0,0,0.2));">
+                    <div style="font-size:21px; font-weight:800; text-transform:uppercase; letter-spacing:1px; line-height:1.2;">${d.uni.html}</div>
+                    <div style="font-size:13px; opacity:0.9; margin-top:3px;">${d.dept.html}</div>
                 </div>
 
-                <div style="padding:24px 44px; display:flex; flex-direction:column; justify-content:space-between; flex:1;">
+                <div style="padding:18px 38px; display:flex; flex-direction:column; justify-content:space-between; flex:1;">
                     <div style="text-align:center;">
-                        <div style="font-size:18px; font-weight:900; letter-spacing:3px; color:${d.color}; text-transform:uppercase;">LABORATORY REPORT</div>
-                        <div style="font-size:15px; font-weight:700; color:#334155; margin-top:4px;">
+                        <div style="font-size:17px; font-weight:900; letter-spacing:3px; color:${d.color}; text-transform:uppercase;">LABORATORY REPORT</div>
+                        <div style="font-size:14px; font-weight:700; color:#334155; margin-top:3px;">
                             ${d.courseTitle.html} (${d.courseCode.html})
                         </div>
                     </div>
 
-                    <div style="border:1px solid #cbd5e1; border-radius:6px; padding:12px 18px; background:#f8fafc; margin:12px 0;">
-                        <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:800; color:${d.color}; border-bottom:1px solid #e2e8f0; padding-bottom:4px;">
+                    <div style="border:1px solid #cbd5e1; border-radius:6px; padding:10px 16px; background:#f8fafc; margin:10px 0;">
+                        <div style="display:flex; justify-content:space-between; font-size:13.5px; font-weight:800; color:${d.color}; border-bottom:1px solid #e2e8f0; padding-bottom:3px;">
                             <span>Experiment No: ${d.expNo.html}</span>
                             <span>Performance Date: ${d.datePerform.html}</span>
                         </div>
-                        <div style="font-size:14.5px; font-weight:700; color:#0f172a; margin:6px 0;">
+                        <div style="font-size:14px; font-weight:700; color:#0f172a; margin:4px 0;">
                             ${d.expName.html}
                         </div>
-                        <div style="font-size:12.5px; font-weight:600; color:#64748b; text-align:right;">
+                        <div style="font-size:12px; font-weight:600; color:#64748b; text-align:right;">
                             Submission Date: ${d.dateSubmit.html}
                         </div>
                     </div>
 
-                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+                    <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px;">
                         <div style="border-left:3px solid ${d.color}; padding-left:12px;">
-                            <div style="font-size:13px; font-weight:800; color:${d.color}; text-transform:uppercase; margin-bottom:6px;">Submitted By:</div>
-                            ${fieldRow("Name", d.studentName)}
-                            ${fieldRow("ID", d.studentId)}
-                            ${fieldRow("Section", d.section)}
-                            ${fieldRow("Batch", d.batch)}
-                            ${d.group.raw ? fieldRow("Group", d.group) : ""}
+                            ${renderSubmittedBy(d, d.color)}
                         </div>
                         <div style="border-left:3px solid #64748b; padding-left:12px;">
-                            <div style="font-size:13px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:6px;">Submitted To:</div>
+                            <div style="font-size:13px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:6px;">👨‍🏫 Submitted To:</div>
                             ${fieldRow("Name", d.teacherName)}
                             ${fieldRow("Designation", d.teacherDesig)}
                             ${fieldRow("Department", d.teacherDept)}
@@ -747,42 +896,37 @@ document.addEventListener("DOMContentLoaded", () => {
         "circuit-dark": (d) => `
             <div class="tpl-circuit-dark" style="width:100%; height:100%; box-sizing:border-box; font-family:${d.font}; color:#0f172a; position:relative; background:#ffffff; border-color:${d.color};">
                 
-                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid ${d.color}; padding-bottom:12px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:2px solid ${d.color}; padding-bottom:10px;">
                     <div>
-                        <div style="font-size:20px; font-weight:900; text-transform:uppercase; color:${d.color};">${d.uni.html}</div>
-                        <div style="font-size:13.5px; font-weight:600; color:#475569;">${d.dept.html}</div>
+                        <div style="font-size:19px; font-weight:900; text-transform:uppercase; color:${d.color};">${d.uni.html}</div>
+                        <div style="font-size:13px; font-weight:600; color:#475569;">${d.dept.html}</div>
                     </div>
-                    <img src="${d.logo}" alt="Logo" style="max-height:80px; max-width:130px; object-fit:contain;">
+                    <img src="${d.logo}" alt="Logo" style="max-height:70px; max-width:120px; object-fit:contain;">
                 </div>
 
-                <div style="margin:16px 0 10px; text-align:center;">
-                    <div style="display:inline-block; border:1px solid ${d.color}; background:#f0fdfa; color:${d.color}; font-size:15px; font-weight:800; letter-spacing:2px; padding:4px 20px; border-radius:4px; text-transform:uppercase;">
+                <div style="margin:12px 0 8px; text-align:center;">
+                    <div style="display:inline-block; border:1px solid ${d.color}; background:#f0fdfa; color:${d.color}; font-size:14.5px; font-weight:800; letter-spacing:2px; padding:3px 18px; border-radius:4px; text-transform:uppercase;">
                         SYSTEM LAB REPORT
                     </div>
-                    <div style="font-size:16px; font-weight:800; margin-top:8px; color:#1e293b;">${d.courseTitle.html}</div>
-                    <div style="font-size:13.5px; font-weight:700; color:${d.color};">Code: ${d.courseCode.html}</div>
+                    <div style="font-size:15px; font-weight:800; margin-top:6px; color:#1e293b;">${d.courseTitle.html}</div>
+                    <div style="font-size:13px; font-weight:700; color:${d.color};">Code: ${d.courseCode.html}</div>
                 </div>
 
-                <div style="border:1.5px solid ${d.color}; border-radius:6px; padding:12px 16px; background:#f8fafc;">
-                    <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:800; color:${d.color};">
+                <div style="border:1.5px solid ${d.color}; border-radius:6px; padding:10px 14px; background:#f8fafc;">
+                    <div style="display:flex; justify-content:space-between; font-size:13.5px; font-weight:800; color:${d.color};">
                         <span>MODULE / EXP: #${d.expNo.html}</span>
                         <span>PERFORMED: ${d.datePerform.html}</span>
                     </div>
-                    <div style="font-size:14.5px; font-weight:700; margin:6px 0; color:#0f172a;">${d.expName.html}</div>
-                    <div style="font-size:12.5px; font-weight:600; color:#64748b; text-align:right;">SUBMITTED: ${d.dateSubmit.html}</div>
+                    <div style="font-size:14px; font-weight:700; margin:4px 0; color:#0f172a;">${d.expName.html}</div>
+                    <div style="font-size:12px; font-weight:600; color:#64748b; text-align:right;">SUBMITTED: ${d.dateSubmit.html}</div>
                 </div>
 
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:10px;">
-                    <div style="border-top:2px solid ${d.color}; padding-top:8px;">
-                        <div style="font-size:13px; font-weight:800; color:${d.color}; text-transform:uppercase; margin-bottom:6px;">ENGINEER (STUDENT)</div>
-                        ${fieldRow("Name", d.studentName)}
-                        ${fieldRow("ID", d.studentId)}
-                        ${fieldRow("Section", d.section)}
-                        ${fieldRow("Batch", d.batch)}
-                        ${d.group.raw ? fieldRow("Group", d.group) : ""}
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:18px; margin-top:8px;">
+                    <div style="border-top:2px solid ${d.color}; padding-top:6px;">
+                        ${renderSubmittedBy(d, d.color)}
                     </div>
-                    <div style="border-top:2px solid #64748b; padding-top:8px;">
-                        <div style="font-size:13px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:6px;">INSTRUCTOR (FACULTY)</div>
+                    <div style="border-top:2px solid #64748b; padding-top:6px;">
+                        <div style="font-size:13px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:6px;">👨‍🏫 INSTRUCTOR (FACULTY)</div>
                         ${fieldRow("Name", d.teacherName)}
                         ${fieldRow("Designation", d.teacherDesig)}
                         ${fieldRow("Department", d.teacherDept)}
@@ -798,38 +942,34 @@ document.addEventListener("DOMContentLoaded", () => {
         "evaluation-focus": (d) => `
             <div class="tpl-evaluation-focus" style="width:100%; height:100%; box-sizing:border-box; font-family:${d.font}; color:#0f172a; position:relative; background:#ffffff; border-color:${d.color};">
                 
-                <div style="text-align:center; border-bottom:2px solid ${d.color}; padding-bottom:10px;">
-                    <img src="${d.logo}" alt="Logo" style="max-height:75px; max-width:130px; object-fit:contain; margin-bottom:4px;">
-                    <div style="font-size:21px; font-weight:800; text-transform:uppercase; color:${d.color}; letter-spacing:1px;">${d.uni.html}</div>
-                    <div style="font-size:13.5px; font-weight:600; color:#475569;">${d.dept.html}</div>
+                <div style="text-align:center; border-bottom:2px solid ${d.color}; padding-bottom:8px;">
+                    <img src="${d.logo}" alt="Logo" style="max-height:70px; max-width:120px; object-fit:contain; margin-bottom:4px;">
+                    <div style="font-size:20px; font-weight:800; text-transform:uppercase; color:${d.color}; letter-spacing:1px;">${d.uni.html}</div>
+                    <div style="font-size:13px; font-weight:600; color:#475569;">${d.dept.html}</div>
                 </div>
 
-                <div style="display:flex; justify-content:space-between; align-items:center; margin:10px 0 6px; padding:6px 12px; background:#f1f5f9; border-radius:4px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin:8px 0 4px; padding:5px 10px; background:#f1f5f9; border-radius:4px;">
                     <div>
-                        <span style="font-weight:800; font-size:14px; color:${d.color};">LAB REPORT: </span>
-                        <span style="font-weight:700; font-size:14px;">${d.courseTitle.html} (${d.courseCode.html})</span>
+                        <span style="font-weight:800; font-size:13.5px; color:${d.color};">LAB REPORT: </span>
+                        <span style="font-weight:700; font-size:13.5px;">${d.courseTitle.html} (${d.courseCode.html})</span>
                     </div>
-                    <div style="font-size:13px; font-weight:800; color:${d.color};">EXP: ${d.expNo.html}</div>
+                    <div style="font-size:12.5px; font-weight:800; color:${d.color};">EXP: ${d.expNo.html}</div>
                 </div>
 
-                <div style="border:1px solid #cbd5e1; padding:8px 14px; border-radius:4px; font-size:13.5px;">
+                <div style="border:1px solid #cbd5e1; padding:6px 12px; border-radius:4px; font-size:13px;">
                     <div><strong>Title: </strong>${d.expName.html}</div>
-                    <div style="display:flex; justify-content:space-between; margin-top:4px; font-size:12px; color:#475569;">
-                        <span>Date of Performance: ${d.datePerform.html}</span>
-                        <span>Date of Submission: ${d.dateSubmit.html}</span>
+                    <div style="display:flex; justify-content:space-between; margin-top:3px; font-size:11.5px; color:#475569;">
+                        <span>Date Performed: ${d.datePerform.html}</span>
+                        <span>Date Submitted: ${d.dateSubmit.html}</span>
                     </div>
                 </div>
 
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin:8px 0;">
-                    <div style="border:1px solid #e2e8f0; border-radius:4px; padding:8px 12px;">
-                        <div style="font-size:12.5px; font-weight:800; color:${d.color}; text-transform:uppercase; margin-bottom:4px;">Submitted By</div>
-                        ${fieldRow("Name", d.studentName)}
-                        ${fieldRow("ID", d.studentId)}
-                        ${fieldRow("Section", d.section)}
-                        ${fieldRow("Batch", d.batch)}
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px; margin:6px 0;">
+                    <div style="border:1px solid #e2e8f0; border-radius:4px; padding:6px 10px;">
+                        ${renderSubmittedBy(d, d.color)}
                     </div>
-                    <div style="border:1px solid #e2e8f0; border-radius:4px; padding:8px 12px;">
-                        <div style="font-size:12.5px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:4px;">Submitted To</div>
+                    <div style="border:1px solid #e2e8f0; border-radius:4px; padding:6px 10px;">
+                        <div style="font-size:12px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:4px;">👨‍🏫 Submitted To</div>
                         ${fieldRow("Name", d.teacherName)}
                         ${fieldRow("Designation", d.teacherDesig)}
                         ${fieldRow("Department", d.teacherDept)}
@@ -846,39 +986,34 @@ document.addEventListener("DOMContentLoaded", () => {
         "minimalist-sharp": (d) => `
             <div class="tpl-minimalist-sharp" style="width:100%; height:100%; box-sizing:border-box; font-family:${d.font}; color:#0f172a; position:relative; background:#ffffff;">
                 
-                <div style="display:flex; align-items:center; gap:20px; border-bottom:1px solid #cbd5e1; padding-bottom:14px;">
-                    <img src="${d.logo}" alt="Logo" style="max-height:85px; max-width:130px; object-fit:contain;">
+                <div style="display:flex; align-items:center; gap:16px; border-bottom:1px solid #cbd5e1; padding-bottom:10px;">
+                    <img src="${d.logo}" alt="Logo" style="max-height:75px; max-width:120px; object-fit:contain;">
                     <div>
-                        <div style="font-size:22px; font-weight:800; text-transform:uppercase; color:${d.color}; letter-spacing:0.5px;">${d.uni.html}</div>
-                        <div style="font-size:14px; font-weight:600; color:#475569; margin-top:2px;">${d.dept.html}</div>
+                        <div style="font-size:21px; font-weight:800; text-transform:uppercase; color:${d.color}; letter-spacing:0.5px;">${d.uni.html}</div>
+                        <div style="font-size:13.5px; font-weight:600; color:#475569; margin-top:2px;">${d.dept.html}</div>
                     </div>
                 </div>
 
-                <div style="margin:20px 0 14px;">
-                    <div style="font-size:13px; font-weight:800; letter-spacing:3px; color:${d.color}; text-transform:uppercase;">LABORATORY REPORT</div>
-                    <div style="font-size:20px; font-weight:800; color:#0f172a; margin:4px 0;">${d.courseTitle.html}</div>
-                    <div style="font-size:14px; font-weight:700; color:#64748b;">Course Code: ${d.courseCode.html}</div>
+                <div style="margin:14px 0 10px;">
+                    <div style="font-size:12px; font-weight:800; letter-spacing:3px; color:${d.color}; text-transform:uppercase;">LABORATORY REPORT</div>
+                    <div style="font-size:18px; font-weight:800; color:#0f172a; margin:3px 0;">${d.courseTitle.html}</div>
+                    <div style="font-size:13px; font-weight:700; color:#64748b;">Course Code: ${d.courseCode.html}</div>
                 </div>
 
-                <div style="border-left:3px solid ${d.color}; padding-left:14px; margin:14px 0;">
-                    <div style="font-size:14.5px; font-weight:800; color:${d.color};">Experiment #${d.expNo.html}</div>
-                    <div style="font-size:15px; font-weight:700; color:#0f172a; margin:4px 0;">${d.expName.html}</div>
-                    <div style="font-size:13px; font-weight:600; color:#64748b;">
+                <div style="border-left:3px solid ${d.color}; padding-left:12px; margin:10px 0;">
+                    <div style="font-size:13.5px; font-weight:800; color:${d.color};">Experiment #${d.expNo.html}</div>
+                    <div style="font-size:14px; font-weight:700; color:#0f172a; margin:3px 0;">${d.expName.html}</div>
+                    <div style="font-size:12px; font-weight:600; color:#64748b;">
                         Performed: ${d.datePerform.html} | Submitted: ${d.dateSubmit.html}
                     </div>
                 </div>
 
-                <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; margin-top:14px;">
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:20px; margin-top:10px;">
                     <div>
-                        <div style="font-size:13.5px; font-weight:800; color:${d.color}; text-transform:uppercase; margin-bottom:6px; border-bottom:1px solid #e2e8f0; padding-bottom:2px;">Submitted By</div>
-                        ${fieldRow("Name", d.studentName)}
-                        ${fieldRow("ID", d.studentId)}
-                        ${fieldRow("Section", d.section)}
-                        ${fieldRow("Batch", d.batch)}
-                        ${d.group.raw ? fieldRow("Group", d.group) : ""}
+                        ${renderSubmittedBy(d, d.color)}
                     </div>
                     <div>
-                        <div style="font-size:13.5px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:6px; border-bottom:1px solid #e2e8f0; padding-bottom:2px;">Submitted To</div>
+                        <div style="font-size:13px; font-weight:800; color:#334155; text-transform:uppercase; margin-bottom:6px; border-bottom:1px solid #e2e8f0; padding-bottom:2px;">👨‍🏫 Submitted To</div>
                         ${fieldRow("Name", d.teacherName)}
                         ${fieldRow("Designation", d.teacherDesig)}
                         ${fieldRow("Department", d.teacherDept)}

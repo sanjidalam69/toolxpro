@@ -70,6 +70,14 @@
             },
             {
               "@type": "Question",
+              "name": "Can I generate both Individual and Group/Team Lab Report cover pages?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes! You can switch between 'Individual Report' (for single student submissions) and 'Group / Team Report' (which supports group names/numbers and dynamic member lists with names, student IDs, and sections for up to 8 team members)."
+              }
+            },
+            {
+              "@type": "Question",
               "name": "Is there an option to include a faculty grading or marks evaluation box?",
               "acceptedAnswer": {
                 "@type": "Answer",
@@ -755,36 +763,95 @@
                                     <input type="text" id="inp-date-submit" class="form-control-sm" placeholder="e.g. 22 October, 2026">
                                 </div>
 
-                                <!-- Section: Submitted By (Student) -->
+                                <!-- Section: Submitted By (Student / Team) -->
                                 <div class="form-section-title">
-                                    <span>🎓</span> 4. Submitted By (Student Info)
+                                    <span>🎓</span> 4. Submitted By (Student / Team)
                                 </div>
 
-                                <div class="input-grid">
-                                    <div class="form-group-lab">
-                                        <label for="inp-student-name">Student Name:</label>
-                                        <input type="text" id="inp-student-name" class="form-control-sm" placeholder="e.g. Sanjid Alam">
+                                <!-- Submission Type Switcher -->
+                                <div class="submission-type-selector" style="display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:12px;">
+                                    <button type="button" class="btn-sub-type active" id="btn-type-indiv" data-type="individual" style="padding:9px; border:2px solid var(--primary); background:var(--primary); color:#fff; font-weight:700; border-radius:8px; cursor:pointer; font-size:0.85rem; display:flex; align-items:center; justify-content:center; gap:6px;">
+                                        <span>👤</span> Individual Report
+                                    </button>
+                                    <button type="button" class="btn-sub-type" id="btn-type-group" data-type="group" style="padding:9px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-primary); font-weight:700; border-radius:8px; cursor:pointer; font-size:0.85rem; display:flex; align-items:center; justify-content:center; gap:6px;">
+                                        <span>👥</span> Group / Team Report
+                                    </button>
+                                </div>
+
+                                <!-- Individual Submission Fields -->
+                                <div id="container-individual">
+                                    <div class="input-grid">
+                                        <div class="form-group-lab">
+                                            <label for="inp-student-name">Student Name:</label>
+                                            <input type="text" id="inp-student-name" class="form-control-sm" placeholder="e.g. Sanjid Alam">
+                                        </div>
+                                        <div class="form-group-lab">
+                                            <label for="inp-student-id">Student ID:</label>
+                                            <input type="text" id="inp-student-id" class="form-control-sm" placeholder="e.g. 2022000000001">
+                                        </div>
                                     </div>
+
+                                    <div class="input-grid">
+                                        <div class="form-group-lab">
+                                            <label for="inp-student-section">Section:</label>
+                                            <input type="text" id="inp-student-section" class="form-control-sm" placeholder="e.g. 01 / A">
+                                        </div>
+                                        <div class="form-group-lab">
+                                            <label for="inp-student-batch">Batch / Semester:</label>
+                                            <input type="text" id="inp-student-batch" class="form-control-sm" placeholder="e.g. 56th Batch / 5th Sem">
+                                        </div>
+                                    </div>
+
                                     <div class="form-group-lab">
-                                        <label for="inp-student-id">Student ID:</label>
-                                        <input type="text" id="inp-student-id" class="form-control-sm" placeholder="e.g. 2022000000001">
+                                        <label for="inp-student-group">Group / Roll (Optional):</label>
+                                        <input type="text" id="inp-student-group" class="form-control-sm" placeholder="e.g. Group: B-02 (optional)">
                                     </div>
                                 </div>
 
-                                <div class="input-grid">
-                                    <div class="form-group-lab">
-                                        <label for="inp-student-section">Section:</label>
-                                        <input type="text" id="inp-student-section" class="form-control-sm" placeholder="e.g. 01 / A">
+                                <!-- Group Submission Fields (Hidden by Default) -->
+                                <div id="container-group" style="display:none;">
+                                    <div class="input-grid">
+                                        <div class="form-group-lab">
+                                            <label for="inp-group-name">Group Name / Number:</label>
+                                            <input type="text" id="inp-group-name" class="form-control-sm" placeholder="e.g. Group: 03 / Team Alpha">
+                                        </div>
+                                        <div class="form-group-lab">
+                                            <label for="inp-group-sec">Section / Batch:</label>
+                                            <input type="text" id="inp-group-sec" class="form-control-sm" placeholder="e.g. Sec: 01, 56th Batch">
+                                        </div>
                                     </div>
-                                    <div class="form-group-lab">
-                                        <label for="inp-student-batch">Batch / Semester:</label>
-                                        <input type="text" id="inp-student-batch" class="form-control-sm" placeholder="e.g. 56th Batch / 5th Sem">
-                                    </div>
-                                </div>
 
-                                <div class="form-group-lab">
-                                    <label for="inp-student-group">Group / Roll (Optional):</label>
-                                    <input type="text" id="inp-student-group" class="form-control-sm" placeholder="e.g. Group: B-02 (optional)">
+                                    <div style="margin-top:8px; margin-bottom:6px; display:flex; justify-content:space-between; align-items:center;">
+                                        <label style="font-size:0.8rem; font-weight:700; color:var(--text-secondary);">Team Members:</label>
+                                        <button type="button" id="btn-add-member" style="background:var(--primary); color:#fff; border:none; border-radius:6px; padding:4px 10px; font-size:0.75rem; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
+                                            <span>➕</span> Add Member
+                                        </button>
+                                    </div>
+
+                                    <!-- Member Rows Container -->
+                                    <div id="group-members-container" style="display:flex; flex-direction:column; gap:8px;">
+                                        <!-- Member Item 1 -->
+                                        <div class="group-member-row" style="display:flex; gap:6px; align-items:center;">
+                                            <span class="member-num" style="font-size:0.8rem; font-weight:800; color:var(--text-secondary); width:18px;">1.</span>
+                                            <input type="text" class="form-control-sm inp-member-name" placeholder="Member Name" style="flex:1;">
+                                            <input type="text" class="form-control-sm inp-member-id" placeholder="Student ID" style="width:130px;">
+                                            <button type="button" class="btn-remove-member" style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer; padding:0 4px;" title="Remove">&times;</button>
+                                        </div>
+                                        <!-- Member Item 2 -->
+                                        <div class="group-member-row" style="display:flex; gap:6px; align-items:center;">
+                                            <span class="member-num" style="font-size:0.8rem; font-weight:800; color:var(--text-secondary); width:18px;">2.</span>
+                                            <input type="text" class="form-control-sm inp-member-name" placeholder="Member Name" style="flex:1;">
+                                            <input type="text" class="form-control-sm inp-member-id" placeholder="Student ID" style="width:130px;">
+                                            <button type="button" class="btn-remove-member" style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer; padding:0 4px;" title="Remove">&times;</button>
+                                        </div>
+                                        <!-- Member Item 3 -->
+                                        <div class="group-member-row" style="display:flex; gap:6px; align-items:center;">
+                                            <span class="member-num" style="font-size:0.8rem; font-weight:800; color:var(--text-secondary); width:18px;">3.</span>
+                                            <input type="text" class="form-control-sm inp-member-name" placeholder="Member Name" style="flex:1;">
+                                            <input type="text" class="form-control-sm inp-member-id" placeholder="Student ID" style="width:130px;">
+                                            <button type="button" class="btn-remove-member" style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer; padding:0 4px;" title="Remove">&times;</button>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <!-- Section: Submitted To (Faculty) -->
@@ -900,6 +967,10 @@
                                 <div class="faq-item">
                                     <div class="faq-question">Which template is best for black-and-white printing? <span>+</span></div>
                                     <div class="faq-answer">The 'Ink-Saver (B&W)' template is specifically designed with crisp pure-black borders, zero heavy color fills, and optimized typography to save printer ink and produce high-contrast, razor-sharp output on any basic laser printer.</div>
+                                </div>
+                                <div class="faq-item">
+                                    <div class="faq-question">Can I create cover pages for both Individual and Group lab reports? <span>+</span></div>
+                                    <div class="faq-answer">Yes! You can toggle between 'Individual Report' (for single student submissions) and 'Group / Team Report'. The group mode allows you to specify a group name/number and add up to 8 team members with individual student names and IDs formatted in a clean table.</div>
                                 </div>
                                 <div class="faq-item">
                                     <div class="faq-question">Can I use this generator for Southeast University (SEU)? <span>+</span></div>
