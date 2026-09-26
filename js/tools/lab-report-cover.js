@@ -398,29 +398,32 @@ document.addEventListener("DOMContentLoaded", () => {
     // ── Modular Submitted By Renderer (Handles Individual vs Group) ────
     function renderSubmittedBy(d, accentColor) {
         if (d.submissionType === "group") {
+            const members = Array.isArray(d.members) ? d.members : [];
+            const secHtml = d.groupSec ? d.groupSec.html : "";
+            const batchHtml = d.groupBatch ? d.groupBatch.html : "";
             return `
                 <div>
                     <div style="font-size:14px; font-weight:800; color:${accentColor}; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">
-                        👥 Submitted By (Team):
+                        👥 Submitted By:
                     </div>
-                    <div style="font-size:14px; font-weight:700; color:#1e293b; margin-bottom:4px;">
-                        <span>Group: </span><span>${d.groupName.html}</span>
+                    <div style="display:flex; gap:16px; font-size:13px; font-weight:600; color:#334155; margin-bottom:8px;">
+                        <div><span style="font-weight:700; color:#1e293b;">Section:</span> <span>${secHtml}</span></div>
+                        <div><span style="font-weight:700; color:#1e293b;">Batch:</span> <span>${batchHtml}</span></div>
                     </div>
-                    ${d.groupSec.raw ? `<div style="font-size:13px; font-weight:600; color:#475569; margin-bottom:6px;"><span>${d.groupSec.html}</span></div>` : ''}
-                    <table style="width:100%; border-collapse:collapse; font-size:12.5px; margin-top:6px; background:#ffffff; border:1px solid #cbd5e1; border-radius:4px; overflow:hidden;">
+                    <table style="width:100%; border-collapse:collapse; font-size:12.5px; margin-top:4px; background:#ffffff; border:1px solid #cbd5e1; border-radius:4px; overflow:hidden;">
                         <thead>
                             <tr style="background:#f1f5f9; border-bottom:1px solid #cbd5e1;">
-                                <th style="padding:4px 6px; text-align:left; border-right:1px solid #cbd5e1; width:22px;">#</th>
-                                <th style="padding:4px 8px; text-align:left; border-right:1px solid #cbd5e1;">Member Name</th>
-                                <th style="padding:4px 8px; text-align:left; width:110px;">Student ID</th>
+                                <th style="padding:5px 6px; text-align:center; border-right:1px solid #cbd5e1; width:28px; font-weight:700; color:#334155;">#</th>
+                                <th style="padding:5px 10px; text-align:left; border-right:1px solid #cbd5e1; font-weight:700; color:#334155;">Student Name</th>
+                                <th style="padding:5px 10px; text-align:left; width:120px; font-weight:700; color:#334155;">Student ID</th>
                             </tr>
                         </thead>
                         <tbody>
-                            ${d.members.map(m => `
+                            ${members.map(m => `
                                 <tr style="border-bottom:1px solid #e2e8f0;">
-                                    <td style="padding:4px 6px; font-weight:700; color:#64748b; border-right:1px solid #e2e8f0; text-align:center;">${m.index}</td>
-                                    <td style="padding:4px 8px; font-weight:600; border-right:1px solid #e2e8f0;">${m.name.html}</td>
-                                    <td style="padding:4px 8px;">${m.id.html}</td>
+                                    <td style="padding:5px 6px; font-weight:700; color:#64748b; border-right:1px solid #e2e8f0; text-align:center;">${m.index}</td>
+                                    <td style="padding:5px 10px; font-weight:600; color:#1e293b; border-right:1px solid #e2e8f0;">${m.name ? m.name.html : ''}</td>
+                                    <td style="padding:5px 10px; color:#334155; font-family:monospace, sans-serif;">${m.id ? m.id.html : ''}</td>
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -434,11 +437,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div style="font-size:14px; font-weight:800; color:${accentColor}; text-transform:uppercase; margin-bottom:8px; letter-spacing:0.5px;">
                     👤 Submitted By:
                 </div>
-                ${fieldRow("Student Name", d.studentName)}
-                ${fieldRow("Student ID", d.studentId)}
-                ${fieldRow("Section", d.section)}
-                ${fieldRow("Batch", d.batch)}
-                ${d.group.raw ? fieldRow("Group", d.group) : ""}
+                ${fieldRow("Student Name", d.studentName || { html: "" })}
+                ${fieldRow("Student ID", d.studentId || { html: "" })}
+                ${fieldRow("Section", d.section || { html: "" })}
+                ${fieldRow("Batch", d.batch || { html: "" })}
             </div>`;
     }
 
