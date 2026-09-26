@@ -29,7 +29,6 @@ document.addEventListener("DOMContentLoaded", () => {
     
     // Group Report Inputs
     const inpGroupSec       = document.getElementById("inp-group-sec");
-    const inpGroupBatch     = document.getElementById("inp-group-batch");
     const groupMembersCont  = document.getElementById("group-members-container");
     const btnAddMember      = document.getElementById("btn-add-member");
 
@@ -206,8 +205,8 @@ document.addEventListener("DOMContentLoaded", () => {
             newRow.style.cssText = "display:flex; gap:6px; align-items:center;";
             newRow.innerHTML = `
                 <span class="member-num" style="font-size:0.8rem; font-weight:800; color:var(--text-secondary); width:18px;">${totalRows + 1}.</span>
-                <input type="text" class="form-control-sm inp-member-name" placeholder="Member Name" style="flex:1;">
-                <input type="text" class="form-control-sm inp-member-id" placeholder="Student ID" style="width:130px;">
+                <input type="text" class="form-control-sm inp-member-name" placeholder="" style="flex:1;">
+                <input type="text" class="form-control-sm inp-member-id" placeholder="" style="width:130px;">
                 <button type="button" class="btn-remove-member" style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer; padding:0 4px;" title="Remove">&times;</button>
             `;
             groupMembersCont.appendChild(newRow);
@@ -258,7 +257,7 @@ document.addEventListener("DOMContentLoaded", () => {
         inpCourseTitle, inpCourseCode, inpExpNo, inpExpName,
         inpDatePerform, inpDateSubmit,
         inpStudentName, inpStudentId, inpStudentSection, inpStudentBatch,
-        inpGroupSec, inpGroupBatch,
+        inpGroupSec,
         inpTeacherName, inpTeacherDesig, inpTeacherDept
     ];
 
@@ -377,7 +376,6 @@ document.addEventListener("DOMContentLoaded", () => {
             batch:          getVal(inpStudentBatch, "Batch / Semester"),
             // Group
             groupSec:       getVal(inpGroupSec, "01 / A"),
-            groupBatch:     getVal(inpGroupBatch, "56th Batch"),
             members:        getGroupMembersData(),
             // Faculty
             teacherName:    getVal(inpTeacherName, "Faculty / Instructor Name"),
@@ -400,15 +398,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (d.submissionType === "group") {
             const members = Array.isArray(d.members) ? d.members : [];
             const secHtml = d.groupSec ? d.groupSec.html : "";
-            const batchHtml = d.groupBatch ? d.groupBatch.html : "";
             return `
                 <div>
                     <div style="font-size:14px; font-weight:800; color:${accentColor}; text-transform:uppercase; margin-bottom:6px; letter-spacing:0.5px;">
                         👥 Submitted By:
                     </div>
-                    <div style="display:flex; gap:16px; font-size:13px; font-weight:600; color:#334155; margin-bottom:8px;">
-                        <div><span style="font-weight:700; color:#1e293b;">Section:</span> <span>${secHtml}</span></div>
-                        <div><span style="font-weight:700; color:#1e293b;">Batch:</span> <span>${batchHtml}</span></div>
+                    <div style="font-size:13px; font-weight:600; color:#334155; margin-bottom:8px;">
+                        <span style="font-weight:700; color:#1e293b;">Section:</span> <span>${secHtml}</span>
                     </div>
                     <table style="width:100%; border-collapse:collapse; font-size:12.5px; margin-top:4px; background:#ffffff; border:1px solid #cbd5e1; border-radius:4px; overflow:hidden;">
                         <thead>
