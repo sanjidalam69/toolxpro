@@ -477,14 +477,17 @@ function injectFooter(homePath, isSubFolder, isHomePage) {
                     <span class="logo-text" style="font-size:1.15rem;">ToolX<span class="logo-pro-badge" style="font-size:0.65rem;">PRO</span></span>
                 </a>
 
-                <nav class="footer-compact-nav" aria-label="Footer Navigation">
-                    <a href="${homePath}">Home</a>
-                    <a href="${categoriesLink}">Categories</a>
-                    <a href="${blogLink}">Blog</a>
+                <nav class="footer-compact-nav" aria-label="Compliance & Legal Links">
                     <a href="${aboutLink}">About</a>
+                    <span class="footer-nav-dot">•</span>
                     <a href="${contactLink}">Contact</a>
-                    <a href="${privacyLink}">Privacy</a>
+                    <span class="footer-nav-dot">•</span>
+                    <a href="${blogLink}">Blog</a>
+                    <span class="footer-nav-dot">•</span>
+                    <a href="${privacyLink}">Privacy Policy</a>
+                    <span class="footer-nav-dot">•</span>
                     <a href="${termsLink}">Terms</a>
+                    <span class="footer-nav-dot">•</span>
                     <a href="${disclaimerLink}">Disclaimer</a>
                 </nav>
 
