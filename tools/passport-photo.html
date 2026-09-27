@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Passport Photo Maker - Create Official 2x2 & 35x45mm Photo Sheets | ToolX Pro</title>
-    <meta name="description" content="Smart online passport photo maker. Crop to biometric standards (2x2 inch, 35x45mm, stamp size), AI background removal & replacement, interactive face alignment, and printable A4/4x6 photo sheets.">
+    <title>AI Passport Photo Maker - Biometric 2x2 & 35x45mm Photo Studio | ToolX Pro</title>
+    <meta name="description" content="AI-powered passport and visa photo maker. Auto face detection, head tilt correction, biometric compliance scoring, AI background cutout, virtual formal suits, and printable A4 & 4x6 photo sheets.">
     <link rel="canonical" href="https://toolxpro.live/tools/passport-photo.html">
     <link rel="stylesheet" href="../css/style.css?v=55.0">
 
@@ -14,8 +14,8 @@
     <!-- Open Graph / Social -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://toolxpro.live/tools/passport-photo.html">
-    <meta property="og:title" content="Passport Photo Maker - Create Official Photo Sheets | ToolX Pro">
-    <meta property="og:description" content="Smart passport and visa photo maker with AI background replacement, biometric face guides, and printable multi-copy A4 & 4x6 sheets.">
+    <meta property="og:title" content="AI Passport Photo Maker - Biometric Photo Studio | ToolX Pro">
+    <meta property="og:description" content="AI passport & visa photo generator: auto-face alignment, tilt correction, AI background replacement, virtual formal suits, and 300 DPI print sheets.">
     <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
 
     <!-- Favicon & Brand Icons -->
@@ -28,10 +28,11 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#F57C00">
 
-    <!-- MediaPipe Selfie Segmentation AI Model (Local In-Browser WASM) -->
+    <!-- MediaPipe AI Libraries (Local In-Browser WASM Execution) -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/face_detection.js" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script>
 
-    <!-- jsPDF for Instant PDF Sheet Generation -->
+    <!-- jsPDF for Instant Vector-Grade PDF Sheet Generation -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <!-- JSON-LD Structured Data -->
@@ -41,7 +42,7 @@
       "@graph": [
         {
           "@type": "WebApplication",
-          "name": "Smart Passport Photo Maker & Sheet Generator",
+          "name": "AI Passport Photo Maker & Biometric Studio",
           "url": "https://toolxpro.live/tools/passport-photo.html",
           "applicationCategory": "MultimediaApplication",
           "operatingSystem": "All",
@@ -56,34 +57,34 @@
           "mainEntity": [
             {
               "@type": "Question",
+              "name": "How does the AI Passport Photo Maker work?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Our AI engine analyzes your portrait locally in your browser. It detects eye level and facial landmarks to automatically straighten head tilt, scale your head to the official 70%-80% biometric ratio, remove background clutter, and replace it with official white or light blue."
+              }
+            },
+            {
+              "@type": "Question",
               "name": "What are the standard dimensions for passport photos in Bangladesh and Europe?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "The international standard for Bangladesh, the UK, Schengen Europe, and Australia is 35mm wide by 45mm high (35x45 mm), with head height occupying approximately 70% to 80% of the vertical frame."
+                "text": "The international standard for Bangladesh (e-Passport & MRP), the UK, and Schengen Europe is 35mm wide by 45mm high (35x45 mm), with head height occupying approximately 70% to 80% of the vertical frame."
               }
             },
             {
               "@type": "Question",
-              "name": "What is the standard US Visa and Passport photo size?",
+              "name": "Can I replace casual t-shirt clothes with a formal suit?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "The US Department of State requires a square 2 x 2 inch (51 x 51 mm) photograph with a plain white background."
+                "text": "Yes! The tool includes a Virtual Formal Attire Studio featuring classic men's and women's suits, blazers, and ties that seamlessly overlay onto your portrait."
               }
             },
             {
               "@type": "Question",
-              "name": "Can I replace my photo background with official white or blue?",
+              "name": "Does my portrait ever get uploaded to an external server?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes! Our tool features an in-browser AI Background Remover that automatically cuts out your portrait and lets you choose official white, light blue, royal blue, or studio gray in one click."
-              }
-            },
-            {
-              "@type": "Question",
-              "name": "Can I print the generated photo sheet on 4x6 inch photo paper or A4?",
-              "acceptedAnswer": {
-                "@type": "Answer",
-                "text": "Yes. You can export multi-copy sheets formatted for standard A4 paper or standard 4x6 inch (10x15 cm) glossy photo paper at 300 DPI print quality."
+                "text": "No. All AI face landmark detection, background segmentation, and 300 DPI rendering occur 100% locally inside your browser memory for guaranteed privacy."
               }
             }
           ]
@@ -101,8 +102,8 @@
 
         .passport-grid {
             display: grid;
-            grid-template-columns: 430px 1fr;
-            gap: 22px;
+            grid-template-columns: 440px 1fr;
+            gap: 24px;
             align-items: flex-start;
         }
 
@@ -114,8 +115,65 @@
             box-shadow: var(--card-shadow);
         }
 
+        /* AI Hero Action Banner */
+        .ai-hero-action-box {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.12), rgba(99, 102, 241, 0.12));
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .ai-sparkle-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            font-size: 0.76rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #059669;
+            background: rgba(16, 185, 129, 0.15);
+            padding: 2px 8px;
+            border-radius: 20px;
+            margin-bottom: 3px;
+        }
+        [data-theme="dark"] .ai-sparkle-badge {
+            color: #34d399;
+            background: rgba(52, 211, 153, 0.2);
+        }
+
+        .btn-ai-magic {
+            background: linear-gradient(135deg, #10b981 0%, #059669 50%, #6366f1 100%);
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            padding: 9px 16px;
+            font-size: 0.88rem;
+            font-weight: 800;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            box-shadow: 0 4px 14px rgba(16, 185, 129, 0.35);
+            transition: all 0.2s ease;
+            white-space: nowrap;
+        }
+        .btn-ai-magic:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(16, 185, 129, 0.45);
+        }
+        .btn-ai-magic:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
         .section-heading {
-            font-size: 0.96rem;
+            font-size: 0.94rem;
             font-weight: 700;
             color: var(--text-primary);
             margin: 18px 0 10px 0;
@@ -133,7 +191,7 @@
         .passport-upload-zone {
             border: 2px dashed var(--border-color);
             border-radius: 12px;
-            padding: 24px 16px;
+            padding: 28px 16px;
             text-align: center;
             cursor: pointer;
             transition: all 0.25s ease;
@@ -184,14 +242,44 @@
             border: 1px solid rgba(0, 0, 0, 0.15);
         }
 
-        /* Sliders with value readouts */
-        .control-slider-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 12px;
-            margin-bottom: 12px;
+        /* Suit Options Grid */
+        .suits-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 8px;
         }
+        .suit-chip-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 4px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            font-size: 0.74rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        .suit-chip-btn:hover {
+            border-color: #6366f1;
+            color: var(--text-primary);
+        }
+        .suit-chip-btn.active {
+            border-color: #6366f1;
+            color: #6366f1;
+            background: rgba(99, 102, 241, 0.1);
+            box-shadow: 0 0 0 1px #6366f1;
+        }
+        .suit-icon-preview {
+            font-size: 1.4rem;
+        }
+
+        /* Sliders */
         .slider-label-group {
             display: flex;
             justify-content: space-between;
@@ -203,6 +291,13 @@
         .slider-label-group span.val-display {
             color: var(--primary);
             font-weight: 700;
+        }
+        .control-slider-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
         }
 
         /* Preview Stage */
@@ -272,7 +367,7 @@
         /* Canvas Wrapper & Guides */
         .crop-canvas-box {
             position: relative;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 12px 36px rgba(0, 0, 0, 0.25);
             border-radius: 4px;
             overflow: hidden;
             cursor: grab;
@@ -287,7 +382,7 @@
             background: #ffffff;
         }
 
-        /* Biometric Guide Overlay (ICAO 9303 Compliant) */
+        /* Biometric Guide Overlay (ICAO 9303 Standard) */
         .biometric-overlay {
             position: absolute;
             inset: 0;
@@ -296,7 +391,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            opacity: 0.85;
+            opacity: 0.88;
             transition: opacity 0.2s ease;
         }
         .biometric-overlay.hidden {
@@ -313,10 +408,10 @@
         .bio-eye-line {
             position: absolute;
             top: 42%;
-            left: -15%;
-            right: -15%;
+            left: -18%;
+            right: -18%;
             height: 1px;
-            border-top: 1px dashed #06b6d4;
+            border-top: 1.5px dashed #06b6d4;
         }
         .bio-eye-label {
             position: absolute;
@@ -325,8 +420,8 @@
             font-size: 9px;
             font-weight: 700;
             color: #06b6d4;
-            background: rgba(0,0,0,0.6);
-            padding: 1px 4px;
+            background: rgba(0,0,0,0.65);
+            padding: 1px 5px;
             border-radius: 3px;
         }
         .bio-chin-line {
@@ -334,7 +429,7 @@
             bottom: 4%;
             left: 10%;
             right: 10%;
-            border-top: 1px dashed #10b981;
+            border-top: 1.5px dashed #10b981;
         }
         .bio-chin-label {
             position: absolute;
@@ -343,9 +438,64 @@
             font-size: 9px;
             font-weight: 700;
             color: #10b981;
-            background: rgba(0,0,0,0.6);
-            padding: 1px 4px;
+            background: rgba(0,0,0,0.65);
+            padding: 1px 5px;
             border-radius: 3px;
+        }
+
+        /* AI Biometric Compliance Inspector Card */
+        .compliance-inspector-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 14px 16px;
+            margin-top: 14px;
+        }
+        .compliance-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 0.84rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .badge-passed {
+            background: rgba(16, 185, 129, 0.15);
+            color: #059669;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.74rem;
+            font-weight: 800;
+        }
+        [data-theme="dark"] .badge-passed {
+            color: #34d399;
+        }
+
+        .compliance-checks-list {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px 12px;
+        }
+        .compliance-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.78rem;
+        }
+        .chk-info {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.25;
+        }
+        .chk-label {
+            color: var(--text-secondary);
+        }
+        .chk-val {
+            color: var(--text-primary);
+            font-weight: 700;
         }
 
         /* Sheet Canvas Wrapper */
@@ -363,7 +513,7 @@
             background: #ffffff;
         }
 
-        /* Dimension Badge HUD */
+        /* Dimension HUD */
         .dimension-hud {
             display: flex;
             align-items: center;
@@ -392,12 +542,11 @@
             gap: 10px;
             margin-top: 16px;
         }
-        .studio-actions-grid button,
-        .studio-actions-grid a {
+        .studio-actions-grid button {
             padding: 12px 14px;
             border-radius: 10px;
             font-weight: 700;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             cursor: pointer;
             display: inline-flex;
             align-items: center;
@@ -406,11 +555,11 @@
             text-decoration: none;
             transition: all 0.2s ease;
             box-sizing: border-box;
+            border: none;
         }
         .btn-dl-sheet {
             background: var(--primary);
             color: #ffffff;
-            border: none;
             box-shadow: 0 4px 12px rgba(245, 124, 0, 0.25);
         }
         .btn-dl-sheet:hover {
@@ -420,7 +569,7 @@
         .btn-dl-single {
             background: var(--bg-primary);
             color: var(--text-primary);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--border-color) !important;
         }
         .btn-dl-single:hover {
             border-color: var(--primary);
@@ -431,7 +580,6 @@
             grid-column: span 2;
             background: linear-gradient(135deg, #10b981, #059669);
             color: #ffffff;
-            border: none;
             box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
         }
         .btn-print-direct:hover {
@@ -439,7 +587,6 @@
             box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
         }
 
-        /* Micro Pill Buttons */
         .btn-micro-pill {
             padding: 4px 8px;
             background: var(--bg-primary);
@@ -456,24 +603,6 @@
         .btn-micro-pill:hover {
             border-color: var(--primary);
             color: var(--primary);
-        }
-
-        /* AI Status Pill */
-        .ai-status-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            background: rgba(16, 185, 129, 0.1);
-            color: #059669;
-            border: 1px solid rgba(16, 185, 129, 0.25);
-            padding: 4px 10px;
-            border-radius: 20px;
-            font-size: 0.78rem;
-            font-weight: 700;
-        }
-        [data-theme="dark"] .ai-status-pill {
-            color: #34d399;
-            border-color: rgba(52, 211, 153, 0.3);
         }
 
         /* Responsive */
@@ -495,6 +624,12 @@
             }
             .color-chips-grid {
                 grid-template-columns: repeat(3, 1fr);
+            }
+            .suits-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .compliance-checks-list {
+                grid-template-columns: 1fr;
             }
             .dimension-hud {
                 flex-direction: column;
@@ -542,8 +677,8 @@
                     
                     <div class="tool-container">
                         <div class="tool-header">
-                            <h1 class="tool-title">📸 Smart Biometric Passport Photo Maker</h1>
-                            <p class="tool-desc">Create 100% compliant biometric passport, visa, and ID photos with local AI background removal, interactive face alignment guides, and printable multi-copy sheets.</p>
+                            <h1 class="tool-title">📸 AI Smart Passport Photo Maker</h1>
+                            <p class="tool-desc">Create 100% compliant biometric passport, visa, and ID photos with local AI auto-face detection, tilt correction, background cutout, virtual suits, and printable multi-copy sheets.</p>
                         </div>
                         
                         <div class="tool-body">
@@ -551,10 +686,10 @@
                             <!-- Initial Upload Box (Shown when no photo uploaded) -->
                             <div id="initial-upload-container">
                                 <div class="passport-upload-zone" id="drop-zone">
-                                    <div style="font-size: 2.8rem; margin-bottom: 8px;">📷</div>
-                                    <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">Click or Drag & Drop Your Portrait Photo</h3>
-                                    <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 14px;">Supports JPG, PNG, WebP (Front-facing portrait, eyes open, neutral expression)</p>
-                                    <button type="button" class="btn btn-primary" style="display: inline-flex; width: auto; padding: 10px 22px; font-weight: 700;">Select Photo from Device</button>
+                                    <div style="font-size: 3rem; margin-bottom: 8px;">📷</div>
+                                    <h3 style="font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">Click or Drag & Drop Your Portrait Photo</h3>
+                                    <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 14px;">Supports JPG, PNG, WebP (Front-facing portrait, eyes open, neutral expression)</p>
+                                    <button type="button" class="btn btn-primary" style="display: inline-flex; width: auto; padding: 11px 24px; font-weight: 700; font-size: 0.95rem;">Select Photo from Device</button>
                                     <input type="file" id="photo-upload" accept="image/*" style="display: none;">
                                 </div>
                             </div>
@@ -573,6 +708,20 @@
                                         </div>
                                         <button type="button" id="btn-change-photo" class="btn-micro-pill">🔄 Change Photo</button>
                                     </div>
+
+                                    <!-- ⚡ AI Smart Auto-Fit Banner (Hero Action) -->
+                                    <div class="ai-hero-action-box">
+                                        <div style="max-width: 260px;">
+                                            <span class="ai-sparkle-badge">🤖 AI Auto-Pilot</span>
+                                            <div style="font-size: 0.88rem; font-weight: 800; color: var(--text-primary); margin-top: 2px;">Smart Biometric Auto-Fit</div>
+                                            <div style="font-size: 0.74rem; color: var(--text-secondary); line-height: 1.35; margin-top: 2px;">Auto-straightens head tilt, centers eyes, scales to official 75% biometric ratio.</div>
+                                        </div>
+                                        <button type="button" id="btn-ai-auto-fit" class="btn-ai-magic">
+                                            <span>✨</span>
+                                            <span id="ai-magic-btn-text">One-Click Auto Fit</span>
+                                        </button>
+                                    </div>
+                                    <div id="ai-face-status" style="display: none; text-align: center; font-size: 0.8rem; color: var(--primary); font-weight: 700; margin-bottom: 10px;"></div>
 
                                     <!-- 1. Country & Biometric Size Preset -->
                                     <div class="section-heading">
@@ -596,7 +745,7 @@
                                         </select>
                                     </div>
 
-                                    <!-- Custom Dimension Inputs (Hidden by default) -->
+                                    <!-- Custom Dimension Inputs -->
                                     <div id="custom-size-fields" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; background: var(--bg-secondary); padding: 10px; border-radius: 8px;">
                                         <div>
                                             <label style="font-size: 0.78rem; font-weight: 700;">Width (mm):</label>
@@ -611,7 +760,7 @@
                                     <!-- 2. AI Background Studio -->
                                     <div class="section-heading">
                                         <span>🎨 2. Background Studio</span>
-                                        <span class="ai-status-pill">⚡ 100% In-Browser</span>
+                                        <span class="ai-sparkle-badge" style="font-size: 0.72rem;">⚡ Local AI</span>
                                     </div>
                                     
                                     <div style="margin-bottom: 12px;">
@@ -656,9 +805,57 @@
                                         </div>
                                     </div>
 
-                                    <!-- 3. Crop, Scale & Align Controls -->
+                                    <!-- 3. Virtual Formal Attire & Suit Overlay -->
                                     <div class="section-heading">
-                                        <span>📐 3. Face Alignment & Crop</span>
+                                        <span>👔 3. Formal Attire & Suit</span>
+                                        <span id="active-suit-label" style="font-size: 0.76rem; color: #6366f1; font-weight: 700;">Original Clothes</span>
+                                    </div>
+                                    
+                                    <div class="suits-grid">
+                                        <button type="button" class="suit-chip-btn active" data-suit="none">
+                                            <span class="suit-icon-preview">🚫</span>
+                                            <span>No Suit</span>
+                                        </button>
+                                        <button type="button" class="suit-chip-btn" data-suit="men-black">
+                                            <span class="suit-icon-preview">👔</span>
+                                            <span>Black Suit</span>
+                                        </button>
+                                        <button type="button" class="suit-chip-btn" data-suit="men-navy">
+                                            <span class="suit-icon-preview">👔</span>
+                                            <span>Navy Suit</span>
+                                        </button>
+                                        <button type="button" class="suit-chip-btn" data-suit="men-shirt">
+                                            <span class="suit-icon-preview">👔</span>
+                                            <span>White Shirt</span>
+                                        </button>
+                                        <button type="button" class="suit-chip-btn" data-suit="women-black">
+                                            <span class="suit-icon-preview">👗</span>
+                                            <span>Women Blazer</span>
+                                        </button>
+                                        <button type="button" class="suit-chip-btn" data-suit="women-navy">
+                                            <span class="suit-icon-preview">👗</span>
+                                            <span>Women Navy</span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Suit Position Sliders (Visible when suit is chosen) -->
+                                    <div id="suit-controls-panel" style="display: none; margin-top: 10px; background: var(--bg-secondary); padding: 10px; border-radius: 8px;">
+                                        <div class="slider-label-group">
+                                            <span>Suit Scale:</span>
+                                            <span class="val-display" id="suit-scale-val">100%</span>
+                                        </div>
+                                        <input type="range" id="suit-scale-range" min="0.7" max="1.5" step="0.02" value="1.0" style="width: 100%; margin-bottom: 8px; cursor: pointer;">
+                                        
+                                        <div class="slider-label-group">
+                                            <span>Suit Vertical Position:</span>
+                                            <span class="val-display" id="suit-y-val">0 px</span>
+                                        </div>
+                                        <input type="range" id="suit-y-range" min="-100" max="150" step="2" value="0" style="width: 100%; cursor: pointer;">
+                                    </div>
+
+                                    <!-- 4. Crop, Scale & Align Controls -->
+                                    <div class="section-heading">
+                                        <span>📐 4. Alignment & Crop</span>
                                         <button type="button" id="btn-reset-transform" class="btn-micro-pill">Reset</button>
                                     </div>
 
@@ -700,9 +897,9 @@
                                         </div>
                                     </div>
 
-                                    <!-- 4. Studio Lighting Adjustments -->
+                                    <!-- 5. Studio Lighting Adjustments -->
                                     <div class="section-heading">
-                                        <span>💡 4. Lighting & Quality</span>
+                                        <span>💡 5. Lighting & Quality</span>
                                         <button type="button" id="btn-auto-enhance" class="btn-micro-pill" style="color: var(--primary); font-weight: 700;">✨ Auto Enhance</button>
                                     </div>
 
@@ -722,9 +919,9 @@
                                         <input type="range" id="contrast-range" min="-50" max="50" value="0" style="width: 100%; cursor: pointer;">
                                     </div>
 
-                                    <!-- 5. Sheet Options -->
+                                    <!-- 6. Sheet Options -->
                                     <div class="section-heading">
-                                        <span>🖨️ 5. Printable Sheet Setup</span>
+                                        <span>🖨️ 6. Printable Sheet Setup</span>
                                     </div>
 
                                     <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
@@ -793,7 +990,7 @@
                                             </div>
                                         </div>
 
-                                        <!-- Sheet View Container (Hidden until tab switched) -->
+                                        <!-- Sheet View Container -->
                                         <div id="sheet-view-container">
                                             <canvas id="sheet-canvas"></canvas>
                                         </div>
@@ -802,7 +999,7 @@
 
                                     <!-- Interactive Drag Tip -->
                                     <div style="text-align: center; font-size: 0.78rem; color: var(--text-secondary); margin-top: 8px;">
-                                        💡 <em>Tip: Click & drag the portrait directly to adjust head position. Use the mouse wheel to zoom.</em>
+                                        💡 <em>Tip: Click & drag photo to pan. Use mouse wheel to zoom.</em>
                                     </div>
 
                                     <!-- Dimension Specification HUD -->
@@ -818,6 +1015,44 @@
                                         <div class="hud-spec-item">
                                             <span>🛡️ Head Ratio:</span>
                                             <strong id="hud-head-ratio">70% – 80%</strong>
+                                        </div>
+                                    </div>
+
+                                    <!-- AI Biometric Compliance Inspector Card -->
+                                    <div class="compliance-inspector-card">
+                                        <div class="compliance-header">
+                                            <span>🛡️ AI Biometric Compliance Inspector (ICAO Doc 9303)</span>
+                                            <span id="compliance-overall-badge" class="badge-passed">98% COMPLIANT</span>
+                                        </div>
+                                        <div class="compliance-checks-list">
+                                            <div class="compliance-item">
+                                                <span class="chk-icon" id="chk-face-icon">✅</span>
+                                                <div class="chk-info">
+                                                    <span class="chk-label">Facial Position:</span>
+                                                    <span class="chk-val" id="chk-face-val">Frontal portrait centered</span>
+                                                </div>
+                                            </div>
+                                            <div class="compliance-item">
+                                                <span class="chk-icon" id="chk-tilt-icon">✅</span>
+                                                <div class="chk-info">
+                                                    <span class="chk-label">Head Tilt / Horizon:</span>
+                                                    <span class="chk-val" id="chk-tilt-val">Level (0° deviation)</span>
+                                                </div>
+                                            </div>
+                                            <div class="compliance-item">
+                                                <span class="chk-icon" id="chk-ratio-icon">✅</span>
+                                                <div class="chk-info">
+                                                    <span class="chk-label">Head-to-Height Ratio:</span>
+                                                    <span class="chk-val" id="chk-ratio-val">74% (Optimal 70%–80%)</span>
+                                                </div>
+                                            </div>
+                                            <div class="compliance-item">
+                                                <span class="chk-icon" id="chk-bg-icon">✅</span>
+                                                <div class="chk-info">
+                                                    <span class="chk-label">Background Uniformity:</span>
+                                                    <span class="chk-val" id="chk-bg-val">Solid official color</span>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
 
@@ -931,8 +1166,8 @@
                         
                         <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Can I take the initial photo with my smartphone?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. Stand approximately 4 to 5 feet away from a plain wall under bright natural light. Take a portrait photo and upload it here to auto-align, replace the background, and format.</p>
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How does the AI Auto-Fit feature work?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Our local AI detects your eye level and facial landmarks using MediaPipe. It calculates head tilt, straightens your posture to perfect 0° horizontal alignment, and scales the photo so your head occupies the exact 70%–80% biometric space required by government authorities.</p>
                             </div>
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
                                 <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How do I print the downloaded A4 or 4x6 sheet?</h3>
@@ -940,7 +1175,7 @@
                             </div>
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
                                 <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Does my photo ever leave my device?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No! 100% of image rendering, cropping, and AI background segmentation runs locally in your browser using HTML5 Canvas and client-side WebAssembly. Your photos are never uploaded to remote servers.</p>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No! 100% of face landmark detection, AI background cutout, and 300 DPI rendering occur locally in your browser using HTML5 Canvas and client-side WebAssembly. Your photos are never uploaded to remote servers.</p>
                             </div>
                         </div>
 

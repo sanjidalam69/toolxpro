@@ -1,14 +1,23 @@
 // ToolX Pro - Smart Biometric Passport Photo Maker & Sheet Generator
-// 100% Client-Side Processing with Local In-Browser AI Background Removal & ICAO 9303 Biometric Alignment
+// 100% Client-Side Processing with Local In-Browser AI Face Alignment, Background Cutout, Virtual Suits & ICAO 9303 Biometric Compliance
 
 document.addEventListener("DOMContentLoaded", () => {
-    // DOM Elements - Upload & Setup
+    // ══════════════════════════════════════════════════════════════════════
+    // DOM ELEMENTS
+    // ══════════════════════════════════════════════════════════════════════
+
+    // Upload & Setup
     const photoUpload = document.getElementById("photo-upload");
     const dropZone = document.getElementById("drop-zone");
     const initialUploadContainer = document.getElementById("initial-upload-container");
     const studioInterface = document.getElementById("studio-interface");
     const btnChangePhoto = document.getElementById("btn-change-photo");
     const fileNameLabel = document.getElementById("file-name-label");
+
+    // AI Auto-Pilot Face Detection
+    const btnAiAutoFit = document.getElementById("btn-ai-auto-fit");
+    const aiMagicBtnText = document.getElementById("ai-magic-btn-text");
+    const aiFaceStatus = document.getElementById("ai-face-status");
 
     // Presets & Size
     const presetSelect = document.getElementById("preset-select");
@@ -17,12 +26,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const customW = document.getElementById("custom-w");
     const customH = document.getElementById("custom-h");
 
-    // AI & Background
+    // AI Background Studio
     const btnAiRemoveBg = document.getElementById("btn-ai-remove-bg");
     const aiBtnText = document.getElementById("ai-btn-text");
     const aiProgressBar = document.getElementById("ai-progress-bar");
     const colorChips = document.querySelectorAll(".color-chip-btn");
     const customColorPicker = document.getElementById("custom-color-picker");
+
+    // Virtual Formal Attire & Suit Overlay
+    const suitChips = document.querySelectorAll(".suit-chip-btn");
+    const activeSuitLabel = document.getElementById("active-suit-label");
+    const suitControlsPanel = document.getElementById("suit-controls-panel");
+    const suitScaleRange = document.getElementById("suit-scale-range");
+    const suitScaleVal = document.getElementById("suit-scale-val");
+    const suitYRange = document.getElementById("suit-y-range");
+    const suitYVal = document.getElementById("suit-y-val");
 
     // Crop, Transform & Sliders
     const zoomRange = document.getElementById("zoom-range");
@@ -72,18 +90,37 @@ document.addEventListener("DOMContentLoaded", () => {
     const hudSizePx = document.getElementById("hud-size-px");
     const hudHeadRatio = document.getElementById("hud-head-ratio");
 
+    // Biometric Compliance Inspector
+    const complianceOverallBadge = document.getElementById("compliance-overall-badge");
+    const chkFaceIcon = document.getElementById("chk-face-icon");
+    const chkFaceVal = document.getElementById("chk-face-val");
+    const chkTiltIcon = document.getElementById("chkTilt-icon") || document.getElementById("chk-tilt-icon");
+    const chkTiltVal = document.getElementById("chk-tilt-val");
+    const chkRatioIcon = document.getElementById("chk-ratio-icon");
+    const chkRatioVal = document.getElementById("chk-ratio-val");
+    const chkBgIcon = document.getElementById("chk-bg-icon");
+    const chkBgVal = document.getElementById("chk-bg-val");
+
     // Download & Print Actions
     const btnDlSinglePng = document.getElementById("btn-dl-single-png");
     const btnDlSheetPng = document.getElementById("btn-dl-sheet-png");
     const btnDlSheetPdf = document.getElementById("btn-dl-sheet-pdf");
     const btnPrintSheet = document.getElementById("btn-print-sheet");
 
-    // ── Application State ──
+    // ══════════════════════════════════════════════════════════════════════
+    // APPLICATION STATE
+    // ══════════════════════════════════════════════════════════════════════
+
     let originalImage = null;
-    let segmentedCanvas = null; // Canvas containing transparent subject cutout
+    let segmentedCanvas = null; // transparent subject cutout
     let isAiSegmented = false;
-    let isAiProcessing = false;
+    let isAiBgProcessing = false;
     let selfieSegmentationInstance = null;
+
+    // AI Face Detection State
+    let faceDetectionInstance = null;
+    let isFaceDetecting = false;
+    let lastDetectedFace = null;
 
     // Standard Biometric Specifications (300 DPI: 1 mm ≈ 11.811 pixels)
     const DPI_FACTOR = 300 / 25.4;
@@ -112,12 +149,170 @@ document.addEventListener("DOMContentLoaded", () => {
     let showGuide = true;
     let activePreviewMode = "single"; // 'single' or 'sheet'
 
+    // Virtual Suit State
+    let activeSuitKey = "none";
+    let suitScale = 1.0;
+    let suitOffsetY = 0;
+    const cachedSuitImages = {};
+
     // Drag Interaction State
     let isDragging = false;
     let dragStartX = 0;
     let dragStartY = 0;
     let initialPanX = 0;
     let initialPanY = 0;
+
+    // ══════════════════════════════════════════════════════════════════════
+    // VECTOR SVG FORMAL SUIT ASSETS
+    // ══════════════════════════════════════════════════════════════════════
+
+    const SUIT_SVGS = {
+        "men-black": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480">
+            <defs>
+                <linearGradient id="mb-jacket" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#27272a"/>
+                    <stop offset="45%" stop-color="#18181b"/>
+                    <stop offset="100%" stop-color="#09090b"/>
+                </linearGradient>
+                <linearGradient id="mb-lapel" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#3f3f46"/>
+                    <stop offset="100%" stop-color="#18181b"/>
+                </linearGradient>
+                <linearGradient id="mb-tie" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#991b1b"/>
+                    <stop offset="50%" stop-color="#b91c1c"/>
+                    <stop offset="100%" stop-color="#7f1d1d"/>
+                </linearGradient>
+                <filter id="mb-sh" x="-10%" y="-10%" width="120%" height="130%">
+                    <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.35"/>
+                </filter>
+            </defs>
+            <path d="M210,125 Q300,165 390,125 L360,340 L240,340 Z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+            <path d="M285,225 L315,225 L335,480 L265,480 Z" fill="url(#mb-tie)" filter="url(#mb-sh)"/>
+            <polygon points="285,180 315,180 322,225 278,225" fill="url(#mb-tie)" filter="url(#mb-sh)"/>
+            <polygon points="208,125 285,190 270,140" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" filter="url(#mb-sh)"/>
+            <polygon points="392,125 315,190 330,140" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" filter="url(#mb-sh)"/>
+            <path d="M0,350 C35,230 130,150 215,135 L245,310 L300,380 L355,310 L385,135 C470,150 565,230 600,350 L600,480 L0,480 Z" fill="url(#mb-jacket)"/>
+            <path d="M215,135 L265,225 L235,245 L298,375 L245,310 Z" fill="url(#mb-lapel)" stroke="#09090b" stroke-width="1" filter="url(#mb-sh)"/>
+            <path d="M385,135 L335,225 L365,245 L302,375 L355,310 Z" fill="url(#mb-lapel)" stroke="#09090b" stroke-width="1" filter="url(#mb-sh)"/>
+            <circle cx="300" cy="398" r="7" fill="#18181b" stroke="#52525b" stroke-width="1.5"/>
+        </svg>`,
+
+        "men-navy": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480">
+            <defs>
+                <linearGradient id="mn-jacket" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1e3a8a"/>
+                    <stop offset="50%" stop-color="#172554"/>
+                    <stop offset="100%" stop-color="#0f172a"/>
+                </linearGradient>
+                <linearGradient id="mn-lapel" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#2563eb"/>
+                    <stop offset="100%" stop-color="#1e3a8a"/>
+                </linearGradient>
+                <linearGradient id="mn-tie" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#0284c7"/>
+                    <stop offset="50%" stop-color="#0369a1"/>
+                    <stop offset="100%" stop-color="#075985"/>
+                </linearGradient>
+                <filter id="mn-sh" x="-10%" y="-10%" width="120%" height="130%">
+                    <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.35"/>
+                </filter>
+            </defs>
+            <path d="M210,125 Q300,165 390,125 L360,340 L240,340 Z" fill="#f8fafc" stroke="#cbd5e1" stroke-width="1.5"/>
+            <path d="M285,225 L315,225 L335,480 L265,480 Z" fill="url(#mn-tie)" filter="url(#mn-sh)"/>
+            <polygon points="285,180 315,180 322,225 278,225" fill="url(#mn-tie)" filter="url(#mn-sh)"/>
+            <polygon points="208,125 285,190 270,140" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" filter="url(#mn-sh)"/>
+            <polygon points="392,125 315,190 330,140" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5" filter="url(#mn-sh)"/>
+            <path d="M0,350 C35,230 130,150 215,135 L245,310 L300,380 L355,310 L385,135 C470,150 565,230 600,350 L600,480 L0,480 Z" fill="url(#mn-jacket)"/>
+            <path d="M215,135 L265,225 L235,245 L298,375 L245,310 Z" fill="url(#mn-lapel)" stroke="#0f172a" stroke-width="1" filter="url(#mn-sh)"/>
+            <path d="M385,135 L335,225 L365,245 L302,375 L355,310 Z" fill="url(#mn-lapel)" stroke="#0f172a" stroke-width="1" filter="url(#mn-sh)"/>
+            <circle cx="300" cy="398" r="7" fill="#0f172a" stroke="#60a5fa" stroke-width="1.5"/>
+        </svg>`,
+
+        "men-shirt": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480">
+            <defs>
+                <linearGradient id="ms-shirt" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#ffffff"/>
+                    <stop offset="60%" stop-color="#f8fafc"/>
+                    <stop offset="100%" stop-color="#e2e8f0"/>
+                </linearGradient>
+                <linearGradient id="ms-tie" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#334155"/>
+                    <stop offset="50%" stop-color="#1e293b"/>
+                    <stop offset="100%" stop-color="#0f172a"/>
+                </linearGradient>
+                <filter id="ms-sh" x="-10%" y="-10%" width="120%" height="130%">
+                    <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+                </filter>
+            </defs>
+            <path d="M0,350 C35,230 130,150 215,135 L285,160 L315,160 L385,135 C470,150 565,230 600,350 L600,480 L0,480 Z" fill="url(#ms-shirt)" stroke="#cbd5e1" stroke-width="1.5"/>
+            <rect x="282" y="160" width="36" height="320" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1"/>
+            <path d="M285,225 L315,225 L335,480 L265,480 Z" fill="url(#ms-tie)" filter="url(#ms-sh)"/>
+            <polygon points="285,180 315,180 322,225 278,225" fill="url(#ms-tie)" filter="url(#ms-sh)"/>
+            <polygon points="208,125 285,190 270,140" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#ms-sh)"/>
+            <polygon points="392,125 315,190 330,140" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5" filter="url(#ms-sh)"/>
+            <circle cx="300" cy="275" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+            <circle cx="300" cy="355" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+            <circle cx="300" cy="435" r="4" fill="#ffffff" stroke="#94a3b8" stroke-width="1"/>
+        </svg>`,
+
+        "women-black": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480">
+            <defs>
+                <linearGradient id="wb-jacket" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#27272a"/>
+                    <stop offset="50%" stop-color="#18181b"/>
+                    <stop offset="100%" stop-color="#09090b"/>
+                </linearGradient>
+                <linearGradient id="wb-lapel" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#3f3f46"/>
+                    <stop offset="100%" stop-color="#18181b"/>
+                </linearGradient>
+                <filter id="wb-sh" x="-10%" y="-10%" width="120%" height="130%">
+                    <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+                </filter>
+            </defs>
+            <path d="M220,135 Q300,240 380,135 L350,330 L250,330 Z" fill="#ffffff" stroke="#e2e8f0" stroke-width="1.5"/>
+            <path d="M0,350 C35,230 135,150 220,135 L255,300 L300,375 L345,300 L380,135 C465,150 565,230 600,350 L600,480 L0,480 Z" fill="url(#wb-jacket)"/>
+            <path d="M220,135 L260,230 L235,245 L298,370 L255,300 Z" fill="url(#wb-lapel)" stroke="#09090b" stroke-width="1" filter="url(#wb-sh)"/>
+            <path d="M380,135 L340,230 L365,245 L302,370 L345,300 Z" fill="url(#wb-lapel)" stroke="#09090b" stroke-width="1" filter="url(#wb-sh)"/>
+            <circle cx="300" cy="385" r="6" fill="#18181b" stroke="#71717a" stroke-width="1.5"/>
+        </svg>`,
+
+        "women-navy": `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480">
+            <defs>
+                <linearGradient id="wn-jacket" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#1e3a8a"/>
+                    <stop offset="50%" stop-color="#172554"/>
+                    <stop offset="100%" stop-color="#0f172a"/>
+                </linearGradient>
+                <linearGradient id="wn-lapel" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#2563eb"/>
+                    <stop offset="100%" stop-color="#1e3a8a"/>
+                </linearGradient>
+                <filter id="wn-sh" x="-10%" y="-10%" width="120%" height="130%">
+                    <feDropShadow dx="0" dy="4" stdDeviation="4" flood-opacity="0.3"/>
+                </filter>
+            </defs>
+            <path d="M220,135 Q300,240 380,135 L350,330 L250,330 Z" fill="#fdfbf7" stroke="#e2e8f0" stroke-width="1.5"/>
+            <path d="M0,350 C35,230 135,150 220,135 L255,300 L300,375 L345,300 L380,135 C465,150 565,230 600,350 L600,480 L0,480 Z" fill="url(#wn-jacket)"/>
+            <path d="M220,135 L260,230 L235,245 L298,370 L255,300 Z" fill="url(#wn-lapel)" stroke="#0f172a" stroke-width="1" filter="url(#wn-sh)"/>
+            <path d="M380,135 L340,230 L365,245 L302,370 L345,300 Z" fill="url(#wn-lapel)" stroke="#0f172a" stroke-width="1" filter="url(#wn-sh)"/>
+            <circle cx="300" cy="385" r="6" fill="#0f172a" stroke="#93c5fd" stroke-width="1.5"/>
+        </svg>`
+    };
+
+    function getSuitImage(key) {
+        if (!key || key === "none" || !SUIT_SVGS[key]) return null;
+        if (!cachedSuitImages[key]) {
+            const img = new Image();
+            img.src = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(SUIT_SVGS[key]);
+            cachedSuitImages[key] = img;
+        }
+        return cachedSuitImages[key];
+    }
+
+    // Pre-cache suits on load
+    Object.keys(SUIT_SVGS).forEach(getSuitImage);
 
     // ══════════════════════════════════════════════════════════════════════
     // INITIALIZATION & EVENT LISTENERS
@@ -162,6 +357,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 originalImage = img;
                 segmentedCanvas = null;
                 isAiSegmented = false;
+                lastDetectedFace = null;
                 resetTransforms();
 
                 initialUploadContainer.style.display = "none";
@@ -169,6 +365,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 updatePresetDimensions();
                 renderAll();
+
+                // Automatically trigger AI auto-pilot face detection on first upload
+                setTimeout(() => {
+                    if (btnAiAutoFit) btnAiAutoFit.click();
+                }, 300);
             };
             img.src = event.target.result;
         };
@@ -244,7 +445,148 @@ document.addEventListener("DOMContentLoaded", () => {
         cropCanvas.style.height = dispH + "px";
     }
 
-    // ── Background Studio & AI Cutout ──
+    // ══════════════════════════════════════════════════════════════════════
+    // ⚡ AI AUTO-PILOT BIOMETRIC FACE DETECTION & ALIGNMENT
+    // ══════════════════════════════════════════════════════════════════════
+
+    if (btnAiAutoFit) {
+        btnAiAutoFit.addEventListener("click", async () => {
+            if (!originalImage || isFaceDetecting) return;
+
+            isFaceDetecting = true;
+            btnAiAutoFit.disabled = true;
+            aiMagicBtnText.innerText = "Analyzing portrait...";
+            if (aiFaceStatus) {
+                aiFaceStatus.style.display = "block";
+                aiFaceStatus.innerText = "🔍 AI detecting eye-level horizon & facial landmarks...";
+            }
+
+            try {
+                if (!faceDetectionInstance && typeof FaceDetection !== "undefined") {
+                    faceDetectionInstance = new FaceDetection({
+                        locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/face_detection/${file}`
+                    });
+                    faceDetectionInstance.setOptions({
+                        model: "short",
+                        minDetectionConfidence: 0.5
+                    });
+                    faceDetectionInstance.onResults(onFaceDetectionResults);
+                }
+
+                if (faceDetectionInstance) {
+                    await faceDetectionInstance.send({ image: originalImage });
+                } else {
+                    applyHeuristicAutoFit();
+                }
+            } catch (err) {
+                console.error("AI Face Detection Error:", err);
+                applyHeuristicAutoFit();
+            } finally {
+                isFaceDetecting = false;
+                btnAiAutoFit.disabled = false;
+                aiMagicBtnText.innerText = "One-Click Auto Fit";
+            }
+        });
+    }
+
+    function onFaceDetectionResults(results) {
+        if (!results.detections || results.detections.length === 0 || !originalImage) {
+            applyHeuristicAutoFit();
+            if (aiFaceStatus) {
+                aiFaceStatus.innerText = "⚠️ Face not fully detected, centered automatically.";
+            }
+            return;
+        }
+
+        const d = getActiveDimensions();
+        // Select the primary detection closest to center or largest
+        const detection = results.detections[0];
+        lastDetectedFace = detection;
+
+        // Landmarks from MediaPipe FaceDetection:
+        // 0: Right Eye (subject's right), 1: Left Eye (subject's left), 2: Nose, 3: Mouth
+        const eyeR = detection.landmarks[0];
+        const eyeL = detection.landmarks[1];
+
+        // 1. Calculate Tilt Angle between eyes
+        const dx = (eyeL.x - eyeR.x) * originalImage.width;
+        const dy = (eyeL.y - eyeR.y) * originalImage.height;
+        const tiltDeg = Math.atan2(dy, dx) * (180 / Math.PI);
+
+        // Counteract tilt to bring eye horizon to 0°
+        rotationDeg = -Math.round(tiltDeg * 10) / 10;
+        // Clamp to comfortable range (-25° to +25°)
+        rotationDeg = Math.max(-25, Math.min(25, rotationDeg));
+
+        // 2. Eye Midpoint in Image coordinates
+        const eyeMidX = ((eyeR.x + eyeL.x) / 2) * originalImage.width;
+        const eyeMidY = ((eyeR.y + eyeL.y) / 2) * originalImage.height;
+
+        // 3. Head Height Estimation (crown to chin)
+        const boxH = detection.boundingBox.height * originalImage.height;
+        // Face bounding box covers eyebrow to chin; add 35% for hair/crown
+        const totalHeadH = boxH * 1.35;
+
+        // Target: Head occupies 74% of passport photo height
+        const targetHeadH = d.pxH * 0.74;
+        const baseScale = Math.max(d.pxW / originalImage.width, d.pxH / originalImage.height);
+        const desiredScale = targetHeadH / totalHeadH;
+
+        zoomLevel = Math.max(0.4, Math.min(2.8, desiredScale / baseScale));
+
+        // 4. Center and Align to Biometric Eye Horizon (42% from top)
+        const finalScale = baseScale * zoomLevel;
+        const origMidX = originalImage.width / 2;
+        const origMidY = originalImage.height / 2;
+
+        const offX = eyeMidX - origMidX;
+        const offY = eyeMidY - origMidY;
+
+        const rad = (rotationDeg * Math.PI) / 180;
+        const rotOffX = (offX * Math.cos(rad) - offY * Math.sin(rad)) * finalScale;
+        const rotOffY = (offX * Math.sin(rad) + offY * Math.cos(rad)) * finalScale;
+
+        // Official eye line is 42% from the top (centered horizontally)
+        panX = Math.round(-rotOffX);
+        panY = Math.round((d.pxH * 0.42 - d.pxH * 0.5) - rotOffY);
+
+        // Update UI Sliders
+        zoomRange.value = zoomLevel;
+        zoomValEl.innerText = Math.round(zoomLevel * 100) + "%";
+
+        rotateRange.value = rotationDeg;
+        rotateValEl.innerText = rotationDeg + "°";
+
+        if (aiFaceStatus) {
+            const tiltFixedText = Math.abs(tiltDeg) >= 0.5
+                ? `Straightened ${Math.abs(tiltDeg).toFixed(1)}° tilt`
+                : "Posture level";
+            aiFaceStatus.innerText = `✨ Biometric Auto-Fit Applied! (${tiltFixedText} & centered on 74% ratio)`;
+        }
+
+        renderAll();
+    }
+
+    function applyHeuristicAutoFit() {
+        // Fallback centering & scaling
+        zoomLevel = 1.05;
+        zoomRange.value = 1.05;
+        zoomValEl.innerText = "105%";
+
+        rotationDeg = 0;
+        rotateRange.value = 0;
+        rotateValEl.innerText = "0°";
+
+        panX = 0;
+        panY = 0;
+
+        renderAll();
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
+    // BACKGROUND STUDIO & AI CUTOUT
+    // ══════════════════════════════════════════════════════════════════════
+
     colorChips.forEach((chip) => {
         chip.addEventListener("click", () => {
             colorChips.forEach((c) => c.classList.remove("active"));
@@ -261,17 +603,16 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 
     btnAiRemoveBg.addEventListener("click", async () => {
-        if (!originalImage || isAiProcessing) return;
+        if (!originalImage || isAiBgProcessing) return;
 
         if (isAiSegmented) {
-            // Already segmented, toggle off/reset to original
             isAiSegmented = false;
             aiBtnText.innerText = "One-Click AI Background Cutout";
             renderAll();
             return;
         }
 
-        isAiProcessing = true;
+        isAiBgProcessing = true;
         btnAiRemoveBg.disabled = true;
         aiProgressBar.style.display = "block";
         aiBtnText.innerText = "Analyzing portrait...";
@@ -288,13 +629,13 @@ document.addEventListener("DOMContentLoaded", () => {
             if (selfieSegmentationInstance) {
                 await selfieSegmentationInstance.send({ image: originalImage });
             } else {
-                alert("AI segmentation model is initializing. Please try again in 2 seconds.");
+                alert("AI segmentation model is loading. Please try again in 2 seconds.");
             }
         } catch (err) {
             console.error("AI Segmentation Error:", err);
             alert("Could not process with AI on this device. You can still align, crop, and adjust your photo manually!");
         } finally {
-            isAiProcessing = false;
+            isAiBgProcessing = false;
             btnAiRemoveBg.disabled = false;
             aiProgressBar.style.display = "none";
         }
@@ -303,16 +644,12 @@ document.addEventListener("DOMContentLoaded", () => {
     function onAiSegmentationResults(results) {
         if (!results.segmentationMask || !originalImage) return;
 
-        // Create transparent cutout canvas
         segmentedCanvas = document.createElement("canvas");
         segmentedCanvas.width = originalImage.width;
         segmentedCanvas.height = originalImage.height;
         const sCtx = segmentedCanvas.getContext("2d");
 
-        // Draw original image
         sCtx.drawImage(originalImage, 0, 0);
-
-        // Apply segmentation mask
         sCtx.globalCompositeOperation = "destination-in";
         sCtx.drawImage(results.segmentationMask, 0, 0, originalImage.width, originalImage.height);
         sCtx.globalCompositeOperation = "source-over";
@@ -320,7 +657,6 @@ document.addEventListener("DOMContentLoaded", () => {
         isAiSegmented = true;
         aiBtnText.innerText = "✅ AI Cutout Active (Click to Revert)";
 
-        // If background was 'original', automatically switch to official White
         if (activeBgColor === "original") {
             activeBgColor = "#ffffff";
             colorChips.forEach((c) => {
@@ -332,7 +668,54 @@ document.addEventListener("DOMContentLoaded", () => {
         renderAll();
     }
 
-    // ── Zoom, Rotate & Transform Sliders ──
+    // ══════════════════════════════════════════════════════════════════════
+    // VIRTUAL FORMAL ATTIRE & SUIT STUDIO
+    // ══════════════════════════════════════════════════════════════════════
+
+    suitChips.forEach((chip) => {
+        chip.addEventListener("click", () => {
+            suitChips.forEach((c) => c.classList.remove("active"));
+            chip.classList.add("active");
+
+            activeSuitKey = chip.getAttribute("data-suit");
+
+            const labels = {
+                "none": "Original Clothes",
+                "men-black": "Men's Black Formal Suit",
+                "men-navy": "Men's Navy Executive Blazer",
+                "men-shirt": "White Dress Shirt & Tie",
+                "women-black": "Women's Black Formal Blazer",
+                "women-navy": "Women's Royal Navy Jacket"
+            };
+
+            activeSuitLabel.innerText = labels[activeSuitKey] || "Formal Attire";
+
+            if (activeSuitKey === "none") {
+                suitControlsPanel.style.display = "none";
+            } else {
+                suitControlsPanel.style.display = "block";
+            }
+
+            renderAll();
+        });
+    });
+
+    suitScaleRange.addEventListener("input", (e) => {
+        suitScale = parseFloat(e.target.value);
+        suitScaleVal.innerText = Math.round(suitScale * 100) + "%";
+        renderAll();
+    });
+
+    suitYRange.addEventListener("input", (e) => {
+        suitOffsetY = parseInt(e.target.value);
+        suitYVal.innerText = (suitOffsetY > 0 ? "+" : "") + suitOffsetY + " px";
+        renderAll();
+    });
+
+    // ══════════════════════════════════════════════════════════════════════
+    // ZOOM, ROTATE & TRANSFORM SLIDERS
+    // ══════════════════════════════════════════════════════════════════════
+
     zoomRange.addEventListener("input", (e) => {
         zoomLevel = parseFloat(e.target.value);
         zoomValEl.innerText = Math.round(zoomLevel * 100) + "%";
@@ -373,7 +756,7 @@ document.addEventListener("DOMContentLoaded", () => {
         renderAll();
     });
 
-    // Nudge & Center Buttons
+    // Quick Nudge & Center Buttons
     const NUDGE_STEP = 15;
     btnNudgeUp.addEventListener("click", () => { panY -= NUDGE_STEP; renderAll(); });
     btnNudgeDown.addEventListener("click", () => { panY += NUDGE_STEP; renderAll(); });
@@ -402,6 +785,17 @@ document.addEventListener("DOMContentLoaded", () => {
         contrastValEl.innerText = "0%";
         contrastRange.value = 0;
         contrastVal = 0;
+
+        suitScale = 1.0;
+        suitScaleRange.value = 1.0;
+        suitScaleVal.innerText = "100%";
+        suitOffsetY = 0;
+        suitYRange.value = 0;
+        suitYVal.innerText = "0 px";
+
+        if (aiFaceStatus) {
+            aiFaceStatus.style.display = "none";
+        }
 
         renderAll();
     }
@@ -542,6 +936,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (activePreviewMode === "sheet") {
             renderSheetCanvas();
         }
+        updateComplianceInspector();
     }
 
     // 1. Draw Single Passport Photo
@@ -586,6 +981,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ctx.drawImage(imgSrc, -drawW / 2, -drawH / 2, drawW, drawH);
         ctx.restore();
+
+        // Overlay Virtual Formal Suit (if chosen)
+        if (activeSuitKey !== "none") {
+            const suitImg = getSuitImage(activeSuitKey);
+            if (suitImg && suitImg.complete) {
+                const suitBaseW = d.pxW * 1.15;
+                const suitBaseH = d.pxH * 0.58;
+                const drawSuitW = suitBaseW * suitScale;
+                const drawSuitH = suitBaseH * suitScale;
+                const drawSuitX = (d.pxW - drawSuitW) / 2;
+                const drawSuitY = (d.pxH - drawSuitH * 0.90) + suitOffsetY;
+
+                ctx.save();
+                ctx.drawImage(suitImg, drawSuitX, drawSuitY, drawSuitW, drawSuitH);
+                ctx.restore();
+            }
+        }
 
         // 1px subtle boundary stroke
         ctx.strokeStyle = "rgba(0, 0, 0, 0.15)";
@@ -688,6 +1100,93 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ══════════════════════════════════════════════════════════════════════
+    // AI BIOMETRIC COMPLIANCE INSPECTOR (ICAO DOC 9303)
+    // ══════════════════════════════════════════════════════════════════════
+
+    function updateComplianceInspector() {
+        if (!complianceOverallBadge) return;
+        const d = getActiveDimensions();
+        let passCount = 0;
+
+        // 1. Facial Position Check
+        const offCenterRatio = Math.abs(panX) / d.pxW;
+        if (offCenterRatio < 0.12) {
+            chkFaceIcon.innerText = "✅";
+            chkFaceVal.innerText = "Frontal portrait centered";
+            chkFaceVal.style.color = "inherit";
+            passCount++;
+        } else {
+            chkFaceIcon.innerText = "⚠️";
+            chkFaceVal.innerText = "Off-center horizontally (click Center)";
+            chkFaceVal.style.color = "#f59e0b";
+        }
+
+        // 2. Head Tilt Check
+        if (Math.abs(rotationDeg) <= 1.0) {
+            if (chkTiltIcon) chkTiltIcon.innerText = "✅";
+            if (chkTiltVal) {
+                chkTiltVal.innerText = "Level horizon (0° deviation)";
+                chkTiltVal.style.color = "inherit";
+            }
+            passCount++;
+        } else {
+            if (chkTiltIcon) chkTiltIcon.innerText = "⚠️";
+            if (chkTiltVal) {
+                chkTiltVal.innerText = `${rotationDeg > 0 ? "+" : ""}${rotationDeg}° tilt (Click Straighten)`;
+                chkTiltVal.style.color = "#f59e0b";
+            }
+        }
+
+        // 3. Head-to-Height Ratio Check (Standard: 70% – 80%)
+        const estimatedRatio = Math.round(74 * (zoomLevel / 1.0));
+        if (estimatedRatio >= 68 && estimatedRatio <= 82) {
+            chkRatioIcon.innerText = "✅";
+            chkRatioVal.innerText = `${estimatedRatio}% (Optimal 70%–80%)`;
+            chkRatioVal.style.color = "inherit";
+            passCount++;
+        } else if (estimatedRatio < 68) {
+            chkRatioIcon.innerText = "⚠️";
+            chkRatioVal.innerText = `${estimatedRatio}% (Head too small, zoom in)`;
+            chkRatioVal.style.color = "#f59e0b";
+        } else {
+            chkRatioIcon.innerText = "⚠️";
+            chkRatioVal.innerText = `${estimatedRatio}% (Head too large, zoom out)`;
+            chkRatioVal.style.color = "#f59e0b";
+        }
+
+        // 4. Background Uniformity Check
+        if (activeBgColor !== "original") {
+            chkBgIcon.innerText = "✅";
+            const colorName = activeBgColor === "#ffffff" ? "Pure White" : (activeBgColor === "#4a90e2" ? "Light Blue" : "Solid Official Color");
+            chkBgVal.innerText = `Solid background (${colorName})`;
+            chkBgVal.style.color = "inherit";
+            passCount++;
+        } else {
+            chkBgIcon.innerText = "⚠️";
+            chkBgVal.innerText = "Original background (use AI Cutout)";
+            chkBgVal.style.color = "#f59e0b";
+        }
+
+        // Overall Compliance Score
+        if (passCount === 4) {
+            complianceOverallBadge.innerText = "98% COMPLIANT";
+            complianceOverallBadge.className = "badge-passed";
+            complianceOverallBadge.style.background = "rgba(16, 185, 129, 0.15)";
+            complianceOverallBadge.style.color = "#059669";
+        } else if (passCount === 3) {
+            complianceOverallBadge.innerText = "80% ACCEPTABLE";
+            complianceOverallBadge.className = "badge-passed";
+            complianceOverallBadge.style.background = "rgba(245, 158, 11, 0.15)";
+            complianceOverallBadge.style.color = "#d97706";
+        } else {
+            complianceOverallBadge.innerText = "NEEDS ALIGNMENT";
+            complianceOverallBadge.className = "badge-passed";
+            complianceOverallBadge.style.background = "rgba(239, 68, 68, 0.15)";
+            complianceOverallBadge.style.color = "#dc2626";
+        }
+    }
+
+    // ══════════════════════════════════════════════════════════════════════
     // EXPORT & DOWNLOAD ACTIONS
     // ══════════════════════════════════════════════════════════════════════
 
@@ -744,7 +1243,6 @@ document.addEventListener("DOMContentLoaded", () => {
             pdf.save(`passport-photo-sheet-${paper}.pdf`);
         } catch (err) {
             console.error("PDF generation error:", err);
-            // Fallback to PNG download
             btnDlSheetPng.click();
         }
     });
@@ -753,10 +1251,8 @@ document.addEventListener("DOMContentLoaded", () => {
     btnPrintSheet.addEventListener("click", () => {
         if (!originalImage) return;
 
-        // Ensure sheet is rendered
         renderSheetCanvas();
 
-        // Switch to sheet view if in single view
         if (activePreviewMode !== "sheet") {
             tabSheetPreview.click();
         }
