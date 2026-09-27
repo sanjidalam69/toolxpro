@@ -5131,60 +5131,71 @@ pre, code {
 }
 
 /* =========================================================
-   CATEGORY HUB SHOWCASE (HUB-AND-SPOKE ARCHITECTURE v56.0)
+   CATEGORY HUB SHOWCASE (HUB-AND-SPOKE ARCHITECTURE v57.0)
    ========================================================= */
+.dashboard-header {
+    margin-bottom: 1.6rem !important;
+    padding: 2.4rem 1.5rem !important;
+}
+
+.search-container {
+    max-width: 680px !important;
+    width: 100% !important;
+    margin: 0 auto !important;
+}
+
 .category-hub-showcase {
     max-width: 1200px;
-    margin: 0 auto 3rem auto;
+    margin: 0 auto 2.25rem auto;
     padding: 0 1rem;
     width: 100%;
 }
 
 .hub-header-bar {
     text-align: center;
-    margin-bottom: 2rem;
+    margin-bottom: 1.25rem;
 }
 
 .hub-section-title {
-    font-size: 1.85rem;
+    font-size: 1.65rem;
     font-weight: 800;
-    letter-spacing: -0.5px;
+    letter-spacing: -0.4px;
     color: var(--text-primary);
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.35rem 0;
 }
 
 .hub-section-subtitle {
-    font-size: 1rem;
+    font-size: 0.95rem;
     color: var(--text-secondary);
     margin: 0 auto;
     max-width: 650px;
-    line-height: 1.5;
+    line-height: 1.45;
 }
 
 .hub-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1.5rem;
+    gap: 1.15rem;
     width: 100%;
 }
 
 .hub-card {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
-    border-radius: 18px;
-    padding: 1.75rem 1.5rem;
+    border-radius: 16px;
+    padding: 1.35rem 1.25rem;
     display: flex;
     flex-direction: column;
     text-decoration: none;
     position: relative;
     overflow: hidden;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.04);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.04);
 }
 
 .hub-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.09);
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
     border-color: var(--primary);
 }
 
@@ -5192,29 +5203,29 @@ pre, code {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 0.85rem;
 }
 
 .hub-icon-box {
-    width: 52px;
-    height: 52px;
-    border-radius: 14px;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.75rem;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
-    transition: transform 0.3s ease;
+    font-size: 1.5rem;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    transition: transform 0.25s ease;
 }
 
 .hub-card:hover .hub-icon-box {
-    transform: scale(1.12) rotate(4deg);
+    transform: scale(1.1) rotate(3deg);
 }
 
 .hub-badge {
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 700;
-    padding: 0.35rem 0.75rem;
+    padding: 0.3rem 0.65rem;
     border-radius: 20px;
     letter-spacing: 0.3px;
     text-transform: uppercase;
@@ -5228,35 +5239,35 @@ pre, code {
 .badge-amber { background: rgba(245, 158, 11, 0.12); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.25); }
 
 .hub-card-title {
-    font-size: 1.25rem;
+    font-size: 1.15rem;
     font-weight: 700;
     color: var(--text-primary);
-    margin: 0 0 0.5rem 0;
+    margin: 0 0 0.35rem 0;
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
 .hub-card-desc {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: var(--text-secondary);
-    line-height: 1.5;
-    margin: 0 0 1.25rem 0;
+    line-height: 1.45;
+    margin: 0 0 0.85rem 0;
     flex-grow: 1;
 }
 
 .hub-tools-list {
     display: flex;
     flex-wrap: wrap;
-    gap: 6px;
-    margin-bottom: 1.25rem;
+    gap: 5px;
+    margin-bottom: 0.85rem;
 }
 
 .hub-tool-pill {
-    font-size: 0.76rem;
+    font-size: 0.73rem;
     font-weight: 600;
-    padding: 0.25rem 0.6rem;
-    border-radius: 8px;
+    padding: 0.2rem 0.55rem;
+    border-radius: 6px;
     background: var(--surface-bg, rgba(0, 0, 0, 0.04));
     color: var(--text-secondary);
     border: 1px solid var(--border-color);
@@ -5273,21 +5284,21 @@ pre, code {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding-top: 0.85rem;
+    padding-top: 0.75rem;
     border-top: 1px solid var(--border-color);
-    font-size: 0.88rem;
+    font-size: 0.84rem;
     font-weight: 700;
     color: var(--primary);
     transition: color 0.2s ease;
 }
 
 .hub-arrow {
-    font-size: 1.15rem;
+    font-size: 1.1rem;
     transition: transform 0.25s ease;
 }
 
 .hub-card:hover .hub-arrow {
-    transform: translateX(5px);
+    transform: translateX(4px);
 }
 
 /* Dark theme overrides for Hub Cards */
@@ -5300,7 +5311,7 @@ pre, code {
 [data-theme='dark'] .hub-card:hover {
     background: #243247 !important;
     border-color: var(--primary) !important;
-    box-shadow: 0 16px 36px rgba(245, 124, 0, 0.15) !important;
+    box-shadow: 0 14px 30px rgba(245, 124, 0, 0.15) !important;
 }
 
 [data-theme='dark'] .hub-tool-pill {
@@ -5309,24 +5320,72 @@ pre, code {
     border-color: rgba(255, 255, 255, 0.08);
 }
 
+/* =========================================================
+   FEATURED & POPULAR TOOLS SECTIONS (HOMEPAGE v57.0)
+   ========================================================= */
+.featured-tools-section {
+    margin-bottom: 2.75rem;
+    width: 100%;
+}
+
+.featured-header-bar {
+    margin-bottom: 1.15rem;
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.featured-section-title {
+    font-size: 1.45rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    margin: 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    letter-spacing: -0.4px;
+}
+
+.featured-section-subtitle {
+    font-size: 0.92rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.featured-tools-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
+    gap: 1.15rem !important;
+}
+
 /* Responsive Breakpoints */
 @media (max-width: 1024px) {
     .hub-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: 1.25rem;
+        gap: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .featured-tools-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 10px !important;
     }
 }
 
 @media (max-width: 640px) {
     .hub-grid {
         grid-template-columns: 1fr;
-        gap: 1rem;
+        gap: 0.85rem;
     }
     .hub-section-title {
-        font-size: 1.45rem;
+        font-size: 1.35rem;
     }
     .hub-card {
-        padding: 1.25rem 1.1rem;
+        padding: 1.15rem 1rem;
+    }
+    .featured-tools-grid {
+        grid-template-columns: 1fr !important;
     }
 }
 
