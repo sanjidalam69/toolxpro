@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -86,6 +86,7 @@
             padding: 2rem;
             margin-bottom: 1.75rem;
             box-shadow: var(--card-shadow);
+            scroll-margin-top: 90px;
         }
 
         .policy-heading {
@@ -183,42 +184,44 @@
                 </div>
 
                 <!-- Section 1 -->
-                <section class="policy-section">
-                    <h2 class="policy-heading">1. Information We Do NOT Collect (Client-Side Tools)</h2>
+                <section class="policy-section" id="local-processing">
+                    <h2 class="policy-heading">1. Information We Do NOT Collect (100% Client-Side & Local Processing)</h2>
                     <p class="policy-text">
-                        The overwhelming majority of tools on ToolX Pro — including all PDF tools, image compressors, converters, financial & health calculators, student calculators, text utilities, and converters — operate <strong>entirely inside your browser</strong> via client-side JavaScript. This means:
+                        The overwhelming majority of tools on ToolX Pro — including all PDF tools, image compressors, converters, background removers, cover page generators (Assignment & Lab Report), financial & health calculators, student board & university GPA/CGPA calculators, and text utilities — operate <strong>100% locally inside your browser</strong> via client-side JavaScript, WebAssembly, and HTML5 Canvas. This means:
                     </p>
                     <ul class="policy-list">
-                        <li><strong>Files you upload</strong> (PDFs, images, documents) are <em>never</em> uploaded or transmitted to our servers or any third-party storage.</li>
-                        <li><strong>Text, numbers, or parameters you input</strong> are never tracked, logged, or stored remotely.</li>
-                        <li><strong>All computation</strong> happens locally within your device's memory sandbox.</li>
+                        <li><strong>Files you upload or select</strong> (PDFs, images, documents, university logos) are <em>never</em> uploaded or transmitted to our servers or any third-party cloud storage.</li>
+                        <li><strong>Personal details & academic inputs</strong> (student names, student IDs, course titles, teacher names, grades, marks) stay strictly within your browser's private sandbox.</li>
+                        <li><strong>All rendering & computation</strong> happens locally within your device's memory.</li>
                     </ul>
                     <div class="policy-highlight">
-                        🛡️ <strong>Zero Data Retention:</strong> These client-side tools have zero persistent data collection. As soon as you reload or close your browser tab, all session calculations and uploaded files are instantly deleted from your temporary local memory.
+                        🛡️ <strong>Zero Server Uploads & Zero Retention:</strong> These client-side tools have zero persistent data collection. As soon as you reload or close your browser tab, all session calculations, generated cover sheets, and uploaded files are instantly erased from your temporary local memory.
                     </div>
                 </section>
 
                 <!-- Section 2 -->
-                <section class="policy-section">
-                    <h2 class="policy-heading">2. AI-Powered Writing, Vision & Voice Tools</h2>
+                <section class="policy-section" id="ai-processing">
+                    <h2 class="policy-heading">2. AI-Powered Writing, Vision & Voice Tools (Cloudflare Edge AI & Google Gemini)</h2>
                     <p class="policy-text">
-                        Our AI utilities (currently <strong>AI Text & Image Detector</strong>, <strong>AI Text Humanizer</strong>, <strong>AI Grammar & Spell Fixer</strong>, and <strong>Bangla Voice Typing & Speech Translator</strong>) provide enhanced language assistance and content verification:
+                        Our specialized AI utilities (currently <strong>AI Text & Image Detector</strong>, <strong>AI Text Humanizer</strong>, <strong>AI Grammar & Spell Fixer</strong>, and <strong>Bangla Voice Typing & Speech Translator</strong>) provide advanced language assistance, tone enhancement, and content verification:
                     </p>
                     <ul class="policy-list">
-                        <li>For AI text detection, proofreading, and humanizing, the text snippet or image payload submitted is transmitted securely over encrypted SSL connections using <strong>Google's Gemini AI API</strong>.</li>
-                        <li>Image forensics and texture analyses execute client-side using browser canvas processors and transient encrypted vision API calls.</li>
-                        <li>Voice typing operates directly through your browser's native Web Speech API and local punctuation engines.</li>
-                        <li><strong>We do not store, log, sell, or retain</strong> any text, images, or voice inputs you submit to our tools on our servers.</li>
+                        <li><strong>Encrypted Edge AI Transmission:</strong> When you submit text or image analysis requests, payloads are transmitted securely over TLS 1.3 encrypted HTTPS connections to our stateless Cloudflare Edge AI Workers and Google Gemini API infrastructure.</li>
+                        <li><strong>Zero Data Logging & Zero Retention:</strong> Neither ToolX Pro nor our Cloudflare Edge proxies log, store, archive, or inspect your text submissions, uploaded images, or voice transcripts. Requests are processed transiently in-memory and discarded immediately upon returning the result to your browser.</li>
+                        <li><strong>Zero Model Training on User Data:</strong> ToolX Pro accesses enterprise developer API endpoints with strict data-exclusion policies. Your submitted essays, reports, or articles are <em>never</em> used to train public machine learning or foundation models.</li>
+                        <li><strong>Client-Side Vision & Forensics:</strong> Image forensic analyses, canvas noise extractions, and texture assessments run directly inside your browser's WebGL / HTML5 Canvas memory before any transient verification check.</li>
+                        <li><strong>Local Speech Processing:</strong> Voice typing operates natively via the browser's local Web Speech API and client-side punctuation normalization algorithms.</li>
                     </ul>
                     <p class="policy-text">
-                        For comprehensive details on Google's privacy and API data handling, please review:
+                        For comprehensive third-party infrastructure terms and privacy safeguards, you may review:
                     </p>
                     <ul class="policy-list">
+                        <li><a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 600;">Cloudflare Privacy & Security Policy</a></li>
                         <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 600;">Google Privacy Policy</a></li>
                         <li><a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 600;">Google Gemini API Terms of Service</a></li>
                     </ul>
                     <div class="policy-highlight">
-                        ⚠️ <strong>User Recommendation:</strong> Please do not enter sensitive passwords, financial credentials, or private confidential data into online AI utilities.
+                        🛡️ <strong>Zero Logging Guarantee:</strong> All AI processing requests are stateless. As soon as the analysis or paraphrase finishes, the data ceases to exist on the edge network.
                     </div>
                 </section>
 

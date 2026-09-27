@@ -72,6 +72,7 @@ function initLayout() {
     const isToolPage = path.includes('/tools/') || path.includes('tools/');
     const isHomePage = path.endsWith('/index.html') || path.endsWith('/') || path === '' || (!path.includes('.html') && !isSubFolder);
     const homePath = isSubFolder ? '../index.html' : 'index.html';
+    const privacyPath = isSubFolder ? '../privacy-policy.html' : 'privacy-policy.html';
     const toolsPrefix = isSubFolder ? '' : 'tools/';
     
     // Inject Layout Elements
@@ -83,6 +84,7 @@ function initLayout() {
     
     if (isToolPage) {
         injectSidebar(toolsPrefix);
+        injectPrivacyTrustBadge(privacyPath);
     }
     
     // Initialize Theme
@@ -214,6 +216,82 @@ function injectToolBackButton(homePath, isSubFolder, isHomePage) {
     
     contentArea.insertBefore(navBar, contentArea.firstChild);
 }
+
+// Inject Privacy Trust Badge for all tools (Client-Side & AI Processing)
+function injectPrivacyTrustBadge(privacyPath) {
+    if (document.querySelector(".tool-privacy-badge")) return;
+    
+    const pathParts = window.location.pathname.split('/');
+    const lastPart = (pathParts[pathParts.length - 1] || '').toLowerCase();
+    const cleanFileName = lastPart.replace('.html', '');
+    
+    // Categorize tool: AI tools vs 100% Client-Side Local tools
+    const aiToolIds = ['ai-detector', 'ai-humanizer', 'grammar-fixer', 'speech-to-bangla'];
+    const isAiTool = aiToolIds.some(id => cleanFileName.includes(id) || lastPart.includes(id));
+    
+    const badge = document.createElement("div");
+    
+    if (isAiTool) {
+        badge.className = "tool-privacy-badge ai-badge";
+        badge.setAttribute("role", "status");
+        badge.setAttribute("aria-label", "Secure Edge AI Privacy guarantee");
+        badge.innerHTML = `
+            <div class="badge-icon-wrap">
+                <span class="badge-pulse-dot" aria-hidden="true"></span>
+                <svg class="badge-shield-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    <path d="M12 8v4"></path>
+                    <path d="M12 16h.01"></path>
+                </svg>
+            </div>
+            <span class="badge-text">
+                <strong>Processed securely via Cloudflare Edge AI</strong> — zero data logging or retention.
+            </span>
+            <a href="${privacyPath}#ai-processing" class="badge-learn-link" title="Read our AI data processing privacy policy">
+                <span>Learn how it works</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+        `;
+    } else {
+        badge.className = "tool-privacy-badge local-badge";
+        badge.setAttribute("role", "status");
+        badge.setAttribute("aria-label", "100% Local Client-Side Privacy guarantee");
+        badge.innerHTML = `
+            <div class="badge-icon-wrap">
+                <span class="badge-pulse-dot" aria-hidden="true"></span>
+                <svg class="badge-shield-icon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
+                    <polyline points="9 12 11 14 15 10"></polyline>
+                </svg>
+            </div>
+            <span class="badge-text">
+                <strong>Processed 100% locally</strong> — your files never leave your device.
+            </span>
+            <a href="${privacyPath}#local-processing" class="badge-learn-link" title="Read our local data processing privacy guarantee">
+                <span>Learn how it works</span>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </a>
+        `;
+    }
+    
+    // Find target container in tool page
+    const targetHeader = document.querySelector(
+        ".tool-header, .humanizer-hero-header, .detector-hero-header, .ai-hero-header, .voice-header"
+    ) || document.querySelector(".content-area h1")?.parentElement;
+    
+    if (targetHeader) {
+        targetHeader.appendChild(badge);
+    } else {
+        const navBar = document.querySelector(".tool-nav-top-bar");
+        const contentArea = document.querySelector(".content-area");
+        if (navBar && navBar.parentNode) {
+            navBar.parentNode.insertBefore(badge, navBar.nextSibling);
+        } else if (contentArea) {
+            contentArea.insertBefore(badge, contentArea.firstChild);
+        }
+    }
+}
+
 
 
 // Inject Header Navbar with Navigation Menu (Feedback 1)

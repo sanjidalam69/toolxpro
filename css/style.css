@@ -4883,3 +4883,250 @@ pre, code {
     transform: translateY(-4px) scale(1.08) !important;
     box-shadow: 0 6px 22px rgba(245, 124, 0, 0.6) !important;
 }
+
+/* =========================================================
+   TOOL PRIVACY TRUST BADGES (Client-Side & AI Processing)
+   ========================================================= */
+.tool-privacy-badge {
+    display: inline-flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px 12px;
+    padding: 6px 14px;
+    border-radius: 9999px;
+    font-size: 0.83rem;
+    line-height: 1.45;
+    margin-top: 10px;
+    margin-bottom: 4px;
+    max-width: 100%;
+    width: fit-content;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
+    transition: all 0.25s ease;
+    box-sizing: border-box;
+}
+
+.humanizer-hero-header .tool-privacy-badge,
+.detector-hero-header .tool-privacy-badge,
+.voice-header .tool-privacy-badge,
+.ai-hero-header .tool-privacy-badge {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Local Processing Badge (Green Theme) */
+.tool-privacy-badge.local-badge {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.28);
+    color: #065f46;
+}
+
+.tool-privacy-badge.local-badge .badge-icon-wrap {
+    color: #10b981;
+}
+
+.tool-privacy-badge.local-badge .badge-pulse-dot {
+    background-color: #10b981;
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+    animation: badgePulseGreen 2s infinite ease-in-out;
+}
+
+.tool-privacy-badge.local-badge .badge-text strong {
+    color: #047857;
+    font-weight: 700;
+}
+
+.tool-privacy-badge.local-badge .badge-learn-link {
+    color: #059669;
+    border-bottom: 1px dashed rgba(5, 150, 105, 0.5);
+}
+
+.tool-privacy-badge.local-badge .badge-learn-link:hover {
+    color: #047857;
+    border-bottom-style: solid;
+}
+
+/* Dark mode: Local Badge */
+[data-theme="dark"] .tool-privacy-badge.local-badge {
+    background: rgba(16, 185, 129, 0.12);
+    border-color: rgba(16, 185, 129, 0.32);
+    color: #d1fae5;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="dark"] .tool-privacy-badge.local-badge .badge-icon-wrap {
+    color: #34d399;
+}
+
+[data-theme="dark"] .tool-privacy-badge.local-badge .badge-pulse-dot {
+    background-color: #34d399;
+    box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7);
+    animation: badgePulseGreenDark 2s infinite ease-in-out;
+}
+
+[data-theme="dark"] .tool-privacy-badge.local-badge .badge-text strong {
+    color: #a7f3d0;
+}
+
+[data-theme="dark"] .tool-privacy-badge.local-badge .badge-learn-link {
+    color: #6ee7b7;
+    border-bottom-color: rgba(110, 231, 183, 0.6);
+}
+
+[data-theme="dark"] .tool-privacy-badge.local-badge .badge-learn-link:hover {
+    color: #a7f3d0;
+}
+
+/* AI Processing Badge (Indigo Theme) */
+.tool-privacy-badge.ai-badge {
+    background: rgba(99, 102, 241, 0.08);
+    border: 1px solid rgba(99, 102, 241, 0.28);
+    color: #3730a3;
+}
+
+.tool-privacy-badge.ai-badge .badge-icon-wrap {
+    color: #6366f1;
+}
+
+.tool-privacy-badge.ai-badge .badge-pulse-dot {
+    background-color: #6366f1;
+    box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7);
+    animation: badgePulseIndigo 2s infinite ease-in-out;
+}
+
+.tool-privacy-badge.ai-badge .badge-text strong {
+    color: #312e81;
+    font-weight: 700;
+}
+
+.tool-privacy-badge.ai-badge .badge-learn-link {
+    color: #4f46e5;
+    border-bottom: 1px dashed rgba(79, 70, 229, 0.5);
+}
+
+.tool-privacy-badge.ai-badge .badge-learn-link:hover {
+    color: #3730a3;
+    border-bottom-style: solid;
+}
+
+/* Dark mode: AI Badge */
+[data-theme="dark"] .tool-privacy-badge.ai-badge {
+    background: rgba(99, 102, 241, 0.14);
+    border-color: rgba(129, 140, 248, 0.32);
+    color: #e0e7ff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="dark"] .tool-privacy-badge.ai-badge .badge-icon-wrap {
+    color: #818cf8;
+}
+
+[data-theme="dark"] .tool-privacy-badge.ai-badge .badge-pulse-dot {
+    background-color: #818cf8;
+    box-shadow: 0 0 0 0 rgba(129, 140, 248, 0.7);
+    animation: badgePulseIndigoDark 2s infinite ease-in-out;
+}
+
+[data-theme="dark"] .tool-privacy-badge.ai-badge .badge-text strong {
+    color: #c7d2fe;
+}
+
+[data-theme="dark"] .tool-privacy-badge.ai-badge .badge-learn-link {
+    color: #a5b4fc;
+    border-bottom-color: rgba(165, 180, 252, 0.6);
+}
+
+[data-theme="dark"] .tool-privacy-badge.ai-badge .badge-learn-link:hover {
+    color: #c7d2fe;
+}
+
+/* Internal elements */
+.badge-icon-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    flex-shrink: 0;
+}
+
+.badge-pulse-dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.badge-shield-icon {
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
+.badge-text {
+    flex: 1 1 auto;
+    font-size: 0.83rem;
+}
+
+.badge-learn-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+    flex-shrink: 0;
+    transition: all 0.2s ease;
+}
+
+.badge-learn-link svg {
+    transition: transform 0.2s ease;
+}
+
+.badge-learn-link:hover svg {
+    transform: translateX(2px);
+}
+
+/* Pulse Animations */
+@keyframes badgePulseGreen {
+    0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); }
+    70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+}
+@keyframes badgePulseGreenDark {
+    0% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0.7); }
+    70% { box-shadow: 0 0 0 6px rgba(52, 211, 153, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(52, 211, 153, 0); }
+}
+@keyframes badgePulseIndigo {
+    0% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0.7); }
+    70% { box-shadow: 0 0 0 6px rgba(99, 102, 241, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(99, 102, 241, 0); }
+}
+@keyframes badgePulseIndigoDark {
+    0% { box-shadow: 0 0 0 0 rgba(129, 140, 248, 0.7); }
+    70% { box-shadow: 0 0 0 6px rgba(129, 140, 248, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(129, 140, 248, 0); }
+}
+
+/* Mobile Responsiveness for Trust Badges */
+@media (max-width: 768px) {
+    .tool-privacy-badge {
+        display: flex;
+        justify-content: center;
+        text-align: center;
+        width: 100%;
+        border-radius: 12px;
+        padding: 8px 12px;
+        font-size: 0.78rem;
+        gap: 6px 10px;
+        margin: 10px auto 4px auto;
+    }
+    .tool-privacy-badge .badge-text {
+        font-size: 0.78rem;
+        line-height: 1.4;
+    }
+    .tool-privacy-badge .badge-learn-link {
+        font-size: 0.76rem;
+    }
+}
+
