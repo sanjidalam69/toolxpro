@@ -5365,6 +5365,11 @@ pre, code {
     width: 100%;
 }
 
+.compact-hub-grid {
+    grid-template-columns: repeat(6, 1fr) !important;
+    gap: 1rem !important;
+}
+
 .hub-card {
     background: var(--card-bg);
     border: 1px solid var(--border-color);
@@ -5487,17 +5492,133 @@ pre, code {
     transform: translateX(4px);
 }
 
+/* =========================================================
+   COMPACT SQUIRCLE CATEGORY CARDS (MODERN HOMEPAGE v60.0)
+   ========================================================= */
+.hub-compact-card {
+    background: var(--card-bg, #ffffff);
+    border: 1px solid var(--border-color, #e2e8f0);
+    border-radius: 18px;
+    padding: 1.25rem 0.75rem 1rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
+}
+
+.hub-compact-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+    border-color: rgba(245, 124, 0, 0.35);
+}
+
+.hub-squircle-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 0.75rem;
+    font-size: 1.45rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.hub-compact-card:hover .hub-squircle-icon {
+    transform: scale(1.1) rotate(4deg);
+}
+
+/* Squircle Icon Color Themes */
+.icon-pink {
+    background: linear-gradient(135deg, rgba(236, 72, 153, 0.16), rgba(244, 63, 94, 0.1));
+    border: 1px solid rgba(236, 72, 153, 0.25);
+}
+.icon-purple {
+    background: linear-gradient(135deg, rgba(139, 92, 246, 0.16), rgba(168, 85, 247, 0.1));
+    border: 1px solid rgba(139, 92, 246, 0.25);
+}
+.icon-red {
+    background: linear-gradient(135deg, rgba(239, 68, 68, 0.16), rgba(248, 113, 113, 0.1));
+    border: 1px solid rgba(239, 68, 68, 0.25);
+}
+.icon-green {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.16), rgba(52, 211, 153, 0.1));
+    border: 1px solid rgba(16, 185, 129, 0.25);
+}
+.icon-teal {
+    background: linear-gradient(135deg, rgba(6, 182, 212, 0.16), rgba(14, 165, 233, 0.1));
+    border: 1px solid rgba(6, 182, 212, 0.25);
+}
+.icon-amber {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.16), rgba(251, 191, 36, 0.1));
+    border: 1px solid rgba(245, 158, 11, 0.25);
+}
+
+.hub-compact-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0 0 0.25rem 0;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+.hub-compact-count {
+    font-size: 0.74rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    opacity: 0.85;
+    margin-bottom: 0.75rem;
+}
+
+/* Accent Bottom Lines */
+.hub-accent-line {
+    width: 26px;
+    height: 3px;
+    border-radius: 3px;
+    transition: width 0.25s ease;
+}
+
+.hub-compact-card:hover .hub-accent-line {
+    width: 44px;
+}
+
+.line-pink { background: #ec4899; }
+.line-purple { background: #8b5cf6; }
+.line-red { background: #ef4444; }
+.line-green { background: #10b981; }
+.line-teal { background: #06b6d4; }
+.line-amber { background: #f59e0b; }
+
 /* Dark theme overrides for Hub Cards */
-[data-theme='dark'] .hub-card {
+[data-theme='dark'] .hub-card,
+[data-theme='dark'] .hub-compact-card {
     background: #1e293b !important;
     border-color: rgba(255, 255, 255, 0.08) !important;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
 }
 
-[data-theme='dark'] .hub-card:hover {
+[data-theme='dark'] .hub-card:hover,
+[data-theme='dark'] .hub-compact-card:hover {
     background: #243247 !important;
-    border-color: var(--primary) !important;
-    box-shadow: 0 14px 30px rgba(245, 124, 0, 0.15) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme='dark'] .hub-compact-title {
+    color: #f8fafc !important;
+}
+
+[data-theme='dark'] .hub-compact-count {
+    color: #94a3b8 !important;
 }
 
 [data-theme='dark'] .hub-tool-pill {
@@ -5550,6 +5671,10 @@ pre, code {
         grid-template-columns: repeat(2, 1fr);
         gap: 1rem;
     }
+    .compact-hub-grid {
+        grid-template-columns: repeat(3, 1fr) !important;
+        gap: 0.85rem !important;
+    }
 }
 
 @media (max-width: 768px) {
@@ -5563,6 +5688,32 @@ pre, code {
     .hub-grid {
         grid-template-columns: 1fr;
         gap: 0.85rem;
+    }
+    .compact-hub-grid {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 0.65rem !important;
+    }
+    .hub-compact-card {
+        padding: 1rem 0.5rem 0.85rem 0.5rem !important;
+        border-radius: 14px !important;
+    }
+    .hub-squircle-icon {
+        width: 42px !important;
+        height: 42px !important;
+        border-radius: 12px !important;
+        font-size: 1.2rem !important;
+        margin-bottom: 0.45rem !important;
+    }
+    .hub-compact-title {
+        font-size: 0.84rem !important;
+    }
+    .hub-compact-count {
+        font-size: 0.68rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    .hub-accent-line {
+        width: 20px !important;
+        height: 2.5px !important;
     }
     .hub-section-title {
         font-size: 1.35rem;
