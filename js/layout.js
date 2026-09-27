@@ -442,7 +442,7 @@ function injectSidebar(toolsPrefix) {
     sidebar.innerHTML = sidebarHtml;
 }
 
-// Inject Rich SaaS-Style Footer (Feedback 5)
+// Inject Ultra-Premium SaaS-Style Footer
 function injectFooter(homePath, isSubFolder, isHomePage) {
     const footer = document.getElementById("main-footer");
     if (!footer) return;
@@ -450,7 +450,26 @@ function injectFooter(homePath, isSubFolder, isHomePage) {
     footer.className = "footer-container";
     
     const year = new Date().getFullYear();
-    const categoriesLink = isHomePage ? '#categories-section' : `${homePath}#categories-section`;
+    const toolsPrefix = isSubFolder ? '../tools/' : 'tools/';
+    const categoriesPrefix = isSubFolder ? '../categories/' : 'categories/';
+    
+    // Category Hub Links
+    const studentHub = `${categoriesPrefix}student.html`;
+    const aiHub = `${categoriesPrefix}ai.html`;
+    const pdfHub = `${categoriesPrefix}pdf.html`;
+    const imageHub = `${categoriesPrefix}image.html`;
+    const calcHub = `${categoriesPrefix}calculators.html`;
+    const banglaHub = `${categoriesPrefix}bangla.html`;
+
+    // Popular Tools Links
+    const aiHumanizer = `${toolsPrefix}ai-humanizer.html`;
+    const coverGen = `${toolsPrefix}assignment-cover.html`;
+    const aiDetector = `${toolsPrefix}ai-detector.html`;
+    const pdfMerge = `${toolsPrefix}pdf-merge.html`;
+    const bdGpa = `${toolsPrefix}bd-gpa.html`;
+    const bgRemover = `${toolsPrefix}bg-remover.html`;
+    
+    // General Pages
     const blogLink = isSubFolder ? '../blog.html' : 'blog.html';
     const aboutLink = isSubFolder ? '../about.html' : 'about.html';
     const contactLink = isSubFolder ? '../contact.html' : 'contact.html';
@@ -459,13 +478,49 @@ function injectFooter(homePath, isSubFolder, isHomePage) {
     const disclaimerLink = isSubFolder ? '../disclaimer.html' : 'disclaimer.html';
     
     footer.innerHTML = `
+        <!-- Pre-Footer Trust Ribbon -->
+        <div class="footer-trust-strip">
+            <div class="footer-trust-grid">
+                <div class="footer-trust-box">
+                    <span class="footer-trust-icon">⚡</span>
+                    <div class="footer-trust-info">
+                        <strong class="footer-trust-title">Zero Waiting Queue</strong>
+                        <span class="footer-trust-sub">100% in-browser client execution</span>
+                    </div>
+                </div>
+                <div class="footer-trust-box">
+                    <span class="footer-trust-icon">🔒</span>
+                    <div class="footer-trust-info">
+                        <strong class="footer-trust-title">Absolute Privacy</strong>
+                        <span class="footer-trust-sub">Files never touch remote servers</span>
+                    </div>
+                </div>
+                <div class="footer-trust-box">
+                    <span class="footer-trust-icon">✨</span>
+                    <div class="footer-trust-info">
+                        <strong class="footer-trust-title">100% Free Forever</strong>
+                        <span class="footer-trust-sub">No credit card or login needed</span>
+                    </div>
+                </div>
+                <div class="footer-trust-box">
+                    <span class="footer-trust-icon">🇧🇩</span>
+                    <div class="footer-trust-info">
+                        <strong class="footer-trust-title">Global & Bangla Support</strong>
+                        <span class="footer-trust-sub">Optimized for students & creators</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Footer Links Grid -->
         <div class="footer-top">
+            <!-- Col 1: Brand & Status -->
             <div class="footer-brand-col">
-                <a href="${homePath}" class="logo-container" style="display:flex; align-items:center; gap:8px;">
-                    <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 6px rgba(251, 140, 0, 0.4)); flex-shrink:0;">
+                <a href="${homePath}" class="footer-brand-logo" title="ToolX Pro Homepage">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 8px rgba(251, 140, 0, 0.45)); flex-shrink:0;">
                         <rect width="32" height="32" rx="10" fill="url(#logo-grad-footer)" />
                         <path d="M10 10L22 22" stroke="white" stroke-width="4" stroke-linecap="round" />
-                        <path d="M22 10L10 22" stroke="rgba(255,255,255,0.6)" stroke-width="4" stroke-linecap="round" />
+                        <path d="M22 10L10 22" stroke="rgba(255,255,255,0.65)" stroke-width="4" stroke-linecap="round" />
                         <circle cx="16" cy="16" r="3" fill="#E65100" />
                         <defs>
                             <linearGradient id="logo-grad-footer" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
@@ -477,69 +532,113 @@ function injectFooter(homePath, isSubFolder, isHomePage) {
                     <span class="logo-text">ToolX<span class="logo-pro-badge">PRO</span></span>
                 </a>
                 <p class="footer-brand-desc">
-                    ToolX Pro provides free, fast, and completely secure client-side utility tools. We do not transmit or store your personal files or input parameters on any server.
+                    Next-generation client-side utility toolkit. Free, secure, and privacy-first online tools built for students, developers, and creators worldwide.
                 </p>
+                <div class="footer-status-pill">
+                    <span class="footer-status-dot"></span>
+                    <span class="footer-status-text">Client Engine Active • 100% Safe</span>
+                </div>
                 <div class="footer-social-icons">
-                    <a href="https://www.facebook.com/sanjidalam69" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="Facebook">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                    </a>
-                    <a href="https://www.instagram.com/sanjidalam69/?hl=en" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="Instagram">
-                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                    </a>
                     <a href="https://github.com/sanjidalam69" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="GitHub">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
                     </a>
                     <a href="https://www.linkedin.com/in/sanjid-alam-29752619b/" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="LinkedIn">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
                     </a>
+                    <a href="https://www.facebook.com/sanjidalam69" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="Facebook">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="https://www.instagram.com/sanjidalam69/?hl=en" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="Instagram">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
                 </div>
             </div>
-            
-            <div>
-                <h4 class="footer-col-title">Quick Links</h4>
+
+            <!-- Col 2: Category Hubs -->
+            <div class="footer-links-col">
+                <h4 class="footer-col-title">Category Hubs</h4>
                 <ul class="footer-links-list">
-                    <li><a href="${homePath}">Home Dashboard</a></li>
-                    <li><a href="${categoriesLink}">Tools Directory</a></li>
-                    <li><a href="${blogLink}">Latest Blog Articles</a></li>
-                    <li><a href="${aboutLink}">About Project</a></li>
+                    <li><a href="${studentHub}">🎓 Student Corner</a></li>
+                    <li><a href="${aiHub}">🤖 AI & Writing Tools</a></li>
+                    <li><a href="${pdfHub}">📄 PDF & Documents</a></li>
+                    <li><a href="${imageHub}">🖼️ Image & Media Tools</a></li>
+                    <li><a href="${calcHub}">🧮 Smart Calculators</a></li>
+                    <li><a href="${banglaHub}">🇧🇩 Bangla Specialized</a></li>
                 </ul>
             </div>
 
-            <div>
-                <h4 class="footer-col-title">Legal</h4>
+            <!-- Col 3: Popular Tools -->
+            <div class="footer-links-col">
+                <h4 class="footer-col-title">Popular Tools</h4>
                 <ul class="footer-links-list">
-                    <li><a href="${privacyLink}">Privacy Policy</a></li>
-                    <li><a href="${termsLink}">Terms of Service</a></li>
-                    <li><a href="${disclaimerLink}">Disclaimer</a></li>
-                    <li><a href="#" class="modal-trigger" data-modal="sitemap">Sitemap</a></li>
+                    <li><a href="${aiHumanizer}">⚡ AI Text Humanizer</a></li>
+                    <li><a href="${coverGen}">⚡ Assignment Cover Page</a></li>
+                    <li><a href="${aiDetector}">⚡ AI Content Detector</a></li>
+                    <li><a href="${pdfMerge}">⚡ PDF Merge & Joiner</a></li>
+                    <li><a href="${bdGpa}">⚡ SSC / HSC GPA Calc</a></li>
+                    <li><a href="${bgRemover}">⚡ Background Remover</a></li>
                 </ul>
             </div>
 
-            <div>
-                <h4 class="footer-col-title">Contact Us</h4>
+            <!-- Col 4: Resources & Legal -->
+            <div class="footer-links-col">
+                <h4 class="footer-col-title">Resources & Legal</h4>
                 <ul class="footer-links-list">
-                    <li><a href="${contactLink}">Contact Page</a></li>
-                    <li><a href="mailto:ai.sanjid.alam@gmail.com" title="Send Email" style="display:inline-flex; align-items:center; gap:6px;">✉️ Send Email</a></li>
+                    <li><a href="${blogLink}">📚 Blog & Guides</a></li>
+                    <li><a href="${aboutLink}">ℹ️ About ToolX Pro</a></li>
+                    <li><a href="${contactLink}">📬 Contact & Support</a></li>
+                    <li><a href="${privacyLink}">🛡️ Privacy Policy</a></li>
+                    <li><a href="${termsLink}">📜 Terms of Service</a></li>
+                    <li><a href="${disclaimerLink}">⚖️ Disclaimer</a></li>
                 </ul>
+            </div>
+
+            <!-- Col 5: Developer Support Card -->
+            <div class="footer-links-col footer-support-card-col">
+                <div class="footer-support-card">
+                    <div class="footer-support-badge">Direct Contact</div>
+                    <h4 class="footer-support-title">Developer Support</h4>
+                    <p class="footer-support-desc">Have a tool request, feedback, or found a bug? Let's connect.</p>
+                    <a href="mailto:ai.sanjid.alam@gmail.com" class="footer-support-btn" title="Email Sanjid Alam">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                        <span>ai.sanjid.alam@gmail.com</span>
+                    </a>
+                    <div class="footer-support-meta">
+                        <span class="footer-meta-pill">⚡ Reply &lt; 24h</span>
+                        <span class="footer-meta-pill">Dhaka, BD 🇧🇩</span>
+                    </div>
+                </div>
             </div>
         </div>
-        
-        <div class="footer-bottom" style="position: relative;">
-            <div class="footer-mandatory-links" style="display: flex; gap: 12px; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 12px; font-size: 0.92rem; font-weight: 600;">
-                <a href="${aboutLink}" style="color: var(--text-primary); text-decoration: underline;">About</a>
-                <span style="color: var(--text-secondary); opacity: 0.6;">|</span>
-                <a href="${contactLink}" style="color: var(--text-primary); text-decoration: underline;">Contact</a>
-                <span style="color: var(--text-secondary); opacity: 0.6;">|</span>
-                <a href="${privacyLink}" style="color: var(--text-primary); text-decoration: underline;">Privacy Policy</a>
-                <span style="color: var(--text-secondary); opacity: 0.6;">|</span>
-                <a href="${termsLink}" style="color: var(--text-primary); text-decoration: underline;">Terms of Service</a>
-                <span style="color: var(--text-secondary); opacity: 0.6;">|</span>
-                <a href="${disclaimerLink}" style="color: var(--text-primary); text-decoration: underline;">Disclaimer</a>
+
+        <!-- Sub-Footer / Bottom Bar -->
+        <div class="footer-bottom">
+            <div class="footer-bottom-info">
+                <p class="footer-copyright">
+                    © ${year} <strong>ToolX Pro</strong>. Engineered with ❤️ by <a href="https://www.linkedin.com/in/sanjid-alam-29752619b/" target="_blank" rel="noopener noreferrer" class="footer-author-link">Sanjid Alam</a>. All rights reserved.
+                </p>
+                <div class="footer-tech-badges">
+                    <span class="footer-tech-tag">🚀 Pure Client-Side WASM & JS</span>
+                    <span class="footer-tech-tag">🛡️ Zero Data Logging</span>
+                    <span class="footer-tech-tag">✨ v2.4.0</span>
+                </div>
             </div>
-            <p>© ${year} <b>ToolX Pro</b>. Designed & Developed with ❤️ by <a href="https://www.linkedin.com/in/sanjid-alam-29752619b/" target="_blank" rel="noopener noreferrer" style="color:inherit; font-weight:bold; text-decoration:underline;">Sanjid Alam</a>. All rights reserved.</p>
-            <p style="color:var(--text-secondary);">Everything runs 100% locally. No server data costs.</p>
+            <div class="footer-bottom-actions">
+                <button type="button" class="footer-back-to-top" id="footer-back-to-top" title="Scroll to top">
+                    <span>Back to Top</span>
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg>
+                </button>
+            </div>
         </div>
     `;
+
+    // Attach Back to Top handler
+    const backToTopBtn = document.getElementById("footer-back-to-top");
+    if (backToTopBtn) {
+        backToTopBtn.addEventListener("click", () => {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
 }
 
 
