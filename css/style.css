@@ -1062,7 +1062,7 @@ body {
 }
 
 /* =========================================================
-   Ultra-Premium SaaS-Style Footer (ToolX Pro 2026 Edition)
+   Clean, Minimal & Professional Footer (ToolX Pro)
    ========================================================= */
 .footer-container {
     background: var(--card-bg);
@@ -1072,84 +1072,25 @@ body {
     color: var(--text-secondary);
     margin-top: auto;
     position: relative;
-    overflow: hidden;
 }
 
 [data-theme='dark'] .footer-container {
-    background: linear-gradient(180deg, #0d131f 0%, #070a10 100%) !important;
+    background: #090d16 !important;
     border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 [data-theme='light'] .footer-container {
-    background: linear-gradient(180deg, #f8fafc 0%, #edf2f7 100%) !important;
+    background: #f8fafc !important;
     border-top: 1px solid rgba(0, 0, 0, 0.08) !important;
 }
 
-/* Pre-Footer Trust Ribbon */
-.footer-trust-strip {
-    max-width: 1240px;
-    margin: 0 auto 3rem auto;
-    padding-bottom: 2.5rem;
-    border-bottom: 1px solid var(--border-color);
-}
-
-.footer-trust-grid {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 1.25rem;
-}
-
-.footer-trust-box {
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    padding: 1rem 1.2rem;
-    border-radius: 12px;
-    background: rgba(245, 124, 0, 0.03);
-    border: 1px solid var(--border-color);
-    transition: var(--transition);
-}
-
-.footer-trust-box:hover {
-    border-color: rgba(245, 124, 0, 0.3);
-    background: rgba(245, 124, 0, 0.06);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
-}
-
-.footer-trust-icon {
-    font-size: 1.5rem;
-    flex-shrink: 0;
-    line-height: 1;
-}
-
-.footer-trust-info {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-}
-
-.footer-trust-title {
-    font-size: 0.92rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    font-family: var(--font-header);
-    letter-spacing: -0.2px;
-}
-
-.footer-trust-sub {
-    font-size: 0.78rem;
-    color: var(--text-secondary);
-    margin-top: 2px;
-}
-
-/* Main Footer Columns Grid */
+/* Main Footer Columns Grid (4 Columns) */
 .footer-top {
-    max-width: 1240px;
+    max-width: 1200px;
     margin: 0 auto 3rem auto;
     display: grid;
-    grid-template-columns: 1.6fr 1.05fr 1.15fr 1.05fr 1.35fr;
-    gap: 2.2rem;
+    grid-template-columns: 1.8fr 1fr 1fr 1fr;
+    gap: 3rem;
     text-align: left;
 }
 
@@ -1169,46 +1110,18 @@ body {
 }
 
 .footer-brand-desc {
-    margin-top: 10px;
+    margin-top: 12px;
     font-size: 0.88rem;
-    line-height: 1.55;
+    line-height: 1.6;
     color: var(--text-secondary);
     max-width: 320px;
-}
-
-.footer-status-pill {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    margin-top: 14px;
-    padding: 5px 12px;
-    border-radius: 20px;
-    background: rgba(34, 197, 94, 0.08);
-    border: 1px solid rgba(34, 197, 94, 0.25);
-    font-size: 0.76rem;
-    font-weight: 600;
-    color: #22c55e;
-}
-
-.footer-status-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: #22c55e;
-    display: inline-block;
-    animation: statusDotPulse 2s infinite ease-in-out;
-}
-
-@keyframes statusDotPulse {
-    0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.55); }
-    70% { box-shadow: 0 0 0 6px rgba(34, 197, 94, 0); }
-    100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
 }
 
 .footer-social-icons {
     display: flex;
     gap: 10px;
     margin-top: 18px;
+    align-items: center;
 }
 
 .footer-social-btn {
@@ -1230,7 +1143,7 @@ body {
     color: #ffffff;
     border-color: var(--primary);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(245, 124, 0, 0.3);
+    box-shadow: 0 4px 12px rgba(245, 124, 0, 0.28);
 }
 
 /* Link Columns */
@@ -1242,24 +1155,11 @@ body {
 .footer-col-title {
     font-family: var(--font-header);
     font-size: 0.88rem;
-    font-weight: 800;
+    font-weight: 700;
     color: var(--text-primary);
-    margin-bottom: 1.15rem;
+    margin-bottom: 1.2rem;
     text-transform: uppercase;
-    letter-spacing: 0.7px;
-    position: relative;
-    padding-bottom: 6px;
-}
-
-.footer-col-title::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 18px;
-    height: 2px;
-    background: var(--primary);
-    border-radius: 2px;
+    letter-spacing: 0.6px;
 }
 
 .footer-links-list {
@@ -1274,11 +1174,9 @@ body {
 .footer-links-list a {
     color: var(--text-secondary);
     text-decoration: none;
-    font-size: 0.86rem;
+    font-size: 0.875rem;
     transition: var(--transition);
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
+    display: inline-block;
 }
 
 .footer-links-list a:hover {
@@ -1286,93 +1184,9 @@ body {
     transform: translateX(4px);
 }
 
-/* Developer Support Card */
-.footer-support-card {
-    background: rgba(245, 124, 0, 0.04);
-    border: 1px solid rgba(245, 124, 0, 0.2);
-    border-radius: 14px;
-    padding: 1.25rem;
-    position: relative;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
-}
-
-[data-theme='dark'] .footer-support-card {
-    background: rgba(245, 124, 0, 0.05);
-    border-color: rgba(245, 124, 0, 0.25);
-}
-
-.footer-support-badge {
-    display: inline-block;
-    font-size: 0.68rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.6px;
-    color: var(--primary);
-    background: rgba(245, 124, 0, 0.12);
-    padding: 3px 8px;
-    border-radius: 6px;
-    margin-bottom: 8px;
-}
-
-.footer-support-title {
-    font-size: 0.95rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    margin-bottom: 6px;
-    font-family: var(--font-header);
-}
-
-.footer-support-desc {
-    font-size: 0.8rem;
-    color: var(--text-secondary);
-    line-height: 1.45;
-    margin-bottom: 12px;
-}
-
-.footer-support-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    width: 100%;
-    padding: 8px 12px;
-    background: var(--bg-primary);
-    border: 1px solid var(--border-color);
-    color: var(--text-primary);
-    font-size: 0.8rem;
-    font-weight: 600;
-    border-radius: 8px;
-    text-decoration: none;
-    transition: var(--transition);
-}
-
-.footer-support-btn:hover {
-    background: var(--primary);
-    color: #ffffff;
-    border-color: var(--primary);
-    transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(245, 124, 0, 0.28);
-}
-
-.footer-support-meta {
-    display: flex;
-    gap: 6px;
-    margin-top: 10px;
-    flex-wrap: wrap;
-}
-
-.footer-meta-pill {
-    font-size: 0.72rem;
-    padding: 2px 8px;
-    border-radius: 6px;
-    background: var(--bg-secondary);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-}
-
 /* Sub-Footer / Bottom Bar */
 .footer-bottom {
-    max-width: 1240px;
+    max-width: 1200px;
     margin: 0 auto;
     border-top: 1px solid var(--border-color);
     padding-top: 1.8rem;
@@ -1380,14 +1194,7 @@ body {
     justify-content: space-between;
     align-items: center;
     gap: 1.5rem;
-    font-size: 0.84rem;
-}
-
-.footer-bottom-info {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    text-align: left;
+    font-size: 0.85rem;
 }
 
 .footer-copyright {
@@ -1408,31 +1215,16 @@ body {
     color: var(--primary);
 }
 
-.footer-tech-badges {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-}
-
-.footer-tech-tag {
-    font-size: 0.74rem;
-    padding: 3px 8px;
-    border-radius: 6px;
-    background: var(--bg-secondary);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-}
-
 .footer-back-to-top {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    padding: 8px 16px;
+    padding: 6px 14px;
     border-radius: 20px;
     background: var(--bg-secondary);
     border: 1px solid var(--border-color);
     color: var(--text-primary);
-    font-size: 0.82rem;
+    font-size: 0.8rem;
     font-weight: 600;
     cursor: pointer;
     transition: var(--transition);
@@ -1444,7 +1236,7 @@ body {
     color: #ffffff;
     border-color: var(--primary);
     transform: translateY(-2px);
-    box-shadow: 0 4px 12px rgba(245, 124, 0, 0.28);
+    box-shadow: 0 4px 12px rgba(245, 124, 0, 0.25);
 }
 
 /* Login Modal & Generic Modal Layouts (Feedback 1) */
@@ -4442,33 +4234,15 @@ a, button, .tool-card, .compact-cat-card, .btn {
         padding: 2.5rem 1.25rem 1.5rem 1.25rem !important;
     }
 
-    .footer-trust-strip {
-        margin-bottom: 2rem !important;
-        padding-bottom: 1.5rem !important;
-    }
-
-    .footer-trust-grid {
-        grid-template-columns: 1fr !important;
-        gap: 0.8rem !important;
-    }
-
-    .footer-trust-box {
-        padding: 0.85rem 1rem !important;
-    }
-
     .footer-top {
-        grid-template-columns: repeat(2, 1fr) !important;
-        gap: 1.8rem 1.2rem !important;
+        grid-template-columns: 1fr !important;
+        gap: 2rem !important;
         text-align: left !important;
     }
 
     .footer-brand-col {
-        grid-column: span 2 !important;
+        grid-column: span 1 !important;
         text-align: left !important;
-    }
-
-    .footer-support-card-col {
-        grid-column: span 2 !important;
     }
 
     .footer-social-icons {
@@ -4480,35 +4254,18 @@ a, button, .tool-card, .compact-cat-card, .btn {
         text-align: center !important;
         gap: 1.2rem !important;
     }
-
-    .footer-bottom-info {
-        align-items: center !important;
-        text-align: center !important;
-    }
-
-    .footer-tech-badges {
-        justify-content: center !important;
-    }
 }
 
 /* Tablet Screen Breakpoints (769px to 1024px) */
 @media screen and (min-width: 769px) and (max-width: 1024px) {
-    .footer-trust-grid {
-        grid-template-columns: repeat(2, 1fr) !important;
-    }
-
     .footer-top {
-        grid-template-columns: repeat(3, 1fr) !important;
-        gap: 2rem !important;
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 2.5rem 2rem !important;
     }
 
     .footer-brand-col {
-        grid-column: span 3 !important;
+        grid-column: span 2 !important;
         margin-bottom: 0.5rem;
-    }
-
-    .footer-support-card-col {
-        grid-column: span 3 !important;
     }
 
     .compact-category-grid {
