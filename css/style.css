@@ -1,12 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap');
 
 :root {
-    /* Color Palette - Light Mode (Sleek Charcoal, Warm Amber Gold & Glassmorphic) */
-    --bg-primary: #f8fafc;
+    /* Color Palette - Light Mode (Clean & Crisp Theme) */
+    --bg-primary: #fafafa;
     --bg-secondary: #ffffff;
-    --bg-mesh: radial-gradient(at 0% 0%, rgba(245, 124, 0, 0.05) 0px, transparent 50%), radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.04) 0px, transparent 50%), radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.04) 0px, transparent 50%), #f8fafc;
-    --text-primary: #0f172a; /* Deep Crisp Slate */
-    --text-secondary: #475569; /* Slate Gray */
+    --text-primary: #18181b; /* Deep Charcoal */
+    --text-secondary: #52525b; /* Slate Gray */
     --primary: #18181b; /* Obsidian Charcoal */
     --secondary: #27272a;
     --primary-hover: #27272a;
@@ -14,16 +13,14 @@
     --primary-glow: rgba(245, 158, 11, 0.12);
     --accent: #d97706; /* Warm Amber Gold */
     --accent-gradient: linear-gradient(135deg, #f59e0b, #d97706);
-    --border-color: rgba(226, 232, 240, 0.85);
+    --border-color: rgba(228, 228, 231, 0.9);
+    --card-bg: #ffffff;
+    --card-shadow: 0 4px 18px rgba(24, 24, 27, 0.04), 0 2px 6px rgba(24, 24, 27, 0.02);
+    --hover-shadow: 0 16px 36px -4px rgba(245, 158, 11, 0.2), 0 6px 14px -2px rgba(24, 24, 27, 0.08);
     
-    /* Glassmorphism Tokens - Light Mode */
-    --glass-bg: rgba(255, 255, 255, 0.72);
-    --glass-bg-hover: rgba(255, 255, 255, 0.9);
-    --glass-border: 1px solid rgba(255, 255, 255, 0.8);
-    --glass-blur: blur(16px) saturate(180%);
-    --card-bg: rgba(255, 255, 255, 0.75);
-    --card-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.04), 0 2px 6px -1px rgba(0, 0, 0, 0.02);
-    --hover-shadow: 0 16px 36px -4px rgba(245, 158, 11, 0.18), 0 6px 14px -2px rgba(15, 23, 42, 0.06);
+    /* Navigation Glassmorphism Only */
+    --nav-glass-bg: rgba(255, 255, 255, 0.85);
+    --nav-glass-blur: blur(16px) saturate(180%);
     
     --success: #10b981;
     --warning: #f59e0b;
@@ -40,12 +37,11 @@
 
 
 [data-theme="dark"] {
-    /* Color Palette - Dark Mode (Sleek Obsidian, Amber Gold & Glassmorphic) */
-    --bg-primary: #090d16;
-    --bg-secondary: #121927;
-    --bg-mesh: radial-gradient(at 0% 0%, rgba(245, 124, 0, 0.08) 0px, transparent 50%), radial-gradient(at 100% 0%, rgba(139, 92, 246, 0.07) 0px, transparent 50%), radial-gradient(at 50% 100%, rgba(14, 165, 233, 0.05) 0px, transparent 50%), #090d16;
-    --text-primary: #f8fafc;
-    --text-secondary: #94a3b8;
+    /* Color Palette - Dark Mode (Sleek Obsidian & Amber Gold) */
+    --bg-primary: #09090b;
+    --bg-secondary: #18181b;
+    --text-primary: #fafafa;
+    --text-secondary: #a1a1aa;
     --primary: #f59e0b;
     --secondary: #d97706;
     --primary-hover: #fbbf24;
@@ -53,16 +49,14 @@
     --primary-glow: rgba(245, 158, 11, 0.22);
     --accent: #fbbf24;
     --accent-gradient: linear-gradient(135deg, #fbbf24, #f59e0b);
-    --border-color: rgba(255, 255, 255, 0.08);
+    --border-color: rgba(63, 63, 70, 0.7);
+    --card-bg: #18181b;
+    --card-shadow: 0 10px 40px -10px rgba(0, 0, 0, 0.7);
+    --hover-shadow: 0 20px 40px -10px rgba(245, 158, 11, 0.35);
     
-    /* Glassmorphism Tokens - Dark Mode */
-    --glass-bg: rgba(22, 31, 48, 0.65);
-    --glass-bg-hover: rgba(30, 42, 65, 0.8);
-    --glass-border: 1px solid rgba(255, 255, 255, 0.08);
-    --glass-blur: blur(16px) saturate(180%);
-    --card-bg: rgba(22, 31, 48, 0.68);
-    --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.35);
-    --hover-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6), 0 0 20px rgba(245, 158, 11, 0.2);
+    /* Navigation Glassmorphism Only */
+    --nav-glass-bg: rgba(9, 9, 11, 0.85);
+    --nav-glass-blur: blur(16px) saturate(180%);
     
     --success: #34d399;
     --warning: #f59e0b;
@@ -167,8 +161,6 @@
 
 body {
     background-color: var(--bg-primary);
-    background-image: var(--bg-mesh);
-    background-attachment: fixed;
     color: var(--text-primary);
     min-height: 100vh;
     display: flex;
@@ -212,22 +204,21 @@ body {
     right: 0 !important;
     width: 100% !important;
     z-index: 99999 !important;
-    background: var(--glass-bg) !important;
-    backdrop-filter: var(--glass-blur) !important;
-    -webkit-backdrop-filter: var(--glass-blur) !important;
+    background: var(--nav-glass-bg) !important;
+    backdrop-filter: var(--nav-glass-blur) !important;
+    -webkit-backdrop-filter: var(--nav-glass-blur) !important;
     border-bottom: 1px solid var(--border-color) !important;
     padding: 0.9rem 2rem !important;
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
     transition: padding 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03) !important;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
 }
 
 #main-header.scrolled,
 .header-nav.scrolled {
-    background: var(--glass-bg-hover) !important;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.08) !important;
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.08) !important;
     padding: 0.75rem 2rem !important;
 }
 
@@ -1083,17 +1074,20 @@ body {
 }
 
 /* =========================================================
-   Clean, Minimal & Professional Compact Footer (Frosted Glassmorphic)
+   Clean, Minimal & Professional Compact Footer (ToolX Pro)
    ========================================================= */
 .footer-container {
-    background: var(--glass-bg) !important;
-    backdrop-filter: var(--glass-blur) !important;
-    -webkit-backdrop-filter: var(--glass-blur) !important;
+    background: #f8fafc !important;
     border-top: 1px solid var(--border-color) !important;
     padding: 1.5rem 1.5rem 1.25rem 1.5rem !important;
     color: var(--text-secondary);
     margin-top: 3rem !important;
     position: relative;
+}
+
+[data-theme='dark'] .footer-container {
+    background: #090d16 !important;
+    border-top: 1px solid rgba(255, 255, 255, 0.08) !important;
 }
 
 .footer-compact-wrapper {
@@ -2953,11 +2947,9 @@ select.form-control {
    VIBRANT & EYE-CATCHING TOOL CARDS & TOOL PAGES (v29.0)
    ========================================================= */
 
-/* Tool Card Enhancements (Frosted Glassmorphic) */
+/* Tool Card Enhancements */
 .tool-card {
     background: var(--card-bg) !important;
-    backdrop-filter: var(--glass-blur) !important;
-    -webkit-backdrop-filter: var(--glass-blur) !important;
     border: 1px solid var(--border-color) !important;
     border-radius: var(--radius-lg, 16px) !important;
     padding: 1.4rem !important;
@@ -5505,10 +5497,8 @@ pre, code {
    COMPACT SQUIRCLE CATEGORY CARDS (MODERN HOMEPAGE v60.0)
    ========================================================= */
 .hub-compact-card {
-    background: var(--glass-bg);
-    backdrop-filter: var(--glass-blur);
-    -webkit-backdrop-filter: var(--glass-blur);
-    border: 1px solid rgba(255, 255, 255, 0.7);
+    background: var(--card-bg, #ffffff);
+    border: 1px solid var(--border-color, #e2e8f0);
     border-radius: 18px;
     padding: 1.25rem 0.75rem 1rem 0.75rem;
     display: flex;
@@ -5519,14 +5509,13 @@ pre, code {
     position: relative;
     overflow: hidden;
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.03);
 }
 
 .hub-compact-card:hover {
     transform: translateY(-4px);
-    background: var(--glass-bg-hover);
-    box-shadow: 0 14px 32px rgba(245, 124, 0, 0.12), 0 4px 12px rgba(0, 0, 0, 0.04);
-    border-color: rgba(245, 124, 0, 0.4);
+    box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+    border-color: rgba(245, 124, 0, 0.35);
 }
 
 .hub-squircle-icon {
@@ -5625,18 +5614,16 @@ pre, code {
 /* Dark theme overrides for Hub Cards */
 [data-theme='dark'] .hub-card,
 [data-theme='dark'] .hub-compact-card {
-    background: var(--glass-bg) !important;
-    backdrop-filter: var(--glass-blur) !important;
-    -webkit-backdrop-filter: var(--glass-blur) !important;
+    background: #1e293b !important;
     border-color: rgba(255, 255, 255, 0.08) !important;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.08) !important;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25) !important;
 }
 
 [data-theme='dark'] .hub-card:hover,
 [data-theme='dark'] .hub-compact-card:hover {
-    background: var(--glass-bg-hover) !important;
-    border-color: rgba(245, 158, 11, 0.4) !important;
-    box-shadow: 0 16px 36px rgba(0, 0, 0, 0.55), 0 0 24px rgba(245, 158, 11, 0.15) !important;
+    background: #243247 !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.4) !important;
 }
 
 [data-theme='dark'] .hub-compact-title {
