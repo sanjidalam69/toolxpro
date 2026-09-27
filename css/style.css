@@ -1559,6 +1559,7 @@ body {
     top: 0;
     right: -280px;
     width: 280px;
+    max-width: 85vw;
     height: 100vh;
     background: var(--bg-secondary);
     box-shadow: -4px 0 30px rgba(0, 0, 0, 0.15);
@@ -4519,7 +4520,7 @@ a, button, .tool-card, .compact-cat-card, .btn {
 /* Prevent Horizontal Page Overflow Without Breaking Sticky Nav */
 html, body {
     max-width: 100% !important;
-    overflow-x: clip !important;
+    overflow-x: hidden !important;
 }
 
 /* Ad Slot Container Responsive Scaling */
@@ -5217,6 +5218,8 @@ pre, code {
     display: flex;
     align-items: center;
     justify-content: center;
+    flex-wrap: wrap;
+    text-align: center;
     gap: 10px;
     margin-top: 14px;
     font-size: 0.82rem;
@@ -5665,6 +5668,93 @@ pre, code {
         margin-top: 0.75rem;
         padding-top: 0.75rem;
         margin-bottom: 1rem;
+    }
+}
+
+/* =========================================================
+   COMPREHENSIVE MOBILE-FRIENDLY & BUG FIX OVERRIDES (v60.0)
+   ========================================================= */
+
+/* Prevent iOS Safari 16px form auto-zoom glitch */
+@media screen and (max-width: 768px) {
+    input[type="text"],
+    input[type="number"],
+    input[type="email"],
+    input[type="search"],
+    input[type="password"],
+    select,
+    textarea,
+    .form-control,
+    .search-input {
+        font-size: 16px !important;
+    }
+
+    /* Floating Scroll To Top Button on Mobile */
+    .floating-top-btn {
+        bottom: 18px !important;
+        right: 16px !important;
+        width: 42px !important;
+        height: 42px !important;
+        font-size: 1.1rem !important;
+    }
+
+    /* Prevent utility / tab / modal buttons from forced 100% width */
+    .btn-inline,
+    .btn-sm,
+    .btn-icon,
+    .btn-auto,
+    .btn-copy,
+    .btn-action,
+    .button-group .btn,
+    .btn-group .btn,
+    .mobile-view-tabs .btn,
+    .tabs .btn,
+    .theme-switch,
+    .hamburger-btn,
+    .back-to-home-btn,
+    #modal-close-btn,
+    #info-modal-close,
+    #drawer-close-btn {
+        width: auto !important;
+    }
+
+    /* Tool card text boundary safeguard */
+    .tool-card {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+    .tool-card-title {
+        word-break: break-word;
+        overflow-wrap: break-word;
+    }
+
+    /* Horizontal scrollbar prevention for all containers */
+    .main-wrapper,
+    .content-area,
+    .dashboard-header,
+    .category-compact-header,
+    .footer {
+        max-width: 100% !important;
+        overflow-x: hidden !important;
+    }
+}
+
+/* Ultra-compact phone layout (<350px e.g. iPhone SE 1st gen) */
+@media screen and (max-width: 350px) {
+    .tools-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .compact-category-grid {
+        grid-template-columns: 1fr !important;
+    }
+    .hero-saas .dashboard-title {
+        font-size: 1.3rem !important;
+    }
+    .header-nav {
+        padding: 0.6rem 0.75rem !important;
+    }
+    .logo-text {
+        font-size: 1.1rem !important;
     }
 }
 

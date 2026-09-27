@@ -114,7 +114,7 @@ function initLayout() {
     initFutureModal();
 
     // Initialize Page Scrolling/Interaction links
-    initNavInteractions();
+    initNavInteractions(homePath);
 
     // Initialize Sticky Header & Floating Back-To-Top Button
     initStickyAndBackToTop();
@@ -352,7 +352,7 @@ function injectHeader(homePath, isSubFolder, isHomePage) {
     
     header.className = "header-nav";
     
-    const categoriesLink = isHomePage ? '#tools-container' : `${homePath}#tools-container`;
+    const categoriesLink = isHomePage ? '#categories-section' : `${homePath}#categories-section`;
     const blogLink = isHomePage ? '#blog-container' : `${homePath}#blog-container`;
     const aboutLink = isSubFolder ? '../about.html' : 'about.html';
     const contactLink = isSubFolder ? '../contact.html' : 'contact.html';
@@ -545,7 +545,7 @@ function injectFooter(homePath, isSubFolder, isHomePage) {
 
 
 // Initialize Custom Generic Modals (About, Contact, Privacy, Terms)
-function initNavInteractions() {
+function initNavInteractions(homePath = 'index.html') {
     let genericModal = document.getElementById("generic-info-modal");
     if (!genericModal) {
         genericModal = document.createElement("div");
@@ -664,9 +664,9 @@ function initNavInteractions() {
             body: `
                 <p style="margin-bottom:10px;">List of all available pages in ToolX Pro:</p>
                 <ul style="padding-left:20px; display:flex; flex-direction:column; gap:6px;">
-                    <li><a href="../index.html" style="color:var(--primary);">Home Dashboard</a></li>
-                    <li><a href="../index.html#tools-container" style="color:var(--primary);">All Tools Categories</a></li>
-                    <li><a href="../index.html#blog-container" style="color:var(--primary);">Latest Articles Blog</a></li>
+                    <li><a href="${homePath}" style="color:var(--primary);">Home Dashboard</a></li>
+                    <li><a href="${homePath}#categories-section" style="color:var(--primary);">All Tools Categories</a></li>
+                    <li><a href="${homePath}#blog-container" style="color:var(--primary);">Latest Articles Blog</a></li>
                     <li>Age, BMI, EMI, GPA, Sales Tax, Image tools, PDF tools, Word Counter, QR, Unit, Currency, File converters.</li>
                 </ul>
             `
@@ -741,7 +741,7 @@ function initMobileDrawer(homePath, isSubFolder, isHomePage) {
         drawer.id = "mobile-drawer-overlay";
         drawer.className = "drawer-overlay";
         
-        const categoriesLink = isHomePage ? '#tools-container' : `${homePath}#tools-container`;
+        const categoriesLink = isHomePage ? '#categories-section' : `${homePath}#categories-section`;
         const blogLink = isHomePage ? '#blog-container' : `${homePath}#blog-container`;
         const aboutLink = isSubFolder ? '../about.html' : 'about.html';
         const contactLink = isSubFolder ? '../contact.html' : 'contact.html';
