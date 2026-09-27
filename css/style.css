@@ -189,22 +189,27 @@ body {
 }
 
 /* Header Styles - Sticky Navigation */
+#main-header,
 .header-nav {
     position: sticky !important;
     top: 0 !important;
-    z-index: 1000 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 99999 !important;
     background: var(--card-bg) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
+    backdrop-filter: blur(14px) !important;
+    -webkit-backdrop-filter: blur(14px) !important;
     border-bottom: 1px solid var(--border-color) !important;
     padding: 0.9rem 2rem !important;
     display: flex !important;
     justify-content: space-between !important;
     align-items: center !important;
-    transition: padding 0.3s ease, box-shadow 0.3s ease !important;
+    transition: padding 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease !important;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05) !important;
 }
 
+#main-header.scrolled,
 .header-nav.scrolled {
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12) !important;
     padding: 0.75rem 2rem !important;
@@ -4567,7 +4572,7 @@ a, button, .tool-card, .compact-cat-card, .btn {
 /* Prevent Horizontal Page Overflow Without Breaking Sticky Nav */
 html, body {
     max-width: 100% !important;
-    overflow-x: hidden !important;
+    overflow-x: clip !important;
 }
 
 /* Ad Slot Container Responsive Scaling */
@@ -5782,7 +5787,7 @@ pre, code {
     .category-compact-header,
     .footer {
         max-width: 100% !important;
-        overflow-x: hidden !important;
+        overflow-x: clip !important;
     }
 }
 
