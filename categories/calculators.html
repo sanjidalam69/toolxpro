@@ -69,16 +69,10 @@
         <main class="main-wrapper" style="flex-direction: column;">
             
             <!-- Category Hero Header -->
-            <section class="dashboard-header" style="background: linear-gradient(135deg, #134e4a 0%, #0f766e 50%, #0d9488 100%); border-color: rgba(20, 184, 166, 0.35);">
-                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🧮</div>
-                <h1 class="dashboard-title">Calculators & Daily Utilities</h1>
-                <p class="dashboard-desc">Instant mathematical, health, conversion, and productivity utilities. Calculate your exact age, evaluate BMI metrics, convert multi-system units, generate QR codes, and analyze text.</p>
-                
-                <!-- Quick Category Search Filter -->
-                <div class="search-container">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" id="category-search" class="search-input" placeholder="Search calculators (e.g. Age, BMI, Unit, QR)..." autocomplete="off">
-                </div>
+            <section class="dashboard-header" style="background: linear-gradient(135deg, #134e4a 0%, #0f766e 50%, #0d9488 100%) !important; border-color: rgba(20, 184, 166, 0.35) !important; padding: 2rem 1.5rem !important; margin-bottom: 1.25rem !important;">
+                <div style="font-size: 2.6rem; margin-bottom: 0.35rem;">🧮</div>
+                <h1 class="dashboard-title" style="margin-bottom: 0.4rem; font-size: 2rem !important;">Calculators & Daily Utilities</h1>
+                <p class="dashboard-desc" style="margin-bottom: 0; max-width: 650px; margin-left: auto; margin-right: auto;">Instant mathematical, health, conversion, and productivity utilities. Calculate your exact age, evaluate BMI metrics, convert multi-system units, generate QR codes, and analyze text.</p>
             </section>
 
             <!-- Tools Grid Section -->
@@ -256,23 +250,7 @@
         <footer id="main-footer"></footer>
     </div>
 
-    <!-- Layout & Category Filter Scripts -->
+    <!-- Layout Script -->
     <script src="../js/layout.js?v=55.0"></script>
-    <script>
-        document.getElementById('category-search')?.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase().trim();
-            const cards = document.querySelectorAll('#category-tools-grid .tool-card');
-            cards.forEach(card => {
-                const title = card.querySelector('.tool-card-title')?.innerText.toLowerCase() || '';
-                const desc = card.querySelector('.tool-card-desc')?.innerText.toLowerCase() || '';
-                const keywords = card.getAttribute('data-keywords')?.toLowerCase() || '';
-                if (title.includes(query) || desc.includes(query) || keywords.includes(query)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-    </script>
 </body>
 </html>

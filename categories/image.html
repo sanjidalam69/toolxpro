@@ -69,16 +69,10 @@
         <main class="main-wrapper" style="flex-direction: column;">
             
             <!-- Category Hero Header -->
-            <section class="dashboard-header" style="background: linear-gradient(135deg, #064e3b 0%, #047857 50%, #059669 100%); border-color: rgba(16, 185, 129, 0.35);">
-                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🖼️</div>
-                <h1 class="dashboard-title">Image Tools</h1>
-                <p class="dashboard-desc">Optimize, transform, and refine photos locally in your browser. Compress MBs into KBs, convert formats, create ICAO-compliant passport photos, and cut out backgrounds instantly.</p>
-                
-                <!-- Quick Category Search Filter -->
-                <div class="search-container">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" id="category-search" class="search-input" placeholder="Search image tools (e.g. Passport, Compress, Converter)..." autocomplete="off">
-                </div>
+            <section class="dashboard-header" style="background: linear-gradient(135deg, #064e3b 0%, #047857 50%, #059669 100%) !important; border-color: rgba(16, 185, 129, 0.35) !important; padding: 2rem 1.5rem !important; margin-bottom: 1.25rem !important;">
+                <div style="font-size: 2.6rem; margin-bottom: 0.35rem;">🖼️</div>
+                <h1 class="dashboard-title" style="margin-bottom: 0.4rem; font-size: 2rem !important;">Image Tools</h1>
+                <p class="dashboard-desc" style="margin-bottom: 0; max-width: 650px; margin-left: auto; margin-right: auto;">Optimize, transform, and refine photos locally in your browser. Compress MBs into KBs, convert formats, create ICAO-compliant passport photos, and cut out backgrounds instantly.</p>
             </section>
 
             <!-- Tools Grid Section -->
@@ -229,23 +223,7 @@
         <footer id="main-footer"></footer>
     </div>
 
-    <!-- Layout & Category Filter Scripts -->
+    <!-- Layout Script -->
     <script src="../js/layout.js?v=55.0"></script>
-    <script>
-        document.getElementById('category-search')?.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase().trim();
-            const cards = document.querySelectorAll('#category-tools-grid .tool-card');
-            cards.forEach(card => {
-                const title = card.querySelector('.tool-card-title')?.innerText.toLowerCase() || '';
-                const desc = card.querySelector('.tool-card-desc')?.innerText.toLowerCase() || '';
-                const keywords = card.getAttribute('data-keywords')?.toLowerCase() || '';
-                if (title.includes(query) || desc.includes(query) || keywords.includes(query)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-    </script>
 </body>
 </html>

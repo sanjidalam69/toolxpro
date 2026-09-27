@@ -69,16 +69,10 @@
         <main class="main-wrapper" style="flex-direction: column;">
             
             <!-- Category Hero Header -->
-            <section class="dashboard-header" style="background: linear-gradient(135deg, #4a044e 0%, #701a75 50%, #86198f 100%); border-color: rgba(217, 70, 239, 0.35);">
-                <div style="font-size: 3rem; margin-bottom: 0.5rem;">🤖</div>
-                <h1 class="dashboard-title">AI Writing & Intelligence Tools</h1>
-                <p class="dashboard-desc">Next-generation Gemini AI-driven utilities designed for writers, researchers, and students. Humanize AI drafts, verify authenticity, correct grammar, and dictate in Bengali with ease.</p>
-                
-                <!-- Quick Category Search Filter -->
-                <div class="search-container">
-                    <span class="search-icon">🔍</span>
-                    <input type="text" id="category-search" class="search-input" placeholder="Search AI tools (e.g. Humanizer, Detector, Grammar)..." autocomplete="off">
-                </div>
+            <section class="dashboard-header" style="background: linear-gradient(135deg, #4a044e 0%, #701a75 50%, #86198f 100%) !important; border-color: rgba(217, 70, 239, 0.35) !important; padding: 2rem 1.5rem !important; margin-bottom: 1.25rem !important;">
+                <div style="font-size: 2.6rem; margin-bottom: 0.35rem;">🤖</div>
+                <h1 class="dashboard-title" style="margin-bottom: 0.4rem; font-size: 2rem !important;">AI Writing & Tools</h1>
+                <p class="dashboard-desc" style="margin-bottom: 0; max-width: 650px; margin-left: auto; margin-right: auto;">Next-generation Gemini AI-driven utilities designed for writers, researchers, and students. Humanize AI drafts, verify authenticity, correct grammar, and dictate in Bengali with ease.</p>
             </section>
 
             <!-- Tools Grid Section -->
@@ -238,23 +232,7 @@
         <footer id="main-footer"></footer>
     </div>
 
-    <!-- Layout & Category Filter Scripts -->
+    <!-- Layout Script -->
     <script src="../js/layout.js?v=55.0"></script>
-    <script>
-        document.getElementById('category-search')?.addEventListener('input', (e) => {
-            const query = e.target.value.toLowerCase().trim();
-            const cards = document.querySelectorAll('#category-tools-grid .tool-card');
-            cards.forEach(card => {
-                const title = card.querySelector('.tool-card-title')?.innerText.toLowerCase() || '';
-                const desc = card.querySelector('.tool-card-desc')?.innerText.toLowerCase() || '';
-                const keywords = card.getAttribute('data-keywords')?.toLowerCase() || '';
-                if (title.includes(query) || desc.includes(query) || keywords.includes(query)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
-            });
-        });
-    </script>
 </body>
 </html>
