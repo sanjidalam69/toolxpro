@@ -216,8 +216,8 @@ function injectToolBackButton(homePath, isSubFolder, isHomePage) {
                 break;
             }
         }
-        backUrl = homePath;
-        backLabel = 'Back to Home';
+        backUrl = `${homePath}#categories-section`;
+        backLabel = 'Back to Categories';
     } else if (isBlogPage) {
         categoryName = 'Blog';
         backUrl = `${homePath}#blog-container`;
