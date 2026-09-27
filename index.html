@@ -106,43 +106,49 @@
             </div>
             -->
 
-            <!-- Explore Tools By Category (Compact Grid matching real site categories) -->
-            <section class="explore-categories-compact">
+            <!-- Explore Tools By Category (Hub-and-Spoke Architecture) -->
+            <section class="explore-categories-compact" id="categories-section">
                 <div class="category-title-bar">
                     <h2 class="compact-cat-title">Explore Tools By Category</h2>
-                    <p class="compact-cat-subtitle">Quick jump to any tool category below</p>
+                    <p class="compact-cat-subtitle">Browse dedicated hubs with specialized tools, guidelines & tutorials</p>
                 </div>
 
-                <div class="compact-category-grid">
-                    <a href="#ai-tools" class="compact-cat-card">
-                        <div class="cat-icon-small bg-pink">🤖</div>
-                        <span class="cat-name">AI Tools</span>
-                        <span class="cat-sub">4+ Live AI</span>
-                        <div class="cat-line line-pink"></div>
-                    </a>
-                    <a href="#student-corner" class="compact-cat-card">
+                <div class="compact-category-grid" style="grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));">
+                    <a href="categories/student.html" class="compact-cat-card">
                         <div class="cat-icon-small bg-purple">🎓</div>
                         <span class="cat-name">Student Corner</span>
-                        <span class="cat-sub">4+ Tools</span>
+                        <span class="cat-sub">4+ Academic Tools</span>
                         <div class="cat-line line-purple"></div>
                     </a>
-                    <a href="#pdf-tools" class="compact-cat-card">
+                    <a href="categories/pdf.html" class="compact-cat-card">
                         <div class="cat-icon-small bg-red">📄</div>
                         <span class="cat-name">PDF Tools</span>
-                        <span class="cat-sub">5+ Tools</span>
+                        <span class="cat-sub">5+ Document Tools</span>
                         <div class="cat-line line-red"></div>
                     </a>
-                    <a href="#image-tools" class="compact-cat-card">
+                    <a href="categories/image.html" class="compact-cat-card">
                         <div class="cat-icon-small bg-green">🖼️</div>
                         <span class="cat-name">Image Tools</span>
-                        <span class="cat-sub">4+ Tools</span>
+                        <span class="cat-sub">4+ Photo Tools</span>
                         <div class="cat-line line-green"></div>
                     </a>
-                    <a href="#utility-tools" class="compact-cat-card">
-                        <div class="cat-icon-small bg-teal">🛠️</div>
-                        <span class="cat-name">Calculators & Utilities</span>
-                        <span class="cat-sub">8+ Tools</span>
+                    <a href="categories/ai.html" class="compact-cat-card">
+                        <div class="cat-icon-small bg-pink">🤖</div>
+                        <span class="cat-name">AI Tools</span>
+                        <span class="cat-sub">4+ Edge AI Tools</span>
+                        <div class="cat-line line-pink"></div>
+                    </a>
+                    <a href="categories/calculators.html" class="compact-cat-card">
+                        <div class="cat-icon-small bg-teal">🧮</div>
+                        <span class="cat-name">Calculators</span>
+                        <span class="cat-sub">7+ Daily Utilities</span>
                         <div class="cat-line line-teal"></div>
+                    </a>
+                    <a href="categories/bangla.html" class="compact-cat-card">
+                        <div class="cat-icon-small bg-purple">🔤</div>
+                        <span class="cat-name">Bangla Tools</span>
+                        <span class="cat-sub">3+ Language Tools</span>
+                        <div class="cat-line line-purple"></div>
                     </a>
                 </div>
             </section>
@@ -152,7 +158,10 @@
                 
                 <!-- Category 1: AI Writing & Tools -->
                 <section class="tools-section" id="ai-tools" data-category="ai-tools">
-                    <h2 class="category-header">🤖 AI Writing & Intelligence Tools</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 0.5rem;">
+                        <h2 class="category-header" style="margin: 0;">🤖 AI Writing & Intelligence Tools</h2>
+                        <a href="categories/ai.html" class="btn-micro-pill" style="color: var(--primary); font-weight: 700; text-decoration: none;">View AI Category Hub &rarr;</a>
+                    </div>
                     <p class="category-desc">Next-generation Gemini AI-powered tools for humanizing text, proofreading, detecting AI content, and writing productivity.</p>
                     <div class="tools-grid">
                         <a href="tools/ai-detector.html" class="tool-card" data-keywords="ai detector ai image detector ai text detector chatgpt detector midjourney detector dall-e deepfake checker turnitin alternative popular live">
@@ -202,7 +211,10 @@
 
                 <!-- Category 2: Student Corner -->
                 <section class="tools-section" id="student-corner" data-category="student-corner">
-                    <h2 class="category-header">🎓 Student Corner</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 0.5rem;">
+                        <h2 class="category-header" style="margin: 0;">🎓 Student Corner</h2>
+                        <a href="categories/student.html" class="btn-micro-pill" style="color: var(--primary); font-weight: 700; text-decoration: none;">View Student Category Hub &rarr;</a>
+                    </div>
                     <p class="category-desc">Dedicated academic utilities for Bangladeshi school, college, and university students.</p>
                     <div class="tools-grid">
                         <a href="tools/assignment-cover.html" class="tool-card" data-keywords="assignment cover generator university front page a4 print teu student">
@@ -238,7 +250,10 @@
 
                 <!-- Category 3: PDF Tools -->
                 <section class="tools-section" id="pdf-tools" data-category="pdf-tools">
-                    <h2 class="category-header">📄 PDF Tools</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 0.5rem;">
+                        <h2 class="category-header" style="margin: 0;">📄 PDF Tools</h2>
+                        <a href="categories/pdf.html" class="btn-micro-pill" style="color: var(--primary); font-weight: 700; text-decoration: none;">View PDF Category Hub &rarr;</a>
+                    </div>
                     <p class="category-desc">Quickly convert, merge, compress, and organize your PDF documents locally in your browser.</p>
                     <div class="tools-grid">
                         <a href="tools/pdf-to-word.html" class="tool-card" data-keywords="pdf to word converter docx doc convert text extract pdf document popular">
@@ -281,7 +296,10 @@
 
                 <!-- Category 4: Image Tools -->
                 <section class="tools-section" id="image-tools" data-category="image-tools">
-                    <h2 class="category-header">🖼️ Image Tools</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 0.5rem;">
+                        <h2 class="category-header" style="margin: 0;">🖼️ Image Tools</h2>
+                        <a href="categories/image.html" class="btn-micro-pill" style="color: var(--primary); font-weight: 700; text-decoration: none;">View Image Category Hub &rarr;</a>
+                    </div>
                     <p class="category-desc">Compress, convert, remove backgrounds, and create official passport photos in your browser.</p>
                     <div class="tools-grid">
                         <a href="tools/image-compressor.html" class="tool-card" data-keywords="image compress resize photo optimize quality size reduction jpg png webp">
@@ -298,11 +316,11 @@
                             <p class="tool-card-desc">Convert image formats instantly between JPG, PNG, and WebP with zero quality degradation.</p>
                             <div class="card-action">Open Tool &rarr;</div>
                         </a>
-                        <a href="tools/passport-photo.html" class="tool-card" data-keywords="passport photo maker 2x2 inch 35x45mm white background blue background printable sheet">
-                            <span class="tool-badge badge-trending">Trending</span>
-                            <div class="tool-card-icon icon-passport">👤</div>
-                            <h3 class="tool-card-title">Passport Photo Maker</h3>
-                            <p class="tool-card-desc">Create 2x2 inch (US/BD) or 35x45mm passport photos with custom background colors and printable A4 grid.</p>
+                        <a href="tools/passport-photo.html" class="tool-card" data-keywords="passport photo maker 2x2 35x45mm bd mrp us visa biometric auto face fit virtual suits print sheet">
+                            <span class="tool-badge badge-popular" style="background: linear-gradient(135deg, #10b981, #6366f1); color: #fff;">Smart AI Studio</span>
+                            <div class="tool-card-icon icon-passport" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">📸</div>
+                            <h3 class="tool-card-title">AI Passport Photo Maker</h3>
+                            <p class="tool-card-desc">Biometric photo studio with AI face auto-fit, tilt correction, virtual suits, official backgrounds, and A4 print sheets.</p>
                             <div class="card-action">Open Tool &rarr;</div>
                         </a>
                         <a href="tools/bg-remover.html" class="tool-card" data-keywords="background remover transparent png remove white background logo signature cutout photo">
@@ -317,7 +335,10 @@
 
                 <!-- Category 5: Calculators & Utilities -->
                 <section class="tools-section" id="utility-tools" data-category="utility-tools">
-                    <h2 class="category-header">🛠️ Calculators & Everyday Utilities</h2>
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 0.5rem;">
+                        <h2 class="category-header" style="margin: 0;">🧮 Calculators & Everyday Utilities</h2>
+                        <a href="categories/calculators.html" class="btn-micro-pill" style="color: var(--primary); font-weight: 700; text-decoration: none;">View Calculators Hub &rarr;</a>
+                    </div>
                     <p class="category-desc">Accurate health calculators, text analytics, QR tools, and daily unit converters.</p>
                     <div class="tools-grid">
                         <a href="tools/age-calculator.html" class="tool-card" data-keywords="age calculator birthday calendar birth years months days">
@@ -339,13 +360,6 @@
                             <div class="tool-card-icon icon-word">🔤</div>
                             <h3 class="tool-card-title">Word & Character Counter</h3>
                             <p class="tool-card-desc">Analyze your writing in real-time, counting words, characters, lines, and reading time.</p>
-                            <div class="card-action">Open Tool &rarr;</div>
-                        </a>
-                        <a href="tools/bangla-unicode.html" class="tool-card" data-keywords="bangla unicode converter bijoy layout typing conversion sutonnymj">
-                            <span class="tool-badge badge-local">BD Rules</span>
-                            <div class="tool-card-icon icon-unicode">✍️</div>
-                            <h3 class="tool-card-title">Bangla Unicode Converter</h3>
-                            <p class="tool-card-desc">Convert Bijoy keyboard legacy typing to Unicode Bangla and vice-versa for Photoshop/Illustrator.</p>
                             <div class="card-action">Open Tool &rarr;</div>
                         </a>
                         <a href="tools/qr-generator.html" class="tool-card" data-keywords="qr generator code qr-code maker design quick links text">
@@ -374,6 +388,31 @@
                             <div class="tool-card-icon icon-filesize">💾</div>
                             <h3 class="tool-card-title">File Size Converter</h3>
                             <p class="tool-card-desc">Convert data storage units instantly between Bytes, KB, MB, GB, TB, and PB.</p>
+                            <div class="card-action">Open Tool &rarr;</div>
+                        </a>
+                    </div>
+                </section>
+
+                <!-- Category 6: Bangla Tools & Typing Utilities -->
+                <section class="tools-section" id="bangla-tools" data-category="bangla-tools">
+                    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 0.5rem;">
+                        <h2 class="category-header" style="margin: 0;">🔤 Bangla Tools & Typing Utilities</h2>
+                        <a href="categories/bangla.html" class="btn-micro-pill" style="color: var(--primary); font-weight: 700; text-decoration: none;">View Bangla Category Hub &rarr;</a>
+                    </div>
+                    <p class="category-desc">Accurate Bengali Unicode to Bijoy font converter and continuous speech-to-text dictation.</p>
+                    <div class="tools-grid">
+                        <a href="tools/bangla-unicode.html" class="tool-card" data-keywords="bangla unicode converter bijoy layout typing conversion sutonnymj avro">
+                            <span class="tool-badge badge-popular">Popular</span>
+                            <div class="tool-card-icon icon-unicode">✍️</div>
+                            <h3 class="tool-card-title">Unicode ↔ Bijoy Converter</h3>
+                            <p class="tool-card-desc">Convert between Unicode (Avro) and ANSI Bijoy (SutonnyMJ) fonts for MS Word, Photoshop, and offset printing.</p>
+                            <div class="card-action">Open Tool &rarr;</div>
+                        </a>
+                        <a href="tools/speech-to-bangla.html" class="tool-card" data-keywords="bangla voice typing speech to text translator english to bangla voice recognition popular live">
+                            <span class="tool-badge badge-popular" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff;">Voice AI</span>
+                            <div class="tool-card-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">🎙️</div>
+                            <h3 class="tool-card-title">Bangla Voice Typing & Translator</h3>
+                            <p class="tool-card-desc">Speak naturally in Bengali or English to convert speech into clean Bangla text with real-time translation.</p>
                             <div class="card-action">Open Tool &rarr;</div>
                         </a>
                     </div>

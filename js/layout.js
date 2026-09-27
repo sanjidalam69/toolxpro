@@ -1,23 +1,11 @@
 // ToolX Pro - Global Shared Layout & Navigation Configuration
 const CATEGORIES_DATA = [
     {
-        id: 'ai-tools',
-        name: 'AI Writing & Tools',
-        icon: '🤖',
-        isAi: true,
-        tools: [
-            { id: 'ai-detector', name: 'AI Text & Image Detector', desc: 'Scan and detect AI-generated text (ChatGPT, Claude) and AI photos (Midjourney, DALL-E) instantly.', path: 'ai-detector.html' },
-            { id: 'ai-humanizer', name: 'AI Text Humanizer', desc: 'Elevate AI drafts into polished human writing with natural nuance and effortless flow.', path: 'ai-humanizer.html' },
-            { id: 'speech-to-bangla', name: 'Bangla Voice Typing & Translator', desc: 'Speak in Bengali or English to convert speech into clean Bangla text with real-time translation.', path: 'speech-to-bangla.html' },
-            { id: 'grammar-fixer', name: 'AI Grammar & Spell Fixer', desc: 'Check and fix spelling, grammar mistakes, punctuation, and refine writing tone instantly.', path: 'grammar-fixer.html' },
-            { id: 'ai-resume', name: 'AI Resume Maker', desc: 'Build an outstanding professional resume using AI.', isFuture: true },
-            { id: 'ai-cover-letter', name: 'AI Cover Letter', desc: 'Generate tailored cover letters for your job applications.', isFuture: true }
-        ]
-    },
-    {
-        id: 'student-corner',
+        id: 'student',
         name: 'Student Corner',
         icon: '🎓',
+        file: 'student.html',
+        desc: 'Academic tools for Bangladeshi students: cover generators & GPA calculators.',
         tools: [
             { id: 'assignment-cover', name: 'Assignment Cover Generator', desc: 'Create and download custom print-ready assignment cover pages for All Universities or Southeast University.', path: 'assignment-cover.html' },
             { id: 'lab-report-cover', name: 'Lab Report Cover Generator', desc: 'Create and download print-ready Lab Report front pages with experiment details, dates, and faculty grading rubric.', path: 'lab-report-cover.html' },
@@ -26,41 +14,72 @@ const CATEGORIES_DATA = [
         ]
     },
     {
-        id: 'pdf-tools',
+        id: 'pdf',
         name: 'PDF Tools',
         icon: '📄',
+        file: 'pdf.html',
+        desc: 'Convert, compress, merge, and split PDF documents locally.',
         tools: [
-            { id: 'pdf-to-word', name: 'PDF to Word Converter', desc: 'Convert PDF documents into editable Word files (.docx / .doc).', path: 'pdf-to-word.html' },
-            { id: 'pdf-merge', name: 'PDF Merge', desc: 'Combine multiple PDF files into one single PDF document.', path: 'pdf-merge.html' },
-            { id: 'image-to-pdf', name: 'Image to PDF', desc: 'Combine multiple image files into a single clean PDF document.', path: 'image-to-pdf.html' },
             { id: 'pdf-compressor', name: 'PDF Compressor', desc: 'Reduce storage size of PDF files.', path: 'pdf-compressor.html' },
-            { id: 'pdf-reorder', name: 'PDF Page Reorder & Delete', desc: 'Reorder or delete PDF pages easily.', path: 'pdf-reorder.html' }
+            { id: 'pdf-merge', name: 'PDF Merge', desc: 'Combine multiple PDF files into one single PDF document.', path: 'pdf-merge.html' },
+            { id: 'pdf-to-word', name: 'PDF to Word Converter', desc: 'Convert PDF documents into editable Word files (.docx / .doc).', path: 'pdf-to-word.html' },
+            { id: 'pdf-reorder', name: 'PDF Page Split & Reorder', desc: 'Reorganize, split, or delete PDF pages easily.', path: 'pdf-reorder.html' },
+            { id: 'image-to-pdf', name: 'Image to PDF', desc: 'Combine multiple image files into a single clean PDF document.', path: 'image-to-pdf.html' }
         ]
     },
     {
-        id: 'image-tools',
+        id: 'image',
         name: 'Image Tools',
         icon: '🖼️',
+        file: 'image.html',
+        desc: 'Compress, convert, create biometric passport photos, and cut out backgrounds.',
         tools: [
             { id: 'image-compressor', name: 'Image Compressor', desc: 'Reduce the file size of JPG, PNG, or WebP images while keeping quality.', path: 'image-compressor.html' },
             { id: 'image-converter', name: 'Image Converter', desc: 'Convert image files instantly between JPG, PNG, and WebP formats.', path: 'image-converter.html' },
-            { id: 'passport-photo', name: 'Passport Photo Maker', desc: 'Create 2x2 inch / 35x45mm passport photos with white/blue background & A4 print sheet.', path: 'passport-photo.html' },
+            { id: 'passport-photo', name: 'AI Passport Photo Maker', desc: 'Create 2x2 inch / 35x45mm passport photos with auto face fit, virtual suits & A4 print sheet.', path: 'passport-photo.html' },
             { id: 'bg-remover', name: 'Transparent PNG Generator', desc: 'Remove white/solid background from logos, signatures, and graphics.', path: 'bg-remover.html' }
         ]
     },
     {
-        id: 'utility-tools',
+        id: 'ai',
+        name: 'AI Tools',
+        icon: '🤖',
+        file: 'ai.html',
+        isAi: true,
+        desc: 'Next-generation AI utilities for humanizing text, proofreading, and detection.',
+        tools: [
+            { id: 'ai-humanizer', name: 'AI Text Humanizer', desc: 'Elevate AI drafts into polished human writing with natural nuance and effortless flow.', path: 'ai-humanizer.html' },
+            { id: 'grammar-fixer', name: 'AI Grammar & Spell Checker', desc: 'Check and fix spelling, grammar mistakes, punctuation, and refine writing tone instantly.', path: 'grammar-fixer.html' },
+            { id: 'speech-to-bangla', name: 'Bangla Voice Typing & Translator', desc: 'Speak in Bengali or English to convert speech into clean Bangla text with real-time translation.', path: 'speech-to-bangla.html' },
+            { id: 'ai-detector', name: 'AI Text & Image Detector', desc: 'Scan and detect AI-generated text (ChatGPT, Claude) and AI photos (Midjourney, DALL-E) instantly.', path: 'ai-detector.html' },
+            { id: 'ai-resume', name: 'AI Resume Maker', desc: 'Build an outstanding professional resume using AI.', isFuture: true }
+        ]
+    },
+    {
+        id: 'calculators',
         name: 'Calculators & Utilities',
-        icon: '🛠️',
+        icon: '🧮',
+        file: 'calculators.html',
+        desc: 'Everyday math, health, conversion, and text analytics.',
         tools: [
             { id: 'age-calculator', name: 'Age Calculator', desc: 'Calculate your exact age in years, months, days, and next birthday details.', path: 'age-calculator.html' },
             { id: 'bmi-calculator', name: 'BMI Health Calculator', desc: 'Calculate your Body Mass Index (BMI) and check your health classification.', path: 'bmi-calculator.html' },
-            { id: 'word-counter', name: 'Word & Character Counter', desc: 'Count words, characters, lines, sentences, and estimated reading time.', path: 'word-counter.html' },
-            { id: 'bangla-unicode', name: 'Bangla Unicode Converter', desc: 'Convert Bijoy keyboard legacy typing to Unicode Bangla and vice-versa.', path: 'bangla-unicode.html' },
+            { id: 'unit-converter', name: 'Unit Converter', desc: 'Convert between different units of length, weight, and temperature.', path: 'unit-converter.html' },
+            { id: 'file-size-converter', name: 'File Size Converter', desc: 'Convert file storage sizes between Bytes, KB, MB, GB, TB, and PB.', path: 'file-size-converter.html' },
             { id: 'qr-generator', name: 'QR Code Generator', desc: 'Generate customized high-quality QR codes for links, text, or phone numbers.', path: 'qr-generator.html' },
             { id: 'qr-scanner', name: 'QR Code Scanner', desc: 'Scan QR codes using your device camera or upload image files.', path: 'qr-scanner.html' },
-            { id: 'unit-converter', name: 'Unit Converter', desc: 'Convert between different units of length, weight, and temperature.', path: 'unit-converter.html' },
-            { id: 'file-size-converter', name: 'File Size Converter', desc: 'Convert file storage sizes between Bytes, KB, MB, GB, TB, and PB.', path: 'file-size-converter.html' }
+            { id: 'word-counter', name: 'Word & Character Counter', desc: 'Count words, characters, lines, sentences, and estimated reading time.', path: 'word-counter.html' }
+        ]
+    },
+    {
+        id: 'bangla',
+        name: 'Bangla Tools',
+        icon: '🔤',
+        file: 'bangla.html',
+        desc: 'Bengali typography and voice dictation utilities.',
+        tools: [
+            { id: 'bangla-unicode', name: 'Unicode ↔ Bijoy Converter', desc: 'Convert Bijoy keyboard legacy typing to Unicode Bangla and vice-versa.', path: 'bangla-unicode.html' },
+            { id: 'speech-to-bangla', name: 'Bangla Voice Typing & Translator', desc: 'Speak in Bengali to type Bangla text in real-time with voice recognition.', path: 'speech-to-bangla.html' }
         ]
     }
 ];
@@ -68,8 +87,9 @@ const CATEGORIES_DATA = [
 function initLayout() {
     // Detect Path Depth & Page Type
     const path = window.location.pathname.toLowerCase();
-    const isSubFolder = path.includes('/tools/') || path.includes('/blog/') || path.includes('tools/') || path.includes('blog/');
+    const isSubFolder = path.includes('/tools/') || path.includes('/blog/') || path.includes('/categories/') || path.includes('tools/') || path.includes('blog/') || path.includes('categories/');
     const isToolPage = path.includes('/tools/') || path.includes('tools/');
+    const isCategoryPage = path.includes('/categories/') || path.includes('categories/');
     const isHomePage = path.endsWith('/index.html') || path.endsWith('/') || path === '' || (!path.includes('.html') && !isSubFolder);
     const homePath = isSubFolder ? '../index.html' : 'index.html';
     const privacyPath = isSubFolder ? '../privacy-policy.html' : 'privacy-policy.html';
@@ -143,15 +163,16 @@ function updateThemeIcon(theme) {
     }
 }
 
-// Inject Top Navigation & Back Button on Tool and Blog Pages
+// Inject Top Navigation & Back Button on Tool, Category, and Blog Pages
 function injectToolBackButton(homePath, isSubFolder, isHomePage) {
     if (isHomePage) return;
     
     const path = window.location.pathname.toLowerCase();
     const isToolPage = path.includes('/tools/') || path.includes('tools/');
+    const isCategoryPage = path.includes('/categories/') || path.includes('categories/');
     const isBlogPage = path.includes('/blog/') || path.includes('blog/');
     
-    if (!isToolPage && !isBlogPage) return;
+    if (!isToolPage && !isBlogPage && !isCategoryPage) return;
     
     // Prevent double injection
     if (document.querySelector(".tool-nav-top-bar")) return;
@@ -169,8 +190,8 @@ function injectToolBackButton(homePath, isSubFolder, isHomePage) {
     
     let categoryName = 'Tools';
     let toolName = document.title ? document.title.split('-')[0].split('|')[0].trim() : 'Tool';
-    let backUrl = `${homePath}#tools-container`;
-    let backLabel = 'Back to All Tools';
+    let backUrl = `${homePath}#categories-section`;
+    let backLabel = 'Back to Categories';
     
     if (isToolPage) {
         for (const cat of CATEGORIES_DATA) {
@@ -182,9 +203,21 @@ function injectToolBackButton(homePath, isSubFolder, isHomePage) {
             if (found) {
                 categoryName = cat.name;
                 toolName = found.name;
+                backUrl = `../categories/${cat.file}`;
+                backLabel = `Back to ${cat.name}`;
                 break;
             }
         }
+    } else if (isCategoryPage) {
+        for (const cat of CATEGORIES_DATA) {
+            if (cat.file.toLowerCase() === lastPart || cat.id === cleanFileName) {
+                categoryName = cat.name;
+                toolName = cat.name;
+                break;
+            }
+        }
+        backUrl = homePath;
+        backLabel = 'Back to Home';
     } else if (isBlogPage) {
         categoryName = 'Blog';
         backUrl = `${homePath}#blog-container`;
@@ -197,22 +230,40 @@ function injectToolBackButton(homePath, isSubFolder, isHomePage) {
     
     const navBar = document.createElement("div");
     navBar.className = "tool-nav-top-bar";
-    navBar.innerHTML = `
-        <a href="${backUrl}" class="back-to-home-btn" title="${backLabel}">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                <line x1="19" y1="12" x2="5" y2="12"></line>
-                <polyline points="12 19 5 12 12 5"></polyline>
-            </svg>
-            <span>${backLabel}</span>
-        </a>
-        <nav class="tool-breadcrumb-trail" aria-label="Breadcrumb">
-            <a href="${homePath}">Home</a>
-            <span class="crumb-sep">/</span>
-            <a href="${backUrl}">${categoryName}</a>
-            <span class="crumb-sep">/</span>
-            <span class="crumb-active" title="${toolName}">${toolName}</span>
-        </nav>
-    `;
+    
+    if (isCategoryPage) {
+        navBar.innerHTML = `
+            <a href="${backUrl}" class="back-to-home-btn" title="${backLabel}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>${backLabel}</span>
+            </a>
+            <nav class="tool-breadcrumb-trail" aria-label="Breadcrumb">
+                <a href="${homePath}">Home</a>
+                <span class="crumb-sep">/</span>
+                <span class="crumb-active" title="${categoryName}">${categoryName}</span>
+            </nav>
+        `;
+    } else {
+        navBar.innerHTML = `
+            <a href="${backUrl}" class="back-to-home-btn" title="${backLabel}">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                <span>${backLabel}</span>
+            </a>
+            <nav class="tool-breadcrumb-trail" aria-label="Breadcrumb">
+                <a href="${homePath}">Home</a>
+                <span class="crumb-sep">/</span>
+                <a href="${backUrl}">${categoryName}</a>
+                <span class="crumb-sep">/</span>
+                <span class="crumb-active" title="${toolName}">${toolName}</span>
+            </nav>
+        `;
+    }
     
     contentArea.insertBefore(navBar, contentArea.firstChild);
 }
