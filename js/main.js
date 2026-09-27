@@ -17,34 +17,45 @@ document.addEventListener("DOMContentLoaded", () => {
 
         searchBar.addEventListener("input", (e) => {
             const query = e.target.value.toLowerCase().trim();
-            selectedIndex = -1;
-            
-            // 1. Filter Homepage Sections
-            toolSections.forEach(section => {
-                let sectionHasVisibleCards = false;
-                const cards = section.querySelectorAll(".tool-card");
-                
-                cards.forEach(card => {
-                    const title = card.querySelector(".tool-card-title").innerText.toLowerCase();
-                    const desc = card.querySelector(".tool-card-desc") ? card.querySelector(".tool-card-desc").innerText.toLowerCase() : "";
-                    const keywords = card.getAttribute("data-keywords") ? card.getAttribute("data-keywords").toLowerCase() : "";
-                    
-                    const isMatch = title.includes(query) || desc.includes(query) || keywords.includes(query);
-                    
-                    if (isMatch) {
+            const path = window.location.pathname.toLowerCase();
+            const isSubFolder = path.includes('/tools/') || path.includes('/blog/') || path.includes('/categories/');
+            const hubCards = document.querySelectorAll(".hub-card");
+
+            // 1. Filter Homepage Category Hub Cards (if on homepage)
+            if (hubCards.length > 0) {
+                hubCards.forEach(card => {
+                    if (query === "") {
                         card.style.display = "flex";
-                        sectionHasVisibleCards = true;
                     } else {
-                        card.style.display = "none";
+                        const title = card.querySelector(".hub-card-title") ? card.querySelector(".hub-card-title").innerText.toLowerCase() : "";
+                        const desc = card.querySelector(".hub-card-desc") ? card.querySelector(".hub-card-desc").innerText.toLowerCase() : "";
+                        const toolsList = card.querySelector(".hub-tools-list") ? card.querySelector(".hub-tools-list").innerText.toLowerCase() : "";
+                        const isMatch = title.includes(query) || desc.includes(query) || toolsList.includes(query);
+                        card.style.display = isMatch ? "flex" : "none";
                     }
                 });
+            }
 
-                if (sectionHasVisibleCards || query === "") {
-                    section.style.display = "block";
-                } else {
-                    section.style.display = "none";
-                }
-            });
+            // Also filter legacy tools-section if present
+            if (toolSections.length > 0) {
+                toolSections.forEach(section => {
+                    let sectionHasVisibleCards = false;
+                    const cards = section.querySelectorAll(".tool-card");
+                    cards.forEach(card => {
+                        const title = card.querySelector(".tool-card-title")?.innerText.toLowerCase() || "";
+                        const desc = card.querySelector(".tool-card-desc")?.innerText.toLowerCase() || "";
+                        const keywords = card.getAttribute("data-keywords")?.toLowerCase() || "";
+                        const isMatch = title.includes(query) || desc.includes(query) || keywords.includes(query);
+                        if (isMatch) {
+                            card.style.display = "flex";
+                            sectionHasVisibleCards = true;
+                        } else {
+                            card.style.display = "none";
+                        }
+                    });
+                    section.style.display = (sectionHasVisibleCards || query === "") ? "block" : "none";
+                });
+            }
 
             // 2. Populate Floating Autocomplete Dropdown
             if (query.length === 0) {
@@ -54,21 +65,55 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             const matches = [];
-            toolCards.forEach(card => {
-                const title = card.querySelector(".tool-card-title").innerText;
-                const desc = card.querySelector(".tool-card-desc") ? card.querySelector(".tool-card-desc").innerText : "";
-                const icon = card.querySelector(".tool-card-icon") ? card.querySelector(".tool-card-icon").innerText : "🛠️";
-                const href = card.getAttribute("href");
-                const keywords = card.getAttribute("data-keywords") ? card.getAttribute("data-keywords") : "";
 
-                if (title.toLowerCase().includes(query) || desc.toLowerCase().includes(query) || keywords.toLowerCase().includes(query)) {
-                    matches.push({ title, desc, icon, href });
-                }
-            });
+            // Primary source: CATEGORIES_DATA (Global knowledge of all 25 tools + 6 hubs)
+            if (typeof CATEGORIES_DATA !== "undefined" && Array.isArray(CATEGORIES_DATA)) {
+                CATEGORIES_DATA.forEach(cat => {
+                    const catHref = isSubFolder ? `../categories/${cat.file}` : `categories/${cat.file}`;
+                    // Category Hub Match
+                    if (cat.name.toLowerCase().includes(query) || (cat.desc && cat.desc.toLowerCase().includes(query))) {
+                        matches.push({
+                            title: `${cat.name} (Hub)`,
+                            desc: cat.desc,
+                            icon: cat.icon,
+                            href: catHref
+                        });
+                    }
+                    // Tools within this category
+                    if (Array.isArray(cat.tools)) {
+                        cat.tools.forEach(tool => {
+                            if (!tool.path) return;
+                            const toolHref = isSubFolder ? `../tools/${tool.path}` : `tools/${tool.path}`;
+                            const haystack = `${tool.name} ${tool.desc || ''} ${tool.id} ${cat.name}`.toLowerCase();
+                            if (haystack.includes(query)) {
+                                matches.push({
+                                    title: tool.name,
+                                    desc: tool.desc || `Open ${tool.name} in ${cat.name}`,
+                                    icon: cat.icon,
+                                    href: toolHref
+                                });
+                            }
+                        });
+                    }
+                });
+            } else if (toolCards.length > 0) {
+                // Fallback to DOM elements if CATEGORIES_DATA is missing
+                toolCards.forEach(card => {
+                    const title = card.querySelector(".tool-card-title")?.innerText || "";
+                    const desc = card.querySelector(".tool-card-desc")?.innerText || "";
+                    const icon = card.querySelector(".tool-card-icon")?.innerText || "🛠️";
+                    const href = card.getAttribute("href") || "#";
+                    const keywords = card.getAttribute("data-keywords") || "";
+
+                    if (title.toLowerCase().includes(query) || desc.toLowerCase().includes(query) || keywords.toLowerCase().includes(query)) {
+                        matches.push({ title, desc, icon, href });
+                    }
+                });
+            }
 
             if (matches.length > 0) {
-                let html = '<div class="dropdown-header">🔍 Instant Matching Tools</div><ul class="dropdown-list">';
-                matches.slice(0, 6).forEach((item, index) => {
+                let html = '<div class="dropdown-header">🔍 Instant Matching Tools & Hubs</div><ul class="dropdown-list">';
+                matches.slice(0, 8).forEach((item, index) => {
                     html += `
                         <li class="dropdown-item" data-index="${index}">
                             <a href="${item.href}" class="dropdown-link">
