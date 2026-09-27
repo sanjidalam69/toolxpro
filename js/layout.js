@@ -220,7 +220,7 @@ function injectToolBackButton(homePath, isSubFolder, isHomePage) {
         backLabel = 'Back to Categories';
     } else if (isBlogPage) {
         categoryName = 'Blog';
-        backUrl = `${homePath}#blog-container`;
+        backUrl = isSubFolder ? '../blog.html' : 'blog.html';
         backLabel = 'Back to All Articles';
         const h1 = document.querySelector('h1');
         if (h1 && h1.textContent.trim()) {
@@ -353,7 +353,7 @@ function injectHeader(homePath, isSubFolder, isHomePage) {
     header.className = "header-nav";
     
     const categoriesLink = isHomePage ? '#categories-section' : `${homePath}#categories-section`;
-    const blogLink = isHomePage ? '#blog-container' : `${homePath}#blog-container`;
+    const blogLink = isSubFolder ? '../blog.html' : 'blog.html';
     const aboutLink = isSubFolder ? '../about.html' : 'about.html';
     const contactLink = isSubFolder ? '../contact.html' : 'contact.html';
     
@@ -450,8 +450,8 @@ function injectFooter(homePath, isSubFolder, isHomePage) {
     footer.className = "footer-container";
     
     const year = new Date().getFullYear();
-    const categoriesLink = isHomePage ? '#tools-container' : `${homePath}#tools-container`;
-    const blogLink = isHomePage ? '#blog-container' : `${homePath}#blog-container`;
+    const categoriesLink = isHomePage ? '#categories-section' : `${homePath}#categories-section`;
+    const blogLink = isSubFolder ? '../blog.html' : 'blog.html';
     const aboutLink = isSubFolder ? '../about.html' : 'about.html';
     const contactLink = isSubFolder ? '../contact.html' : 'contact.html';
     const privacyLink = isSubFolder ? '../privacy-policy.html' : 'privacy-policy.html';
@@ -742,7 +742,7 @@ function initMobileDrawer(homePath, isSubFolder, isHomePage) {
         drawer.className = "drawer-overlay";
         
         const categoriesLink = isHomePage ? '#categories-section' : `${homePath}#categories-section`;
-        const blogLink = isHomePage ? '#blog-container' : `${homePath}#blog-container`;
+        const blogLink = isSubFolder ? '../blog.html' : 'blog.html';
         const aboutLink = isSubFolder ? '../about.html' : 'about.html';
         const contactLink = isSubFolder ? '../contact.html' : 'contact.html';
         

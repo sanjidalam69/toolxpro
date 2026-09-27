@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog & Tech Knowledge Base - ToolX Pro</title>
+    <meta name="description" content="Explore insightful tutorials, tech guides, academic grading breakdowns, and productivity articles on ToolX Pro. Free guides for students, writers, and developers.">
+    <meta name="keywords" content="toolx pro blog, academic guides, ai detection tutorials, pdf tools guides, cgpa calculator guide, bangla typing tutorial">
+    <link rel="stylesheet" href="css/style.css?v=60.0">
+
+    <!-- Canonical & Open Graph -->
+    <link rel="canonical" href="https://toolxpro.live/blog.html">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://toolxpro.live/blog.html">
+    <meta property="og:title" content="Blog & Knowledge Base - ToolX Pro">
+    <meta property="og:description" content="In-depth tutorials, academic guides, and privacy-first web utility articles.">
+    <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
+
+    <!-- Favicon & Brand Icons -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#F57C00">
+
+    <!-- Google AdSense -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
+
+    <style>
+        .blog-archive-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0.5rem 0.5rem 3rem 0.5rem;
+        }
+
+        .blog-filters {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 8px;
+            margin-bottom: 1.5rem;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .blog-filter-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .blog-filter-btn:hover,
+        .blog-filter-btn.active {
+            background: rgba(245, 124, 0, 0.12);
+            color: var(--primary-color, #f57c00);
+            border-color: rgba(245, 124, 0, 0.35);
+        }
+
+        .blog-grid-full {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .blog-card-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 1.35rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            text-decoration: none;
+            color: inherit;
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .blog-card-item:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary-color, #f57c00);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .blog-card-top {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.75rem;
+        }
+
+        .blog-card-icon {
+            font-size: 1.6rem;
+            line-height: 1;
+        }
+
+        .blog-card-badge {
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 12px;
+            background: rgba(245, 124, 0, 0.1);
+            color: var(--primary-color, #f57c00);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .blog-card-title {
+            font-family: var(--font-header, inherit);
+            font-size: 1.15rem;
+            font-weight: 750;
+            color: var(--text-primary);
+            margin: 0 0 0.5rem 0;
+            line-height: 1.35;
+        }
+
+        .blog-card-excerpt {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.5;
+            margin: 0 0 1rem 0;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .blog-card-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: 0.75rem;
+            border-top: 1px solid var(--border-color);
+            font-size: 0.78rem;
+            color: var(--text-secondary);
+        }
+
+        .blog-card-btn {
+            color: var(--primary-color, #f57c00);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        @media (max-width: 640px) {
+            .blog-grid-full {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app-container">
+        <!-- Header Injected dynamically by layout.js -->
+        <header id="main-header"></header>
+
+        <main class="main-wrapper" style="flex-direction: column;">
+            <div class="blog-archive-container">
+                
+                <!-- Compact Category Header -->
+                <header class="category-compact-header">
+                    <div class="category-compact-header-inner">
+                        <div class="category-title-group">
+                            <span class="category-title-icon">📰</span>
+                            <h1 class="category-title-text">Blog & Knowledge Base</h1>
+                        </div>
+                        <p class="category-subtitle">Comprehensive guides, university grading breakdowns, AI writing tips, and document optimization tutorials.</p>
+                        <div class="category-meta-badges">
+                            <span class="category-meta-pill">
+                                <span class="category-meta-dot"></span>
+                                13 Published Articles
+                            </span>
+                            <span class="category-meta-sep">•</span>
+                            <span class="category-meta-text">Updated for 2026</span>
+                            <span class="category-meta-sep">•</span>
+                            <span class="category-meta-text">Free & Authoritative</span>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Filter Pills -->
+                <div class="blog-filters" id="blog-filter-bar">
+                    <button class="blog-filter-btn active" data-filter="all">All Articles (13)</button>
+                    <button class="blog-filter-btn" data-filter="student">🎓 Academic & Student (4)</button>
+                    <button class="blog-filter-btn" data-filter="ai">🤖 AI & Detection (3)</button>
+                    <button class="blog-filter-btn" data-filter="pdf">📄 PDF & Documents (2)</button>
+                    <button class="blog-filter-btn" data-filter="image">🖼️ Image & Media (2)</button>
+                    <button class="blog-filter-btn" data-filter="utilities">🧮 Calculators & Daily (2)</button>
+                </div>
+
+                <!-- Articles Grid -->
+                <div class="blog-grid-full" id="blog-articles-grid">
+
+                    <!-- 1. AI Text & Image Detector -->
+                    <a href="blog/ai-detector-guide.html" class="blog-card-item" data-cat="ai">
+                        <div>
+                            <div class="blog-card-top">
+                                <span class="blog-card-icon">🛡️</span>
+                                <span class="blog-card-badge">AI Forensics</span>
+                            </div>
+                            <h2 class="blog-card-title">How to Detect AI Text & AI-Generated Images Online</h2>
+                            <p class="blog-card-excerpt">Master AI forensics to spot ChatGPT/Claude text via perplexity metrics and identify Midjourney/Flux synthetic images using micro-texture noise analysis.</p>
+                        </div>
+                        <div class="blog-card-footer">
+                            <span>Sep 20, 2026 • 6 min read</span>
+                            <span class="blog-card-btn">Read Article &rarr;</span>
+                        </div>
+                    </a>
+
+                    <!-- 2. AI Humanizer Guide -->
+                    <a href="blog/ai-writing-guide.html" class="blog-card-item" data-cat="ai">
+                        <div>
+                            <div class="blog-card-top">
+                                <span class="blog-card-icon">✨</span>
+                                <span class="blog-card-badge">AI Writing</span>
+                            </div>
+                            <h2 class="blog-card-title">How to Refine AI Drafts into Natural Human Writing</h2>
+                            <p class="blog-card-excerpt">Actionable techniques to eliminate robotic phrasing, improve sentence flow, reduce repetitive patterns, and create authentic, publish-ready content.</p>
+                        </div>
+                        <div class="blog-card-footer">
+                            <span>Aug 18, 2026 • 5 min read</span>
+                            <span class="blog-card-btn">Read Article &rarr;</span>
+                        </div>
+                    </a>
+
+                    <!-- 3. Bangla Voice Typing -->
+                    <a href="blog/bangla-voice-typing-guide.html" class="blog-card-item" data-cat="ai">
+                        <div>
+                            <div class="blog-card-top">
+                                <span class="blog-card-icon">🎙️</span>
+                                <span class="blog-card-badge">Voice AI</span>
+                            </div>
+                            <h2 class="blog-card-title">Bangla Voice Typing & Speech Translation Guide</h2>
+                            <p class="blog-card-excerpt">Learn how to dictate Bengali smoothly without keyboard typing, perform real-time speech translation, and convert output to Bijoy 52 encoding.</p>
+                        </div>
+                        <div class="blog-card-footer">
+                            <span>Aug 20, 2026 • 4 min read</span>
+                            <span class="blog-card-btn">Read Article &rarr;</span>
+                        </div>
+                    </a>
+
+                    <!-- 4. BD CGPA Guide -->
+                    <a href="blog/bd-cgpa-guide.html" class="blog-card-item" data-cat="student">
+                        <div>
+                            <div class="blog-card-top">
+                                <span class="blog-card-icon">🎖️</span>
+                                <span class="blog-card-badge">BD Higher Ed</span>
+                            </div>
+                            <h2 class="blog-card-title">Complete Guide to Calculating GPA & CGPA in Bangladesh</h2>
+                            <p class="blog-card-excerpt">Comprehensive breakdown of official UGC 4.00 grading scale, credit-weighted semester GPAs, and Cumulative CGPA calculation formulas.</p>
+                        </div>
+                        <div class="blog-card-footer">
+                            <span>Aug 19, 2026 • 7 min read</span>
+                            <span class="blog-card-btn">Read Article &rarr;</span>
+                        </div>
+                    </a>
+
+                    <!-- 5. Academic Grading Systems -->
+                    <a href="blog/academic-grading-systems-guide.html" class="blog-card-item" data-cat="student">
+                        <div>
+                            <div class="blog-card-top">
+                                <span class="blog-card-icon">📊</span>
+                                <span class="blog-card-badge">Education</span>
+                            </div>
+                            <h2 class="blog-card-title">Academic Grading Systems: NCTB, UGC & International Scales</h2>
+                            <p class="blog-card-excerpt">Compare the Bangladeshi 5.00 SSC/HSC board scale, UGC 4.00 university scale, and international US/UK letter grade conversions.</p>
+                        </div>
+                        <div class="blog-card-footer">
+                            <span>Aug 22, 2026 • 8 min read</span>
+                            <span class="blog-card-btn">Read Article &rarr;</span>
+                        </div>
+                    </a>
+
+                    <!-- 6. Assignment Cover Guide -->
+                    <a href="blog/assignment-cover-guide.html" class="blog-card-item" data-cat="student">
+                        <div>
+                            <div class="blog-card-top">
+                                <span class="blog-card-icon">📄</span>
+                                <span class="blog-card-badge">Print Ready</span>
+                            </div>
+                            <h2 class="blog-card-title">How to Create A4 Assignment Cover Pages Online</h2>
+                            <p class="blog-card-excerpt">Step-by-step instructions for university students to format perfect A4 assignment covers with course codes, submission details, and logos.</p>
+                        </div>
+                        <div class="blog-card-footer">
+                            <span>Aug 15, 2026 • 4 min read</span>
+                            <span class="blog-card-btn">Read Article &rarr;</span>
+                        </div>
+                    </a>
+
+                    <!-- 7. Lab Report Cover Guide -->
+                    <a href="blog/lab-report-cover-guide.html" class="blog-card-item" data-cat="student">
+                        <div>
+                            <div class="blog-card-top">
+                                <span class="blog-card-icon">🧪</span>
+                                <span class="blog-card-badge">Engineering & Science</span>
+                            </div>
+                            <h2 class="blog-card-title">How to Generate Lab Report Covers for Universities</h2>
+                            <p class="blog-card-excerpt">Create publication-quality front pages for science and engineering laboratory experiments, with rubrics, dates, and instructor signatures.</p>
+                        </div>
+                        <div class="blog-card-footer">
+                            <span>Sep 27, 2026 • 5 min read</span>
+                            <span class="blog-card-btn">Read Article &rarr;</span>
+                        </div>
+                    </a>
+
+                    <!-- 8. Best PDF Tools -->
+                    <a href="blog/best-pdf-tools.html" class="blog-card-item" data-cat="pdf">
+                        <div>
+                            <div class="blog-card-top">
+                                <span class="blog-card-icon">📑</span>
+                                <span class="blog-card-badge">Document Tools</span>
+                            </div>
+                            <h2 class="blog-card-title">Best Free Online PDF Tools: Compress, Merge & Convert</h2>
+                            <p class="blog-card-excerpt">Explore the fastest browser-powered PDF utilities that protect your confidential documents with zero server uploads.</p>
+                        </div>
+                        <div class="blog-card-footer">
+                            <span>Aug 12, 2026 • 5 min read</span>
+                            <span class="blog-card-btn">Read Article &rarr;</span>
+                        </div>
+                    </a>
+
+                    <!-- 9. PDF Document Management -->
+                    <a href="blog/pdf-document-management-guide.html" class="blog-card-item" data-cat="pdf">
+                        <div>
+                            <div class="blog-card-top">
+                                <span class="blog-card-icon">📁</span>
+                                <span class="blog-card-badge">Productivity</span>
+                            </div>
+                            <h2 class="blog-card-title">PDF Document Management: Organizing, Splitting & Reordering</h2>
+                            <p class="blog-card-excerpt">Proven workflows for rearranging multi-page PDFs, removing blank pages, and preparing clean digital document submissions.</p>
+                        </div>
+                        <div class="blog-card-footer">
+                            <span>Aug 14, 2026 • 4 min read</span>
+                            <span class="blog-card-btn">Read Article &rarr;</span>
+                        </div>
+                    </a>
+
+                    <!-- 10. Image Compression Guide -->
+                    <a href="blog/image-compression-guide.html" class="blog-card-item" data-cat="image">
+                        <div>
+                            <div class="blog-card-top">
+                                <span class="blog-card-icon">📉</span>
+                                <span class="blog-card-badge">Web Optimization</span>
+                            </div>
+                            <h2 class="blog-card-title">Image Compression Techniques: Reduce MBs to KBs Without Quality Loss</h2>
+                            <p class="blog-card-excerpt">Understand lossy vs lossless compression, WebP encoding benefits, and how to reduce file sizes for faster web pages and portal uploads.</p>
+                        </div>
+                        <div class="blog-card-footer">
+                            <span>Aug 10, 2026 • 5 min read</span>
+                            <span class="blog-card-btn">Read Article &rarr;</span>
+                        </div>
+                    </a>
+
+                    <!-- 11. Complete Image Optimization -->
+                    <a href="blog/complete-image-optimization-guide.html" class="blog-card-item" data-cat="image">
+                        <div>
+                            <div class="blog-card-top">
+                                <span class="blog-card-icon">🖼️</span>
+                                <span class="blog-card-badge">Performance</span>
+                            </div>
+                            <h2 class="blog-card-title">The Complete Image Optimization Guide for Creators</h2>
+                            <p class="blog-card-excerpt">In-depth tutorial on choosing between JPG, PNG, WebP, and SVG formats, resizing aspect ratios, and creating transparent assets.</p>
+                        </div>
+                        <div class="blog-card-footer">
+                            <span>Aug 11, 2026 • 6 min read</span>
+                            <span class="blog-card-btn">Read Article &rarr;</span>
+                        </div>
+                    </a>
+
+                    <!-- 12. How to Calculate BMI -->
+                    <a href="blog/how-to-calculate-bmi.html" class="blog-card-item" data-cat="utilities">
+                        <div>
+                            <div class="blog-card-top">
+                                <span class="blog-card-icon">⚖️</span>
+                                <span class="blog-card-badge">Health Analytics</span>
+                            </div>
+                            <h2 class="blog-card-title">How to Calculate BMI & Understand Body Mass Index Accurately</h2>
+                            <p class="blog-card-excerpt">Learn the WHO BMI formula, how to interpret underweight/overweight ranges, and the limitations of BMI for athletes and muscle mass.</p>
+                        </div>
+                        <div class="blog-card-footer">
+                            <span>Aug 08, 2026 • 4 min read</span>
+                            <span class="blog-card-btn">Read Article &rarr;</span>
+                        </div>
+                    </a>
+
+                    <!-- 13. QR Code Technology Guide -->
+                    <a href="blog/qr-code-technology-guide.html" class="blog-card-item" data-cat="utilities">
+                        <div>
+                            <div class="blog-card-top">
+                                <span class="blog-card-icon">📱</span>
+                                <span class="blog-card-badge">Digital Utilities</span>
+                            </div>
+                            <h2 class="blog-card-title">QR Code Technology: Generation, Scanning & Error Correction</h2>
+                            <p class="blog-card-excerpt">Everything you need to know about Reed-Solomon error correction, QR code versions, scannability contrast, and best practices.</p>
+                        </div>
+                        <div class="blog-card-footer">
+                            <span>Aug 05, 2026 • 5 min read</span>
+                            <span class="blog-card-btn">Read Article &rarr;</span>
+                        </div>
+                    </a>
+
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer Injected dynamically by layout.js -->
+        <footer id="main-footer"></footer>
+    </div>
+
+    <script src="js/layout.js?v=60.0"></script>
+    <script>
+        // Interactive Category Filter for Blog
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('.blog-filter-btn');
+            const cards = document.querySelectorAll('.blog-card-item');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+
+                    const filter = btn.getAttribute('data-filter');
+
+                    cards.forEach(card => {
+                        const cat = card.getAttribute('data-cat');
+                        if (filter === 'all' || cat === filter) {
+                            card.style.display = 'flex';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

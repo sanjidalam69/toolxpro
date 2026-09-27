@@ -1,20 +1,30 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About ToolX Pro - Free Online Utility Tools Hub</title>
-    <meta name="description" content="Learn about ToolX Pro — a free, privacy-first collection of 24+ online tools for students, creators, and professionals. No sign-up, fast browser processing.">
+    <title>About ToolX Pro - Free Privacy-First Utility Tools Hub</title>
+    <meta name="description" content="Learn about ToolX Pro — a free, privacy-first platform offering 25+ online utilities for students, creators, and professionals. 100% client-side & edge AI processing.">
     <meta name="keywords" content="about ToolX Pro, free online tools, privacy first tools, web utility hub, student tools, ai detector, pdf tools, bangla voice typing, cgpa calculator">
-    <link rel="stylesheet" href="css/style.css?v=55.0">
+    <link rel="stylesheet" href="css/style.css?v=60.0">
 
     <!-- Canonical & Open Graph -->
     <link rel="canonical" href="https://toolxpro.live/about.html">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://toolxpro.live/about.html">
-    <meta property="og:title" content="About ToolX Pro - Free Online Utility Tools Hub">
-    <meta property="og:description" content="Learn about ToolX Pro — a free, privacy-first collection of 24+ online tools for students, creators, and professionals.">
+    <meta property="og:title" content="About ToolX Pro - Free Privacy-First Utility Tools Hub">
+    <meta property="og:description" content="Learn about ToolX Pro — a free, privacy-first platform offering 25+ online utilities for students, creators, and professionals.">
     <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
+
+    <!-- Favicon & Brand Icons -->
+    <link rel="icon" href="/favicon.ico" sizes="any">
+    <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
+    <link rel="icon" type="image/png" sizes="48x48" href="/images/favicon-48x48.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="theme-color" content="#F57C00">
 
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
@@ -27,7 +37,7 @@
       "name": "ToolX Pro",
       "url": "https://toolxpro.live",
       "logo": "https://toolxpro.live/images/icon-512.png",
-      "description": "Free, privacy-first online utility tools hub providing 24+ academic, AI writing & vision detection, PDF, and image utilities.",
+      "description": "Free, privacy-first online utility tools hub providing 25+ academic, AI writing & vision detection, PDF, image, and calculation utilities.",
       "founder": {
         "@type": "Person",
         "name": "Sanjid Alam"
@@ -42,160 +52,138 @@
 
     <style>
         .about-page-container {
-            max-width: 960px;
+            max-width: 980px;
             margin: 0 auto;
             width: 100%;
-            padding: 2rem 1.25rem 4rem;
+            padding: 0.5rem 0.5rem 3.5rem 0.5rem;
         }
 
-        .about-hero {
-            text-align: center;
-            padding: 2.8rem 1.8rem;
+        .about-card {
             background: var(--card-bg);
-            border-radius: var(--border-radius);
-            border: var(--glass-border);
-            box-shadow: var(--card-shadow);
-            margin-bottom: 2.5rem;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .about-hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: var(--accent-gradient);
-        }
-
-        .about-hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 6px 14px;
-            background: var(--primary-glow);
-            color: var(--accent);
-            border-radius: 30px;
-            font-size: 0.85rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-bottom: 1rem;
-        }
-
-        .about-hero-title {
-            font-family: var(--font-header);
-            font-size: 2.4rem;
-            font-weight: 800;
-            color: var(--text-primary);
-            margin-bottom: 1rem;
-            line-height: 1.2;
-        }
-
-        .about-hero-lead {
-            font-size: 1.15rem;
-            color: var(--text-secondary);
-            max-width: 760px;
-            margin: 0 auto;
-            line-height: 1.7;
-        }
-
-        .about-section {
-            background: var(--card-bg);
-            border-radius: var(--border-radius);
+            border-radius: 16px;
             border: 1px solid var(--border-color);
-            padding: 2.2rem;
-            margin-bottom: 2rem;
+            padding: 2rem 2.2rem;
+            margin-bottom: 1.5rem;
             box-shadow: var(--card-shadow);
         }
 
-        .section-heading {
-            font-family: var(--font-header);
-            font-size: 1.45rem;
-            font-weight: 700;
+        .about-card h2 {
+            font-family: var(--font-header, inherit);
+            font-size: 1.35rem;
+            font-weight: 750;
             color: var(--text-primary);
             display: flex;
             align-items: center;
             gap: 10px;
-            margin-bottom: 1.2rem;
-            padding-bottom: 0.75rem;
+            margin: 0 0 1rem 0;
+            padding-bottom: 0.65rem;
             border-bottom: 1px solid var(--border-color);
+            letter-spacing: -0.3px;
         }
 
         .about-text {
-            font-size: 1.02rem;
+            font-size: 1rem;
             line-height: 1.75;
             color: var(--text-primary);
             margin-bottom: 1rem;
         }
 
-        /* Tools Table Styling */
-        .tools-table-wrapper {
-            overflow-x: auto;
-            border-radius: 12px;
+        .about-text:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Stats Grid */
+        .about-stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about-stat-box {
+            background: var(--card-bg);
             border: 1px solid var(--border-color);
-            margin: 1.5rem 0;
+            border-radius: 14px;
+            padding: 1.25rem 1rem;
+            text-align: center;
         }
 
-        .tools-table {
-            width: 100%;
-            border-collapse: collapse;
-            text-align: left;
-            font-size: 0.96rem;
+        .about-stat-number {
+            font-family: var(--font-header, inherit);
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: var(--primary-color, #f57c00);
+            line-height: 1.2;
+            margin-bottom: 4px;
         }
 
-        .tools-table th {
-            background: var(--bg-secondary);
-            color: var(--text-primary);
-            padding: 12px 18px;
-            font-weight: 700;
-            border-bottom: 2px solid var(--border-color);
-            font-family: var(--font-header);
-        }
-
-        .tools-table td {
-            padding: 14px 18px;
-            border-bottom: 1px solid var(--border-color);
-            color: var(--text-primary);
-            vertical-align: middle;
-        }
-
-        .tools-table tr:last-child td {
-            border-bottom: none;
-        }
-
-        .tools-table tr:hover {
-            background: var(--primary-glow);
-        }
-
-        .cat-tag {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: 700;
-            color: var(--text-primary);
-        }
-
-        /* Feature / Notice Cards */
-        .notice-card {
-            background: var(--primary-glow);
-            border-left: 4px solid var(--accent);
-            border-radius: 10px;
-            padding: 1.25rem;
-            margin: 1.2rem 0;
-            line-height: 1.65;
-            font-size: 0.98rem;
-        }
-
-        .notice-card a {
-            color: var(--accent);
+        .about-stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
             font-weight: 600;
-            text-decoration: underline;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .contact-card-box {
+        /* Hubs Breakdown Grid */
+        .hubs-breakdown-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.2rem;
+            margin-top: 1rem;
+        }
+
+        .hub-breakdown-card {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.25rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .hub-breakdown-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 750;
+            font-size: 1.05rem;
+            color: var(--text-primary);
+        }
+
+        .hub-breakdown-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            line-height: 1.55;
+            margin: 0;
+        }
+
+        .hub-breakdown-tools {
+            font-size: 0.82rem;
+            color: var(--text-primary);
+            line-height: 1.5;
+            margin-top: 0.25rem;
+        }
+
+        .hub-breakdown-tools strong {
+            color: var(--primary-color, #f57c00);
+        }
+
+        /* Highlight Notice */
+        .privacy-highlight-box {
+            background: rgba(16, 185, 129, 0.08);
+            border-left: 4px solid #10b981;
+            border-radius: 10px;
+            padding: 1.2rem 1.4rem;
+            margin: 1.2rem 0 0.5rem;
+            line-height: 1.65;
+            font-size: 0.95rem;
+            color: var(--text-primary);
+        }
+
+        /* Contact Action Box */
+        .about-contact-banner {
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -208,42 +196,37 @@
             margin-top: 1.2rem;
         }
 
-        .contact-btn-link {
+        .about-contact-btn {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: var(--accent-gradient);
+            background: var(--primary-gradient);
             color: #ffffff !important;
             padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
+            border-radius: 30px;
+            font-weight: 700;
             text-decoration: none;
-            transition: var(--transition);
+            font-size: 0.92rem;
+            transition: all 0.2s ease;
         }
 
-        .contact-btn-link:hover {
-            opacity: 0.92;
+        .about-contact-btn:hover {
             transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 124, 0, 0.35);
         }
 
-        .disclaimer-footer-text {
-            font-size: 0.88rem;
-            color: var(--text-secondary);
-            line-height: 1.6;
-            margin-top: 1.5rem;
-            padding-top: 1rem;
-            border-top: 1px dashed var(--border-color);
+        @media (max-width: 768px) {
+            .about-stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .hubs-breakdown-grid {
+                grid-template-columns: 1fr;
+            }
+            .about-card {
+                padding: 1.4rem 1.15rem;
+            }
         }
     </style>
-    <!-- Favicon & Brand Icons -->
-    <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="icon" href="/images/favicon.svg" type="image/svg+xml">
-    <link rel="icon" type="image/png" sizes="48x48" href="/images/favicon-48x48.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="/images/favicon-96x96.png">
-    <link rel="icon" type="image/png" sizes="192x192" href="/images/favicon-192x192.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
-    <link rel="manifest" href="/site.webmanifest">
-    <meta name="theme-color" content="#F57C00">
 </head>
 <body>
     <div id="app-container">
@@ -253,102 +236,153 @@
         <main class="main-wrapper" style="flex-direction: column;">
             <div class="about-page-container">
                 
-                <!-- Hero Section -->
-                <div class="about-hero">
-                    <div class="about-hero-badge">✨ Fast, Free & Privacy-First</div>
-                    <h1 class="about-hero-title">About ToolX Pro</h1>
-                    <p class="about-hero-lead">
-                        ToolX Pro (<a href="https://toolxpro.live" style="color:var(--accent); text-decoration:none; font-weight:600;">toolxpro.live</a>) is a free, browser-based utility tools platform engineered for students, writers, freelancers, and professionals who need fast, reliable web utilities — without sign-up barriers, intrusive popups, or privacy compromises.
-                    </p>
+                <!-- Compact Category Header -->
+                <header class="category-compact-header">
+                    <div class="category-compact-header-inner">
+                        <div class="category-title-group">
+                            <span class="category-title-icon">ℹ️</span>
+                            <h1 class="category-title-text">About ToolX Pro</h1>
+                        </div>
+                        <p class="category-subtitle">Empowering students, creators, and everyday web users with free, lightning-fast, privacy-first digital utilities.</p>
+                        <div class="category-meta-badges">
+                            <span class="category-meta-pill">
+                                <span class="category-meta-dot"></span>
+                                25+ Free Tools
+                            </span>
+                            <span class="category-meta-sep">•</span>
+                            <span class="category-meta-text">6 Core Category Hubs</span>
+                            <span class="category-meta-sep">•</span>
+                            <span class="category-meta-text">No Sign-up Required</span>
+                        </div>
+                    </div>
+                </header>
+
+                <!-- Key Metrics -->
+                <div class="about-stats-grid">
+                    <div class="about-stat-box">
+                        <div class="about-stat-number">25+</div>
+                        <div class="about-stat-label">Free Tools</div>
+                    </div>
+                    <div class="about-stat-box">
+                        <div class="about-stat-number">100%</div>
+                        <div class="about-stat-label">Privacy First</div>
+                    </div>
+                    <div class="about-stat-box">
+                        <div class="about-stat-number">6</div>
+                        <div class="about-stat-label">Dedicated Hubs</div>
+                    </div>
+                    <div class="about-stat-box">
+                        <div class="about-stat-number">0s</div>
+                        <div class="about-stat-label">Zero Sign-up Wait</div>
+                    </div>
                 </div>
 
-                <!-- Mission Section -->
-                <section class="about-section">
-                    <h2 class="section-heading">🎯 Our Mission</h2>
+                <!-- Mission Card -->
+                <section class="about-card">
+                    <h2>🎯 Our Mission & Philosophy</h2>
                     <p class="about-text">
-                        We believe essential web utilities should be freely accessible to everyone around the world. Whether you are a university student in Bangladesh generating print-ready assignment covers and calculating semester CGPA, a content creator speaking in Bengali to type documents with real-time translation, or a professional converting and merging PDF files, ToolX Pro delivers instant, reliable utilities directly in your browser.
+                        <strong>ToolX Pro</strong> (<a href="https://toolxpro.live" style="color:var(--primary-color, #f57c00); text-decoration:none; font-weight:700;">toolxpro.live</a>) was created with one clear purpose: <em>to make essential digital utilities free, instant, and accessible without compromise</em>. 
+                    </p>
+                    <p class="about-text">
+                        Most utility websites online today are cluttered with paywalls, forced email registrations, intrusive redirects, and excessive ads. ToolX Pro changes that by offering high-quality, professional-grade tools that run directly inside your web browser — completely free, print-ready, and respect your privacy.
                     </p>
                 </section>
 
-                <!-- What We Offer Section -->
-                <section class="about-section">
-                    <h2 class="section-heading">🛠️ What We Offer</h2>
+                <!-- 6 Category Hubs -->
+                <section class="about-card">
+                    <h2>🏗️ The 6 Dedicated Category Hubs</h2>
                     <p class="about-text">
-                        ToolX Pro currently provides <strong>24+ free, production-ready utilities</strong> across 5 core categories:
+                        Our suite is organized into 6 focused hubs designed for fast task completion:
                     </p>
 
-                    <div class="tools-table-wrapper">
-                        <table class="tools-table">
-                            <thead>
-                                <tr>
-                                    <th style="width: 30%;">Category</th>
-                                    <th>Included Tools & Capabilities</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td><span class="cat-tag">🤖 AI Writing & Vision</span></td>
-                                    <td><strong>AI Text & Image Detector</strong> (scans ChatGPT/Claude text & Midjourney/Flux synthetic imagery), <strong>Bangla Voice Typing & Speech Translator</strong> (Web Speech API & Live Translation), <strong>AI Text Humanizer</strong> (converts robotic AI drafts into natural human prose), <strong>AI Grammar & Spell Fixer</strong> (powered by Google Gemini AI).</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="cat-tag">🎓 Student Corner</span></td>
-                                    <td><strong>Assignment Cover Page Generator</strong> (A4 print-ready for All BD Universities & Southeast University), <strong>SSC/HSC GPA Calculator</strong> (NCTB 5.00 Scale with 4th subject bonus), <strong>BD University CGPA Calculator</strong> (UGC Standard 4.00 Scale).</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="cat-tag">📄 PDF Tools</span></td>
-                                    <td><strong>PDF to Word Converter</strong>, <strong>PDF Merge</strong>, <strong>Image to PDF</strong>, <strong>PDF Compressor</strong>, and <strong>PDF Page Reorder & Delete</strong> (100% client-side WebAssembly processing).</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="cat-tag">🖼️ Image Tools</span></td>
-                                    <td><strong>Image Compressor</strong> (JPG, PNG, WebP), <strong>Image Converter</strong>, <strong>Passport Photo Maker</strong> (2x2 inch / 35x45mm with A4 print sheet), and <strong>Transparent PNG Background Remover</strong>.</td>
-                                </tr>
-                                <tr>
-                                    <td><span class="cat-tag">🛠️ Calculators & Utilities</span></td>
-                                    <td><strong>Bangla Unicode to Bijoy Converter</strong> (SutonnyMJ font coding), <strong>Age Calculator</strong>, <strong>BMI Health Calculator</strong>, <strong>Word & Character Counter</strong>, <strong>QR Code Generator & Scanner</strong>, <strong>Unit Converter</strong>, and <strong>File Size Converter</strong>.</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </section>
-
-                <!-- Privacy First Section -->
-                <section class="about-section">
-                    <h2 class="section-heading">🔒 Privacy First — Client-Side Architecture</h2>
-                    <p class="about-text">
-                        The majority of tools on ToolX Pro operate <strong>100% client-side</strong> using HTML5, Canvas API, WebAssembly, and local JavaScript engines. This guarantees that your sensitive documents, PDFs, photos, and voice audio streams are processed entirely within your device's browser memory and are never uploaded to any remote server.
-                    </p>
-                    
-                    <div class="notice-card">
-                        ℹ️ <strong>AI Tools Transparency:</strong> AI-powered intelligence features (such as AI Text & Image Detector, AI Humanizer, and Grammar Fixer) communicate securely with Google's Gemini API via encrypted SSL connections exclusively to analyze content and generate outputs. No personal user data, uploaded images, or input text is permanently retained or used for model training. Review our <a href="privacy-policy.html">Privacy Policy</a> for comprehensive details.
-                    </div>
-                </section>
-
-                <!-- Built for Bangladesh & Global Users -->
-                <section class="about-section">
-                    <h2 class="section-heading">🇧🇩 Localized for Bangladesh & Built for Global Users</h2>
-                    <p class="about-text">
-                        ToolX Pro features customized academic grading matrices and linguistic tools tailored specifically for Bangladeshi schools, colleges, and universities — including the National University, public and private university UGC grading regulations, and SutonnyMJ Bijoy keyboard encoding standards. Everything is optimized for both desktop and mobile devices.
-                    </p>
-                </section>
-
-                <!-- Get in Touch Section -->
-                <section class="about-section">
-                    <h2 class="section-heading">📬 Get in Touch</h2>
-                    <p class="about-text">
-                        Have suggestions for new utilities, university grading templates, or bug reports? We welcome all community feedback.
-                    </p>
-
-                    <div class="contact-card-box">
-                        <div>
-                            <strong style="font-size: 1.05rem; display: block; margin-bottom: 4px;">Have questions or feature requests?</strong>
-                            <span style="color: var(--text-secondary); font-size: 0.92rem;">We respond to all user inquiries within 24 hours at <strong>ai.sanjid.alam@gmail.com</strong>.</span>
+                    <div class="hubs-breakdown-grid">
+                        <div class="hub-breakdown-card">
+                            <div class="hub-breakdown-header">
+                                <span>🎓</span> Student Corner
+                            </div>
+                            <p class="hub-breakdown-desc">Academic tools built for Bangladeshi school, college, and university students.</p>
+                            <div class="hub-breakdown-tools">
+                                <strong>Tools:</strong> Assignment Cover Generator, Lab Report Cover Generator, SSC & HSC GPA Calculator, BD University CGPA Calculator.
+                            </div>
                         </div>
-                        <a href="contact.html" class="contact-btn-link">👉 Visit Contact Page</a>
-                    </div>
 
-                    <p class="disclaimer-footer-text">
-                        <strong>Disclaimer:</strong> ToolX Pro is an independent web utility platform. All brand names, product trademarks, and institutional names referenced remain the property of their respective owners.
+                        <div class="hub-breakdown-card">
+                            <div class="hub-breakdown-header">
+                                <span>📄</span> PDF Tools
+                            </div>
+                            <p class="hub-breakdown-desc">Lightweight, browser-powered document utilities with zero server uploads.</p>
+                            <div class="hub-breakdown-tools">
+                                <strong>Tools:</strong> PDF Compressor, PDF Merge, PDF to Word Converter, PDF Page Split & Reorder, Image to PDF.
+                            </div>
+                        </div>
+
+                        <div class="hub-breakdown-card">
+                            <div class="hub-breakdown-header">
+                                <span>🖼️</span> Image Tools
+                            </div>
+                            <p class="hub-breakdown-desc">Client-side photo optimization, conversion, and biometric passport photo creation.</p>
+                            <div class="hub-breakdown-tools">
+                                <strong>Tools:</strong> AI Passport Photo Maker, Image Compressor, Image Converter, Transparent PNG Background Remover.
+                            </div>
+                        </div>
+
+                        <div class="hub-breakdown-card">
+                            <div class="hub-breakdown-header">
+                                <span>🤖</span> AI Writing & Tools
+                            </div>
+                            <p class="hub-breakdown-desc">Smart edge AI utilities powered by Cloudflare and Google Gemini.</p>
+                            <div class="hub-breakdown-tools">
+                                <strong>Tools:</strong> AI Text Humanizer, AI Text & Image Detector, AI Grammar & Spell Checker, Bangla Voice Typing.
+                            </div>
+                        </div>
+
+                        <div class="hub-breakdown-card">
+                            <div class="hub-breakdown-header">
+                                <span>🧮</span> Calculators & Utilities
+                            </div>
+                            <p class="hub-breakdown-desc">High-precision everyday math, health, conversion, and text analytics tools.</p>
+                            <div class="hub-breakdown-tools">
+                                <strong>Tools:</strong> Age Calculator, BMI Calculator, Unit Converter, File Size Converter, QR Generator & Scanner, Word Counter.
+                            </div>
+                        </div>
+
+                        <div class="hub-breakdown-card">
+                            <div class="hub-breakdown-header">
+                                <span>🔤</span> Bangla Tools
+                            </div>
+                            <p class="hub-breakdown-desc">Specialized Bengali typography conversion and voice dictation utilities.</p>
+                            <div class="hub-breakdown-tools">
+                                <strong>Tools:</strong> Unicode to Bijoy Converter, Bijoy to Unicode, Bangla Voice Typing with Live Translation.
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Privacy Architecture -->
+                <section class="about-card">
+                    <h2>🔒 Privacy First & Client-Side Sandbox</h2>
+                    <p class="about-text">
+                        The majority of tools on ToolX Pro operate <strong>100% client-side</strong> using modern HTML5 Canvas, WebAssembly, and local JavaScript algorithms. Your files, confidential PDF documents, portrait photos, and calculations remain strictly in your device's memory.
                     </p>
+                    <div class="privacy-highlight-box">
+                        🛡️ <strong>Zero Data Retention:</strong> We do not log, retain, or store your private files or text inputs. For AI tools, requests are encrypted over SSL and processed statelessly without ever being used to train third-party machine learning models.
+                    </div>
+                </section>
+
+                <!-- Developer & Open Feedback -->
+                <section class="about-card">
+                    <h2>👨‍💻 Built & Maintained with Care</h2>
+                    <p class="about-text">
+                        ToolX Pro is designed, engineered, and maintained by <strong>Sanjid Alam</strong>. We continuously monitor user feedback, board exam grading changes, and browser standards to keep every calculator and tool 100% accurate and up-to-date.
+                    </p>
+
+                    <div class="about-contact-banner">
+                        <div>
+                            <strong style="display:block; font-size:1.02rem; margin-bottom:3px; color:var(--text-primary);">Have a tool suggestion or found a bug?</strong>
+                            <span style="font-size:0.88rem; color:var(--text-secondary);">We welcome community feedback and usually respond within 24 hours.</span>
+                        </div>
+                        <a href="contact.html" class="about-contact-btn">Get In Touch &rarr;</a>
+                    </div>
                 </section>
 
             </div>
@@ -358,6 +392,6 @@
         <footer id="main-footer"></footer>
     </div>
 
-    <script src="js/layout.js?v=55.0"></script>
+    <script src="js/layout.js?v=60.0"></script>
 </body>
 </html>
