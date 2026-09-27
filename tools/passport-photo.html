@@ -1,10 +1,10 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Passport Photo Maker - Create Official 2x2 & 35x45mm Photo Sheets | ToolX Pro</title>
-    <meta name="description" content="Free online passport size photo maker. Crop to official biometric dimensions (2x2 inch, 35x45mm, stamp size), replace background color (white, light blue), and create printable A4 photo sheets.">
+    <meta name="description" content="Smart online passport photo maker. Crop to biometric standards (2x2 inch, 35x45mm, stamp size), AI background removal & replacement, interactive face alignment, and printable A4/4x6 photo sheets.">
     <link rel="canonical" href="https://toolxpro.live/tools/passport-photo.html">
     <link rel="stylesheet" href="../css/style.css?v=55.0">
 
@@ -15,7 +15,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://toolxpro.live/tools/passport-photo.html">
     <meta property="og:title" content="Passport Photo Maker - Create Official Photo Sheets | ToolX Pro">
-    <meta property="og:description" content="Create compliant passport and visa photos with background adjustment and multi-copy A4 grid templates.">
+    <meta property="og:description" content="Smart passport and visa photo maker with AI background replacement, biometric face guides, and printable multi-copy A4 & 4x6 sheets.">
     <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
 
     <!-- Favicon & Brand Icons -->
@@ -28,6 +28,12 @@
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#F57C00">
 
+    <!-- MediaPipe Selfie Segmentation AI Model (Local In-Browser WASM) -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/selfie_segmentation/selfie_segmentation.js" crossorigin="anonymous"></script>
+
+    <!-- jsPDF for Instant PDF Sheet Generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json">
     {
@@ -35,7 +41,7 @@
       "@graph": [
         {
           "@type": "WebApplication",
-          "name": "Passport Photo Maker & Grid Generator",
+          "name": "Smart Passport Photo Maker & Sheet Generator",
           "url": "https://toolxpro.live/tools/passport-photo.html",
           "applicationCategory": "MultimediaApplication",
           "operatingSystem": "All",
@@ -66,10 +72,18 @@
             },
             {
               "@type": "Question",
-              "name": "Can I print the generated A4 sheet at home or at a photo studio?",
+              "name": "Can I replace my photo background with official white or blue?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes. The generated sheet is rendered at 300 DPI print resolution. You can print it on standard glossy photo paper using any home inkjet printer or local print shop."
+                "text": "Yes! Our tool features an in-browser AI Background Remover that automatically cuts out your portrait and lets you choose official white, light blue, royal blue, or studio gray in one click."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I print the generated photo sheet on 4x6 inch photo paper or A4?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes. You can export multi-copy sheets formatted for standard A4 paper or standard 4x6 inch (10x15 cm) glossy photo paper at 300 DPI print quality."
               }
             }
           ]
@@ -77,70 +91,760 @@
       ]
     }
     </script>
+
+    <style>
+        .passport-studio-wrapper {
+            max-width: 1280px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .passport-grid {
+            display: grid;
+            grid-template-columns: 430px 1fr;
+            gap: 22px;
+            align-items: flex-start;
+        }
+
+        .studio-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 22px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .section-heading {
+            font-size: 0.96rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 18px 0 10px 0;
+            padding-bottom: 6px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .section-heading:first-child {
+            margin-top: 0;
+        }
+
+        /* Upload Area */
+        .passport-upload-zone {
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 24px 16px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            background: var(--bg-secondary);
+        }
+        .passport-upload-zone:hover,
+        .passport-upload-zone.dragover {
+            border-color: var(--primary);
+            background: var(--primary-glow);
+        }
+
+        /* Color Chips */
+        .color-chips-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin-top: 8px;
+        }
+        .color-chip-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            padding: 8px 4px;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            font-size: 0.74rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .color-chip-btn:hover {
+            border-color: var(--primary);
+            color: var(--text-primary);
+        }
+        .color-chip-btn.active {
+            border-color: var(--primary);
+            color: var(--primary);
+            background: var(--primary-glow);
+            box-shadow: 0 0 0 1px var(--primary);
+        }
+        .color-dot-indicator {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+        }
+
+        /* Sliders with value readouts */
+        .control-slider-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+        .slider-label-group {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: var(--text-primary);
+        }
+        .slider-label-group span.val-display {
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        /* Preview Stage */
+        .preview-stage-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: var(--border-radius);
+            padding: 22px;
+            box-shadow: var(--card-shadow);
+            position: sticky;
+            top: 85px;
+        }
+
+        .preview-header-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .preview-mode-tabs {
+            display: inline-flex;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 3px;
+            gap: 4px;
+        }
+        .preview-tab-btn {
+            padding: 6px 14px;
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-size: 0.84rem;
+            font-weight: 700;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .preview-tab-btn.active {
+            background: var(--card-bg);
+            color: var(--primary);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .canvas-viewport {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 420px;
+            background: #cbd5e1;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            overflow: hidden;
+            user-select: none;
+        }
+        [data-theme="dark"] .canvas-viewport {
+            background: #0f172a;
+        }
+
+        /* Canvas Wrapper & Guides */
+        .crop-canvas-box {
+            position: relative;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            border-radius: 4px;
+            overflow: hidden;
+            cursor: grab;
+            touch-action: none;
+        }
+        .crop-canvas-box:active {
+            cursor: grabbing;
+        }
+
+        #crop-canvas {
+            display: block;
+            background: #ffffff;
+        }
+
+        /* Biometric Guide Overlay (ICAO 9303 Compliant) */
+        .biometric-overlay {
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            opacity: 0.85;
+            transition: opacity 0.2s ease;
+        }
+        .biometric-overlay.hidden {
+            display: none !important;
+        }
+        .bio-oval {
+            width: 58%;
+            height: 72%;
+            border: 2px dashed #0284c7;
+            border-radius: 50% / 55% 55% 45% 45%;
+            position: relative;
+            box-sizing: border-box;
+        }
+        .bio-eye-line {
+            position: absolute;
+            top: 42%;
+            left: -15%;
+            right: -15%;
+            height: 1px;
+            border-top: 1px dashed #06b6d4;
+        }
+        .bio-eye-label {
+            position: absolute;
+            top: -14px;
+            right: 0;
+            font-size: 9px;
+            font-weight: 700;
+            color: #06b6d4;
+            background: rgba(0,0,0,0.6);
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+        .bio-chin-line {
+            position: absolute;
+            bottom: 4%;
+            left: 10%;
+            right: 10%;
+            border-top: 1px dashed #10b981;
+        }
+        .bio-chin-label {
+            position: absolute;
+            top: 2px;
+            right: 0;
+            font-size: 9px;
+            font-weight: 700;
+            color: #10b981;
+            background: rgba(0,0,0,0.6);
+            padding: 1px 4px;
+            border-radius: 3px;
+        }
+
+        /* Sheet Canvas Wrapper */
+        #sheet-view-container {
+            display: none;
+            width: 100%;
+            justify-content: center;
+            overflow-x: auto;
+        }
+        #sheet-canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 4px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+            background: #ffffff;
+        }
+
+        /* Dimension Badge HUD */
+        .dimension-hud {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 8px 14px;
+            font-size: 0.82rem;
+            margin-top: 12px;
+        }
+        .hud-spec-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+        }
+        .hud-spec-item strong {
+            color: var(--text-primary);
+        }
+
+        /* Action Buttons */
+        .studio-actions-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 16px;
+        }
+        .studio-actions-grid button,
+        .studio-actions-grid a {
+            padding: 12px 14px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            box-sizing: border-box;
+        }
+        .btn-dl-sheet {
+            background: var(--primary);
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 4px 12px rgba(245, 124, 0, 0.25);
+        }
+        .btn-dl-sheet:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(245, 124, 0, 0.35);
+        }
+        .btn-dl-single {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            border: 1px solid var(--border-color);
+        }
+        .btn-dl-single:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-print-direct {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #ffffff;
+            border: none;
+            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+        }
+        .btn-print-direct:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+        }
+
+        /* Micro Pill Buttons */
+        .btn-micro-pill {
+            padding: 4px 8px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 6px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .btn-micro-pill:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* AI Status Pill */
+        .ai-status-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(16, 185, 129, 0.1);
+            color: #059669;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+        [data-theme="dark"] .ai-status-pill {
+            color: #34d399;
+            border-color: rgba(52, 211, 153, 0.3);
+        }
+
+        /* Responsive */
+        @media (max-width: 992px) {
+            .passport-grid {
+                grid-template-columns: 1fr;
+            }
+            .preview-stage-card {
+                position: static;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .studio-actions-grid {
+                grid-template-columns: 1fr;
+            }
+            .btn-print-direct {
+                grid-column: span 1;
+            }
+            .color-chips-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+            .dimension-hud {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 6px;
+            }
+        }
+
+        @media print {
+            body * {
+                visibility: hidden !important;
+            }
+            #sheet-canvas, #sheet-canvas * {
+                visibility: visible !important;
+            }
+            #sheet-canvas {
+                position: fixed !important;
+                left: 0 !important;
+                top: 0 !important;
+                width: 100vw !important;
+                height: 100vh !important;
+                object-fit: contain !important;
+                margin: 0 !important;
+                padding: 0 !important;
+                box-shadow: none !important;
+                border: none !important;
+            }
+            @page {
+                size: auto;
+                margin: 0;
+            }
+        }
+    </style>
 </head>
 <body>
     <div id="app-container">
+        <!-- Header Injected dynamically by layout.js -->
         <header id="main-header"></header>
         
         <div class="main-wrapper">
             <aside id="main-sidebar"></aside>
             
             <main class="content-area">
-                <div class="tool-container">
-                    <div class="tool-header">
-                        <h1 class="tool-title">📸 Passport Photo Maker & A4 Sheet Generator</h1>
-                        <p class="tool-desc">Upload your portrait, set official background colors, crop to government passport standards, and download printable multi-copy sheets in seconds.</p>
-                    </div>
+                <div class="passport-studio-wrapper">
                     
-                    <div class="tool-body">
-                        <div class="form-group">
-                            <label for="photo-upload" style="font-weight:600;">Upload Portrait Photo (JPG, PNG, WebP):</label>
-                            <input type="file" id="photo-upload" accept="image/*" class="form-control">
+                    <div class="tool-container">
+                        <div class="tool-header">
+                            <h1 class="tool-title">📸 Smart Biometric Passport Photo Maker</h1>
+                            <p class="tool-desc">Create 100% compliant biometric passport, visa, and ID photos with local AI background removal, interactive face alignment guides, and printable multi-copy sheets.</p>
                         </div>
-
-                        <div id="editor-controls" style="display:none; margin-top:1.5rem; flex-direction:column; gap:1.2rem;">
-                            <div class="form-row">
-                                <div class="form-group">
-                                    <label for="size-preset" style="font-weight:600;">Standard Dimension Preset:</label>
-                                    <select id="size-preset" class="form-control">
-                                        <option value="passport-us">2 x 2 inch / 51 x 51 mm (US & Visa Standard)</option>
-                                        <option value="passport-bd" selected>35 x 45 mm (Bangladesh, UK & Schengen Europe)</option>
-                                        <option value="stamp">Stamp Size (25 x 30 mm)</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="bg-color" style="font-weight:600;">Official Background Color:</label>
-                                    <select id="bg-color" class="form-control">
-                                        <option value="keep">Original Background</option>
-                                        <option value="#ffffff" selected>White (Standard International)</option>
-                                        <option value="#0055ff">Light Blue (BD Govt & Academic Exam)</option>
-                                        <option value="#e2e8f0">Light Gray (Neutral Studio)</option>
-                                    </select>
-                                </div>
-                                <div class="form-group">
-                                    <label for="grid-copies" style="font-weight:600;">Printable Sheet Copies:</label>
-                                    <select id="grid-copies" class="form-control">
-                                        <option value="1">Single Photo Only</option>
-                                        <option value="8" selected>8 Copies (A4 Sheet Grid)</option>
-                                        <option value="12">12 Copies (A4 Sheet Grid)</option>
-                                        <option value="16">16 Copies (A4 Sheet Grid)</option>
-                                    </select>
+                        
+                        <div class="tool-body">
+                            
+                            <!-- Initial Upload Box (Shown when no photo uploaded) -->
+                            <div id="initial-upload-container">
+                                <div class="passport-upload-zone" id="drop-zone">
+                                    <div style="font-size: 2.8rem; margin-bottom: 8px;">📷</div>
+                                    <h3 style="font-size: 1.15rem; font-weight: 700; color: var(--text-primary); margin-bottom: 6px;">Click or Drag & Drop Your Portrait Photo</h3>
+                                    <p style="font-size: 0.88rem; color: var(--text-secondary); margin-bottom: 14px;">Supports JPG, PNG, WebP (Front-facing portrait, eyes open, neutral expression)</p>
+                                    <button type="button" class="btn btn-primary" style="display: inline-flex; width: auto; padding: 10px 22px; font-weight: 700;">Select Photo from Device</button>
+                                    <input type="file" id="photo-upload" accept="image/*" style="display: none;">
                                 </div>
                             </div>
 
-                            <button id="generate-btn" class="btn btn-primary" style="margin-top:0.5rem;">Generate Passport Photo Sheet 🚀</button>
-                        </div>
-                    </div>
-                    
-                    <div id="results" class="results-card" style="display:none; margin-top:2rem;">
-                        <h2 class="results-title">✨ Preview & Download</h2>
-                        <div class="results-content" style="text-align:center;">
-                            <div id="canvas-container" style="margin:1.5rem 0; overflow-x:auto; display:flex; justify-content:center;">
-                                <canvas id="output-canvas" style="border:1px solid var(--border-color); border-radius:12px; max-width:100%; height:auto; box-shadow:var(--card-shadow);"></canvas>
+                            <!-- Studio Interface (Hidden until image is selected) -->
+                            <div id="studio-interface" class="passport-grid" style="display: none;">
+                                
+                                <!-- Left Column: Controls -->
+                                <div class="studio-card">
+                                    
+                                    <!-- Change Photo Strip -->
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border-color);">
+                                        <div style="display: flex; align-items: center; gap: 8px;">
+                                            <span style="font-size: 1.1rem;">👤</span>
+                                            <span id="file-name-label" style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); max-width: 180px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">photo.jpg</span>
+                                        </div>
+                                        <button type="button" id="btn-change-photo" class="btn-micro-pill">🔄 Change Photo</button>
+                                    </div>
+
+                                    <!-- 1. Country & Biometric Size Preset -->
+                                    <div class="section-heading">
+                                        <span>🌍 1. Biometric Preset</span>
+                                        <span id="preset-dim-label" style="font-size: 0.8rem; color: var(--primary); font-weight: 700;">35 × 45 mm</span>
+                                    </div>
+                                    <div class="form-group" style="margin-bottom: 10px;">
+                                        <select id="preset-select" class="form-control" style="font-weight: 700; cursor: pointer;">
+                                            <optgroup label="Popular Biometric Standards">
+                                                <option value="bd-mrp" selected>🇧🇩 Bangladesh (e-Passport, MRP, BCS & Exam) - 35 × 45 mm</option>
+                                                <option value="us-visa">🇺🇸 United States (Passport, Visa & Green Card) - 2 × 2 in (51 × 51 mm)</option>
+                                                <option value="eu-schengen">🇪🇺 Schengen Visa, UK & Europe - 35 × 45 mm</option>
+                                                <option value="ca-passport">🇨🇦 Canada (Passport & Visa) - 50 × 70 mm</option>
+                                                <option value="in-passport">🇮🇳 India (Passport & OCI) - 35 × 45 mm</option>
+                                                <option value="sa-visa">🇸🇦 Saudi Arabia (Hajj, Umrah & Work Visa) - 40 × 60 mm</option>
+                                                <option value="ae-visa">🇦🇪 UAE / Dubai (Residence Visa) - 40 × 50 mm</option>
+                                                <option value="my-passport">🇲🇾 Malaysia (Passport & Visa) - 35 × 50 mm</option>
+                                                <option value="stamp-size">🔖 Stamp Size (Universal) - 25 × 30 mm</option>
+                                                <option value="custom">⚙️ Custom Dimension (Set mm)</option>
+                                            </optgroup>
+                                        </select>
+                                    </div>
+
+                                    <!-- Custom Dimension Inputs (Hidden by default) -->
+                                    <div id="custom-size-fields" style="display: none; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; background: var(--bg-secondary); padding: 10px; border-radius: 8px;">
+                                        <div>
+                                            <label style="font-size: 0.78rem; font-weight: 700;">Width (mm):</label>
+                                            <input type="number" id="custom-w" class="form-control" value="35" min="15" max="150" style="padding: 6px 10px; height: 36px;">
+                                        </div>
+                                        <div>
+                                            <label style="font-size: 0.78rem; font-weight: 700;">Height (mm):</label>
+                                            <input type="number" id="custom-h" class="form-control" value="45" min="15" max="150" style="padding: 6px 10px; height: 36px;">
+                                        </div>
+                                    </div>
+
+                                    <!-- 2. AI Background Studio -->
+                                    <div class="section-heading">
+                                        <span>🎨 2. Background Studio</span>
+                                        <span class="ai-status-pill">⚡ 100% In-Browser</span>
+                                    </div>
+                                    
+                                    <div style="margin-bottom: 12px;">
+                                        <button type="button" id="btn-ai-remove-bg" class="btn btn-primary" style="width: 100%; padding: 10px 14px; font-size: 0.88rem; font-weight: 700; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 8px;">
+                                            <span id="ai-btn-icon">🤖</span>
+                                            <span id="ai-btn-text">One-Click AI Background Cutout</span>
+                                        </button>
+                                        <div id="ai-progress-bar" style="display: none; text-align: center; font-size: 0.82rem; color: var(--primary); font-weight: 700; margin-bottom: 8px;">
+                                            ⏳ AI segmenting portrait... Please wait a moment.
+                                        </div>
+                                    </div>
+
+                                    <div style="font-size: 0.82rem; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px;">Select Official Background Color:</div>
+                                    <div class="color-chips-grid">
+                                        <button type="button" class="color-chip-btn active" data-color="#ffffff" title="White (Standard International)">
+                                            <span class="color-dot-indicator" style="background: #ffffff;"></span>
+                                            <span>White</span>
+                                        </button>
+                                        <button type="button" class="color-chip-btn" data-color="#4a90e2" title="Light Blue (Bangladesh Govt & BCS Exam)">
+                                            <span class="color-dot-indicator" style="background: #4a90e2;"></span>
+                                            <span>Light Blue</span>
+                                        </button>
+                                        <button type="button" class="color-chip-btn" data-color="#003366" title="Royal Blue (Academic / ID Cards)">
+                                            <span class="color-dot-indicator" style="background: #003366;"></span>
+                                            <span>Royal Blue</span>
+                                        </button>
+                                        <button type="button" class="color-chip-btn" data-color="#e2e8f0" title="Studio Gray (Neutral European)">
+                                            <span class="color-dot-indicator" style="background: #e2e8f0;"></span>
+                                            <span>Gray</span>
+                                        </button>
+                                        <button type="button" class="color-chip-btn" data-color="#c53030" title="Red (Asian Diplomatic / Specific Visas)">
+                                            <span class="color-dot-indicator" style="background: #c53030;"></span>
+                                            <span>Red</span>
+                                        </button>
+                                        <button type="button" class="color-chip-btn" data-color="original" title="Keep Original Photo Background">
+                                            <span class="color-dot-indicator" style="background: linear-gradient(135deg, #f59e0b, #6366f1);"></span>
+                                            <span>Original</span>
+                                        </button>
+                                        <div style="grid-column: span 2; display: flex; align-items: center; gap: 6px; padding: 4px; background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 8px;">
+                                            <input type="color" id="custom-color-picker" value="#ffffff" style="width: 28px; height: 28px; border: none; cursor: pointer; border-radius: 4px; padding: 0;">
+                                            <span style="font-size: 0.76rem; font-weight: 700; color: var(--text-secondary);">Custom Color</span>
+                                        </div>
+                                    </div>
+
+                                    <!-- 3. Crop, Scale & Align Controls -->
+                                    <div class="section-heading">
+                                        <span>📐 3. Face Alignment & Crop</span>
+                                        <button type="button" id="btn-reset-transform" class="btn-micro-pill">Reset</button>
+                                    </div>
+
+                                    <!-- Zoom Slider -->
+                                    <div style="margin-bottom: 12px;">
+                                        <div class="slider-label-group">
+                                            <span>🔍 Zoom / Scale:</span>
+                                            <span class="val-display" id="zoom-val">100%</span>
+                                        </div>
+                                        <div class="control-slider-row">
+                                            <button type="button" id="btn-zoom-out" class="btn-micro-pill" style="min-width: 28px; justify-content: center;">-</button>
+                                            <input type="range" id="zoom-range" min="0.4" max="3.0" step="0.02" value="1.0" style="flex: 1; cursor: pointer;">
+                                            <button type="button" id="btn-zoom-in" class="btn-micro-pill" style="min-width: 28px; justify-content: center;">+</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Rotate Slider -->
+                                    <div style="margin-bottom: 12px;">
+                                        <div class="slider-label-group">
+                                            <span>🔄 Straighten Tilt:</span>
+                                            <span class="val-display" id="rotate-val">0°</span>
+                                        </div>
+                                        <div class="control-slider-row">
+                                            <button type="button" id="btn-rot-left" class="btn-micro-pill" style="min-width: 28px; justify-content: center;">↶</button>
+                                            <input type="range" id="rotate-range" min="-25" max="25" step="0.5" value="0" style="flex: 1; cursor: pointer;">
+                                            <button type="button" id="btn-rot-right" class="btn-micro-pill" style="min-width: 28px; justify-content: center;">↷</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- Pan Position Quick Nudge -->
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; background: var(--bg-secondary); padding: 8px 12px; border-radius: 8px;">
+                                        <span style="font-size: 0.8rem; font-weight: 600; color: var(--text-secondary);">Position: (or drag on photo)</span>
+                                        <div style="display: flex; gap: 4px;">
+                                            <button type="button" id="btn-nudge-up" class="btn-micro-pill" title="Move Up">↑</button>
+                                            <button type="button" id="btn-nudge-down" class="btn-micro-pill" title="Move Down">↓</button>
+                                            <button type="button" id="btn-nudge-left" class="btn-micro-pill" title="Move Left">←</button>
+                                            <button type="button" id="btn-nudge-right" class="btn-micro-pill" title="Move Right">→</button>
+                                            <button type="button" id="btn-center-photo" class="btn-micro-pill" title="Center Photo">Center</button>
+                                        </div>
+                                    </div>
+
+                                    <!-- 4. Studio Lighting Adjustments -->
+                                    <div class="section-heading">
+                                        <span>💡 4. Lighting & Quality</span>
+                                        <button type="button" id="btn-auto-enhance" class="btn-micro-pill" style="color: var(--primary); font-weight: 700;">✨ Auto Enhance</button>
+                                    </div>
+
+                                    <div style="margin-bottom: 10px;">
+                                        <div class="slider-label-group">
+                                            <span>☀️ Brightness:</span>
+                                            <span class="val-display" id="bright-val">0%</span>
+                                        </div>
+                                        <input type="range" id="bright-range" min="-50" max="50" value="0" style="width: 100%; cursor: pointer;">
+                                    </div>
+
+                                    <div style="margin-bottom: 14px;">
+                                        <div class="slider-label-group">
+                                            <span>🌓 Contrast:</span>
+                                            <span class="val-display" id="contrast-val">0%</span>
+                                        </div>
+                                        <input type="range" id="contrast-range" min="-50" max="50" value="0" style="width: 100%; cursor: pointer;">
+                                    </div>
+
+                                    <!-- 5. Sheet Options -->
+                                    <div class="section-heading">
+                                        <span>🖨️ 5. Printable Sheet Setup</span>
+                                    </div>
+
+                                    <div class="form-row" style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 10px;">
+                                        <div>
+                                            <label style="font-size: 0.78rem; font-weight: 700;">Paper Format:</label>
+                                            <select id="sheet-paper-type" class="form-control" style="font-size: 0.85rem; padding: 6px 10px; height: 38px;">
+                                                <option value="a4" selected>Standard A4 Paper (210 × 297 mm)</option>
+                                                <option value="4x6">4 × 6 inch Photo Paper (10 × 15 cm)</option>
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label style="font-size: 0.78rem; font-weight: 700;">Photo Copies:</label>
+                                            <select id="sheet-copies" class="form-control" style="font-size: 0.85rem; padding: 6px 10px; height: 38px;">
+                                                <option value="auto" selected>Auto Fit (Max on Sheet)</option>
+                                                <option value="4">4 Copies</option>
+                                                <option value="6">6 Copies</option>
+                                                <option value="8">8 Copies</option>
+                                                <option value="12">12 Copies</option>
+                                                <option value="16">16 Copies</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div style="display: flex; align-items: center; justify-content: space-between; padding: 6px 4px;">
+                                        <label for="cut-lines-toggle" style="font-size: 0.82rem; font-weight: 600; color: var(--text-primary); cursor: pointer;">✂️ Show Scissor Cutting Guide Lines</label>
+                                        <input type="checkbox" id="cut-lines-toggle" checked style="width: 18px; height: 18px; cursor: pointer;">
+                                    </div>
+
+                                </div>
+
+                                <!-- Right Column: Live Interactive Preview Stage -->
+                                <div class="preview-stage-card">
+                                    
+                                    <!-- Preview Stage Header -->
+                                    <div class="preview-header-bar">
+                                        <div class="preview-mode-tabs">
+                                            <button type="button" class="preview-tab-btn active" id="tab-single-preview">👤 Single Photo</button>
+                                            <button type="button" class="preview-tab-btn" id="tab-sheet-preview">📄 Printable Sheet</button>
+                                        </div>
+
+                                        <button type="button" id="btn-toggle-guide" class="btn-micro-pill" style="border-color: #0284c7; color: #0284c7; font-weight: 700;">
+                                            <span>👁️ Biometric Guide:</span>
+                                            <span id="guide-status-text">ON</span>
+                                        </button>
+                                    </div>
+
+                                    <!-- Canvas Viewport Area -->
+                                    <div class="canvas-viewport" id="viewport-container">
+                                        
+                                        <!-- Single Crop Canvas Container -->
+                                        <div id="single-view-container" style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                                            <div class="crop-canvas-box" id="crop-box">
+                                                <canvas id="crop-canvas"></canvas>
+                                                
+                                                <!-- Biometric Guide Overlay (ICAO 9303 Standard) -->
+                                                <div class="biometric-overlay" id="biometric-overlay">
+                                                    <div class="bio-oval">
+                                                        <div class="bio-eye-line">
+                                                            <span class="bio-eye-label">EYE LEVEL</span>
+                                                        </div>
+                                                        <div class="bio-chin-line">
+                                                            <span class="bio-chin-label">CHIN</span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Sheet View Container (Hidden until tab switched) -->
+                                        <div id="sheet-view-container">
+                                            <canvas id="sheet-canvas"></canvas>
+                                        </div>
+
+                                    </div>
+
+                                    <!-- Interactive Drag Tip -->
+                                    <div style="text-align: center; font-size: 0.78rem; color: var(--text-secondary); margin-top: 8px;">
+                                        💡 <em>Tip: Click & drag the portrait directly to adjust head position. Use the mouse wheel to zoom.</em>
+                                    </div>
+
+                                    <!-- Dimension Specification HUD -->
+                                    <div class="dimension-hud">
+                                        <div class="hud-spec-item">
+                                            <span>📏 Size:</span>
+                                            <strong id="hud-size-mm">35 × 45 mm</strong>
+                                        </div>
+                                        <div class="hud-spec-item">
+                                            <span>🖥️ Pixels (300 DPI):</span>
+                                            <strong id="hud-size-px">413 × 531 px</strong>
+                                        </div>
+                                        <div class="hud-spec-item">
+                                            <span>🛡️ Head Ratio:</span>
+                                            <strong id="hud-head-ratio">70% – 80%</strong>
+                                        </div>
+                                    </div>
+
+                                    <!-- Download & Print Action Buttons -->
+                                    <div class="studio-actions-grid">
+                                        <button type="button" id="btn-dl-single-png" class="btn-dl-single">
+                                            <span>📥</span>
+                                            <span>Download Single Photo</span>
+                                        </button>
+                                        <button type="button" id="btn-dl-sheet-png" class="btn-dl-sheet">
+                                            <span>📄</span>
+                                            <span>Download Photo Sheet (PNG)</span>
+                                        </button>
+                                        <button type="button" id="btn-dl-sheet-pdf" class="btn-dl-sheet" style="background: #dc2626; box-shadow: 0 4px 12px rgba(220, 38, 38, 0.25);">
+                                            <span>⬇️</span>
+                                            <span>Download PDF Sheet (Ready to Print)</span>
+                                        </button>
+                                        <button type="button" id="btn-print-sheet" class="btn-print-direct">
+                                            <span>🖨️</span>
+                                            <span>Print Photo Sheet Now</span>
+                                        </button>
+                                    </div>
+
+                                </div>
+
                             </div>
-                            <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
-                                <a id="download-btn" class="btn btn-primary" download="passport-photos.png" style="width:auto; text-decoration:none;">📥 Download High Quality Photo Sheet</a>
-                            </div>
+
                         </div>
                     </div>
 
@@ -171,22 +875,34 @@
                                 </thead>
                                 <tbody>
                                     <tr style="border-bottom: 1px solid var(--border-color);">
-                                        <td style="padding: 10px; font-weight: 600;">United States (Passport / Visa)</td>
-                                        <td style="padding: 10px;">2 x 2 inches (51 x 51 mm)</td>
-                                        <td style="padding: 10px;">50% – 69% (1 to 1.4 inches)</td>
-                                        <td style="padding: 10px;">Plain White</td>
-                                    </tr>
-                                    <tr style="border-bottom: 1px solid var(--border-color);">
                                         <td style="padding: 10px; font-weight: 600;">Bangladesh (MRP & e-Passport)</td>
                                         <td style="padding: 10px;">35 x 45 mm</td>
                                         <td style="padding: 10px;">70% – 80% (31 to 36 mm)</td>
                                         <td style="padding: 10px;">White / Light Blue</td>
                                     </tr>
                                     <tr style="border-bottom: 1px solid var(--border-color);">
-                                        <td style="padding: 10px; font-weight: 600;">UK & Schengen Visa</td>
+                                        <td style="padding: 10px; font-weight: 600;">United States (Passport / Visa / Green Card)</td>
+                                        <td style="padding: 10px;">2 x 2 inches (51 x 51 mm)</td>
+                                        <td style="padding: 10px;">50% – 69% (1 to 1.4 inches)</td>
+                                        <td style="padding: 10px;">Plain White</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">UK, Schengen & European Union</td>
                                         <td style="padding: 10px;">35 x 45 mm</td>
                                         <td style="padding: 10px;">70% – 80% (29 to 34 mm)</td>
                                         <td style="padding: 10px;">Plain Light Gray / White</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">Canada (Passport & Visa)</td>
+                                        <td style="padding: 10px;">50 x 70 mm</td>
+                                        <td style="padding: 10px;">70% (31 to 36 mm)</td>
+                                        <td style="padding: 10px;">Plain White</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">Saudi Arabia (Hajj / Umrah)</td>
+                                        <td style="padding: 10px;">40 x 60 mm</td>
+                                        <td style="padding: 10px;">70% – 80%</td>
+                                        <td style="padding: 10px;">Plain White</td>
                                     </tr>
                                     <tr>
                                         <td style="padding: 10px; font-weight: 600;">Standard Stamp Size</td>
@@ -216,11 +932,15 @@
                         <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
                                 <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Can I take the initial photo with my smartphone?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. Stand approximately 4 to 5 feet away from a plain wall under bright natural light. Take a portrait photo and upload it here to auto-align and format.</p>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. Stand approximately 4 to 5 feet away from a plain wall under bright natural light. Take a portrait photo and upload it here to auto-align, replace the background, and format.</p>
                             </div>
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How do I print the downloaded A4 sheet?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Open the downloaded PNG image and choose "Print". In your printer settings dialog, ensure scaling is set to <strong>"100%" or "Actual Size"</strong> (do not select "Fit to Printable Area") to ensure exact physical millimeter dimensions.</p>
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How do I print the downloaded A4 or 4x6 sheet?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Open the downloaded PDF or PNG and choose "Print". In your printer settings dialog, ensure scaling is set to <strong>"100%" or "Actual Size"</strong> (do not select "Fit to Printable Area") to ensure exact physical millimeter dimensions.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Does my photo ever leave my device?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No! 100% of image rendering, cropping, and AI background segmentation runs locally in your browser using HTML5 Canvas and client-side WebAssembly. Your photos are never uploaded to remote servers.</p>
                             </div>
                         </div>
 
