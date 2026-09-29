@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
     <meta charset="UTF-8">
@@ -257,7 +257,94 @@
             padding-top: 18px;
             border-top: 1px solid var(--border-color);
         }
+
+        /* ── Submission Type Switcher (Single vs Group) ── */
+        .submission-type-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .btn-sub-type {
+            padding: 9px 12px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            font-weight: 700;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            transition: all 0.2s ease;
+        }
+        .btn-sub-type:hover {
+            border-color: var(--primary);
+        }
+        .btn-sub-type.active {
+            border-color: var(--primary);
+            background: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.12);
+        }
+
+        /* Group Member Row */
+        .group-member-row {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+        }
+
         @media (max-width: 576px) {
+            .submission-type-selector {
+                grid-template-columns: 1fr !important;
+                gap: 6px !important;
+            }
+            .btn-sub-type {
+                min-height: 44px;
+                font-size: 0.88rem;
+            }
+            .group-member-row {
+                display: grid !important;
+                grid-template-columns: 24px 1fr 34px !important;
+                grid-template-rows: auto auto !important;
+                gap: 6px !important;
+                background: var(--bg-primary);
+                padding: 10px !important;
+                border-radius: 8px !important;
+                border: 1px solid var(--border-color);
+                margin-bottom: 8px;
+            }
+            .group-member-row .member-num {
+                grid-column: 1 / 2;
+                grid-row: 1 / 2;
+                align-self: center;
+            }
+            .group-member-row .inp-member-name {
+                grid-column: 2 / 3;
+                grid-row: 1 / 2;
+                width: 100% !important;
+            }
+            .group-member-row .btn-remove-member {
+                grid-column: 3 / 4;
+                grid-row: 1 / 2;
+                align-self: center;
+                justify-self: center;
+                font-size: 1.4rem;
+                min-width: 34px;
+                min-height: 34px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .group-member-row .inp-member-id {
+                grid-column: 2 / 4;
+                grid-row: 2 / 3;
+                width: 100% !important;
+            }
+
             .action-buttons {
                 flex-direction: column;
             }
@@ -1184,27 +1271,88 @@
                             </div>
 
                             <!-- Submitted By -->
-                            <h3 class="form-section-title">👨‍🎓 Submitted By (Student)</h3>
-                            <div class="input-grid">
-                                <div style="grid-column: span 2;">
-                                    <label class="form-label">Student Name</label>
-                                    <input type="text" id="inp-student-name" class="form-control-sm" value="" placeholder="">
+                            <h3 class="form-section-title">👨‍🎓 Submitted By (Student / Team)</h3>
+
+                            <!-- Submission Type Switcher (Single vs Group) -->
+                            <div class="submission-type-selector">
+                                <button type="button" class="btn-sub-type active" id="btn-type-indiv" data-type="individual">
+                                    <span>👤</span> Individual (Single)
+                                </button>
+                                <button type="button" class="btn-sub-type" id="btn-type-group" data-type="group">
+                                    <span>👥</span> Group / Team
+                                </button>
+                            </div>
+
+                            <!-- Individual Student Inputs -->
+                            <div id="container-individual">
+                                <div class="input-grid">
+                                    <div style="grid-column: span 2;">
+                                        <label class="form-label">Student Name</label>
+                                        <input type="text" id="inp-student-name" class="form-control-sm" value="" placeholder="e.g. John Doe">
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Student ID</label>
+                                        <input type="text" id="inp-student-id" class="form-control-sm" value="" placeholder="e.g. 2023000000001">
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Department</label>
+                                        <input type="text" id="inp-dept" class="form-control-sm" value="" placeholder="e.g. CSE">
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Semester</label>
+                                        <input type="text" id="inp-semester" class="form-control-sm" value="" placeholder="e.g. 6th Semester">
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Section / Group</label>
+                                        <input type="text" id="inp-section" class="form-control-sm" value="" placeholder="e.g. Section A">
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="form-label">Student ID</label>
-                                    <input type="text" id="inp-student-id" class="form-control-sm" value="" placeholder="">
+                            </div>
+
+                            <!-- Group Submission Inputs -->
+                            <div id="container-group" style="display:none;">
+                                <div class="input-grid">
+                                    <div>
+                                        <label class="form-label">Department</label>
+                                        <input type="text" id="inp-group-dept" class="form-control-sm" value="" placeholder="e.g. CSE">
+                                    </div>
+                                    <div>
+                                        <label class="form-label">Semester</label>
+                                        <input type="text" id="inp-group-semester" class="form-control-sm" value="" placeholder="e.g. 6th Semester">
+                                    </div>
+                                    <div style="grid-column: span 2;">
+                                        <label class="form-label">Section / Group Name or No.</label>
+                                        <input type="text" id="inp-group-sec" class="form-control-sm" value="" placeholder="e.g. Section 1 / Group A">
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="form-label">Department</label>
-                                    <input type="text" id="inp-dept" class="form-control-sm" value="" placeholder="">
+
+                                <div style="margin-top:10px; margin-bottom:8px; display:flex; justify-content:space-between; align-items:center;">
+                                    <label class="form-label" style="margin-bottom:0; font-weight:700;">Group Members List:</label>
+                                    <button type="button" id="btn-add-member" style="background:var(--primary); color:#fff; border:none; border-radius:6px; padding:5px 12px; font-size:0.78rem; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:4px;">
+                                        <span>➕</span> Add Member
+                                    </button>
                                 </div>
-                                <div>
-                                    <label class="form-label">Semester</label>
-                                    <input type="text" id="inp-semester" class="form-control-sm" value="" placeholder="">
-                                </div>
-                                <div>
-                                    <label class="form-label">Section / Group</label>
-                                    <input type="text" id="inp-section" class="form-control-sm" value="" placeholder="">
+
+                                <!-- Member Rows Container -->
+                                <div id="group-members-container" style="display:flex; flex-direction:column; gap:8px;">
+                                    <div class="group-member-row">
+                                        <span class="member-num" style="font-size:0.8rem; font-weight:800; color:var(--text-secondary); width:18px;">1.</span>
+                                        <input type="text" class="form-control-sm inp-member-name" placeholder="Member 1 Name" style="flex:1;">
+                                        <input type="text" class="form-control-sm inp-member-id" placeholder="Student ID" style="width:130px;">
+                                        <button type="button" class="btn-remove-member" style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer; padding:0 4px;" title="Remove">&times;</button>
+                                    </div>
+                                    <div class="group-member-row">
+                                        <span class="member-num" style="font-size:0.8rem; font-weight:800; color:var(--text-secondary); width:18px;">2.</span>
+                                        <input type="text" class="form-control-sm inp-member-name" placeholder="Member 2 Name" style="flex:1;">
+                                        <input type="text" class="form-control-sm inp-member-id" placeholder="Student ID" style="width:130px;">
+                                        <button type="button" class="btn-remove-member" style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer; padding:0 4px;" title="Remove">&times;</button>
+                                    </div>
+                                    <div class="group-member-row">
+                                        <span class="member-num" style="font-size:0.8rem; font-weight:800; color:var(--text-secondary); width:18px;">3.</span>
+                                        <input type="text" class="form-control-sm inp-member-name" placeholder="Member 3 Name" style="flex:1;">
+                                        <input type="text" class="form-control-sm inp-member-id" placeholder="Student ID" style="width:130px;">
+                                        <button type="button" class="btn-remove-member" style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer; padding:0 4px;" title="Remove">&times;</button>
+                                    </div>
                                 </div>
                             </div>
 
@@ -1267,8 +1415,8 @@
         <footer id="main-footer"></footer>
     </div>
     
-    <script src="../js/layout.js?v=68.0"></script>
-    <script src="../js/tools/assignment-cover.js"></script>
+    <script src="../js/layout.js?v=73.0"></script>
+    <script src="../js/tools/assignment-cover.js?v=73.0"></script>
 </body>
 </html>
 

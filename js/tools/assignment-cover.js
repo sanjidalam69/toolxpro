@@ -12,6 +12,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const inpDept        = document.getElementById("inp-dept");
     const inpSemester    = document.getElementById("inp-semester");
     const inpSection     = document.getElementById("inp-section");
+
+    // Submission Type Elements
+    const btnTypeIndiv      = document.getElementById("btn-type-indiv");
+    const btnTypeGroup      = document.getElementById("btn-type-group");
+    const containerIndiv    = document.getElementById("container-individual");
+    const containerGroup    = document.getElementById("container-group");
+    
+    // Group Report Inputs
+    const inpGroupDept      = document.getElementById("inp-group-dept");
+    const inpGroupSemester  = document.getElementById("inp-group-semester");
+    const inpGroupSec       = document.getElementById("inp-group-sec");
+    const groupMembersCont  = document.getElementById("group-members-container");
+    const btnAddMember      = document.getElementById("btn-add-member");
+
     const inpTeacherName = document.getElementById("inp-teacher-name");
     const inpTeacherDesig= document.getElementById("inp-teacher-desig");
     const inpDate        = document.getElementById("inp-date");
@@ -28,6 +42,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     let currentTemplate = "royal";
     let currentMode = "all"; // 'all' or 'seu'
+    let submissionType = "individual"; // 'individual' or 'group'
 
     const defaultLogo = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23e5e7eb'/%3E%3Ctext x='50' y='58' font-size='18' text-anchor='middle' fill='%236b7280' font-family='sans-serif'%3ELOGO%3C/text%3E%3C/svg%3E";
 
@@ -85,33 +100,207 @@ document.addEventListener("DOMContentLoaded", () => {
 
     } // end if (btnModeAll && btnModeSeu)
 
+    // ── Submission Type Switcher (Single vs Group) ─────────────────────
+    if (btnTypeIndiv && btnTypeGroup) {
+        btnTypeIndiv.addEventListener("click", () => {
+            submissionType = "individual";
+            btnTypeIndiv.classList.add("active");
+            btnTypeGroup.classList.remove("active");
+            if (containerIndiv) containerIndiv.style.display = "block";
+            if (containerGroup) containerGroup.style.display = "none";
+            render();
+        });
+
+        btnTypeGroup.addEventListener("click", () => {
+            submissionType = "group";
+            btnTypeGroup.classList.add("active");
+            btnTypeIndiv.classList.remove("active");
+            if (containerIndiv) containerIndiv.style.display = "none";
+            if (containerGroup) containerGroup.style.display = "block";
+
+            // Sync dept/semester/section if group inputs are blank
+            if (inpGroupDept && !inpGroupDept.value.trim() && inpDept && inpDept.value.trim()) {
+                inpGroupDept.value = inpDept.value.trim();
+            }
+            if (inpGroupSemester && !inpGroupSemester.value.trim() && inpSemester && inpSemester.value.trim()) {
+                inpGroupSemester.value = inpSemester.value.trim();
+            }
+            if (inpGroupSec && !inpGroupSec.value.trim() && inpSection && inpSection.value.trim()) {
+                inpGroupSec.value = inpSection.value.trim();
+            }
+
+            render();
+        });
+    }
+
+    // ── Group Members Dynamic Management ────────────────────────────────
+    function updateMemberNumbers() {
+        if (!groupMembersCont) return;
+        const rows = groupMembersCont.querySelectorAll(".group-member-row");
+        rows.forEach((row, idx) => {
+            const numSpan = row.querySelector(".member-num");
+            if (numSpan) numSpan.textContent = `${idx + 1}.`;
+            const nameInp = row.querySelector(".inp-member-name");
+            if (nameInp && !nameInp.value) {
+                nameInp.placeholder = `Member ${idx + 1} Name`;
+            }
+        });
+    }
+
+    function bindMemberRowEvents(row) {
+        const inputs = row.querySelectorAll("input");
+        inputs.forEach(inp => {
+            inp.addEventListener("input", render);
+            inp.addEventListener("change", render);
+        });
+
+        const btnRemove = row.querySelector(".btn-remove-member");
+        if (btnRemove) {
+            btnRemove.addEventListener("click", () => {
+                const totalRows = groupMembersCont.querySelectorAll(".group-member-row").length;
+                if (totalRows > 1) {
+                    row.remove();
+                    updateMemberNumbers();
+                    render();
+                } else {
+                    inputs.forEach(inp => inp.value = "");
+                    render();
+                }
+            });
+        }
+    }
+
+    if (groupMembersCont) {
+        const initialRows = groupMembersCont.querySelectorAll(".group-member-row");
+        initialRows.forEach(row => bindMemberRowEvents(row));
+    }
+
+    if (btnAddMember && groupMembersCont) {
+        btnAddMember.addEventListener("click", () => {
+            const totalRows = groupMembersCont.querySelectorAll(".group-member-row").length;
+            if (totalRows >= 8) {
+                alert("Maximum 8 group members allowed.");
+                return;
+            }
+            const newRow = document.createElement("div");
+            newRow.className = "group-member-row";
+            newRow.innerHTML = `
+                <span class="member-num" style="font-size:0.8rem; font-weight:800; color:var(--text-secondary); width:18px;">${totalRows + 1}.</span>
+                <input type="text" class="form-control-sm inp-member-name" placeholder="Member ${totalRows + 1} Name" style="flex:1;">
+                <input type="text" class="form-control-sm inp-member-id" placeholder="Student ID" style="width:130px;">
+                <button type="button" class="btn-remove-member" style="background:none; border:none; color:#ef4444; font-size:1.1rem; cursor:pointer; padding:0 4px;" title="Remove">&times;</button>
+            `;
+            groupMembersCont.appendChild(newRow);
+            bindMemberRowEvents(newRow);
+            render();
+        });
+    }
 
     // ── Template Renderers ───────────────────────────────────────────
 
+    function escapeHtml(text) {
+        if (!text) return '';
+        return String(text)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;")
+            .replace(/'/g, "&#039;");
+    }
+
+    function getGroupMembersData() {
+        const members = [];
+        if (!groupMembersCont) return members;
+        const rows = groupMembersCont.querySelectorAll(".group-member-row");
+        rows.forEach((row, idx) => {
+            const nameInp = row.querySelector(".inp-member-name");
+            const idInp   = row.querySelector(".inp-member-id");
+            const nameVal = nameInp ? nameInp.value.trim() : "";
+            const idVal   = idInp ? idInp.value.trim() : "";
+            
+            members.push({
+                index: idx + 1,
+                name: nameVal || `Member ${idx + 1}`,
+                id: idVal || `ID-${idx + 1}`,
+                isFilled: Boolean(nameVal || idVal)
+            });
+        });
+        return members;
+    }
 
     function getData() {
         return {
-            uni:         inpUni.value.trim(),
-            topic:       inpTopic.value.trim(),
-            courseTitle: inpCourseTitle.value.trim(),
-            courseCode:  inpCourseCode.value.trim(),
-            studentName: inpStudentName.value.trim(),
-            studentId:   inpStudentId.value.trim(),
-            dept:        inpDept.value.trim(),
-            semester:    inpSemester.value.trim(),
-            section:     inpSection.value.trim(),
-            teacherName: inpTeacherName.value.trim(),
-            teacherDesig:inpTeacherDesig.value.trim(),
-            date:        inpDate.value.trim(),
+            submissionType: submissionType,
+            uni:         inpUni ? inpUni.value.trim() : "",
+            topic:       inpTopic ? inpTopic.value.trim() : "",
+            courseTitle: inpCourseTitle ? inpCourseTitle.value.trim() : "",
+            courseCode:  inpCourseCode ? inpCourseCode.value.trim() : "",
+            // Individual
+            studentName: inpStudentName ? inpStudentName.value.trim() : "",
+            studentId:   inpStudentId ? inpStudentId.value.trim() : "",
+            dept:        inpDept ? inpDept.value.trim() : "",
+            semester:    inpSemester ? inpSemester.value.trim() : "",
+            section:     inpSection ? inpSection.value.trim() : "",
+            // Group
+            groupDept:   inpGroupDept ? (inpGroupDept.value.trim() || (inpDept ? inpDept.value.trim() : "")) : (inpDept ? inpDept.value.trim() : ""),
+            groupSemester: inpGroupSemester ? (inpGroupSemester.value.trim() || (inpSemester ? inpSemester.value.trim() : "")) : (inpSemester ? inpSemester.value.trim() : ""),
+            groupSec:    inpGroupSec ? (inpGroupSec.value.trim() || (inpSection ? inpSection.value.trim() : "")) : (inpSection ? inpSection.value.trim() : ""),
+            members:     getGroupMembersData(),
+            // Faculty
+            teacherName: inpTeacherName ? inpTeacherName.value.trim() : "",
+            teacherDesig:inpTeacherDesig ? inpTeacherDesig.value.trim() : "",
+            date:        inpDate ? inpDate.value.trim() : "",
         };
     }
 
     function field(label, value, cls) {
         // Label and colon always show, value shows when filled with clean wrap
-        return `<div class="${cls}"><strong class="t-label">${label}</strong><span class="t-colon">:</span><span class="t-val">${value || ''}</span></div>`;
+        return `<div class="${cls}"><strong class="t-label">${label}</strong><span class="t-colon">:</span><span class="t-val">${escapeHtml(value) || ''}</span></div>`;
     }
 
     function submittedByFields(d, fieldClass) {
+        if (d.submissionType === "group") {
+            const topRows = [];
+            if (d.groupDept) {
+                topRows.push(field('Dept.', d.groupDept, fieldClass));
+            }
+            if (d.groupSemester) {
+                topRows.push(field('Semester', d.groupSemester, fieldClass));
+            }
+            if (d.groupSec) {
+                topRows.push(field('Section', d.groupSec, fieldClass));
+            }
+
+            const members = Array.isArray(d.members) ? d.members : [];
+            const isDense = members.length > 4;
+            const cellPad = isDense ? "3px 6px" : "5px 8px";
+            const tableFontSize = isDense ? "11px" : "12px";
+
+            const tableHtml = `
+                <div style="margin-top:6px; width:100%;">
+                    <table style="width:100%; border-collapse:collapse; font-size:${tableFontSize}; background:#ffffff; border:1px solid #cbd5e1; border-radius:4px; overflow:hidden;">
+                        <thead>
+                            <tr style="background:#f1f5f9; border-bottom:1px solid #cbd5e1;">
+                                <th style="padding:${cellPad}; text-align:center; border-right:1px solid #cbd5e1; width:22px; font-weight:700; color:#334155;">#</th>
+                                <th style="padding:${cellPad}; text-align:left; border-right:1px solid #cbd5e1; font-weight:700; color:#334155;">Student Name</th>
+                                <th style="padding:${cellPad}; text-align:left; width:105px; font-weight:700; color:#334155;">Student ID</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${members.map(m => `
+                                <tr style="border-bottom:1px solid #e2e8f0;">
+                                    <td style="padding:${cellPad}; font-weight:700; color:#64748b; border-right:1px solid #e2e8f0; text-align:center;">${m.index}</td>
+                                    <td style="padding:${cellPad}; font-weight:600; color:#1e293b; border-right:1px solid #e2e8f0; overflow-wrap:break-word;">${escapeHtml(m.name)}</td>
+                                    <td style="padding:${cellPad}; color:#334155; font-family:monospace, sans-serif;">${escapeHtml(m.id)}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            `;
+            return topRows.join('') + tableHtml;
+        }
+
         return [
             field('Name',     d.studentName, fieldClass),
             field('ID',       d.studentId,   fieldClass),
@@ -147,7 +336,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <hr class="t-hr">
                 <div class="t-info-row">
                     <div>
-                        <div class="t-col-label">Submitted By</div>
+                        <div class="t-col-label">${d.submissionType === 'group' ? 'Submitted By (Group)' : 'Submitted By'}</div>
                         ${submittedByFields(d, 't-field')}
                     </div>
                     <div>
@@ -177,7 +366,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     <hr class="t-divider">
                     <div class="t-info-row">
                         <div>
-                            <div class="t-col-label">Submitted By</div>
+                            <div class="t-col-label">${d.submissionType === 'group' ? 'Submitted By (Group)' : 'Submitted By'}</div>
                             ${submittedByFields(d, 't-field')}
                         </div>
                         <div>
@@ -206,7 +395,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <hr class="t-hr">
                 <div class="t-info-row">
                     <div>
-                        <div class="t-col-label">Submitted By</div>
+                        <div class="t-col-label">${d.submissionType === 'group' ? 'Submitted By (Group)' : 'Submitted By'}</div>
                         ${submittedByFields(d, 't-field')}
                     </div>
                     <div>
@@ -234,7 +423,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 <div class="t-ornament-line"><hr><span>❧</span><hr></div>
                 <div class="t-info-row">
                     <div>
-                        <div class="t-col-label">Submitted By</div>
+                        <div class="t-col-label">${d.submissionType === 'group' ? 'Submitted By (Group)' : 'Submitted By'}</div>
                         ${submittedByFields(d, 't-field')}
                     </div>
                     <div>
@@ -261,7 +450,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <div class="t-info-row">
                 <div class="t-info-card">
-                    <div class="t-col-label">Submitted By</div>
+                    <div class="t-col-label">${d.submissionType === 'group' ? 'Submitted By (Group)' : 'Submitted By'}</div>
                     ${submittedByFields(d, 't-field')}
                 </div>
                 <div class="t-info-card">
@@ -290,7 +479,7 @@ document.addEventListener("DOMContentLoaded", () => {
             </div>
             <div class="t-info-row">
                 <div class="t-info-box">
-                    <div class="t-col-label">Submitted By</div>
+                    <div class="t-col-label">${d.submissionType === 'group' ? 'Submitted By (Group)' : 'Submitted By'}</div>
                     ${submittedByFields(d, 't-field')}
                 </div>
                 <div class="t-info-box">
@@ -317,7 +506,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 <div class="t-info-row">
                     <div class="t-info-card">
-                        <div class="t-col-label">Submitted By</div>
+                        <div class="t-col-label">${d.submissionType === 'group' ? 'Submitted By (Group)' : 'Submitted By'}</div>
                         ${submittedByFields(d, 't-field')}
                     </div>
                     <div class="t-info-card">
@@ -352,7 +541,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 <div class="t-info-table">
                     <div class="t-table-card">
-                        <div class="t-col-label">Submitted By</div>
+                        <div class="t-col-label">${d.submissionType === 'group' ? 'Submitted By (Group)' : 'Submitted By'}</div>
                         <div class="t-table-body">
                             ${submittedByFields(d, 't-field')}
                         </div>
@@ -385,7 +574,7 @@ document.addEventListener("DOMContentLoaded", () => {
             <div class="t-divider-diamond">♦ ♦ ♦</div>
             <div class="t-info-row">
                 <div>
-                    <div class="t-col-label">Submitted By</div>
+                    <div class="t-col-label">${d.submissionType === 'group' ? 'Submitted By (Group)' : 'Submitted By'}</div>
                     ${submittedByFields(d, 't-field')}
                 </div>
                 <div>
@@ -415,7 +604,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 </div>
                 <div class="t-info-row">
                     <div class="t-info-card">
-                        <div class="t-col-label">Submitted By</div>
+                        <div class="t-col-label">${d.submissionType === 'group' ? 'Submitted By (Group)' : 'Submitted By'}</div>
                         ${submittedByFields(d, 't-field')}
                     </div>
                     <div class="t-info-card">
@@ -457,7 +646,8 @@ document.addEventListener("DOMContentLoaded", () => {
     // ── Live bindings ─────────────────────────────────────────────────
     [inpUni, inpTopic, inpCourseTitle, inpCourseCode,
      inpStudentName, inpStudentId, inpDept, inpSemester,
-     inpSection, inpTeacherName, inpTeacherDesig, inpDate
+     inpSection, inpGroupDept, inpGroupSemester, inpGroupSec,
+     inpTeacherName, inpTeacherDesig, inpDate
     ].forEach(el => {
         if (el) el.addEventListener("input", render);
     });
