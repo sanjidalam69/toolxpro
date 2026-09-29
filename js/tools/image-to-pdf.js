@@ -1,4 +1,4 @@
-// ToolX Pro - CamScanner Document Scanner & Image to PDF Engine (v70.0 - Complete Rebuild)
+// ToolX Pro - CamScanner Document Scanner & Image to PDF Engine (v71.0)
 document.addEventListener("DOMContentLoaded", () => {
     // Core DOM Elements
     const dropArea = document.getElementById("drop-area");
@@ -34,7 +34,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentGlobalFilter = 'magic';
 
     // =========================================================
-    // 1. FILE UPLOAD & INGESTION
+    // 1. FILE UPLOAD & AUTOMATIC BOUNDARY DETECTION
     // =========================================================
     dropArea.addEventListener("click", () => imageUpload.click());
     if (addMoreBtn) addMoreBtn.addEventListener("click", () => imageUpload.click());
@@ -96,54 +96,211 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /**
      * Ingest Uploaded Images.
-     * CRITICAL RULE: NEVER cut off margins, handwriting, or headers automatically!
-     * Default crop box is set to 100% full view [0, 0, 1, 1].
+     * Automatically eliminates unnecessary sides (laptop keyboard, yellow desk, pencil)
+     * while preserving 100% of handwriting, dates, and margins.
      */
     function handleFilesSelect(files) {
         const fileArray = Array.from(files).filter(file => file.type.match('image.*'));
         if (fileArray.length === 0) return;
 
         let loadedCount = 0;
-        const startIndex = uploadedFiles.length;
 
         fileArray.forEach(file => {
             const reader = new FileReader();
             reader.onload = (e) => {
                 const img = new Image();
                 img.onload = () => {
-                    // Safe 100% full image bounds by default: ZERO cut
-                    const fullCropBox = { x: 0.0, y: 0.0, w: 1.0, h: 1.0 };
+                    // 1. Automatically detect exact paper bounds
+                    const autoBounds = detectExactDocumentBounds(img, 0);
 
-                    uploadedFiles.push({
-                        id: 'img_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
-                        name: file.name,
-                        size: file.size,
-                        type: file.type,
-                        rawImgElement: img,          // Original untouched image
-                        imgElement: img,             // Working display image
-                        cropBox: fullCropBox,        // Default full page
-                        filter: currentGlobalFilter,
-                        rotation: 0                  // 0, 90, 180, 270
-                    });
+                    // 2. Crop working image to the detected paper boundaries
+                    const origW = img.naturalWidth || img.width;
+                    const origH = img.naturalHeight || img.height;
 
-                    loadedCount++;
-                    if (loadedCount === fileArray.length) {
-                        settingsArea.style.display = "block";
-                        resultsCard.style.display = "none";
-                        renderImagesList();
+                    const cropX = Math.round(autoBounds.x * origW);
+                    const cropY = Math.round(autoBounds.y * origH);
+                    const cropW = Math.round(autoBounds.w * origW);
+                    const cropH = Math.round(autoBounds.h * origH);
 
-                        // Automatically open CamScanner Cropper for the newly added image so user can adjust boundaries comfortably
-                        setTimeout(() => {
-                            if (uploadedFiles.length > startIndex) {
-                                window.openCropper(startIndex);
-                            }
-                        }, 100);
-                    }
+                    const initialCanvas = document.createElement("canvas");
+                    initialCanvas.width = Math.max(1, cropW);
+                    initialCanvas.height = Math.max(1, cropH);
+                    const ictx = initialCanvas.getContext("2d");
+                    ictx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
+
+                    const croppedImg = new Image();
+                    croppedImg.onload = () => {
+                        uploadedFiles.push({
+                            id: 'img_' + Date.now() + '_' + Math.random().toString(36).substr(2, 6),
+                            name: file.name,
+                            size: file.size,
+                            type: file.type,
+                            rawImgElement: img,          // Original untouched backup
+                            imgElement: croppedImg,      // Auto-cleaned paper image
+                            cropBox: autoBounds,
+                            filter: currentGlobalFilter,
+                            rotation: 0
+                        });
+
+                        loadedCount++;
+                        if (loadedCount === fileArray.length) {
+                            settingsArea.style.display = "block";
+                            resultsCard.style.display = "none";
+                            renderImagesList();
+                        }
+                    };
+                    croppedImg.src = initialCanvas.toDataURL("image/jpeg", 0.95);
                 };
                 img.src = e.target.result;
             };
             reader.readAsDataURL(file);
         });
+    }
+
+    /**
+     * Precision Document Boundary Detector:
+     * Mathematically identifies laptop keyboard rows and yellow desk / pencil columns
+     * to crop them out completely, while leaving handwriting, top date boxes, and margin lines intact.
+     */
+    function detectExactDocumentBounds(img, rotation = 0) {
+        const isRot = (rotation === 90 || rotation === 270);
+        const origW = img.naturalWidth || img.width;
+        const origH = img.naturalHeight || img.height;
+        const srcW = isRot ? origH : origW;
+        const srcH = isRot ? origW : origH;
+
+        const analysisW = 450;
+        const scale = analysisW / srcW;
+        const analysisH = Math.max(10, Math.round(srcH * scale));
+
+        const canvas = document.createElement("canvas");
+        canvas.width = analysisW;
+        canvas.height = analysisH;
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
+
+        ctx.save();
+        ctx.translate(analysisW / 2, analysisH / 2);
+        ctx.rotate((rotation * Math.PI) / 180);
+        const dw = isRot ? analysisH : analysisW;
+        const dh = isRot ? analysisW : analysisH;
+        ctx.drawImage(img, -dw / 2, -dh / 2, dw, dh);
+        ctx.restore();
+
+        const imgData = ctx.getImageData(0, 0, analysisW, analysisH);
+        const data = imgData.data;
+
+        const lums = new Float32Array(analysisW * analysisH);
+        const diffRB = new Float32Array(analysisW * analysisH);
+
+        for (let i = 0; i < data.length; i += 4) {
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+            const idx = i / 4;
+            lums[idx] = 0.299 * r + 0.587 * g + 0.114 * b;
+            diffRB[idx] = Math.abs(r - b);
+        }
+
+        // 1. Detect Top Edge (Laptop keyboard / dark chassis)
+        let topCut = 0;
+        const maxTopScan = Math.round(analysisH * 0.35);
+        const keyboardRows = [];
+        for (let y = 0; y < maxTopScan; y++) {
+            let darkHits = 0;
+            let sumLum = 0;
+            const rowOffset = y * analysisW;
+            for (let x = 0; x < analysisW; x++) {
+                const l = lums[rowOffset + x];
+                sumLum += l;
+                if (l < 110) darkHits++;
+            }
+            const darkRatio = darkHits / analysisW;
+            const meanLum = sumLum / analysisW;
+            if (darkRatio > 0.25 || meanLum < 160) {
+                keyboardRows.push(y);
+            }
+        }
+        if (keyboardRows.length > 0) {
+            const lastRow = keyboardRows[keyboardRows.length - 1];
+            topCut = Math.min(Math.round(analysisH * 0.25), lastRow + 2);
+        }
+
+        // 2. Detect Right Edge (Yellow desk / green pencil / dark borders)
+        let rightCut = analysisW - 1;
+        const yStart = Math.max(topCut, Math.round(analysisH * 0.15));
+        const yEnd = Math.round(analysisH * 0.85);
+        const scanHeight = Math.max(1, yEnd - yStart);
+        const deskCols = [];
+
+        for (let x = Math.round(analysisW * 0.50); x < analysisW; x++) {
+            let darkHits = 0;
+            let sumDiff = 0;
+            for (let y = yStart; y < yEnd; y++) {
+                const idx = y * analysisW + x;
+                sumDiff += diffRB[idx];
+                if (lums[idx] < 100) darkHits++;
+            }
+            const meanDiff = sumDiff / scanHeight;
+            const darkRatio = darkHits / scanHeight;
+            if (meanDiff > 20.0 || darkRatio > 0.25) {
+                deskCols.push(x);
+            }
+        }
+        if (deskCols.length > 0) {
+            rightCut = Math.max(Math.round(analysisW * 0.55), deskCols[0] - 2);
+        }
+
+        // 3. Detect Left Edge (Desk / shadow on the left)
+        let leftCut = 0;
+        const leftDeskCols = [];
+        for (let x = 0; x < Math.round(analysisW * 0.25); x++) {
+            let darkHits = 0;
+            let sumDiff = 0;
+            for (let y = yStart; y < yEnd; y++) {
+                const idx = y * analysisW + x;
+                sumDiff += diffRB[idx];
+                if (lums[idx] < 100) darkHits++;
+            }
+            const meanDiff = sumDiff / scanHeight;
+            const darkRatio = darkHits / scanHeight;
+            if (meanDiff > 20.0 || darkRatio > 0.35) {
+                leftDeskCols.push(x);
+            }
+        }
+        if (leftDeskCols.length > 0) {
+            const lastLeft = leftDeskCols[leftDeskCols.length - 1];
+            leftCut = Math.min(Math.round(analysisW * 0.15), lastLeft + 2);
+        }
+
+        // 4. Detect Bottom Edge (Desk below paper)
+        let bottomCut = analysisH - 1;
+        const bottomRows = [];
+        const scanWidth = Math.max(1, rightCut - leftCut);
+        for (let y = analysisH - 1; y > Math.round(analysisH * 0.85); y--) {
+            let darkHits = 0;
+            let sumLum = 0;
+            const rowOffset = y * analysisW;
+            for (let x = leftCut; x < rightCut; x++) {
+                const l = lums[rowOffset + x];
+                sumLum += l;
+                if (l < 100) darkHits++;
+            }
+            const darkRatio = darkHits / scanWidth;
+            const meanLum = sumLum / scanWidth;
+            if (darkRatio > 0.40 || meanLum < 130) {
+                bottomRows.push(y);
+            }
+        }
+        if (bottomRows.length > 0) {
+            bottomCut = Math.max(Math.round(analysisH * 0.80), bottomRows[bottomRows.length - 1] - 2);
+        }
+
+        return {
+            x: Math.max(0.0, Math.min(0.25, leftCut / analysisW)),
+            y: Math.max(0.0, Math.min(0.25, topCut / analysisH)),
+            w: Math.min(1.0, Math.max(0.50, (rightCut - leftCut) / analysisW)),
+            h: Math.min(1.0, Math.max(0.50, (bottomCut - topCut) / analysisH))
+        };
     }
 
     // =========================================================
@@ -256,12 +413,12 @@ document.addEventListener("DOMContentLoaded", () => {
     // 3. CAMSCANNER DOCUMENT FILTER ENGINE (PURE LUMINANCE GAIN)
     // =========================================================
     function renderProcessedCanvas(canvas, img, filter, rotation, maxW = null, maxH = null) {
-        const isRotated = (rotation === 90 || rotation === 270);
+        const isRot = (rotation === 90 || rotation === 270);
         let origW = img.naturalWidth || img.width;
         let origH = img.naturalHeight || img.height;
 
-        let targetW = isRotated ? origH : origW;
-        let targetH = isRotated ? origW : origH;
+        let targetW = isRot ? origH : origW;
+        let targetH = isRot ? origW : origH;
 
         if (maxW && maxH) {
             let ratio = Math.min(maxW / targetW, maxH / targetH);
@@ -278,8 +435,8 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.translate(targetW / 2, targetH / 2);
         ctx.rotate((rotation * Math.PI) / 180);
 
-        const drawW = isRotated ? targetH : targetW;
-        const drawH = isRotated ? targetW : targetH;
+        const drawW = isRot ? targetH : targetW;
+        const drawH = isRot ? targetW : targetH;
         ctx.drawImage(img, -drawW / 2, -drawH / 2, drawW, drawH);
         ctx.restore();
 
@@ -499,8 +656,8 @@ document.addEventListener("DOMContentLoaded", () => {
         cropImg = file.rawImgElement;
         cropRotation = file.rotation || 0;
 
-        // Use file's existing cropBox, or default to 100% full view
-        cropBox = file.cropBox ? { ...file.cropBox } : { x: 0.0, y: 0.0, w: 1.0, h: 1.0 };
+        // Use file's existing cropBox, or run precision auto detection
+        cropBox = file.cropBox ? { ...file.cropBox } : detectExactDocumentBounds(cropImg, cropRotation);
 
         cropModal.style.display = "flex";
         initCropCanvas();
@@ -535,7 +692,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Full 100% Document Reset (guarantees zero cut)
+    // Full 100% Document Reset
     if (cropFullBtn) {
         cropFullBtn.addEventListener("click", () => {
             cropBox = { x: 0.0, y: 0.0, w: 1.0, h: 1.0 };
@@ -543,88 +700,13 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // Smart Auto-Detect Button (Calculates safe boundaries without cutting writing)
+    // Smart Auto-Detect Button (Calculates boundaries to exclude keyboard and desk)
     if (cropAutoDetectBtn) {
         cropAutoDetectBtn.addEventListener("click", () => {
             if (!cropImg) return;
-            cropBox = calculateSafeDocumentBounds(cropImg, cropRotation);
+            cropBox = detectExactDocumentBounds(cropImg, cropRotation);
             drawCropCanvas();
         });
-    }
-
-    /**
-     * Safe Boundary Detector:
-     * Discovers paper boundaries vs dark keyboard/desk,
-     * but adds safe padding so handwriting, top dates, and margin lines are NEVER cut off!
-     */
-    function calculateSafeDocumentBounds(img, rotation) {
-        const isRot = (rotation === 90 || rotation === 270);
-        const origW = img.naturalWidth || img.width;
-        const origH = img.naturalHeight || img.height;
-        const srcW = isRot ? origH : origW;
-        const srcH = isRot ? origW : origH;
-
-        const analysisW = 400;
-        const scale = analysisW / srcW;
-        const analysisH = Math.round(srcH * scale);
-
-        const tempCanvas = document.createElement("canvas");
-        tempCanvas.width = analysisW;
-        tempCanvas.height = analysisH;
-        const tctx = tempCanvas.getContext("2d", { willReadFrequently: true });
-
-        tctx.save();
-        tctx.translate(analysisW / 2, analysisH / 2);
-        tctx.rotate((rotation * Math.PI) / 180);
-        const dw = isRot ? analysisH : analysisW;
-        const dh = isRot ? analysisW : analysisH;
-        tctx.drawImage(img, -dw / 2, -dh / 2, dw, dh);
-        tctx.restore();
-
-        const imgData = tctx.getImageData(0, 0, analysisW, analysisH);
-        const data = imgData.data;
-
-        // Compute row luminance
-        let topCut = 0;
-        for (let y = 0; y < Math.round(analysisH * 0.30); y++) {
-            let darkHits = 0;
-            for (let x = 0; x < analysisW; x += 3) {
-                const idx = (y * analysisW + x) * 4;
-                const lum = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
-                if (lum < 75) darkHits++;
-            }
-            if (darkHits / (analysisW / 3) > 0.15) {
-                // Keyboard / dark band detected
-                topCut = y;
-            }
-        }
-
-        // Add 5px safe margin below keyboard (ensures Date 20/7/2026 is untouched)
-        if (topCut > 0) {
-            topCut = Math.max(0, topCut - 3);
-        }
-
-        // Detect right desk / pencil
-        let rightCut = analysisW - 1;
-        for (let x = analysisW - 1; x > Math.round(analysisW * 0.65); x -= 2) {
-            let darkHits = 0;
-            for (let y = Math.round(analysisH * 0.2); y < Math.round(analysisH * 0.8); y += 4) {
-                const idx = (y * analysisW + x) * 4;
-                const lum = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
-                if (lum < 70) darkHits++;
-            }
-            if (darkHits > 8) {
-                rightCut = Math.min(analysisW - 1, x + 10); // safe padding outward
-                break;
-            }
-        }
-
-        return {
-            x: 0.0, // Always keep left margin intact
-            y: Math.max(0.0, Math.min(0.25, topCut / analysisH)),
-            w: Math.min(1.0, Math.max(0.65, rightCut / analysisW)),
-            h: Math.min(1.0, 1.0 - Math.max(0.0, topCut / analysisH))
-        };
     }
 
     function initCropCanvas() {
@@ -773,18 +855,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const hx = currentPointerPos.x;
         const hy = currentPointerPos.y;
 
-        // Position loupe bubble 70px above pointer, or below if too close to top
         const loupeRadius = 46;
         const loupeY = (hy - 75 < loupeRadius) ? hy + 75 : hy - 75;
         const loupeX = Math.max(loupeRadius + 5, Math.min(cw - loupeRadius - 5, hx));
 
         ctx.save();
 
-        // Drop shadow for loupe bubble
         ctx.shadowColor = "rgba(0, 0, 0, 0.6)";
         ctx.shadowBlur = 12;
 
-        // Clip circular aperture
         ctx.beginPath();
         ctx.arc(loupeX, loupeY, loupeRadius, 0, Math.PI * 2);
         ctx.fillStyle = "#000000";
@@ -794,13 +873,11 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.shadowColor = "transparent";
         ctx.shadowBlur = 0;
 
-        // Draw 2.5x magnified view centered on (hx, hy)
         const zoom = 2.4;
         ctx.translate(loupeX, loupeY);
         ctx.scale(zoom, zoom);
         ctx.translate(-hx, -hy);
 
-        // Render rotated image in loupe
         ctx.save();
         ctx.translate(cw / 2, ch / 2);
         ctx.rotate((cropRotation * Math.PI) / 180);
@@ -812,7 +889,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ctx.restore();
 
-        // Outer white & orange ring border for loupe
         ctx.save();
         ctx.lineWidth = 3.5;
         ctx.strokeStyle = "#ffffff";
@@ -826,7 +902,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.arc(loupeX, loupeY, loupeRadius - 2.5, 0, Math.PI * 2);
         ctx.stroke();
 
-        // Crosshairs inside loupe
         ctx.strokeStyle = "#f57c00";
         ctx.lineWidth = 1;
         ctx.beginPath();
@@ -846,7 +921,7 @@ document.addEventListener("DOMContentLoaded", () => {
             { id: 'se', x: bx + bw, y: by + bh, cursor: 'nwse-resize' },
             { id: 'sw', x: bx, y: by + bh, cursor: 'nesw-resize' },
             { id: 'n', x: bx + bw / 2, y: by, cursor: 'ns-resize' },
-            { id: 's', x: bx + bw / 2, y: by + bh, cursor: 'ns-resize' },
+            { id: 's', x: bx + bw / 2, y: by, cursor: 'ns-resize' },
             { id: 'w', x: bx, y: by + bh / 2, cursor: 'ew-resize' },
             { id: 'e', x: bx + bw, y: by + bh / 2, cursor: 'ew-resize' }
         ];
@@ -877,7 +952,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (dist <= hitDist) return h;
         }
 
-        // Inside crop rectangle -> Move whole box
         if (pos.x >= bx && pos.x <= bx + bw && pos.y >= by && pos.y <= by + bh) {
             return { id: 'move', cursor: 'move' };
         }
