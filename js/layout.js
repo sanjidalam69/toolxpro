@@ -512,9 +512,9 @@ function injectFooter(homePath, isSubFolder, isHomePage) {
 
             <div class="footer-compact-bottom">
                 <p class="footer-copyright">
-                    © ${year} <strong>ToolX Pro</strong>. Founded & Developed with ❤️ by <a href="https://www.linkedin.com/in/sanjid-alam-29752619b/" target="_blank" rel="noopener noreferrer" class="footer-author-link">Sanjid Alam</a>. All rights reserved.
+                    © ${year} <strong>ToolX Pro</strong>. Founded & developed by <a href="https://www.linkedin.com/in/sanjid-alam-29752619b/" target="_blank" rel="noopener noreferrer" class="footer-author-link">Sanjid Alam</a>. All rights reserved.
                 </p>
-                <span class="footer-client-tag">🔒 100% Client-Side • Zero Data Stored</span>
+                <span class="footer-client-tag">🔒 Privacy-Focused • No Account Required</span>
             </div>
         </div>
     `;
