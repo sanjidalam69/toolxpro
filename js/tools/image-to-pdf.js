@@ -349,11 +349,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const len = width * height;
 
         if (filter === 'magic') {
-            const radius = Math.max(8, Math.round(Math.min(width, height) / 28));
+            const radius = Math.max(8, Math.round(Math.min(width, height) / 26));
             const bg = computeSeparableBoxBlur(data, width, height, radius);
 
-            const blackPt = 62.0;
-            const whitePt = 228.0;
+            const blackPt = 60.0;
+            const whitePt = 225.0;
             const scale = 255.0 / (whitePt - blackPt);
 
             for (let i = 0; i < len; i++) {
@@ -380,19 +380,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 // Ink Saturation Boost (Magic Color preserves margin lines and pen hues)
                 const mean = (strR + strG + strB) / 3.0;
-                strR = Math.max(0, Math.min(255, mean + (strR - mean) * 1.32));
-                strG = Math.max(0, Math.min(255, mean + (strG - mean) * 1.32));
-                strB = Math.max(0, Math.min(255, mean + (strB - mean) * 1.32));
+                strR = Math.max(0, Math.min(255, mean + (strR - mean) * 1.30));
+                strG = Math.max(0, Math.min(255, mean + (strG - mean) * 1.30));
+                strB = Math.max(0, Math.min(255, mean + (strB - mean) * 1.30));
 
                 data[idx] = strR;
                 data[idx + 1] = strG;
                 data[idx + 2] = strB;
             }
+
+            // Intelligent Corner & Outer Edge Shadow Cleaner
+            const cornerW = Math.round(width * 0.12);
+            const cornerH = Math.round(height * 0.08);
+
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    const isCorner = (
+                        (x < cornerW && y < cornerH) || // Top-left corner
+                        (x > width - cornerW && y < cornerH) || // Top-right corner
+                        (x < cornerW && y > height - cornerH) || // Bottom-left corner
+                        (x > width - cornerW && y > height - cornerH) // Bottom-right corner
+                    );
+
+                    const idx = (y * width + x) * 4;
+                    if (isCorner) {
+                        const lum = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
+                        if (lum < 185) {
+                            data[idx] = 255;
+                            data[idx + 1] = 255;
+                            data[idx + 2] = 255;
+                        }
+                    }
+
+                    // Clean outer 2px boundary perimeter
+                    if (x < 2 || x >= width - 2 || y < 2 || y >= height - 2) {
+                        data[idx] = 255;
+                        data[idx + 1] = 255;
+                        data[idx + 2] = 255;
+                    }
+                }
+            }
+
             ctx.putImageData(imgData, 0, 0);
 
         } else if (filter === 'bw') {
             // Clean Photocopy / Document B&W Scan
-            const radius = Math.max(8, Math.round(Math.min(width, height) / 28));
+            const radius = Math.max(8, Math.round(Math.min(width, height) / 26));
             const bg = computeSeparableBoxBlur(data, width, height, radius);
 
             for (let i = 0; i < len; i++) {
@@ -420,6 +453,19 @@ document.addEventListener("DOMContentLoaded", () => {
                 data[idx + 1] = val;
                 data[idx + 2] = val;
             }
+
+            // Outer perimeter whitening
+            for (let y = 0; y < height; y++) {
+                for (let x = 0; x < width; x++) {
+                    if (x < 2 || x >= width - 2 || y < 2 || y >= height - 2) {
+                        const idx = (y * width + x) * 4;
+                        data[idx] = 255;
+                        data[idx + 1] = 255;
+                        data[idx + 2] = 255;
+                    }
+                }
+            }
+
             ctx.putImageData(imgData, 0, 0);
 
         } else if (filter === 'gray') {
@@ -453,7 +499,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // =========================================================
-    // 2-PASS SMART DOCUMENT BOUNDARY DETECTION (EDGE TRIMMER)
+    // SAFE SMART DOCUMENT BOUNDARY DETECTION (100% TEXT SAFE)
     // =========================================================
 
     function detectDocumentBounds(img) {
@@ -480,7 +526,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const getLum = (x, y) => lums[y * analysisW + x];
 
-        // 1. Column variance & mean analysis
+        // Column variance & mean analysis
         const colMeans = new Float32Array(analysisW);
         const colStds = new Float32Array(analysisW);
         for (let x = 0; x < analysisW; x++) {
@@ -501,7 +547,7 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let x = 0; x < analysisW * 0.40; x++) {
             const isSolidBorder = (colStds[x] < 1.5 && (colMeans[x] > 250 || colMeans[x] < 50)) || colMeans[x] < 55;
             if (!isSolidBorder) {
-                xMin = Math.max(0, x - 2);
+                xMin = Math.max(0, x - 3);
                 break;
             }
         }
@@ -510,7 +556,7 @@ document.addEventListener("DOMContentLoaded", () => {
         for (let x = analysisW - 1; x > analysisW * 0.60; x--) {
             const isSolidBorder = (colStds[x] < 1.5 && (colMeans[x] > 250 || colMeans[x] < 50)) || colMeans[x] < 55;
             if (!isSolidBorder) {
-                xMax = Math.min(analysisW - 1, x + 2);
+                xMax = Math.min(analysisW - 1, x + 3);
                 break;
             }
         }
@@ -528,7 +574,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const mean = sum / (count || 1);
             const isBorder = (mean > 252 && darkHits === 0) || mean < 55;
             if (!isBorder) {
-                yMin = Math.max(0, y - 2);
+                yMin = Math.max(0, y - 3);
                 break;
             }
         }
@@ -545,76 +591,22 @@ document.addEventListener("DOMContentLoaded", () => {
             const mean = sum / (count || 1);
             const isBorder = (mean > 252 && darkHits === 0) || mean < 55;
             if (!isBorder) {
-                yMax = Math.min(analysisH - 1, y + 2);
+                yMax = Math.min(analysisH - 1, y + 3);
                 break;
             }
         }
 
-        // Pass 3: Inward trimming for desk shadows, clips & binding rings
-        const curW = xMax - xMin;
-        const curH = yMax - yMin;
-
-        // Inward Left
-        for (let x = xMin; x < xMin + Math.round(curW * 0.12); x++) {
-            let darkCount = 0, total = 0;
-            for (let y = yMin; y <= yMax; y += 4) {
-                if (getLum(x, y) < 80) darkCount++;
-                total++;
-            }
-            if (darkCount / (total || 1) > 0.18) {
-                xMin = x + 1;
-            } else {
-                break;
-            }
-        }
-
-        // Inward Right
-        for (let x = xMax; x > xMax - Math.round(curW * 0.12); x--) {
-            let darkCount = 0, total = 0;
-            for (let y = yMin; y <= yMax; y += 4) {
-                if (getLum(x, y) < 80) darkCount++;
-                total++;
-            }
-            if (darkCount / (total || 1) > 0.18) {
-                xMax = x - 1;
-            } else {
-                break;
-            }
-        }
-
-        // Inward Top
-        for (let y = yMin; y < yMin + Math.round(curH * 0.12); y++) {
-            let darkCount = 0, total = 0;
-            for (let x = xMin; x <= xMax; x += 4) {
-                if (getLum(x, y) < 80) darkCount++;
-                total++;
-            }
-            if (darkCount / (total || 1) > 0.18) {
-                yMin = y + 1;
-            } else {
-                break;
-            }
-        }
-
-        // Inward Bottom
-        for (let y = yMax; y > yMax - Math.round(curH * 0.12); y--) {
-            let darkCount = 0, total = 0;
-            for (let x = xMin; x <= xMax; x += 4) {
-                if (getLum(x, y) < 80) darkCount++;
-                total++;
-            }
-            if (darkCount / (total || 1) > 0.18) {
-                yMax = y - 1;
-            } else {
-                break;
-            }
-        }
+        // Safe padding: never cut off margin or bottom text
+        xMin = Math.max(0, xMin - 4);
+        yMin = Math.max(0, yMin - 4);
+        xMax = Math.min(analysisW - 1, xMax + 4);
+        yMax = Math.min(analysisH - 1, yMax + 4);
 
         return {
-            x: Math.max(0, Math.min(0.40, xMin / analysisW)),
-            y: Math.max(0, Math.min(0.40, yMin / analysisH)),
-            w: Math.min(1.0, Math.max(0.30, (xMax - xMin) / analysisW)),
-            h: Math.min(1.0, Math.max(0.30, (yMax - yMin) / analysisH))
+            x: Math.max(0, Math.min(0.35, xMin / analysisW)),
+            y: Math.max(0, Math.min(0.35, yMin / analysisH)),
+            w: Math.min(1.0, Math.max(0.40, (xMax - xMin) / analysisW)),
+            h: Math.min(1.0, Math.max(0.40, (yMax - yMin) / analysisH))
         };
     }
 
