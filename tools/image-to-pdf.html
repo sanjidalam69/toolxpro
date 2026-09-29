@@ -6,7 +6,7 @@
     <title>Image to PDF Converter - Merge JPG & PNG Pictures into PDF Online | ToolX Pro</title>
     <meta name="description" content="Convert and combine multiple JPG, PNG, and WebP images into a single professional PDF document. Free client-side compiler with custom page sizes (A4, Letter), margins, and orientation.">
     <link rel="canonical" href="https://toolxpro.live/tools/image-to-pdf.html">
-    <link rel="stylesheet" href="../css/style.css?v=66.0">
+    <link rel="stylesheet" href="../css/style.css?v=67.0">
 
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
@@ -91,59 +91,93 @@
             <main class="content-area">
                 <div class="tool-container">
                     <div class="tool-header">
-                        <h1 class="tool-title">📄 High-Speed Image to PDF Converter</h1>
-                        <p class="tool-desc">Combine and compile multiple JPG, PNG, and WebP images into a single clean PDF document with customizable page sizes, margins, and orientation.</p>
+                        <h1 class="tool-title">📄 CamScanner Image to PDF Converter</h1>
+                        <p class="tool-desc">Turn photos of assignments, handwritten notes, receipts & documents into clean, scan-copy PDFs. Apply CamScanner filters (Magic Color, B&W Clean Scan, Sharp, Grayscale) with rotation and custom page formats.</p>
                     </div>
                     
                     <div class="tool-body">
                         <!-- Drag and Drop Upload Area -->
                         <div class="upload-area" id="drop-area">
-                            <span class="upload-icon">📄</span>
-                            <h3 style="font-size:1.1rem; font-weight:600;">Drag & drop multiple images here or click to browse</h3>
-                            <p style="font-size:0.85rem; color:var(--text-secondary);">Supports: JPG, JPEG, PNG, WebP (Select multiple files at once)</p>
+                            <span class="upload-icon">📸</span>
+                            <h3 style="font-size:1.1rem; font-weight:600;">Drag & drop document images here or click to browse</h3>
+                            <p style="font-size:0.85rem; color:var(--text-secondary);">Supports: JPG, JPEG, PNG, WebP (Upload single or multiple pages)</p>
                             <input type="file" id="image-upload" accept="image/*" multiple style="display:none;">
                         </div>
 
                         <!-- Settings & Preview Area -->
                         <div id="settings-area" style="display:none; margin-top:1.5rem; animation: fadeIn 0.3s;">
-                            <!-- PDF Settings Form -->
-                            <div class="form-row" style="background:var(--bg-secondary); padding:1rem; border-radius:12px; border:1px solid var(--border-color); margin-bottom:1.2rem;">
-                                <div class="form-group">
-                                    <label for="pdf-page-size" style="font-weight:600;">Page Format:</label>
-                                    <select id="pdf-page-size" class="form-control">
-                                        <option value="a4">A4 (Standard 210 × 297 mm)</option>
+                            
+                            <!-- CamScanner Global Filter Presets Bar -->
+                            <div class="scan-filter-section">
+                                <div class="scan-filter-title">
+                                    <span>✨ CamScanner Document Filters (Apply to All Pages):</span>
+                                </div>
+                                <div class="scan-filter-chips" id="global-filter-chips">
+                                    <button type="button" class="filter-chip active" data-filter="magic">✨ Magic Color</button>
+                                    <button type="button" class="filter-chip" data-filter="bw">📄 B&W Clean Scan</button>
+                                    <button type="button" class="filter-chip" data-filter="sharp">⚡ Sharp Document</button>
+                                    <button type="button" class="filter-chip" data-filter="gray">🩶 Grayscale</button>
+                                    <button type="button" class="filter-chip" data-filter="original">🖼️ Original (Raw)</button>
+                                </div>
+                            </div>
+
+                            <!-- PDF Page & Format Settings Form -->
+                            <div class="form-row" style="background:var(--bg-secondary); padding:1rem; border-radius:12px; border:1px solid var(--border-color); margin-bottom:1.2rem; display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:12px;">
+                                <div class="form-group" style="margin-bottom:0;">
+                                    <label for="pdf-page-size" style="font-weight:600; font-size:0.88rem;">Page Format:</label>
+                                    <select id="pdf-page-size" class="form-control" style="font-size:0.88rem; padding:8px 12px;">
+                                        <option value="a4" selected>A4 (Standard 210 × 297 mm)</option>
                                         <option value="letter">Letter (8.5 × 11 in)</option>
                                         <option value="fit">Auto Fit (Exact Image Bounds)</option>
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label for="pdf-orientation" style="font-weight:600;">Page Orientation:</label>
-                                    <select id="pdf-orientation" class="form-control">
-                                        <option value="p">Portrait (Vertical)</option>
+                                <div class="form-group" style="margin-bottom:0;">
+                                    <label for="pdf-orientation" style="font-weight:600; font-size:0.88rem;">Page Orientation:</label>
+                                    <select id="pdf-orientation" class="form-control" style="font-size:0.88rem; padding:8px 12px;">
+                                        <option value="p" selected>Portrait (Vertical)</option>
                                         <option value="l">Landscape (Horizontal)</option>
+                                        <option value="auto">Auto (Match Image)</option>
                                     </select>
                                 </div>
-                                <div class="form-group">
-                                    <label for="pdf-margin" style="font-weight:600;">Border Margin:</label>
-                                    <select id="pdf-margin" class="form-control">
+                                <div class="form-group" style="margin-bottom:0;">
+                                    <label for="pdf-margin" style="font-weight:600; font-size:0.88rem;">Page Margin:</label>
+                                    <select id="pdf-margin" class="form-control" style="font-size:0.88rem; padding:8px 12px;">
                                         <option value="0">No Margin (Full Bleed)</option>
-                                        <option value="10">Small Margin (10px)</option>
-                                        <option value="20" selected>Standard Margin (20px)</option>
+                                        <option value="10" selected>Small Margin (10 mm)</option>
+                                        <option value="20">Standard Margin (20 mm)</option>
+                                    </select>
+                                </div>
+                                <div class="form-group" style="margin-bottom:0;">
+                                    <label for="pdf-quality" style="font-weight:600; font-size:0.88rem;">Output Quality / DPI:</label>
+                                    <select id="pdf-quality" class="form-control" style="font-size:0.88rem; padding:8px 12px;">
+                                        <option value="high" selected>HD Print (Crisp Text)</option>
+                                        <option value="medium">Standard (Balanced Size)</option>
                                     </select>
                                 </div>
                             </div>
 
-                            <!-- Uploaded Images List -->
-                            <h3 style="font-size:1.1rem; font-weight:600; margin-bottom:8px;">Uploaded Images to Compile:</h3>
-                            <div class="file-list" id="images-list">
+                            <!-- Uploaded Images Header Toolbar -->
+                            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; flex-wrap:wrap; gap:8px;">
+                                <h3 style="font-size:1.05rem; font-weight:700; color:var(--text-primary); margin:0;" id="images-count-heading">Uploaded Document Pages (0):</h3>
+                                <div style="display:flex; gap:8px;">
+                                    <button type="button" id="add-more-btn" class="btn btn-secondary" style="padding:6px 14px; font-size:0.84rem; cursor:pointer;">➕ Add More Pages</button>
+                                    <button type="button" id="clear-all-btn" class="btn btn-secondary" style="padding:6px 14px; font-size:0.84rem; cursor:pointer; color:var(--danger, #ef4444);">🗑️ Clear All</button>
+                                </div>
+                            </div>
+
+                            <!-- Uploaded Images List with Live Filter Previews -->
+                            <div class="scan-files-grid" id="images-list">
                                 <!-- Dynamically added images list -->
                             </div>
 
-                            <button id="create-pdf-btn" class="btn btn-primary" style="margin-top:1.2rem;">Create PDF Document 🚀</button>
+                            <!-- Compilation Action Button -->
+                            <button id="create-pdf-btn" class="btn btn-primary" style="margin-top:1.5rem; width:100%; padding:14px; font-size:1.05rem; font-weight:700; display:flex; align-items:center; justify-content:center; gap:8px;">
+                                <span>Generate Scan PDF Document 🚀</span>
+                            </button>
                         </div>
                     </div>
                     
-                    <div id="results" class="results-card">
+                    <div id="results" class="results-card" style="display:none;">
                         <h2 class="results-title">📊 PDF Compilation Complete</h2>
                         <div class="results-content" id="results-content">
                             <!-- Injected by JS -->
@@ -195,10 +229,11 @@
         <footer id="main-footer"></footer>
     </div>
     
-    <script src="../js/layout.js?v=66.0"></script>
-    <script src="../js/tools/image-to-pdf.js"></script>
+    <script src="../js/layout.js?v=67.0"></script>
+    <script src="../js/tools/image-to-pdf.js?v=67.0"></script>
 </body>
 </html>
+
 
 
 

@@ -5978,5 +5978,186 @@ pre, code {
     }
 }
 
+/* =========================================================
+   CAMSCANNER DOCUMENT SCANNER & IMAGE-TO-PDF UI (v67.0)
+   ========================================================= */
+.scan-filter-section {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 14px;
+    padding: 1.15rem;
+    margin-bottom: 1.25rem;
+}
+
+.scan-filter-title {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.scan-filter-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.filter-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-primary);
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+}
+
+.filter-chip:hover {
+    border-color: var(--primary);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+
+.filter-chip.active {
+    background: var(--primary-gradient, linear-gradient(135deg, #18181b, #3f3f46));
+    color: #ffffff !important;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(245, 124, 0, 0.25);
+}
+
+[data-theme='dark'] .filter-chip.active {
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: #09090b !important;
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
+}
+
+.scan-files-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 12px;
+    margin-top: 1rem;
+}
+
+.scan-item-card {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 10px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    position: relative;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.scan-item-card:hover {
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.05);
+}
+
+.scan-thumb-container {
+    width: 64px;
+    height: 80px;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000000;
+    border: 1px solid var(--border-color);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.scan-thumb-canvas {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 0.25s ease;
+}
+
+.scan-item-meta {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.scan-item-name {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.scan-item-controls {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    margin-top: 4px;
+}
+
+.scan-select-mini {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    border: 1px solid var(--border-color);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.scan-btn-icon {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    border: 1px solid var(--border-color);
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: all 0.2s ease;
+}
+
+.scan-btn-icon:hover {
+    background: var(--primary-glow);
+    border-color: var(--primary);
+    color: var(--primary);
+}
+
+.scan-btn-icon:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.scan-spinner {
+    width: 36px;
+    height: 36px;
+    border: 3px solid rgba(245, 124, 0, 0.2);
+    border-top-color: var(--primary);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
 
 
