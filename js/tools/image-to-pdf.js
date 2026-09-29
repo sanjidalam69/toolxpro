@@ -138,6 +138,13 @@ document.addEventListener("DOMContentLoaded", () => {
                             settingsArea.style.display = "block";
                             resultsCard.style.display = "none";
                             renderImagesList();
+
+                            // Automatically open Pro CamScanner cropper for first uploaded image
+                            setTimeout(() => {
+                                if (uploadedFiles.length > 0) {
+                                    window.openCropper(uploadedFiles.length - 1);
+                                }
+                            }, 120);
                         }
                     };
                     croppedImg.src = initialCropCanvas.toDataURL("image/jpeg", 0.95);
@@ -740,18 +747,31 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.lineTo(bx + bw, by + (2 * bh) / 3);
         ctx.stroke();
 
-        // 8 Interactive Handles
-        const handleSize = 10;
+        // 8 Pro CamScanner Interactive Handles
         const handles = getCropHandles(bx, by, bw, bh);
 
         handles.forEach(h => {
+            // Outer shadow / glow
+            ctx.shadowColor = "rgba(0, 0, 0, 0.4)";
+            ctx.shadowBlur = 6;
+
+            // Outer ring
             ctx.fillStyle = "#ffffff";
             ctx.strokeStyle = "#f57c00";
-            ctx.lineWidth = 2.5;
+            ctx.lineWidth = 3;
             ctx.beginPath();
-            ctx.arc(h.x, h.y, handleSize / 1.5, 0, Math.PI * 2);
+            ctx.arc(h.x, h.y, 9, 0, Math.PI * 2);
             ctx.fill();
             ctx.stroke();
+
+            // Inner dot
+            ctx.fillStyle = "#f57c00";
+            ctx.beginPath();
+            ctx.arc(h.x, h.y, 4, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.shadowColor = "transparent";
+            ctx.shadowBlur = 0;
         });
     }
 
@@ -785,7 +805,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const by = cropBox.y * ch;
         const bw = cropBox.w * cw;
         const bh = cropBox.h * ch;
-        const hitDist = 20;
+        const hitDist = 32;
 
         const handles = getCropHandles(bx, by, bw, bh);
         for (let h of handles) {
