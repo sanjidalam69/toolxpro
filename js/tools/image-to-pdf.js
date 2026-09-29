@@ -283,7 +283,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /**
-     * True CamScanner Adaptive Local-Illumination Magic Color Algorithm
+     * High-Precision CamScanner Adaptive Local-Illumination Magic Color Algorithm
      */
     function applyDocumentFilter(ctx, width, height, filter) {
         const imgData = ctx.getImageData(0, 0, width, height);
@@ -291,28 +291,37 @@ document.addEventListener("DOMContentLoaded", () => {
         const len = data.length;
 
         if (filter === 'magic') {
-            // 1. Calculate local paper background illumination grid to eliminate shadows & lighting gradients
-            const gridBlock = Math.max(16, Math.round(Math.min(width, height) / 25));
+            // 1. Calculate local paper background illumination grid (percentile-based flat-field estimator)
+            const gridBlock = Math.max(16, Math.round(Math.min(width, height) / 22));
             const gridCols = Math.ceil(width / gridBlock);
             const gridRows = Math.ceil(height / gridBlock);
             const localMaxLums = new Float32Array(gridCols * gridRows);
 
             for (let gy = 0; gy < gridRows; gy++) {
+                const startY = gy * gridBlock;
+                const endY = Math.min(height, startY + gridBlock);
+
                 for (let gx = 0; gx < gridCols; gx++) {
                     const startX = gx * gridBlock;
-                    const startY = gy * gridBlock;
                     const endX = Math.min(width, startX + gridBlock);
-                    const endY = Math.min(height, startY + gridBlock);
 
-                    let maxL = 150;
+                    // Sample block luminance values
+                    const sampleLums = [];
                     for (let y = startY; y < endY; y += 2) {
                         for (let x = startX; x < endX; x += 2) {
                             const idx = (y * width + x) * 4;
-                            const lum = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
-                            if (lum > maxL) maxL = lum;
+                            sampleLums.push(0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2]);
                         }
                     }
-                    localMaxLums[gy * gridCols + gx] = Math.max(135, maxL);
+
+                    if (sampleLums.length > 0) {
+                        sampleLums.sort((a, b) => a - b);
+                        // 92nd percentile represents paper surface without ink interference
+                        const pIdx = Math.min(sampleLums.length - 1, Math.floor(sampleLums.length * 0.92));
+                        localMaxLums[gy * gridCols + gx] = Math.max(125, sampleLums[pIdx]);
+                    } else {
+                        localMaxLums[gy * gridCols + gx] = 220;
+                    }
                 }
             }
 
@@ -328,30 +337,34 @@ document.addEventListener("DOMContentLoaded", () => {
                     let g = data[idx + 1];
                     let b = data[idx + 2];
 
-                    const lum = 0.299 * r + 0.587 * g + 0.114 * b;
-                    const ratio = lum / bgLum;
+                    // Normalize color channel by local paper brightness surface
+                    const normR = Math.min(255, (r / (bgLum || 1)) * 255);
+                    const normG = Math.min(255, (g / (bgLum || 1)) * 255);
+                    const normB = Math.min(255, (b / (bgLum || 1)) * 255);
+                    const normLum = 0.299 * normR + 0.587 * normG + 0.114 * normB;
 
-                    if (ratio > 0.82) {
-                        // Clean Paper Background -> Pure Crisp White
-                        const boost = 255;
-                        const factor = boost / (lum || 1);
-                        r = Math.min(255, r * factor);
-                        g = Math.min(255, g * factor);
-                        b = Math.min(255, b * factor);
-                    } else if (ratio < 0.62) {
-                        // Deep Pen Ink & Pencil Text -> High Contrast
-                        const contrastFactor = 1.45;
-                        r = Math.max(0, Math.min(255, (r - 128) * contrastFactor + 85));
-                        g = Math.max(0, Math.min(255, (g - 128) * contrastFactor + 85));
-                        b = Math.max(0, Math.min(255, (b - 128) * contrastFactor + 85));
+                    const paperThresh = 208;
+                    const inkThresh = 145;
+
+                    if (normLum >= paperThresh) {
+                        // Paper surface -> Pure 255 Clean White
+                        r = 255;
+                        g = 255;
+                        b = 255;
+                    } else if (normLum <= inkThresh) {
+                        // Handwritten Text / Ink -> Deep Crisp Color
+                        const inkFactor = 0.50;
+                        r = Math.max(0, Math.min(255, normR * inkFactor));
+                        g = Math.max(0, Math.min(255, normG * inkFactor));
+                        b = Math.max(0, Math.min(255, normB * inkFactor));
                     } else {
-                        // Smooth Anti-aliased Handwriting Edge
-                        const t = (ratio - 0.62) / 0.20;
-                        const targetLum = 85 + t * (255 - 85);
-                        const factor = targetLum / (lum || 1);
-                        r = Math.max(0, Math.min(255, r * factor));
-                        g = Math.max(0, Math.min(255, g * factor));
-                        b = Math.max(0, Math.min(255, b * factor));
+                        // Smooth Anti-Aliased Handwriting Edge
+                        const t = (normLum - inkThresh) / (paperThresh - inkThresh);
+                        const targetLum = (inkThresh * 0.50) + t * (255 - (inkThresh * 0.50));
+                        const scale = targetLum / (normLum || 1);
+                        r = Math.max(0, Math.min(255, normR * scale));
+                        g = Math.max(0, Math.min(255, normG * scale));
+                        b = Math.max(0, Math.min(255, normB * scale));
                     }
 
                     data[idx] = r;
@@ -366,12 +379,12 @@ document.addEventListener("DOMContentLoaded", () => {
             for (let i = 0; i < len; i += 4) {
                 const lum = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
                 let val;
-                if (lum > 135) {
+                if (lum > 140) {
                     val = 255;
-                } else if (lum < 85) {
-                    val = Math.max(0, lum * 0.35);
+                } else if (lum < 95) {
+                    val = Math.max(0, lum * 0.30);
                 } else {
-                    val = ((lum - 85) / 50) * 255;
+                    val = ((lum - 95) / 45) * 255;
                 }
                 data[i] = val;
                 data[i + 1] = val;
@@ -383,7 +396,7 @@ document.addEventListener("DOMContentLoaded", () => {
             // Smooth Grayscale Document Scan
             for (let i = 0; i < len; i += 4) {
                 const lum = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
-                const val = Math.max(0, Math.min(255, (lum - 128) * 1.3 + 140));
+                const val = Math.max(0, Math.min(255, (lum - 128) * 1.35 + 145));
                 data[i] = val;
                 data[i + 1] = val;
                 data[i + 2] = val;
@@ -397,9 +410,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 let g = data[i + 1];
                 let b = data[i + 2];
 
-                r = Math.max(0, Math.min(255, (r - 128) * 1.25 + 138));
-                g = Math.max(0, Math.min(255, (g - 128) * 1.25 + 138));
-                b = Math.max(0, Math.min(255, (b - 128) * 1.25 + 138));
+                r = Math.max(0, Math.min(255, (r - 128) * 1.30 + 142));
+                g = Math.max(0, Math.min(255, (g - 128) * 1.30 + 142));
+                b = Math.max(0, Math.min(255, (b - 128) * 1.30 + 142));
 
                 data[i] = r;
                 data[i + 1] = g;
@@ -410,7 +423,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // =========================================================
-    // AUTOMATIC DOCUMENT BOUNDARY DETECTION (EDGE TRIMMER)
+    // 2-PASS SMART DOCUMENT BOUNDARY DETECTION (EDGE TRIMMER)
     // =========================================================
 
     function detectDocumentBounds(img) {
@@ -435,96 +448,143 @@ document.addEventListener("DOMContentLoaded", () => {
             lums[i / 4] = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
         }
 
-        // Sample border/table background luminance
-        let borderSum = 0;
-        let borderCount = 0;
-        for (let x = 0; x < analysisW; x += 5) {
-            borderSum += lums[0 * analysisW + x] + lums[(analysisH - 1) * analysisW + x];
-            borderCount += 2;
+        const getLum = (x, y) => lums[y * analysisW + x];
+
+        // 1. Column variance & mean analysis
+        const colMeans = new Float32Array(analysisW);
+        const colStds = new Float32Array(analysisW);
+        for (let x = 0; x < analysisW; x++) {
+            let sum = 0, sumSq = 0;
+            for (let y = 0; y < analysisH; y += 2) {
+                const l = getLum(x, y);
+                sum += l;
+                sumSq += l * l;
+            }
+            const count = Math.ceil(analysisH / 2);
+            const mean = sum / count;
+            colMeans[x] = mean;
+            colStds[x] = Math.sqrt(Math.max(0, (sumSq / count) - (mean * mean)));
         }
-        for (let y = 0; y < analysisH; y += 5) {
-            borderSum += lums[y * analysisW + 0] + lums[y * analysisW + (analysisW - 1)];
-            borderCount += 2;
-        }
-        const borderAvg = borderSum / (borderCount || 1);
 
-        // Calculate center notebook luminance
-        let centerSum = 0;
-        let centerCount = 0;
-        for (let y = Math.round(analysisH * 0.3); y < analysisH * 0.7; y += 5) {
-            for (let x = Math.round(analysisW * 0.3); x < analysisW * 0.7; x += 5) {
-                centerSum += lums[y * analysisW + x];
-                centerCount++;
+        // Pass 1: Find coarse X bounds (skipping solid screenshot frames or dark backgrounds)
+        let xMin = 0;
+        for (let x = 0; x < analysisW * 0.40; x++) {
+            const isSolidBorder = (colStds[x] < 1.5 && (colMeans[x] > 250 || colMeans[x] < 50)) || colMeans[x] < 55;
+            if (!isSolidBorder) {
+                xMin = Math.max(0, x - 2);
+                break;
             }
         }
-        const centerAvg = centerSum / (centerCount || 1);
 
-        let minX = 0, maxX = analysisW - 1, minY = 0, maxY = analysisH - 1;
-        const diff = centerAvg - borderAvg;
-
-        if (diff > 14) {
-            const thresh = borderAvg + diff * 0.32;
-
-            // Left to Right
-            for (let x = 0; x < analysisW * 0.38; x++) {
-                let paperHits = 0;
-                for (let y = Math.round(analysisH * 0.2); y < analysisH * 0.8; y += 4) {
-                    if (lums[y * analysisW + x] > thresh) paperHits++;
-                }
-                if (paperHits > (analysisH * 0.6) / 4 * 0.45) {
-                    minX = Math.max(0, x - 3);
-                    break;
-                }
+        let xMax = analysisW - 1;
+        for (let x = analysisW - 1; x > analysisW * 0.60; x--) {
+            const isSolidBorder = (colStds[x] < 1.5 && (colMeans[x] > 250 || colMeans[x] < 50)) || colMeans[x] < 55;
+            if (!isSolidBorder) {
+                xMax = Math.min(analysisW - 1, x + 2);
+                break;
             }
+        }
 
-            // Right to Left
-            for (let x = analysisW - 1; x > analysisW * 0.62; x--) {
-                let paperHits = 0;
-                for (let y = Math.round(analysisH * 0.2); y < analysisH * 0.8; y += 4) {
-                    if (lums[y * analysisW + x] > thresh) paperHits++;
-                }
-                if (paperHits > (analysisH * 0.6) / 4 * 0.45) {
-                    maxX = Math.min(analysisW - 1, x + 3);
-                    break;
-                }
+        // Pass 2: Within detected X span, find coarse Y bounds
+        let yMin = 0;
+        for (let y = 0; y < analysisH * 0.40; y++) {
+            let sum = 0, count = 0, darkHits = 0;
+            for (let x = xMin; x <= xMax; x += 3) {
+                const l = getLum(x, y);
+                sum += l;
+                if (l < 75) darkHits++;
+                count++;
             }
+            const mean = sum / (count || 1);
+            const isBorder = (mean > 252 && darkHits === 0) || mean < 55;
+            if (!isBorder) {
+                yMin = Math.max(0, y - 2);
+                break;
+            }
+        }
 
-            // Top to Bottom
-            for (let y = 0; y < analysisH * 0.38; y++) {
-                let paperHits = 0;
-                for (let x = Math.round(analysisW * 0.2); x < analysisW * 0.8; x += 4) {
-                    if (lums[y * analysisW + x] > thresh) paperHits++;
-                }
-                if (paperHits > (analysisW * 0.6) / 4 * 0.45) {
-                    minY = Math.max(0, y - 3);
-                    break;
-                }
+        let yMax = analysisH - 1;
+        for (let y = analysisH - 1; y > analysisH * 0.60; y--) {
+            let sum = 0, count = 0, darkHits = 0;
+            for (let x = xMin; x <= xMax; x += 3) {
+                const l = getLum(x, y);
+                sum += l;
+                if (l < 75) darkHits++;
+                count++;
             }
+            const mean = sum / (count || 1);
+            const isBorder = (mean > 252 && darkHits === 0) || mean < 55;
+            if (!isBorder) {
+                yMax = Math.min(analysisH - 1, y + 2);
+                break;
+            }
+        }
 
-            // Bottom to Top
-            for (let y = analysisH - 1; y > analysisH * 0.62; y--) {
-                let paperHits = 0;
-                for (let x = Math.round(analysisW * 0.2); x < analysisW * 0.8; x += 4) {
-                    if (lums[y * analysisW + x] > thresh) paperHits++;
-                }
-                if (paperHits > (analysisW * 0.6) / 4 * 0.45) {
-                    maxY = Math.min(analysisH - 1, y + 3);
-                    break;
-                }
+        // Pass 3: Inward trimming for desk shadows, clips & binding rings
+        const curW = xMax - xMin;
+        const curH = yMax - yMin;
+
+        // Inward Left
+        for (let x = xMin; x < xMin + Math.round(curW * 0.12); x++) {
+            let darkCount = 0, total = 0;
+            for (let y = yMin; y <= yMax; y += 4) {
+                if (getLum(x, y) < 80) darkCount++;
+                total++;
             }
-        } else {
-            // Tight frame default
-            minX = Math.round(analysisW * 0.02);
-            maxX = Math.round(analysisW * 0.98);
-            minY = Math.round(analysisH * 0.02);
-            maxY = Math.round(analysisH * 0.98);
+            if (darkCount / (total || 1) > 0.18) {
+                xMin = x + 1;
+            } else {
+                break;
+            }
+        }
+
+        // Inward Right
+        for (let x = xMax; x > xMax - Math.round(curW * 0.12); x--) {
+            let darkCount = 0, total = 0;
+            for (let y = yMin; y <= yMax; y += 4) {
+                if (getLum(x, y) < 80) darkCount++;
+                total++;
+            }
+            if (darkCount / (total || 1) > 0.18) {
+                xMax = x - 1;
+            } else {
+                break;
+            }
+        }
+
+        // Inward Top
+        for (let y = yMin; y < yMin + Math.round(curH * 0.12); y++) {
+            let darkCount = 0, total = 0;
+            for (let x = xMin; x <= xMax; x += 4) {
+                if (getLum(x, y) < 80) darkCount++;
+                total++;
+            }
+            if (darkCount / (total || 1) > 0.18) {
+                yMin = y + 1;
+            } else {
+                break;
+            }
+        }
+
+        // Inward Bottom
+        for (let y = yMax; y > yMax - Math.round(curH * 0.12); y--) {
+            let darkCount = 0, total = 0;
+            for (let x = xMin; x <= xMax; x += 4) {
+                if (getLum(x, y) < 80) darkCount++;
+                total++;
+            }
+            if (darkCount / (total || 1) > 0.18) {
+                yMax = y - 1;
+            } else {
+                break;
+            }
         }
 
         return {
-            x: Math.max(0, minX / analysisW),
-            y: Math.max(0, minY / analysisH),
-            w: Math.max(0.5, (maxX - minX) / analysisW),
-            h: Math.max(0.5, (maxY - minY) / analysisH)
+            x: Math.max(0, Math.min(0.40, xMin / analysisW)),
+            y: Math.max(0, Math.min(0.40, yMin / analysisH)),
+            w: Math.min(1.0, Math.max(0.30, (xMax - xMin) / analysisW)),
+            h: Math.min(1.0, Math.max(0.30, (yMax - yMin) / analysisH))
         };
     }
 
