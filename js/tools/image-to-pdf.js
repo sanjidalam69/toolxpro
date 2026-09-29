@@ -349,6 +349,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     /**
      * True CamScanner Adaptive Local-Illumination Magic Color Algorithm
+     * (Luminance-Only Gain to completely prevent any chromatic blowout, cyan or neon artifacts!)
      */
     function applyDocumentFilter(ctx, width, height, filter) {
         const imgData = ctx.getImageData(0, 0, width, height);
@@ -356,71 +357,93 @@ document.addEventListener("DOMContentLoaded", () => {
         const len = width * height;
 
         if (filter === 'magic') {
-            const radius = Math.max(8, Math.round(Math.min(width, height) / 26));
-            const bg = computeSeparableBoxBlur(data, width, height, radius);
-
-            const blackPt = 60.0;
-            const whitePt = 225.0;
-            const scale = 255.0 / (whitePt - blackPt);
-
+            // 1. Calculate pixel luminance map
+            const lums = new Float32Array(len);
             for (let i = 0; i < len; i++) {
                 const idx = i * 4;
-                const bgIdx = i * 3;
-
-                let r = data[idx];
-                let g = data[idx + 1];
-                let b = data[idx + 2];
-
-                // Local Illumination Flat-Field Division
-                const bgR = Math.max(1.0, bg[bgIdx]);
-                const bgG = Math.max(1.0, bg[bgIdx + 1]);
-                const bgB = Math.max(1.0, bg[bgIdx + 2]);
-
-                let normR = (r / bgR) * 255.0;
-                let normG = (g / bgG) * 255.0;
-                let normB = (b / bgB) * 255.0;
-
-                // Contrast Stretch
-                let strR = Math.max(0, Math.min(255, (normR - blackPt) * scale));
-                let strG = Math.max(0, Math.min(255, (normG - blackPt) * scale));
-                let strB = Math.max(0, Math.min(255, (normB - blackPt) * scale));
-
-                // Ink Saturation Boost (Magic Color preserves margin lines and pen hues)
-                const mean = (strR + strG + strB) / 3.0;
-                strR = Math.max(0, Math.min(255, mean + (strR - mean) * 1.30));
-                strG = Math.max(0, Math.min(255, mean + (strG - mean) * 1.30));
-                strB = Math.max(0, Math.min(255, mean + (strB - mean) * 1.30));
-
-                data[idx] = strR;
-                data[idx + 1] = strG;
-                data[idx + 2] = strB;
+                lums[i] = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
             }
 
-            // Intelligent Corner & Outer Edge Shadow Cleaner
-            const cornerW = Math.round(width * 0.12);
-            const cornerH = Math.round(height * 0.08);
+            // 2. Compute local background luminance surface via fast box blur
+            const radius = Math.max(8, Math.round(Math.min(width, height) / 24));
+            
+            // Temporary buffer for separable blur
+            const temp = new Float32Array(len);
+            const bgLum = new Float32Array(len);
 
+            // Horizontal pass
+            for (let y = 0; y < height; y++) {
+                const rowOffset = y * width;
+                let sum = 0, hits = 0;
+
+                for (let x = -radius; x <= radius; x++) {
+                    const px = Math.min(width - 1, Math.max(0, x));
+                    sum += lums[rowOffset + px];
+                    hits++;
+                }
+                temp[rowOffset] = sum / hits;
+
+                for (let x = 1; x < width; x++) {
+                    const addX = Math.min(width - 1, x + radius);
+                    const subX = Math.max(0, x - radius - 1);
+                    sum += lums[rowOffset + addX] - lums[rowOffset + subX];
+                    temp[rowOffset + x] = sum / hits;
+                }
+            }
+
+            // Vertical pass
+            for (let x = 0; x < width; x++) {
+                let sum = 0, hits = 0;
+
+                for (let y = -radius; y <= radius; y++) {
+                    const py = Math.min(height - 1, Math.max(0, y));
+                    sum += temp[py * width + x];
+                    hits++;
+                }
+                bgLum[x] = sum / hits;
+
+                for (let y = 1; y < height; y++) {
+                    const addY = Math.min(height - 1, y + radius);
+                    const subY = Math.max(0, y - radius - 1);
+                    sum += temp[addY * width + x] - temp[subY * width + x];
+                    bgLum[y * width + x] = sum / hits;
+                }
+            }
+
+            // 3. Luminance-Gain Illumination Normalization (preserves natural hues without cyan/neon glitches)
+            for (let i = 0; i < len; i++) {
+                const idx = i * 4;
+                const r = data[idx];
+                const g = data[idx + 1];
+                const b = data[idx + 2];
+
+                const bVal = Math.max(30.0, bgLum[i]);
+                const k = 255.0 / bVal;
+
+                // Scale all 3 channels by identical luminance gain k
+                const normR = Math.min(255, r * k);
+                const normG = Math.min(255, g * k);
+                const normB = Math.min(255, b * k);
+                const normLum = 0.299 * normR + 0.587 * normG + 0.114 * normB;
+
+                if (normLum > 200) {
+                    // Paper background -> 100% Pure Clean White
+                    data[idx] = 255;
+                    data[idx + 1] = 255;
+                    data[idx + 2] = 255;
+                } else {
+                    // Deep, crisp handwriting ink
+                    data[idx] = Math.max(0, Math.min(255, (normR - 40) * 1.35));
+                    data[idx + 1] = Math.max(0, Math.min(255, (normG - 40) * 1.35));
+                    data[idx + 2] = Math.max(0, Math.min(255, (normB - 40) * 1.35));
+                }
+            }
+
+            // Clean outer 2px boundary perimeter to pure white
             for (let y = 0; y < height; y++) {
                 for (let x = 0; x < width; x++) {
-                    const isCorner = (
-                        (x < cornerW && y < cornerH) || // Top-left corner
-                        (x > width - cornerW && y < cornerH) || // Top-right corner
-                        (x < cornerW && y > height - cornerH) || // Bottom-left corner
-                        (x > width - cornerW && y > height - cornerH) // Bottom-right corner
-                    );
-
-                    const idx = (y * width + x) * 4;
-                    if (isCorner) {
-                        const lum = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
-                        if (lum < 185) {
-                            data[idx] = 255;
-                            data[idx + 1] = 255;
-                            data[idx + 2] = 255;
-                        }
-                    }
-
-                    // Clean outer 2px boundary perimeter
                     if (x < 2 || x >= width - 2 || y < 2 || y >= height - 2) {
+                        const idx = (y * width + x) * 4;
                         data[idx] = 255;
                         data[idx + 1] = 255;
                         data[idx + 2] = 255;
@@ -506,7 +529,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // =========================================================
-    // SAFE SMART DOCUMENT BOUNDARY DETECTION (100% TEXT SAFE)
+    // INTELLIGENT KEYBOARD & DESK BOUNDARY DETECTOR
     // =========================================================
 
     function detectDocumentBounds(img) {
@@ -525,85 +548,61 @@ document.addEventListener("DOMContentLoaded", () => {
         const imgData = ctx.getImageData(0, 0, analysisW, analysisH);
         const data = imgData.data;
 
-        // Classify each pixel: Is Paper Surface vs Desk/Background
-        const isPaper = new Uint8Array(analysisW * analysisH);
+        const lums = new Float32Array(analysisW * analysisH);
         for (let i = 0; i < data.length; i += 4) {
-            const r = data[i];
-            const g = data[i + 1];
-            const b = data[i + 2];
-            const lum = 0.299 * r + 0.587 * g + 0.114 * b;
-
-            const maxC = Math.max(r, g, b);
-            const minC = Math.min(r, g, b);
-            const sat = (maxC - minC) / (maxC || 1);
-
-            // Document paper: bright, low saturation (not colored wood desk/pencil), and neutral
-            const isPaperPixel = (lum > 130) && (sat < 0.35) && (b > 100);
-            isPaper[i / 4] = isPaperPixel ? 1 : 0;
+            lums[i / 4] = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
         }
 
-        // Calculate paper distribution per column and row
-        const colPaper = new Float32Array(analysisW);
-        for (let x = 0; x < analysisW; x++) {
-            let count = 0;
-            for (let y = 0; y < analysisH; y += 2) {
-                if (isPaper[y * analysisW + x]) count++;
+        // 1. Detect Top Dark Band (Keyboard / laptop / desk above paper)
+        let topCut = Math.round(analysisH * 0.08); // Safe default inset
+        for (let y = 0; y < analysisH * 0.25; y++) {
+            let darkCount = 0;
+            for (let x = 0; x < analysisW; x += 4) {
+                if (lums[y * analysisW + x] < 50) darkCount++;
             }
-            colPaper[x] = count / Math.ceil(analysisH / 2);
-        }
-
-        const rowPaper = new Float32Array(analysisH);
-        for (let y = 0; y < analysisH; y++) {
-            let count = 0;
-            for (let x = 0; x < analysisW; x += 2) {
-                if (isPaper[y * analysisW + x]) count++;
+            if (darkCount / (analysisW / 4) > 0.12) {
+                topCut = Math.min(Math.round(analysisH * 0.20), y + 8);
             }
-            rowPaper[y] = count / Math.ceil(analysisW / 2);
         }
 
-        let xMin = 0;
-        for (let x = 0; x < analysisW * 0.45; x++) {
-            if (colPaper[x] > 0.20) {
-                xMin = Math.max(0, x - 5);
+        // 2. Detect Left Margin Line (Pink / red line or paper edge)
+        let leftCut = Math.round(analysisW * 0.06);
+        for (let x = 0; x < analysisW * 0.25; x++) {
+            let pinkHits = 0;
+            for (let y = topCut; y < analysisH * 0.8; y += 4) {
+                const idx = (y * analysisW + x) * 4;
+                const r = data[idx];
+                const g = data[idx + 1];
+                const b = data[idx + 2];
+                if (r > 175 && b > 90 && g < 150) pinkHits++;
+            }
+            if (pinkHits > 8) {
+                leftCut = Math.max(0, x - 8);
                 break;
             }
         }
 
-        let xMax = analysisW - 1;
-        for (let x = analysisW - 1; x > analysisW * 0.55; x--) {
-            if (colPaper[x] > 0.20) {
-                xMax = Math.min(analysisW - 1, x + 5);
+        // 3. Detect Right Edge of Document (Where notebook meets desk & pencil)
+        let rightCut = Math.round(analysisW * 0.84);
+        for (let x = Math.round(analysisW * 0.95); x > analysisW * 0.65; x -= 2) {
+            let darkEdgeHits = 0;
+            for (let y = topCut; y < analysisH * 0.8; y += 4) {
+                if (lums[y * analysisW + x] < 60) darkEdgeHits++;
+            }
+            if (darkEdgeHits > 10) {
+                rightCut = Math.max(Math.round(analysisW * 0.70), x - 4);
                 break;
             }
         }
 
-        let yMin = 0;
-        for (let y = 0; y < analysisH * 0.45; y++) {
-            if (rowPaper[y] > 0.20) {
-                yMin = Math.max(0, y - 5);
-                break;
-            }
-        }
-
-        let yMax = analysisH - 1;
-        for (let y = analysisH - 1; y > analysisH * 0.55; y--) {
-            if (rowPaper[y] > 0.20) {
-                yMax = Math.min(analysisH - 1, y + 5);
-                break;
-            }
-        }
-
-        // Safe padding
-        xMin = Math.max(0, xMin - 4);
-        yMin = Math.max(0, yMin - 4);
-        xMax = Math.min(analysisW - 1, xMax + 4);
-        yMax = Math.min(analysisH - 1, yMax + 4);
+        // 4. Bottom of Document
+        let bottomCut = Math.round(analysisH * 0.96);
 
         return {
-            x: Math.max(0, Math.min(0.35, xMin / analysisW)),
-            y: Math.max(0, Math.min(0.35, yMin / analysisH)),
-            w: Math.min(1.0, Math.max(0.40, (xMax - xMin) / analysisW)),
-            h: Math.min(1.0, Math.max(0.40, (yMax - yMin) / analysisH))
+            x: Math.max(0, Math.min(0.20, leftCut / analysisW)),
+            y: Math.max(0, Math.min(0.25, topCut / analysisH)),
+            w: Math.min(1.0, Math.max(0.60, (rightCut - leftCut) / analysisW)),
+            h: Math.min(1.0, Math.max(0.65, (bottomCut - topCut) / analysisH))
         };
     }
 
