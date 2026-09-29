@@ -1,4 +1,4 @@
-// ToolX Pro - CamScanner Document Scanner & Image to PDF Engine (v68.0)
+// ToolX Pro - CamScanner Document Scanner & Image to PDF Engine (v69.0)
 document.addEventListener("DOMContentLoaded", () => {
     const dropArea = document.getElementById("drop-area");
     const imageUpload = document.getElementById("image-upload");
@@ -90,6 +90,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
+    // Auto-Process & Detect Edges on Upload
     function handleFilesSelect(files) {
         const fileArray = Array.from(files).filter(file => file.type.match('image.*'));
         if (fileArray.length === 0) return;
@@ -100,23 +101,46 @@ document.addEventListener("DOMContentLoaded", () => {
             reader.onload = (e) => {
                 const img = new Image();
                 img.onload = () => {
-                    uploadedFiles.push({
-                        id: 'img_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
-                        name: file.name,
-                        size: file.size,
-                        type: file.type,
-                        rawImgElement: img,    // Permanent original backup
-                        imgElement: img,       // Active working image (or cropped version)
-                        filter: currentGlobalFilter,
-                        rotation: 0            // 0, 90, 180, 270
-                    });
+                    // Automatically run smart boundary detection to remove desk/background
+                    const autoCropBox = detectDocumentBounds(img);
+                    
+                    // Create auto-cropped working image if desk edges were detected
+                    const initialCropCanvas = document.createElement("canvas");
+                    const origW = img.naturalWidth || img.width;
+                    const origH = img.naturalHeight || img.height;
+                    
+                    const cropX = Math.round(autoCropBox.x * origW);
+                    const cropY = Math.round(autoCropBox.y * origH);
+                    const cropW = Math.round(autoCropBox.w * origW);
+                    const cropH = Math.round(autoCropBox.h * origH);
+                    
+                    initialCropCanvas.width = cropW;
+                    initialCropCanvas.height = cropH;
+                    const ctx = initialCropCanvas.getContext("2d");
+                    ctx.drawImage(img, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
 
-                    loadedCount++;
-                    if (loadedCount === fileArray.length) {
-                        settingsArea.style.display = "block";
-                        resultsCard.style.display = "none";
-                        renderImagesList();
-                    }
+                    const croppedImg = new Image();
+                    croppedImg.onload = () => {
+                        uploadedFiles.push({
+                            id: 'img_' + Date.now() + '_' + Math.random().toString(36).substr(2, 5),
+                            name: file.name,
+                            size: file.size,
+                            type: file.type,
+                            rawImgElement: img,           // Full raw upload backup
+                            imgElement: croppedImg,       // Auto-cropped document paper
+                            cropBox: autoCropBox,
+                            filter: currentGlobalFilter,
+                            rotation: 0                   // 0, 90, 180, 270
+                        });
+
+                        loadedCount++;
+                        if (loadedCount === fileArray.length) {
+                            settingsArea.style.display = "block";
+                            resultsCard.style.display = "none";
+                            renderImagesList();
+                        }
+                    };
+                    croppedImg.src = initialCropCanvas.toDataURL("image/jpeg", 0.95);
                 };
                 img.src = e.target.result;
             };
@@ -145,7 +169,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const sizeKb = (file.size / 1024).toFixed(1);
 
             card.innerHTML = `
-                <div class="scan-thumb-container">
+                <div class="scan-thumb-container" onclick="window.openCropper(${index})" style="cursor:pointer;" title="Click to adjust crop edges">
                     <canvas class="scan-thumb-canvas" id="canvas_${file.id}"></canvas>
                 </div>
                 <div class="scan-item-meta">
@@ -163,8 +187,8 @@ document.addEventListener("DOMContentLoaded", () => {
                             <option value="original" ${file.filter === 'original' ? 'selected' : ''}>🖼️ Original</option>
                         </select>
 
-                        <button type="button" class="scan-btn-icon" onclick="window.openCropper(${index})" title="Crop Page / Trim Edges">
-                            ✂️
+                        <button type="button" class="scan-btn-icon" onclick="window.openCropper(${index})" title="Adjust Crop Edges">
+                            ✂️ Crop
                         </button>
                         <button type="button" class="scan-btn-icon" onclick="window.rotateImage(${index})" title="Rotate 90° Clockwise">
                             🔄 ${file.rotation > 0 ? file.rotation + '°' : ''}
@@ -258,62 +282,105 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
+    /**
+     * True CamScanner Adaptive Local-Illumination Magic Color Algorithm
+     */
     function applyDocumentFilter(ctx, width, height, filter) {
-        const imageData = ctx.getImageData(0, 0, width, height);
-        const data = imageData.data;
+        const imgData = ctx.getImageData(0, 0, width, height);
+        const data = imgData.data;
         const len = data.length;
 
         if (filter === 'magic') {
-            for (let i = 0; i < len; i += 4) {
-                let r = data[i];
-                let g = data[i + 1];
-                let b = data[i + 2];
+            // 1. Calculate local paper background illumination grid to eliminate shadows & lighting gradients
+            const gridBlock = Math.max(16, Math.round(Math.min(width, height) / 25));
+            const gridCols = Math.ceil(width / gridBlock);
+            const gridRows = Math.ceil(height / gridBlock);
+            const localMaxLums = new Float32Array(gridCols * gridRows);
 
-                const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+            for (let gy = 0; gy < gridRows; gy++) {
+                for (let gx = 0; gx < gridCols; gx++) {
+                    const startX = gx * gridBlock;
+                    const startY = gy * gridBlock;
+                    const endX = Math.min(width, startX + gridBlock);
+                    const endY = Math.min(height, startY + gridBlock);
 
-                if (lum > 155) {
-                    const boost = Math.min(255, lum + (255 - lum) * 0.75);
-                    const factor = boost / (lum || 1);
-                    r = Math.min(255, r * factor);
-                    g = Math.min(255, g * factor);
-                    b = Math.min(255, b * factor);
-                } else {
-                    const contrastFactor = 1.35;
-                    r = Math.max(0, Math.min(255, (r - 128) * contrastFactor + 110));
-                    g = Math.max(0, Math.min(255, (g - 128) * contrastFactor + 110));
-                    b = Math.max(0, Math.min(255, (b - 128) * contrastFactor + 110));
+                    let maxL = 150;
+                    for (let y = startY; y < endY; y += 2) {
+                        for (let x = startX; x < endX; x += 2) {
+                            const idx = (y * width + x) * 4;
+                            const lum = 0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2];
+                            if (lum > maxL) maxL = lum;
+                        }
+                    }
+                    localMaxLums[gy * gridCols + gx] = Math.max(135, maxL);
                 }
-
-                data[i] = r;
-                data[i + 1] = g;
-                data[i + 2] = b;
             }
-            ctx.putImageData(imageData, 0, 0);
+
+            // 2. Normalize and sharpen paper + ink contrast
+            for (let y = 0; y < height; y++) {
+                const gy = Math.min(gridRows - 1, Math.floor(y / gridBlock));
+                for (let x = 0; x < width; x++) {
+                    const gx = Math.min(gridCols - 1, Math.floor(x / gridBlock));
+                    const bgLum = localMaxLums[gy * gridCols + gx];
+
+                    const idx = (y * width + x) * 4;
+                    let r = data[idx];
+                    let g = data[idx + 1];
+                    let b = data[idx + 2];
+
+                    const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+                    const ratio = lum / bgLum;
+
+                    if (ratio > 0.82) {
+                        // Clean Paper Background -> Pure Crisp White
+                        const boost = 255;
+                        const factor = boost / (lum || 1);
+                        r = Math.min(255, r * factor);
+                        g = Math.min(255, g * factor);
+                        b = Math.min(255, b * factor);
+                    } else if (ratio < 0.62) {
+                        // Deep Pen Ink & Pencil Text -> High Contrast
+                        const contrastFactor = 1.45;
+                        r = Math.max(0, Math.min(255, (r - 128) * contrastFactor + 85));
+                        g = Math.max(0, Math.min(255, (g - 128) * contrastFactor + 85));
+                        b = Math.max(0, Math.min(255, (b - 128) * contrastFactor + 85));
+                    } else {
+                        // Smooth Anti-aliased Handwriting Edge
+                        const t = (ratio - 0.62) / 0.20;
+                        const targetLum = 85 + t * (255 - 85);
+                        const factor = targetLum / (lum || 1);
+                        r = Math.max(0, Math.min(255, r * factor));
+                        g = Math.max(0, Math.min(255, g * factor));
+                        b = Math.max(0, Math.min(255, b * factor));
+                    }
+
+                    data[idx] = r;
+                    data[idx + 1] = g;
+                    data[idx + 2] = b;
+                }
+            }
+            ctx.putImageData(imgData, 0, 0);
 
         } else if (filter === 'bw') {
+            // Clean Photocopy / Document B&W Scan
             for (let i = 0; i < len; i += 4) {
-                const r = data[i];
-                const g = data[i + 1];
-                const b = data[i + 2];
-
-                const lum = 0.299 * r + 0.587 * g + 0.114 * b;
-
+                const lum = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
                 let val;
-                if (lum > 140) {
+                if (lum > 135) {
                     val = 255;
-                } else if (lum < 90) {
-                    val = Math.max(0, lum * 0.4);
+                } else if (lum < 85) {
+                    val = Math.max(0, lum * 0.35);
                 } else {
-                    val = ((lum - 90) / 50) * 255;
+                    val = ((lum - 85) / 50) * 255;
                 }
-
                 data[i] = val;
                 data[i + 1] = val;
                 data[i + 2] = val;
             }
-            ctx.putImageData(imageData, 0, 0);
+            ctx.putImageData(imgData, 0, 0);
 
         } else if (filter === 'gray') {
+            // Smooth Grayscale Document Scan
             for (let i = 0; i < len; i += 4) {
                 const lum = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
                 const val = Math.max(0, Math.min(255, (lum - 128) * 1.3 + 140));
@@ -321,9 +388,10 @@ document.addEventListener("DOMContentLoaded", () => {
                 data[i + 1] = val;
                 data[i + 2] = val;
             }
-            ctx.putImageData(imageData, 0, 0);
+            ctx.putImageData(imgData, 0, 0);
 
         } else if (filter === 'sharp') {
+            // Detail Sharpening + Color Contrast Boost
             for (let i = 0; i < len; i += 4) {
                 let r = data[i];
                 let g = data[i + 1];
@@ -337,20 +405,139 @@ document.addEventListener("DOMContentLoaded", () => {
                 data[i + 1] = g;
                 data[i + 2] = b;
             }
-            ctx.putImageData(imageData, 0, 0);
+            ctx.putImageData(imgData, 0, 0);
         }
     }
 
     // =========================================================
-    // INTERACTIVE DOCUMENT CROPPER ENGINE (AUTO-EDGE DETECT)
+    // AUTOMATIC DOCUMENT BOUNDARY DETECTION (EDGE TRIMMER)
+    // =========================================================
+
+    function detectDocumentBounds(img) {
+        const analysisW = 500;
+        const origW = img.naturalWidth || img.width;
+        const origH = img.naturalHeight || img.height;
+        const scale = analysisW / origW;
+        const analysisH = Math.round(origH * scale);
+
+        const canvas = document.createElement("canvas");
+        canvas.width = analysisW;
+        canvas.height = analysisH;
+        const ctx = canvas.getContext("2d", { willReadFrequently: true });
+        ctx.drawImage(img, 0, 0, analysisW, analysisH);
+
+        const imgData = ctx.getImageData(0, 0, analysisW, analysisH);
+        const data = imgData.data;
+
+        // Calculate luminance map
+        const lums = new Float32Array(analysisW * analysisH);
+        for (let i = 0; i < data.length; i += 4) {
+            lums[i / 4] = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+        }
+
+        // Sample border/table background luminance
+        let borderSum = 0;
+        let borderCount = 0;
+        for (let x = 0; x < analysisW; x += 5) {
+            borderSum += lums[0 * analysisW + x] + lums[(analysisH - 1) * analysisW + x];
+            borderCount += 2;
+        }
+        for (let y = 0; y < analysisH; y += 5) {
+            borderSum += lums[y * analysisW + 0] + lums[y * analysisW + (analysisW - 1)];
+            borderCount += 2;
+        }
+        const borderAvg = borderSum / (borderCount || 1);
+
+        // Calculate center notebook luminance
+        let centerSum = 0;
+        let centerCount = 0;
+        for (let y = Math.round(analysisH * 0.3); y < analysisH * 0.7; y += 5) {
+            for (let x = Math.round(analysisW * 0.3); x < analysisW * 0.7; x += 5) {
+                centerSum += lums[y * analysisW + x];
+                centerCount++;
+            }
+        }
+        const centerAvg = centerSum / (centerCount || 1);
+
+        let minX = 0, maxX = analysisW - 1, minY = 0, maxY = analysisH - 1;
+        const diff = centerAvg - borderAvg;
+
+        if (diff > 14) {
+            const thresh = borderAvg + diff * 0.32;
+
+            // Left to Right
+            for (let x = 0; x < analysisW * 0.38; x++) {
+                let paperHits = 0;
+                for (let y = Math.round(analysisH * 0.2); y < analysisH * 0.8; y += 4) {
+                    if (lums[y * analysisW + x] > thresh) paperHits++;
+                }
+                if (paperHits > (analysisH * 0.6) / 4 * 0.45) {
+                    minX = Math.max(0, x - 3);
+                    break;
+                }
+            }
+
+            // Right to Left
+            for (let x = analysisW - 1; x > analysisW * 0.62; x--) {
+                let paperHits = 0;
+                for (let y = Math.round(analysisH * 0.2); y < analysisH * 0.8; y += 4) {
+                    if (lums[y * analysisW + x] > thresh) paperHits++;
+                }
+                if (paperHits > (analysisH * 0.6) / 4 * 0.45) {
+                    maxX = Math.min(analysisW - 1, x + 3);
+                    break;
+                }
+            }
+
+            // Top to Bottom
+            for (let y = 0; y < analysisH * 0.38; y++) {
+                let paperHits = 0;
+                for (let x = Math.round(analysisW * 0.2); x < analysisW * 0.8; x += 4) {
+                    if (lums[y * analysisW + x] > thresh) paperHits++;
+                }
+                if (paperHits > (analysisW * 0.6) / 4 * 0.45) {
+                    minY = Math.max(0, y - 3);
+                    break;
+                }
+            }
+
+            // Bottom to Top
+            for (let y = analysisH - 1; y > analysisH * 0.62; y--) {
+                let paperHits = 0;
+                for (let x = Math.round(analysisW * 0.2); x < analysisW * 0.8; x += 4) {
+                    if (lums[y * analysisW + x] > thresh) paperHits++;
+                }
+                if (paperHits > (analysisW * 0.6) / 4 * 0.45) {
+                    maxY = Math.min(analysisH - 1, y + 3);
+                    break;
+                }
+            }
+        } else {
+            // Tight frame default
+            minX = Math.round(analysisW * 0.02);
+            maxX = Math.round(analysisW * 0.98);
+            minY = Math.round(analysisH * 0.02);
+            maxY = Math.round(analysisH * 0.98);
+        }
+
+        return {
+            x: Math.max(0, minX / analysisW),
+            y: Math.max(0, minY / analysisH),
+            w: Math.max(0.5, (maxX - minX) / analysisW),
+            h: Math.max(0.5, (maxY - minY) / analysisH)
+        };
+    }
+
+    // =========================================================
+    // INTERACTIVE DOCUMENT CROPPER MODAL CONTROLLER
     // =========================================================
 
     let activeCropIndex = null;
     let cropImg = null;
     let cropRotation = 0;
-    let cropBox = { x: 0, y: 0, w: 0, h: 0 }; // Normalized 0..1 coordinates
+    let cropBox = { x: 0, y: 0, w: 0, h: 0 };
     let isDragging = false;
-    let dragMode = null; // 'move', 'nw', 'ne', 'sw', 'se', 'n', 's', 'e', 'w'
+    let dragMode = null;
     let dragStart = { x: 0, y: 0 };
     let cropBoxStart = { x: 0, y: 0, w: 0, h: 0 };
 
@@ -359,12 +546,12 @@ document.addEventListener("DOMContentLoaded", () => {
         activeCropIndex = index;
         const file = uploadedFiles[index];
 
-        // Use raw original image backup or working image
+        // Use raw original image backup so user can re-crop anytime
         cropImg = file.rawImgElement || file.imgElement;
         cropRotation = file.rotation || 0;
 
-        // Default crop box: 5% inset
-        cropBox = { x: 0.05, y: 0.05, w: 0.90, h: 0.90 };
+        // Load existing crop box or auto-detect
+        cropBox = file.cropBox ? { ...file.cropBox } : detectDocumentBounds(cropImg);
 
         cropModal.style.display = "flex";
         initCropCanvas();
@@ -406,7 +593,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (cropAutoDetectBtn) {
         cropAutoDetectBtn.addEventListener("click", () => {
-            autoDetectDocumentEdges();
+            if (cropImg) {
+                cropBox = detectDocumentBounds(cropImg);
+                drawCropCanvas();
+            }
         });
     }
 
@@ -438,7 +628,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         ctx.clearRect(0, 0, cw, ch);
 
-        // 1. Draw base rotated image
         ctx.save();
         ctx.translate(cw / 2, ch / 2);
         ctx.rotate((cropRotation * Math.PI) / 180);
@@ -448,45 +637,38 @@ document.addEventListener("DOMContentLoaded", () => {
         ctx.drawImage(cropImg, -drawW / 2, -drawH / 2, drawW, drawH);
         ctx.restore();
 
-        // 2. Calculate pixel coordinates for crop box
         const bx = cropBox.x * cw;
         const by = cropBox.y * ch;
         const bw = cropBox.w * cw;
         const bh = cropBox.h * ch;
 
-        // 3. Draw Darkened Overlay outside crop box
+        // Darkened Background Overlay
         ctx.fillStyle = "rgba(0, 0, 0, 0.65)";
-        // Top
         ctx.fillRect(0, 0, cw, by);
-        // Bottom
         ctx.fillRect(0, by + bh, cw, ch - (by + bh));
-        // Left
         ctx.fillRect(0, by, bx, bh);
-        // Right
         ctx.fillRect(bx + bw, by, cw - (bx + bw), bh);
 
-        // 4. Draw Crop Box Border & Grid
+        // Crop Box Outline
         ctx.strokeStyle = "#f57c00";
         ctx.lineWidth = 2;
         ctx.strokeRect(bx, by, bw, bh);
 
-        // Grid lines (rule of thirds)
+        // Rule-of-Thirds Grid
         ctx.strokeStyle = "rgba(255, 255, 255, 0.35)";
         ctx.lineWidth = 1;
         ctx.beginPath();
-        // Verticals
         ctx.moveTo(bx + bw / 3, by);
         ctx.lineTo(bx + bw / 3, by + bh);
         ctx.moveTo(bx + (2 * bw) / 3, by);
         ctx.lineTo(bx + (2 * bw) / 3, by + bh);
-        // Horizontals
         ctx.moveTo(bx, by + bh / 3);
         ctx.lineTo(bx + bw, by + bh / 3);
         ctx.moveTo(bx, by + (2 * bh) / 3);
         ctx.lineTo(bx + bw, by + (2 * bh) / 3);
         ctx.stroke();
 
-        // 5. Draw 8 Interactive Circular/Square Handles
+        // 8 Interactive Handles
         const handleSize = 10;
         const handles = getCropHandles(bx, by, bw, bh);
 
@@ -514,56 +696,6 @@ document.addEventListener("DOMContentLoaded", () => {
         ];
     }
 
-    // Smart Document Edge Detection Algorithm
-    function autoDetectDocumentEdges() {
-        if (!cropImg) return;
-        const cw = cropCanvas.width;
-        const ch = cropCanvas.height;
-        const ctx = cropCanvas.getContext("2d", { willReadFrequently: true });
-        
-        // Draw raw image on canvas first to inspect pixels
-        ctx.save();
-        ctx.translate(cw / 2, ch / 2);
-        ctx.rotate((cropRotation * Math.PI) / 180);
-        const isRotated = (cropRotation === 90 || cropRotation === 270);
-        const drawW = isRotated ? ch : cw;
-        const drawH = isRotated ? cw : ch;
-        ctx.drawImage(cropImg, -drawW / 2, -drawH / 2, drawW, drawH);
-        ctx.restore();
-
-        const imgData = ctx.getImageData(0, 0, cw, ch);
-        const data = imgData.data;
-
-        // Sample border brightness (table background)
-        let borderLum = 0;
-        let samples = 0;
-        for (let x = 0; x < cw; x += 10) {
-            const idxTop = (0 * cw + x) * 4;
-            const idxBottom = ((ch - 1) * cw + x) * 4;
-            borderLum += (data[idxTop] + data[idxTop+1] + data[idxTop+2]) / 3;
-            borderLum += (data[idxBottom] + data[idxBottom+1] + data[idxBottom+2]) / 3;
-            samples += 2;
-        }
-        borderLum = borderLum / (samples || 1);
-
-        // Find paper bounds by searching for luminance difference step
-        let minX = Math.round(cw * 0.06);
-        let maxX = Math.round(cw * 0.94);
-        let minY = Math.round(ch * 0.06);
-        let maxY = Math.round(ch * 0.94);
-
-        // Set detected or safe smart inset crop box
-        cropBox = {
-            x: Math.max(0, Math.min(0.2, minX / cw)),
-            y: Math.max(0, Math.min(0.2, minY / ch)),
-            w: Math.max(0.6, (maxX - minX) / cw),
-            h: Math.max(0.6, (maxY - minY) / ch)
-        };
-
-        drawCropCanvas();
-    }
-
-    // Cropper Pointer & Touch Interactions
     function getCanvasPos(e) {
         const rect = cropCanvas.getBoundingClientRect();
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -589,7 +721,6 @@ document.addEventListener("DOMContentLoaded", () => {
             if (dist <= hitDist) return h;
         }
 
-        // Check inside crop box for moving
         if (pos.x >= bx && pos.x <= bx + bw && pos.y >= by && pos.y <= by + bh) {
             return { id: 'move', cursor: 'move' };
         }
@@ -670,7 +801,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.addEventListener("touchmove", onPointerMove, { passive: false });
     window.addEventListener("touchend", onPointerUp);
 
-    // Apply Crop Button Handler
+    // Apply Manual Crop
     if (cropApplyBtn) {
         cropApplyBtn.addEventListener("click", () => {
             if (activeCropIndex === null || !uploadedFiles[activeCropIndex]) return;
@@ -685,7 +816,6 @@ document.addEventListener("DOMContentLoaded", () => {
             const fullRotatedW = isRotated ? origH : origW;
             const fullRotatedH = isRotated ? origW : origH;
 
-            // Create offscreen full rotated canvas
             const rotCanvas = document.createElement("canvas");
             rotCanvas.width = fullRotatedW;
             rotCanvas.height = fullRotatedH;
@@ -699,7 +829,6 @@ document.addEventListener("DOMContentLoaded", () => {
             rotCtx.drawImage(sourceImg, -drawW / 2, -drawH / 2, drawW, drawH);
             rotCtx.restore();
 
-            // Calculate precise crop rect in original pixels
             const cropX = Math.round(cropBox.x * fullRotatedW);
             const cropY = Math.round(cropBox.y * fullRotatedH);
             const cropW = Math.round(cropBox.w * fullRotatedW);
@@ -712,12 +841,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
             croppedCtx.drawImage(rotCanvas, cropX, cropY, cropW, cropH, 0, 0, cropW, cropH);
 
-            // Create new Image from cropped data
             const croppedDataUrl = croppedCanvas.toDataURL("image/jpeg", 0.95);
             const newImg = new Image();
             newImg.onload = () => {
                 file.imgElement = newImg;
-                file.rotation = 0; // Rotation is baked into cropped image
+                file.cropBox = { ...cropBox };
+                file.rotation = 0;
                 closeCropper();
                 renderImagesList();
             };
