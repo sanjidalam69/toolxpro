@@ -518,85 +518,75 @@ document.addEventListener("DOMContentLoaded", () => {
         const imgData = ctx.getImageData(0, 0, analysisW, analysisH);
         const data = imgData.data;
 
-        // Calculate luminance map
-        const lums = new Float32Array(analysisW * analysisH);
+        // Classify each pixel: Is Paper Surface vs Desk/Background
+        const isPaper = new Uint8Array(analysisW * analysisH);
         for (let i = 0; i < data.length; i += 4) {
-            lums[i / 4] = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+            const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+
+            const maxC = Math.max(r, g, b);
+            const minC = Math.min(r, g, b);
+            const sat = (maxC - minC) / (maxC || 1);
+
+            // Document paper: bright, low saturation (not colored wood desk/pencil), and neutral
+            const isPaperPixel = (lum > 130) && (sat < 0.35) && (b > 100);
+            isPaper[i / 4] = isPaperPixel ? 1 : 0;
         }
 
-        const getLum = (x, y) => lums[y * analysisW + x];
-
-        // Column variance & mean analysis
-        const colMeans = new Float32Array(analysisW);
-        const colStds = new Float32Array(analysisW);
+        // Calculate paper distribution per column and row
+        const colPaper = new Float32Array(analysisW);
         for (let x = 0; x < analysisW; x++) {
-            let sum = 0, sumSq = 0;
+            let count = 0;
             for (let y = 0; y < analysisH; y += 2) {
-                const l = getLum(x, y);
-                sum += l;
-                sumSq += l * l;
+                if (isPaper[y * analysisW + x]) count++;
             }
-            const count = Math.ceil(analysisH / 2);
-            const mean = sum / count;
-            colMeans[x] = mean;
-            colStds[x] = Math.sqrt(Math.max(0, (sumSq / count) - (mean * mean)));
+            colPaper[x] = count / Math.ceil(analysisH / 2);
         }
 
-        // Pass 1: Find coarse X bounds (skipping solid screenshot frames or dark backgrounds)
+        const rowPaper = new Float32Array(analysisH);
+        for (let y = 0; y < analysisH; y++) {
+            let count = 0;
+            for (let x = 0; x < analysisW; x += 2) {
+                if (isPaper[y * analysisW + x]) count++;
+            }
+            rowPaper[y] = count / Math.ceil(analysisW / 2);
+        }
+
         let xMin = 0;
-        for (let x = 0; x < analysisW * 0.40; x++) {
-            const isSolidBorder = (colStds[x] < 1.5 && (colMeans[x] > 250 || colMeans[x] < 50)) || colMeans[x] < 55;
-            if (!isSolidBorder) {
-                xMin = Math.max(0, x - 3);
+        for (let x = 0; x < analysisW * 0.45; x++) {
+            if (colPaper[x] > 0.20) {
+                xMin = Math.max(0, x - 5);
                 break;
             }
         }
 
         let xMax = analysisW - 1;
-        for (let x = analysisW - 1; x > analysisW * 0.60; x--) {
-            const isSolidBorder = (colStds[x] < 1.5 && (colMeans[x] > 250 || colMeans[x] < 50)) || colMeans[x] < 55;
-            if (!isSolidBorder) {
-                xMax = Math.min(analysisW - 1, x + 3);
+        for (let x = analysisW - 1; x > analysisW * 0.55; x--) {
+            if (colPaper[x] > 0.20) {
+                xMax = Math.min(analysisW - 1, x + 5);
                 break;
             }
         }
 
-        // Pass 2: Within detected X span, find coarse Y bounds
         let yMin = 0;
-        for (let y = 0; y < analysisH * 0.40; y++) {
-            let sum = 0, count = 0, darkHits = 0;
-            for (let x = xMin; x <= xMax; x += 3) {
-                const l = getLum(x, y);
-                sum += l;
-                if (l < 75) darkHits++;
-                count++;
-            }
-            const mean = sum / (count || 1);
-            const isBorder = (mean > 252 && darkHits === 0) || mean < 55;
-            if (!isBorder) {
-                yMin = Math.max(0, y - 3);
+        for (let y = 0; y < analysisH * 0.45; y++) {
+            if (rowPaper[y] > 0.20) {
+                yMin = Math.max(0, y - 5);
                 break;
             }
         }
 
         let yMax = analysisH - 1;
-        for (let y = analysisH - 1; y > analysisH * 0.60; y--) {
-            let sum = 0, count = 0, darkHits = 0;
-            for (let x = xMin; x <= xMax; x += 3) {
-                const l = getLum(x, y);
-                sum += l;
-                if (l < 75) darkHits++;
-                count++;
-            }
-            const mean = sum / (count || 1);
-            const isBorder = (mean > 252 && darkHits === 0) || mean < 55;
-            if (!isBorder) {
-                yMax = Math.min(analysisH - 1, y + 3);
+        for (let y = analysisH - 1; y > analysisH * 0.55; y--) {
+            if (rowPaper[y] > 0.20) {
+                yMax = Math.min(analysisH - 1, y + 5);
                 break;
             }
         }
 
-        // Safe padding: never cut off margin or bottom text
+        // Safe padding
         xMin = Math.max(0, xMin - 4);
         yMin = Math.max(0, yMin - 4);
         xMax = Math.min(analysisW - 1, xMax + 4);
