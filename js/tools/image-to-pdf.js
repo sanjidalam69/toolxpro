@@ -169,34 +169,36 @@ document.addEventListener("DOMContentLoaded", () => {
             const sizeKb = (file.size / 1024).toFixed(1);
 
             card.innerHTML = `
-                <div class="scan-thumb-container" onclick="window.openCropper(${index})" style="cursor:pointer;" title="Click to adjust crop edges">
+                <div class="scan-card-header">
+                    <span class="scan-page-badge">Page ${index + 1}</span>
+                    <span class="scan-item-name" title="${file.name}">${file.name}</span>
+                    <span style="font-size:0.75rem; color:var(--text-secondary); margin-left:auto; flex-shrink:0;">${sizeKb} KB</span>
+                </div>
+
+                <div class="scan-thumb-container" onclick="window.openCropper(${index})" title="Click to adjust crop boundaries">
                     <canvas class="scan-thumb-canvas" id="canvas_${file.id}"></canvas>
                 </div>
+
                 <div class="scan-item-meta">
-                    <div style="display:flex; justify-content:space-between; align-items:flex-start;">
-                        <span class="scan-item-name" title="${file.name}">Page ${index + 1}: ${file.name}</span>
-                        <span style="font-size:0.75rem; color:var(--text-secondary); margin-left:6px;">${sizeKb} KB</span>
-                    </div>
-
                     <div class="scan-item-controls">
-                        <select class="scan-select-mini" onchange="window.updateImageFilter(${index}, this.value)">
-                            <option value="magic" ${file.filter === 'magic' ? 'selected' : ''}>✨ Magic Color</option>
-                            <option value="bw" ${file.filter === 'bw' ? 'selected' : ''}>📄 B&W Clean</option>
-                            <option value="sharp" ${file.filter === 'sharp' ? 'selected' : ''}>⚡ Sharp Doc</option>
-                            <option value="gray" ${file.filter === 'gray' ? 'selected' : ''}>🩶 Grayscale</option>
-                            <option value="original" ${file.filter === 'original' ? 'selected' : ''}>🖼️ Original</option>
-                        </select>
-
-                        <button type="button" class="scan-btn-icon" onclick="window.openCropper(${index})" title="Adjust Crop Edges">
-                            ✂️ Crop
+                        <button type="button" class="scan-btn-pill primary" onclick="window.openCropper(${index})" title="Adjust Crop Boundaries">
+                            ✂️ Crop / Straighten
                         </button>
-                        <button type="button" class="scan-btn-icon" onclick="window.rotateImage(${index})" title="Rotate 90° Clockwise">
-                            🔄 ${file.rotation > 0 ? file.rotation + '°' : ''}
+                        <button type="button" class="scan-btn-pill" onclick="window.rotateImage(${index})" title="Rotate 90°">
+                            🔄 ${file.rotation > 0 ? file.rotation + '°' : 'Rotate'}
                         </button>
-                        <button type="button" class="scan-btn-icon" onclick="window.moveImageOrder(${index}, -1)" ${index === 0 ? 'disabled' : ''} title="Move Up">⬆️</button>
-                        <button type="button" class="scan-btn-icon" onclick="window.moveImageOrder(${index}, 1)" ${index === uploadedFiles.length - 1 ? 'disabled' : ''} title="Move Down">⬇️</button>
-                        <button type="button" class="scan-btn-icon" onclick="window.removeScanImage(${index})" title="Delete Page" style="color:var(--danger, #ef4444);">🗑️</button>
+                        <button type="button" class="scan-btn-icon" onclick="window.removeScanImage(${index})" title="Delete Page" style="color:var(--danger, #ef4444);">
+                            🗑️
+                        </button>
                     </div>
+
+                    <select class="scan-select-mini" onchange="window.updateImageFilter(${index}, this.value)">
+                        <option value="magic" ${file.filter === 'magic' ? 'selected' : ''}>✨ Magic Color (CamScanner)</option>
+                        <option value="bw" ${file.filter === 'bw' ? 'selected' : ''}>📄 B&W Clean Scan (Photocopy)</option>
+                        <option value="sharp" ${file.filter === 'sharp' ? 'selected' : ''}>⚡ Sharp Document</option>
+                        <option value="gray" ${file.filter === 'gray' ? 'selected' : ''}>🩶 Grayscale Scan</option>
+                        <option value="original" ${file.filter === 'original' ? 'selected' : ''}>🖼️ Original (Raw)</option>
+                    </select>
                 </div>
             `;
 
@@ -206,7 +208,7 @@ document.addEventListener("DOMContentLoaded", () => {
             setTimeout(() => {
                 const canvas = document.getElementById(`canvas_${file.id}`);
                 if (canvas) {
-                    renderProcessedCanvas(canvas, file.imgElement, file.filter, file.rotation, 140, 180);
+                    renderProcessedCanvas(canvas, file.imgElement, file.filter, file.rotation, 300, 360);
                 }
             }, 10);
         });
@@ -218,7 +220,7 @@ document.addEventListener("DOMContentLoaded", () => {
             uploadedFiles[index].filter = newFilter;
             const canvas = document.getElementById(`canvas_${uploadedFiles[index].id}`);
             if (canvas) {
-                renderProcessedCanvas(canvas, uploadedFiles[index].imgElement, newFilter, uploadedFiles[index].rotation, 140, 180);
+                renderProcessedCanvas(canvas, uploadedFiles[index].imgElement, newFilter, uploadedFiles[index].rotation, 300, 360);
             }
         }
     };
@@ -283,120 +285,148 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     /**
-     * High-Precision CamScanner Adaptive Local-Illumination Magic Color Algorithm
+     * Fast Separable Box-Blur Algorithm for Local Background Illumination
+     */
+    function computeSeparableBoxBlur(data, width, height, radius) {
+        const len = width * height;
+        const blurred = new Float32Array(len * 3);
+        const temp = new Float32Array(len * 3);
+
+        // Horizontal pass
+        for (let y = 0; y < height; y++) {
+            const rowOffset = y * width;
+            for (let c = 0; c < 3; c++) {
+                let sum = 0;
+                let hits = 0;
+
+                for (let x = -radius; x <= radius; x++) {
+                    const px = Math.min(width - 1, Math.max(0, x));
+                    sum += data[(rowOffset + px) * 4 + c];
+                    hits++;
+                }
+                temp[(rowOffset + 0) * 3 + c] = sum / hits;
+
+                for (let x = 1; x < width; x++) {
+                    const addX = Math.min(width - 1, x + radius);
+                    const subX = Math.max(0, x - radius - 1);
+                    sum += data[(rowOffset + addX) * 4 + c] - data[(rowOffset + subX) * 4 + c];
+                    temp[(rowOffset + x) * 3 + c] = sum / hits;
+                }
+            }
+        }
+
+        // Vertical pass
+        for (let x = 0; x < width; x++) {
+            for (let c = 0; c < 3; c++) {
+                let sum = 0;
+                let hits = 0;
+
+                for (let y = -radius; y <= radius; y++) {
+                    const py = Math.min(height - 1, Math.max(0, y));
+                    sum += temp[(py * width + x) * 3 + c];
+                    hits++;
+                }
+                blurred[(0 * width + x) * 3 + c] = sum / hits;
+
+                for (let y = 1; y < height; y++) {
+                    const addY = Math.min(height - 1, y + radius);
+                    const subY = Math.max(0, y - radius - 1);
+                    sum += temp[(addY * width + x) * 3 + c] - temp[(subY * width + x) * 3 + c];
+                    blurred[(y * width + x) * 3 + c] = sum / hits;
+                }
+            }
+        }
+
+        return blurred;
+    }
+
+    /**
+     * True CamScanner Adaptive Local-Illumination Magic Color Algorithm
      */
     function applyDocumentFilter(ctx, width, height, filter) {
         const imgData = ctx.getImageData(0, 0, width, height);
         const data = imgData.data;
-        const len = data.length;
+        const len = width * height;
 
         if (filter === 'magic') {
-            // 1. Calculate local paper background illumination grid (percentile-based flat-field estimator)
-            const gridBlock = Math.max(16, Math.round(Math.min(width, height) / 22));
-            const gridCols = Math.ceil(width / gridBlock);
-            const gridRows = Math.ceil(height / gridBlock);
-            const localMaxLums = new Float32Array(gridCols * gridRows);
+            const radius = Math.max(8, Math.round(Math.min(width, height) / 28));
+            const bg = computeSeparableBoxBlur(data, width, height, radius);
 
-            for (let gy = 0; gy < gridRows; gy++) {
-                const startY = gy * gridBlock;
-                const endY = Math.min(height, startY + gridBlock);
+            const blackPt = 62.0;
+            const whitePt = 228.0;
+            const scale = 255.0 / (whitePt - blackPt);
 
-                for (let gx = 0; gx < gridCols; gx++) {
-                    const startX = gx * gridBlock;
-                    const endX = Math.min(width, startX + gridBlock);
+            for (let i = 0; i < len; i++) {
+                const idx = i * 4;
+                const bgIdx = i * 3;
 
-                    // Sample block luminance values
-                    const sampleLums = [];
-                    for (let y = startY; y < endY; y += 2) {
-                        for (let x = startX; x < endX; x += 2) {
-                            const idx = (y * width + x) * 4;
-                            sampleLums.push(0.299 * data[idx] + 0.587 * data[idx + 1] + 0.114 * data[idx + 2]);
-                        }
-                    }
+                let r = data[idx];
+                let g = data[idx + 1];
+                let b = data[idx + 2];
 
-                    if (sampleLums.length > 0) {
-                        sampleLums.sort((a, b) => a - b);
-                        // 92nd percentile represents paper surface without ink interference
-                        const pIdx = Math.min(sampleLums.length - 1, Math.floor(sampleLums.length * 0.92));
-                        localMaxLums[gy * gridCols + gx] = Math.max(125, sampleLums[pIdx]);
-                    } else {
-                        localMaxLums[gy * gridCols + gx] = 220;
-                    }
-                }
-            }
+                // Local Illumination Flat-Field Division
+                const bgR = Math.max(1.0, bg[bgIdx]);
+                const bgG = Math.max(1.0, bg[bgIdx + 1]);
+                const bgB = Math.max(1.0, bg[bgIdx + 2]);
 
-            // 2. Normalize and sharpen paper + ink contrast
-            for (let y = 0; y < height; y++) {
-                const gy = Math.min(gridRows - 1, Math.floor(y / gridBlock));
-                for (let x = 0; x < width; x++) {
-                    const gx = Math.min(gridCols - 1, Math.floor(x / gridBlock));
-                    const bgLum = localMaxLums[gy * gridCols + gx];
+                let normR = (r / bgR) * 255.0;
+                let normG = (g / bgG) * 255.0;
+                let normB = (b / bgB) * 255.0;
 
-                    const idx = (y * width + x) * 4;
-                    let r = data[idx];
-                    let g = data[idx + 1];
-                    let b = data[idx + 2];
+                // Contrast Stretch
+                let strR = Math.max(0, Math.min(255, (normR - blackPt) * scale));
+                let strG = Math.max(0, Math.min(255, (normG - blackPt) * scale));
+                let strB = Math.max(0, Math.min(255, (normB - blackPt) * scale));
 
-                    // Normalize color channel by local paper brightness surface
-                    const normR = Math.min(255, (r / (bgLum || 1)) * 255);
-                    const normG = Math.min(255, (g / (bgLum || 1)) * 255);
-                    const normB = Math.min(255, (b / (bgLum || 1)) * 255);
-                    const normLum = 0.299 * normR + 0.587 * normG + 0.114 * normB;
+                // Ink Saturation Boost (Magic Color preserves margin lines and pen hues)
+                const mean = (strR + strG + strB) / 3.0;
+                strR = Math.max(0, Math.min(255, mean + (strR - mean) * 1.32));
+                strG = Math.max(0, Math.min(255, mean + (strG - mean) * 1.32));
+                strB = Math.max(0, Math.min(255, mean + (strB - mean) * 1.32));
 
-                    const paperThresh = 208;
-                    const inkThresh = 145;
-
-                    if (normLum >= paperThresh) {
-                        // Paper surface -> Pure 255 Clean White
-                        r = 255;
-                        g = 255;
-                        b = 255;
-                    } else if (normLum <= inkThresh) {
-                        // Handwritten Text / Ink -> Deep Crisp Color
-                        const inkFactor = 0.50;
-                        r = Math.max(0, Math.min(255, normR * inkFactor));
-                        g = Math.max(0, Math.min(255, normG * inkFactor));
-                        b = Math.max(0, Math.min(255, normB * inkFactor));
-                    } else {
-                        // Smooth Anti-Aliased Handwriting Edge
-                        const t = (normLum - inkThresh) / (paperThresh - inkThresh);
-                        const targetLum = (inkThresh * 0.50) + t * (255 - (inkThresh * 0.50));
-                        const scale = targetLum / (normLum || 1);
-                        r = Math.max(0, Math.min(255, normR * scale));
-                        g = Math.max(0, Math.min(255, normG * scale));
-                        b = Math.max(0, Math.min(255, normB * scale));
-                    }
-
-                    data[idx] = r;
-                    data[idx + 1] = g;
-                    data[idx + 2] = b;
-                }
+                data[idx] = strR;
+                data[idx + 1] = strG;
+                data[idx + 2] = strB;
             }
             ctx.putImageData(imgData, 0, 0);
 
         } else if (filter === 'bw') {
             // Clean Photocopy / Document B&W Scan
-            for (let i = 0; i < len; i += 4) {
-                const lum = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
+            const radius = Math.max(8, Math.round(Math.min(width, height) / 28));
+            const bg = computeSeparableBoxBlur(data, width, height, radius);
+
+            for (let i = 0; i < len; i++) {
+                const idx = i * 4;
+                const bgIdx = i * 3;
+
+                const r = data[idx];
+                const g = data[idx + 1];
+                const b = data[idx + 2];
+                const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+
+                const bgLum = 0.299 * bg[bgIdx] + 0.587 * bg[bgIdx + 1] + 0.114 * bg[bgIdx + 2];
+                const ratio = lum / Math.max(1.0, bgLum);
+
                 let val;
-                if (lum > 140) {
+                if (ratio > 0.82) {
                     val = 255;
-                } else if (lum < 95) {
-                    val = Math.max(0, lum * 0.30);
+                } else if (ratio < 0.60) {
+                    val = Math.max(0, ratio * 180);
                 } else {
-                    val = ((lum - 95) / 45) * 255;
+                    val = ((ratio - 0.60) / 0.22) * 255;
                 }
-                data[i] = val;
-                data[i + 1] = val;
-                data[i + 2] = val;
+
+                data[idx] = val;
+                data[idx + 1] = val;
+                data[idx + 2] = val;
             }
             ctx.putImageData(imgData, 0, 0);
 
         } else if (filter === 'gray') {
             // Smooth Grayscale Document Scan
-            for (let i = 0; i < len; i += 4) {
+            for (let i = 0; i < len * 4; i += 4) {
                 const lum = 0.299 * data[i] + 0.587 * data[i + 1] + 0.114 * data[i + 2];
-                const val = Math.max(0, Math.min(255, (lum - 128) * 1.35 + 145));
+                const val = Math.max(0, Math.min(255, (lum - 128) * 1.30 + 142));
                 data[i] = val;
                 data[i + 1] = val;
                 data[i + 2] = val;
@@ -405,14 +435,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
         } else if (filter === 'sharp') {
             // Detail Sharpening + Color Contrast Boost
-            for (let i = 0; i < len; i += 4) {
+            for (let i = 0; i < len * 4; i += 4) {
                 let r = data[i];
                 let g = data[i + 1];
                 let b = data[i + 2];
 
-                r = Math.max(0, Math.min(255, (r - 128) * 1.30 + 142));
-                g = Math.max(0, Math.min(255, (g - 128) * 1.30 + 142));
-                b = Math.max(0, Math.min(255, (b - 128) * 1.30 + 142));
+                r = Math.max(0, Math.min(255, (r - 128) * 1.28 + 140));
+                g = Math.max(0, Math.min(255, (g - 128) * 1.28 + 140));
+                b = Math.max(0, Math.min(255, (b - 128) * 1.28 + 140));
 
                 data[i] = r;
                 data[i + 1] = g;
