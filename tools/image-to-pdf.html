@@ -38,7 +38,7 @@
       "@graph": [
         {
           "@type": "WebApplication",
-          "name": "Image to PDF Converter",
+          "name": "CamScanner Image to PDF Converter",
           "url": "https://toolxpro.live/tools/image-to-pdf.html",
           "applicationCategory": "UtilitiesApplication",
           "operatingSystem": "All",
@@ -53,26 +53,50 @@
           "mainEntity": [
             {
               "@type": "Question",
-              "name": "Can I convert multiple images into a single multi-page PDF?",
+              "name": "How does the CamScanner Magic Color filter work?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes. You can select and upload multiple JPG, PNG, or WebP files simultaneously. The converter will organize each image onto consecutive pages in your desired sequence."
+                "text": "The Magic Color filter computes local background illumination across the document using a fast separable box blur. It normalizes paper luminance uniformly across all color channels, transforming yellow, shadowy, or uneven paper into 100% pure snow-white (#FFFFFF) while deepening ink contrast without introducing cyan, neon, or chromatic discoloration."
               }
             },
             {
               "@type": "Question",
-              "name": "Is my image upload safe and private?",
+              "name": "Can I convert multiple photos into a single multi-page PDF document?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "Yes, 100% private. All PDF compilation is performed directly inside your local web browser memory using client-side JavaScript. No images or generated documents are sent to any remote server."
+                "text": "Yes. You can select and upload multiple JPG, PNG, or WebP files simultaneously. The converter organizes each image onto consecutive pages, allows you to reorder pages up or down, rotate individual pages, and compiles them into a single organized PDF document."
               }
             },
             {
               "@type": "Question",
-              "name": "What is the best page size for printing?",
+              "name": "How does the tool prevent handwriting, dates, and margins from being cut off?",
               "acceptedAnswer": {
                 "@type": "Answer",
-                "text": "A4 is the universal standard for academic papers, official certificates, and international office printing. Choose Letter for North American print requirements."
+                "text": "Our adaptive document boundary detector samples the baseline paper luminance from the document body and detects outer dark backgrounds (keyboards, tables, stationery) without invading handwritten margins, top date boxes, or bottom code lines. Users also have full interactive control with 8 magnetic control handles and a 2.4x magnifying loupe."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Are my uploaded photos and documents kept private and secure?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, 100% private. All boundary detection, document filtering, and PDF compilation run completely inside your local web browser memory using HTML5 Canvas and client-side JavaScript. No images or generated PDFs are ever sent to any remote server or third-party cloud."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "What page format should I select for coursework and official document printing?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "A4 (210 x 297 mm) is the universal international standard for university assignments, official certificates, and international office paperwork. Choose Letter (8.5 x 11 in) for North American submissions, or Auto-Fit to match the exact natural aspect ratio of your photographed pages."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Does ToolX Pro add any watermark to the generated PDF?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. Unlike mobile scanner apps that imprint unsightly 'Scanned with CamScanner' logos on your documents, ToolX Pro generates 100% clean, watermark-free, publication-ready PDF files completely free."
               }
             }
           ]
@@ -218,39 +242,241 @@
                     </div>
 
                     <!-- ═══════════════════════════════════════════════════════
-                         AUTHORITATIVE EDITORIAL GUIDE & STUDENT/OFFICE WORKFLOWS
+                         AUTHORITATIVE EDITORIAL GUIDE & CAMSCANNER WORKFLOWS
                          ═══════════════════════════════════════════════════════ -->
                     <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
                         
-                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
-                            📑 Streamlining Document Submission with Image to PDF
+                        <h2 style="font-family: var(--font-header); font-size: 1.55rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            📑 The Science of Document Digitization: Turning Camera Photos into Official Scanner PDFs
                         </h2>
                         <p style="margin-bottom: 1.2rem;">
-                            Converting mobile photos of physical papers into a unified PDF file is an essential workflow for students submitting coursework assignments, remote workers filing expense receipts, and professionals submitting legal documentation for verification portals.
+                            In academic portals (such as Google Classroom, Canvas, Blackboard, and Moodle) and corporate enterprise workflows, submitting raw smartphone photographs of physical documents frequently leads to rejection or illegibility. Mobile camera lenses inevitably capture environmental clutter: uneven desk surfaces, shadows cast by hands or smartphones, incandescent bulb yellowing, and skewed perspective angles.
+                        </p>
+                        <p style="margin-bottom: 1.4rem;">
+                            The <strong>ToolX Pro CamScanner Engine</strong> bridges this gap by bringing the full algorithmic pipeline of dedicated mobile scanning hardware directly into your web browser. Utilizing advanced client-side image processing, illumination normalization, and vector PDF compilation, you can transform photos of handwritten lecture notes, assignment codes, textbook diagrams, and official receipts into publication-ready, snow-white PDF documents in seconds—completely free, private, and without watermarks.
                         </p>
 
-                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
-                            🌟 Best Practices for High-Quality Document Scans
+                        <!-- Step-by-Step Architecture -->
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.85rem;">
+                            ⚙️ Step-by-Step Scanning Architecture: How the Tool Works
                         </h3>
-                        <ol style="padding-left: 1.4rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem;">
-                            <li><strong>Ensure Even Overhead Lighting:</strong> Avoid casting harsh shadows over paper text while photographing with your smartphone.</li>
-                            <li><strong>Align Aspect Ratios:</strong> When compiling portrait document pages, select the <em>A4 Portrait</em> option with standard 20px margins for uniform printable output.</li>
-                            <li><strong>Maintain Chronological Order:</strong> Upload multi-page lecture notes in sequential order so your final compiled PDF reads naturally from cover to conclusion.</li>
-                        </ol>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 14px; margin-bottom: 1.8rem;">
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.1rem;">
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                                    <span style="background: var(--primary-glow, rgba(245,124,0,0.12)); color: var(--primary); font-weight: 800; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">1</span>
+                                    <h4 style="margin: 0; font-size: 0.98rem; font-weight: 700; color: var(--text-primary);">Adaptive Document Boundary Detection</h4>
+                                </div>
+                                <p style="font-size: 0.86rem; color: var(--text-secondary); margin: 0;">Upon image ingestion, our relative luminance analysis evaluates the document body against outer surroundings. It automatically trims away laptops, keyboards, desk wood, and stationary without encroaching upon top dates, handwritten margin lines, or bottom code blocks.</p>
+                            </div>
 
-                        <!-- FAQ Section -->
-                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.1rem;">
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                                    <span style="background: var(--primary-glow, rgba(245,124,0,0.12)); color: var(--primary); font-weight: 800; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">2</span>
+                                    <h4 style="margin: 0; font-size: 0.98rem; font-weight: 700; color: var(--text-primary);">Interactive Studio Cropper & Loupe</h4>
+                                </div>
+                                <p style="font-size: 0.86rem; color: var(--text-secondary); margin: 0;">For millimeter-level precision, click <em>Crop / Adjust</em> to enter our full-screen workspace. Eight magnetic handles paired with a real-time 2.4x circular magnifying loupe let you position boundaries cleanly around margin borders with zero guesswork.</p>
+                            </div>
+
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.1rem;">
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                                    <span style="background: var(--primary-glow, rgba(245,124,0,0.12)); color: var(--primary); font-weight: 800; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">3</span>
+                                    <h4 style="margin: 0; font-size: 0.98rem; font-weight: 700; color: var(--text-primary);">Pure-Luminance Magic Color Filter</h4>
+                                </div>
+                                <p style="font-size: 0.86rem; color: var(--text-secondary); margin: 0;">A separable 1D box blur computes local paper surface illumination. By scaling RGB channels uniformly by the inverse background luminance, yellow paper and cast shadows are converted to 100% pure snow-white (#FFFFFF) with zero cyan or neon color distortion.</p>
+                            </div>
+
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.1rem;">
+                                <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                                    <span style="background: var(--primary-glow, rgba(245,124,0,0.12)); color: var(--primary); font-weight: 800; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.85rem;">4</span>
+                                    <h4 style="margin: 0; font-size: 0.98rem; font-weight: 700; color: var(--text-primary);">Vector PDF Compilation (No Clipping)</h4>
+                                </div>
+                                <p style="font-size: 0.86rem; color: var(--text-secondary); margin: 0;">Our jsPDF engine calculates exact printable boundaries across standard A4, Letter, or Auto-Fit page formats. Aspect-ratio preservation guarantees that bottom signatures, page numbers, and margin headers are never clipped or cropped during PDF compilation.</p>
+                            </div>
+                        </div>
+
+                        <!-- CamScanner Filter Deep Dive -->
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 2rem; margin-bottom: 0.85rem;">
+                            🎨 CamScanner Filter Presets: Choosing the Best Output for Your Document
+                        </h3>
+                        <p style="margin-bottom: 1.1rem;">
+                            Different document types require tailored contrast and chromatic curves. You can switch filters globally for all pages or customize each page individually from its dedicated card:
+                        </p>
+
+                        <div style="display: flex; flex-direction: column; gap: 12px; margin-bottom: 2rem;">
+                            <div style="background: var(--bg-secondary); border-left: 4px solid var(--primary, #f57c00); border-radius: 0 10px 10px 0; padding: 1rem 1.25rem;">
+                                <h4 style="margin: 0 0 4px 0; font-size: 1rem; font-weight: 700; color: var(--primary);">✨ Magic Color (CamScanner Pro Standard - Recommended)</h4>
+                                <p style="margin: 0; font-size: 0.88rem; color: var(--text-secondary);">
+                                    The hallmark CamScanner look. Removes dark shadows, ambient yellow tints, and desk gradients to render the paper background pure snow-white (<code style="background:rgba(0,0,0,0.06); padding:2px 6px; border-radius:4px;">#FFFFFF</code>). Deepens handwriting, pencil sketches, and ballpoint ink while fully preserving colorful highlights (such as pink margin lines, blue ballpen text, and red grading marks).
+                                </p>
+                            </div>
+
+                            <div style="background: var(--bg-secondary); border-left: 4px solid #3b82f6; border-radius: 0 10px 10px 0; padding: 1rem 1.25rem;">
+                                <h4 style="margin: 0 0 4px 0; font-size: 1rem; font-weight: 700; color: var(--text-primary);">📄 B&W Clean Scan (High-Contrast Photocopy)</h4>
+                                <p style="margin: 0; font-size: 0.88rem; color: var(--text-secondary);">
+                                    Simulates a clean Xerox laser photocopy. Binarizes document pixels using adaptive local ratios, forcing all paper background to pure white and printed or written text to stark black. Ideal for legal contracts, government affidavits, and monochrome office printing where file size must remain minimal.
+                                </p>
+                            </div>
+
+                            <div style="background: var(--bg-secondary); border-left: 4px solid #10b981; border-radius: 0 10px 10px 0; padding: 1rem 1.25rem;">
+                                <h4 style="margin: 0 0 4px 0; font-size: 1rem; font-weight: 700; color: var(--text-primary);">⚡ Sharp Document (Detail & Contrast Boost)</h4>
+                                <p style="margin: 0; font-size: 0.88rem; color: var(--text-secondary);">
+                                    Applies high-frequency edge enhancement without stripping paper texture. Perfect for colored illustrations, university lab graphs, organic chemistry reaction diagrams, and textbook pages containing photographs alongside text.
+                                </p>
+                            </div>
+
+                            <div style="background: var(--bg-secondary); border-left: 4px solid #8b5cf6; border-radius: 0 10px 10px 0; padding: 1rem 1.25rem;">
+                                <h4 style="margin: 0 0 4px 0; font-size: 1rem; font-weight: 700; color: var(--text-primary);">🩶 Grayscale Scan (Smooth Tonal Reproduction)</h4>
+                                <p style="margin: 0; font-size: 0.88rem; color: var(--text-secondary);">
+                                    Converts images into a balanced 8-bit monochromatic spectrum with gentle S-curve contrast. Preserves fine shading in graphite pencil drawings, architectural blueprints, and engineering schematics.
+                                </p>
+                            </div>
+
+                            <div style="background: var(--bg-secondary); border-left: 4px solid #64748b; border-radius: 0 10px 10px 0; padding: 1rem 1.25rem;">
+                                <h4 style="margin: 0 0 4px 0; font-size: 1rem; font-weight: 700; color: var(--text-primary);">🖼️ Original (Raw Photographic Pixels)</h4>
+                                <p style="margin: 0; font-size: 0.88rem; color: var(--text-secondary);">
+                                    Bypasses all algorithmic contrast and brightness adjustments, embedding your camera pixels directly into the PDF. Best when photographic authenticity or historical document preservation is required.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Technical Comparison Table -->
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 2rem; margin-bottom: 0.85rem;">
+                            📊 Feature Matrix: Raw Mobile Photos vs. Mobile Scanner Apps vs. ToolX Pro
+                        </h3>
+                        <div style="overflow-x: auto; margin-bottom: 2rem; border-radius: 12px; border: 1px solid var(--border-color);">
+                            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.88rem;">
+                                <thead>
+                                    <tr style="background: var(--bg-secondary); border-bottom: 2px solid var(--border-color);">
+                                        <th style="padding: 12px 16px; font-weight: 700; color: var(--text-primary);">Evaluation Criteria</th>
+                                        <th style="padding: 12px 16px; font-weight: 700; color: var(--text-secondary);">Raw Smartphone Photo</th>
+                                        <th style="padding: 12px 16px; font-weight: 700; color: var(--text-secondary);">Free Mobile Scanner Apps</th>
+                                        <th style="padding: 12px 16px; font-weight: 700; color: var(--primary);">ToolX Pro CamScanner Engine</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 12px 16px; font-weight: 600;">Paper Background</td>
+                                        <td style="padding: 12px 16px; color: var(--danger, #ef4444);">Yellow, uneven, shadowy</td>
+                                        <td style="padding: 12px 16px;">Clean white or gray</td>
+                                        <td style="padding: 12px 16px; color: var(--success, #10b981); font-weight: 600;">100% Pure White (#FFFFFF)</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color); background: rgba(0,0,0,0.02);">
+                                        <td style="padding: 12px 16px; font-weight: 600;">Unnecessary Sides (Desk/Table)</td>
+                                        <td style="padding: 12px 16px; color: var(--danger, #ef4444);">Included (keyboards, pens, desk)</td>
+                                        <td style="padding: 12px 16px;">Manual crop required</td>
+                                        <td style="padding: 12px 16px; color: var(--success, #10b981); font-weight: 600;">Auto-Removed + Manual Studio Cropper</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 12px 16px; font-weight: 600;">Watermark Policy</td>
+                                        <td style="padding: 12px 16px;">None</td>
+                                        <td style="padding: 12px 16px; color: var(--danger, #ef4444);">Intrusive brand logo watermark</td>
+                                        <td style="padding: 12px 16px; color: var(--success, #10b981); font-weight: 600;">100% Watermark-Free</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color); background: rgba(0,0,0,0.02);">
+                                        <td style="padding: 12px 16px; font-weight: 600;">Privacy & Security</td>
+                                        <td style="padding: 12px 16px;">Stored on local camera roll</td>
+                                        <td style="padding: 12px 16px; color: var(--danger, #ef4444);">Uploaded to third-party cloud</td>
+                                        <td style="padding: 12px 16px; color: var(--success, #10b981); font-weight: 600;">100% Client-Side (Zero Server Upload)</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 12px 16px; font-weight: 600;">Handwriting & Color Integrity</td>
+                                        <td style="padding: 12px 16px;">Raw camera blur</td>
+                                        <td style="padding: 12px 16px;">Often cyan or washed-out</td>
+                                        <td style="padding: 12px 16px; color: var(--success, #10b981); font-weight: 600;">Deepened ink, vivid margin preservation</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding: 12px 16px; font-weight: 600;">Cost & Subscriptions</td>
+                                        <td style="padding: 12px 16px;">Free</td>
+                                        <td style="padding: 12px 16px; color: var(--danger, #ef4444);">$4.99 - $9.99 / month paywall</td>
+                                        <td style="padding: 12px 16px; color: var(--success, #10b981); font-weight: 600;">100% Free Forever</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <!-- Real-World Workflows -->
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 2rem; margin-bottom: 0.85rem;">
+                            🎓 Academic, Corporate & Legal Use Cases
+                        </h3>
+                        <ul style="padding-left: 1.3rem; margin-bottom: 1.8rem; display: flex; flex-direction: column; gap: 0.75rem;">
+                            <li>
+                                <strong>University Coursework & Exam Submissions:</strong> Students submitting algorithmic problem sets, mathematical proofs, or laboratory notes to Google Classroom or Canvas can convert multi-page notebook spreads into a unified, cleanly numbered PDF with ink lines sharpened for instructor grading.
+                            </li>
+                            <li>
+                                <strong>Remote Work Expense Management:</strong> Freelancers and corporate remote employees can photograph fuel chits, restaurant receipts, and taxi invoices. The <em>Magic Color</em> filter flattens thermal paper curling and produces crisp financial documentation for accounting portals.
+                            </li>
+                            <li>
+                                <strong>Legal Agreements & Identity Archiving:</strong> Compile physical identification cards (NID, Passport, Driver's License), certificates, and signed real-estate lease agreements into standard A4 format with clean photocopy contrast.
+                            </li>
+                            <li>
+                                <strong>Medical Prescription & Diagnostic Records:</strong> Digitize doctor prescriptions, hospital discharge summaries, and blood test lab reports to maintain private digital health archives without disclosing confidential medical data to cloud servers.
+                            </li>
+                        </ul>
+
+                        <!-- Privacy Architecture -->
+                        <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 14px; padding: 1.4rem; margin-bottom: 2.2rem;">
+                            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                                <span style="font-size: 1.4rem;">🔒</span>
+                                <h3 style="margin: 0; font-size: 1.15rem; font-weight: 700; color: var(--text-primary);">Zero-Cloud Client-Side Privacy Guarantee</h3>
+                            </div>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0; line-height: 1.7;">
+                                Unlike commercial document scanning apps that quietly upload your handwritten notes, invoices, and identity records to centralized cloud databases for processing, ToolX Pro operates on a <strong>Zero-Trust Client-Side Architecture</strong>. All canvas manipulations, boundary detections, filter kernels, and jsPDF binary generation execute exclusively within your local web browser's sandboxed JavaScript memory. No image bytes or compiled PDF files ever traverse the internet or touch our servers.
+                            </p>
+                        </div>
+
+                        <!-- Comprehensive FAQ -->
+                        <h2 style="font-family: var(--font-header); font-size: 1.45rem; font-weight: 700; color: var(--primary); margin-top: 2.5rem; margin-bottom: 1.1rem;">
                             ❓ Frequently Asked Questions (FAQ)
                         </h2>
                         
                         <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
-                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How many pictures can I merge into one PDF?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">You can combine dozens of images in a single session. Because computation runs locally, performance depends only on your device's memory.</p>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.45rem;">Q: How does the Magic Color filter make paper pure white without fading handwriting?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">
+                                    The filter calculates local background luminance across the document using a fast separable box blur. Because all three RGB channels are scaled by identical luminance gain, the paper background is normalized to pure white (#FFFFFF) while handwriting contrast is deepened. Colored inks (like pink margin lines and blue ballpoint ink) retain their natural chromatic hue without any cyan or neon distortion.
+                                </p>
                             </div>
-                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Will the text in the images be searchable?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">This tool creates high-fidelity raster bitmap PDFs preserving exact handwriting, diagrams, and signatures. To extract editable text, you can use our PDF to Word or OCR utilities.</p>
+
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.45rem;">Q: How does the tool prevent handwriting, dates, and margin lines from getting cut off?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">
+                                    Our adaptive document detector samples the baseline paper luminance directly from the document center. It distinguishes outer dark surfaces (laptops, desk wood, browser borders) without encroaching upon top date boxes, margin headers, or bottom code lines. Furthermore, our interactive cropper allows millimeter-level manual adjustment with a 2.4x magnifying loupe.
+                                </p>
+                            </div>
+
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.45rem;">Q: Can I convert multiple images into a single multi-page PDF document?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">
+                                    Yes. You can select and upload dozens of JPG, PNG, or WebP files simultaneously. The tool allows you to reorder pages up or down, rotate individual pages in 90-degree increments, customize filters per page, and merges them into a single chronological PDF.
+                                </p>
+                            </div>
+
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.45rem;">Q: What is the best page size for printing or online submission?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">
+                                    <strong>A4 (Standard 210 × 297 mm)</strong> is the universal standard for university assignments, official certificates, and international office printing. Choose <strong>Letter (8.5 × 11 in)</strong> for North American print requirements, or <strong>Auto-Fit</strong> if you want each page to match the exact natural aspect ratio of your photographed notebook.
+                                </p>
+                            </div>
+
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.45rem;">Q: Are my uploaded photos and documents kept safe and private?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">
+                                    Yes, 100% private. All boundary detection, document filtering, and PDF compilation are executed directly inside your local web browser memory using client-side JavaScript. No images or compiled PDF documents are ever uploaded to any remote server or third-party cloud.
+                                </p>
+                            </div>
+
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.45rem;">Q: Does ToolX Pro add any watermark to the generated PDF?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">
+                                    No. Unlike mobile scanner applications that stamp intrusive 'Scanned with CamScanner' watermarks on page corners, ToolX Pro generates 100% clean, professional, publication-ready PDF documents without any branding.
+                                </p>
+                            </div>
+
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.25rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.45rem;">Q: Will the text in the generated PDF be searchable?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">
+                                    This tool compiles high-fidelity raster bitmap pages to preserve exact handwriting, mathematical notations, geometric graphs, and physical signatures. To extract editable text, you can pass the generated PDF through our PDF to Word or OCR utilities.
+                                </p>
                             </div>
                         </div>
 
