@@ -105,6 +105,7 @@ function initLayout() {
     if (isToolPage) {
         injectSidebar(toolsPrefix);
         injectPrivacyTrustBadge(privacyPath);
+        injectRelatedTools(toolsPrefix, homePath);
     }
     
     // Initialize Theme
@@ -121,6 +122,9 @@ function initLayout() {
 
     // Initialize Mobile Navigation Drawer (Feedback UI)
     initMobileDrawer(homePath, isSubFolder, isHomePage);
+
+    // Initialize PWA Installation Engine & Service Worker
+    initPwaEngine(homePath);
 }
 
 if (document.readyState === "loading") {
@@ -246,7 +250,6 @@ function injectToolBackButton(homePath, isSubFolder, isHomePage) {
                 <span class="crumb-active" title="${categoryName}">${categoryName}</span>
             </nav>
         `;
-    } else {
         navBar.innerHTML = `
             <a href="${backUrl}" class="back-to-home-btn" title="${backLabel}">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -255,14 +258,48 @@ function injectToolBackButton(homePath, isSubFolder, isHomePage) {
                 </svg>
                 <span>${backLabel}</span>
             </a>
-            <nav class="tool-breadcrumb-trail" aria-label="Breadcrumb">
-                <a href="${homePath}">Home</a>
-                <span class="crumb-sep">/</span>
-                <a href="${backUrl}">${categoryName}</a>
-                <span class="crumb-sep">/</span>
-                <span class="crumb-active" title="${toolName}">${toolName}</span>
-            </nav>
+            <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+                <button class="share-tool-btn" id="share-tool-top-btn" title="Share this tool with friends or classmates" aria-label="Share tool">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="18" cy="5" r="3"></circle>
+                        <circle cx="6" cy="12" r="3"></circle>
+                        <circle cx="18" cy="19" r="3"></circle>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                    </svg>
+                    <span>Share</span>
+                </button>
+                <nav class="tool-breadcrumb-trail" aria-label="Breadcrumb">
+                    <a href="${homePath}">Home</a>
+                    <span class="crumb-sep">/</span>
+                    <a href="${backUrl}">${categoryName}</a>
+                    <span class="crumb-sep">/</span>
+                    <span class="crumb-active" title="${toolName}">${toolName}</span>
+                </nav>
+            </div>
         `;
+
+        const shareBtn = navBar.querySelector("#share-tool-top-btn");
+        if (shareBtn) {
+            shareBtn.addEventListener("click", () => {
+                const shareTitle = `${toolName} - ToolX Pro`;
+                const shareText = `Use free ${toolName} on ToolX Pro — fast, privacy-first web utilities:`;
+                const shareUrl = window.location.href;
+                if (navigator.share) {
+                    navigator.share({
+                        title: shareTitle,
+                        text: shareText,
+                        url: shareUrl
+                    }).catch(() => {});
+                } else {
+                    navigator.clipboard.writeText(shareUrl).then(() => {
+                        if (window.showToast) {
+                            window.showToast("Tool link copied to clipboard! Share it with friends 🚀");
+                        }
+                    }).catch(() => {});
+                }
+            });
+        }
     }
     
     contentArea.insertBefore(navBar, contentArea.firstChild);
@@ -381,6 +418,13 @@ function injectHeader(homePath, isSubFolder, isHomePage) {
             <li><a href="${contactLink}" class="nav-menu-link">Contact</a></li>
         </ul>
         <div class="nav-actions">
+            <button id="header-install-pwa-btn" class="header-install-app-btn" title="Install ToolX Pro Web App" style="display:none;" aria-label="Install App">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                </svg>
+                <span>Install App</span>
+            </button>
             <div id="theme-toggle-btn" class="theme-switch" role="button" tabindex="0" title="Toggle Light/Dark Theme">
                 <span class="switch-icon sun">☀️</span>
                 <span class="switch-icon moon">🌙</span>
@@ -736,6 +780,7 @@ function initMobileDrawer(homePath, isSubFolder, isHomePage) {
                     <li><a href="${blogLink}" class="drawer-menu-link">Blog</a></li>
                     <li><a href="${aboutLink}" class="drawer-menu-link">About</a></li>
                     <li><a href="${contactLink}" class="drawer-menu-link">Contact</a></li>
+                    <li id="drawer-pwa-install-item"><a href="#" id="drawer-install-pwa-btn" class="drawer-menu-link" style="color:var(--accent); font-weight:700;">📲 Install ToolX Pro App</a></li>
                 </ul>
             </div>
         `;
@@ -869,3 +914,207 @@ function injectGoogleAdSense() {
 }
 
 
+
+// Smart Related Tools Recommendation Engine (Retention & SEO Booster)
+function injectRelatedTools(toolsPrefix, homePath) {
+    if (document.querySelector(".tool-related-section")) return;
+
+    const pathParts = window.location.pathname.split('/');
+    const lastPart = (pathParts[pathParts.length - 1] || '').toLowerCase();
+    const cleanFileName = lastPart.replace('.html', '');
+
+    let currentCategory = null;
+    let currentTool = null;
+
+    for (const cat of CATEGORIES_DATA) {
+        const found = cat.tools.find(t => {
+            if (!t.path) return false;
+            return t.path.toLowerCase().replace('.html', '') === cleanFileName || t.path.toLowerCase() === lastPart;
+        });
+        if (found) {
+            currentCategory = cat;
+            currentTool = found;
+            break;
+        }
+    }
+
+    if (!currentCategory) return;
+
+    // Pick related tools: prioritize same category first, excluding current & future tools
+    let relatedTools = currentCategory.tools.filter(t => !t.isFuture && t.path !== currentTool.path);
+
+    // If fewer than 3 tools in this category, borrow popular tools from other categories
+    if (relatedTools.length < 3) {
+        for (const cat of CATEGORIES_DATA) {
+            if (cat.id !== currentCategory.id) {
+                const addTools = cat.tools.filter(t => !t.isFuture && (!currentTool || t.path !== currentTool.path));
+                relatedTools = relatedTools.concat(addTools);
+                if (relatedTools.length >= 4) break;
+            }
+        }
+    }
+
+    const displayTools = relatedTools.slice(0, 4);
+    if (displayTools.length === 0) return;
+
+    const categoryUrl = `${homePath}#categories-section`;
+    const section = document.createElement("section");
+    section.className = "tool-related-section";
+    section.setAttribute("aria-label", "Related Useful Tools");
+
+    let cardsHtml = '';
+    displayTools.forEach(tool => {
+        cardsHtml += `
+            <a href="${toolsPrefix}${tool.path}" class="related-tool-card" title="${tool.name}">
+                <div class="related-tool-name">
+                    <span>⚡</span>
+                    <span>${tool.name}</span>
+                </div>
+                <div class="related-tool-desc">${tool.desc}</div>
+            </a>
+        `;
+    });
+
+    section.innerHTML = `
+        <div class="tool-related-header">
+            <h3 class="tool-related-title">
+                <span>✨</span>
+                <span>More Popular Tools for You</span>
+            </h3>
+            <a href="${categoryUrl}" style="font-size:0.85rem; color:var(--accent); font-weight:600; text-decoration:none;">Explore All →</a>
+        </div>
+        <div class="tool-related-grid">
+            ${cardsHtml}
+        </div>
+    `;
+
+    // Append to content area before footer
+    const contentArea = document.querySelector(".content-area, .main-wrapper");
+    if (contentArea) {
+        contentArea.appendChild(section);
+    } else {
+        const footer = document.getElementById("main-footer");
+        if (footer && footer.parentNode) {
+            footer.parentNode.insertBefore(section, footer);
+        }
+    }
+}
+
+// Progressive Web App (PWA) Engine & Service Worker Registration
+function initPwaEngine(homePath) {
+    // 1. Register Service Worker
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js', { scope: '/' })
+                .then(reg => {
+                    console.debug('PWA Service Worker registered:', reg.scope);
+                })
+                .catch(err => {
+                    console.debug('PWA Service Worker registration skipped:', err);
+                });
+        });
+    }
+
+    // 2. Detect Standalone Mode
+    const isStandalone = window.matchMedia('(display-mode: standalone)').matches || window.navigator.standalone === true;
+    if (isStandalone) {
+        return;
+    }
+
+    // 3. Inject PWA Floating Banner
+    let banner = document.getElementById("pwa-install-banner");
+    if (!banner) {
+        banner = document.createElement("div");
+        banner.id = "pwa-install-banner";
+        banner.className = "pwa-install-banner";
+        const iconPath = homePath.includes('..') ? '../images/favicon-96x96.png' : 'images/favicon-96x96.png';
+        banner.innerHTML = `
+            <div class="pwa-banner-content">
+                <div class="pwa-banner-icon">
+                    <img src="${iconPath}" alt="ToolX Pro Logo" width="38" height="38">
+                </div>
+                <div class="pwa-banner-text">
+                    <strong>Install ToolX Pro App</strong>
+                    <span>1-Tap fast access & offline tools</span>
+                </div>
+            </div>
+            <div class="pwa-banner-actions">
+                <button id="pwa-install-banner-btn" class="pwa-install-btn">Install</button>
+                <button id="pwa-banner-dismiss-btn" class="pwa-dismiss-btn" aria-label="Dismiss">✕</button>
+            </div>
+        `;
+        document.body.appendChild(banner);
+    }
+
+    let deferredPrompt = null;
+    const headerBtn = document.getElementById("header-install-pwa-btn");
+    const drawerBtn = document.getElementById("drawer-install-pwa-btn");
+    const bannerInstallBtn = document.getElementById("pwa-install-banner-btn");
+    const bannerDismissBtn = document.getElementById("pwa-banner-dismiss-btn");
+
+    function triggerInstall() {
+        if (deferredPrompt) {
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => {
+                if (choiceResult.outcome === 'accepted') {
+                    if (window.showToast) window.showToast("Installing ToolX Pro... 🎉");
+                }
+                deferredPrompt = null;
+                hideBanner();
+            });
+        } else {
+            const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+            if (isIOS) {
+                if (window.showToast) {
+                    window.showToast("Tap Safari Share 📤 then choose 'Add to Home Screen' ➕", "success");
+                } else {
+                    alert("To install on iOS: Tap Share 📤 at bottom of Safari, then 'Add to Home Screen' ➕");
+                }
+            } else {
+                if (window.showToast) {
+                    window.showToast("Tap your browser menu (⋮) and select 'Install app' or 'Add to Home screen' 📲");
+                }
+            }
+        }
+    }
+
+    function showBanner() {
+        const lastDismiss = localStorage.getItem('toolxpro_pwa_dismissed');
+        const now = Date.now();
+        // Hide if dismissed within last 5 days
+        if (lastDismiss && (now - parseInt(lastDismiss, 10)) < 5 * 24 * 60 * 60 * 1000) {
+            return;
+        }
+        setTimeout(() => {
+            banner.classList.add("visible");
+        }, 2500);
+    }
+
+    function hideBanner() {
+        banner.classList.remove("visible");
+        localStorage.setItem('toolxpro_pwa_dismissed', Date.now().toString());
+    }
+
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredPrompt = e;
+        if (headerBtn) headerBtn.style.display = "inline-flex";
+        showBanner();
+    });
+
+    if (bannerInstallBtn) bannerInstallBtn.addEventListener("click", triggerInstall);
+    if (headerBtn) headerBtn.addEventListener("click", triggerInstall);
+    if (drawerBtn) drawerBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        triggerInstall();
+    });
+    if (bannerDismissBtn) bannerDismissBtn.addEventListener("click", hideBanner);
+
+    window.addEventListener('appinstalled', () => {
+        hideBanner();
+        if (headerBtn) headerBtn.style.display = "none";
+        const drawerItem = document.getElementById("drawer-pwa-install-item");
+        if (drawerItem) drawerItem.style.display = "none";
+        if (window.showToast) window.showToast("ToolX Pro is now installed on your device! 🚀", "success");
+    });
+}

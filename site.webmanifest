@@ -1,11 +1,14 @@
 {
-  "name": "ToolX Pro - Free Online Utility Tools",
+  "name": "ToolX Pro - Free Web Utility Tools Hub",
   "short_name": "ToolX Pro",
-  "description": "Fast, free, and secure online utilities and AI tools.",
-  "start_url": "/",
+  "description": "Fast, free, and secure online utilities, academic student tools, and image converters.",
+  "start_url": "/?source=pwa",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
+  "orientation": "portrait-primary",
+  "background_color": "#09090b",
   "theme_color": "#F57C00",
+  "categories": ["utilities", "education", "productivity"],
   "icons": [
     {
       "src": "/images/favicon-48x48.png",
