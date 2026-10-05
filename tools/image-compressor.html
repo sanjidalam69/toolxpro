@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -136,44 +136,118 @@
                          ═══════════════════════════════════════════════════════ -->
                     <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
                         
-                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
-                            🖼️ Lossy vs Lossless Image Compression Explained
+                        <h2 style="font-family: var(--font-header); font-size: 1.55rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            🖼️ Master Guide to Digital Image Compression, Bandwidth & Portal Uploads
                         </h2>
                         <p style="margin-bottom: 1.2rem;">
-                            Images account for more than 60% of total web page payload. Optimizing graphic assets is the single most effective way to improve Google Core Web Vitals, accelerate Largest Contentful Paint (LCP), reduce mobile data consumption, and pass strict file size limitations on job and visa portals (e.g., maximum 200 KB or 500 KB upload caps).
+                            High-resolution smartphone cameras and modern digital sensors routinely output image files between 5MB and 25MB in size. While ideal for physical canvas printing, transmitting multi-megabyte files across mobile networks causes sluggish page loading, wastes user data bundles, and frequently triggers rejection errors on job applications, university portals, and government web systems. ToolX Pro’s <strong>Smart Image Compressor</strong> provides precision client-side optimization across JPG, PNG, and WebP formats without sacrificing human-perceived visual clarity.
                         </p>
 
-                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
-                            ⚙️ Technical Breakdown of Supported Image Formats
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
+                            🔬 The Science of Image Compression: Quantization & Subsampling
                         </h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.2rem 0;">
-                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">📷 JPEG / JPG</h4>
-                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">Best suited for complex camera photographs containing rich gradients and millions of colors. Uses discrete cosine transform (DCT) lossy compression.</p>
+                        <p style="margin-bottom: 1rem;">
+                            How does our browser engine shrink image weight by up to 80% while keeping faces, text, and edges sharp? The process leverages fundamental psychovisual principles:
+                        </p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.5rem 0;">
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">👁️ Chroma Subsampling (YCbCr)</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                                    Human eyes contain far more luminance rods (brightness sensors) than chrominance cones (color sensors). By separating an image into Luminance (Y) and Chrominance (Cb, Cr) channels, our engine preserves 100% of brightness detail while subtly compressing color resolution (4:2:0 subsampling), halving file size with zero visible difference.
+                                </p>
                             </div>
-                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">🎨 PNG</h4>
-                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">Ideal for logos, screenshots, and icons requiring alpha-channel transparency and sharp text contrast.</p>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">📐 DCT Matrix Quantization</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                                    Images are divided into 8×8 pixel blocks and transformed into frequency coefficients via Discrete Cosine Transform. High-frequency micro-variations (imperceptible visual noise) are discarded during quantization, allowing entropy encoders to compress the remaining matrix into remarkably few bytes.
+                                </p>
                             </div>
-                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">⚡ WebP</h4>
-                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">Google's modern web container that delivers 25%–34% smaller file sizes than comparable JPEGs at identical visual index scores.</p>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">📊 SSIM Quality Preservation</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                                    Our adaptive quality slider is calibrated against Structural Similarity Index (SSIM) benchmarks. Setting compression between 65% and 80% delivers an optimal sweet spot where file size drops by 60%–85% while perceived image fidelity remains virtually indistinguishable from the master file.
+                                </p>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">🔒 Zero-Server Client Privacy</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                                    Unlike online compressors that transfer your sensitive photos to offshore cloud servers, ToolX Pro compresses all images locally inside your browser's WebGL canvas pipeline. Your confidential documents, student records, and personal photos never leave your device.
+                                </p>
                             </div>
                         </div>
 
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
+                            📋 Official Photo Size Requirements for Job & Admission Portals
+                        </h3>
+                        <p style="margin-bottom: 1rem;">
+                            Most Bangladeshi and international online registration portals enforce strict file size caps. If your image exceeds these limits by even 1 kilobyte, the form fails to submit:
+                        </p>
+                        
+                        <div style="overflow-x: auto; margin: 1.2rem 0;">
+                            <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.92rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; overflow: hidden;">
+                                <thead>
+                                    <tr style="background: var(--bg-primary); border-bottom: 2px solid var(--border-color);">
+                                        <th style="padding: 12px 16px; color: var(--primary);">Application Portal</th>
+                                        <th style="padding: 12px 16px; color: var(--primary);">Required Dimensions</th>
+                                        <th style="padding: 12px 16px; color: var(--primary);">Strict File Size Cap</th>
+                                        <th style="padding: 12px 16px; color: var(--primary);">Recommended Slider Setting</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px 16px; font-weight: 600;">Teletalk Govt Job (BCS, Primary, NTRCA) Photo</td>
+                                        <td style="padding: 10px 16px;">300 × 300 px</td>
+                                        <td style="padding: 10px 16px; color: var(--danger); font-weight: 600;">Max 100 KB</td>
+                                        <td style="padding: 10px 16px; color: var(--accent);">60% - 70% Quality</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px 16px; font-weight: 600;">Teletalk Signature Upload</td>
+                                        <td style="padding: 10px 16px;">300 × 80 px</td>
+                                        <td style="padding: 10px 16px; color: var(--danger); font-weight: 600;">Max 60 KB</td>
+                                        <td style="padding: 10px 16px; color: var(--accent);">70% - 80% Quality</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px 16px; font-weight: 600;">University Admissions (DU, BUET, GST Cluster)</td>
+                                        <td style="padding: 10px 16px;">Passport Ratio (35×45mm)</td>
+                                        <td style="padding: 10px 16px; color: var(--danger); font-weight: 600;">Max 100 KB - 150 KB</td>
+                                        <td style="padding: 10px 16px; color: var(--accent);">65% - 75% Quality</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px 16px; font-weight: 600;">US Visa Portal (DS-160)</td>
+                                        <td style="padding: 10px 16px;">600 × 600 px (2×2 inch)</td>
+                                        <td style="padding: 10px 16px; color: var(--danger); font-weight: 600;">Max 240 KB</td>
+                                        <td style="padding: 10px 16px; color: var(--accent);">75% - 85% Quality</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
                         <!-- FAQ Section -->
-                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2.2rem; margin-bottom: 1rem;">
                             ❓ Frequently Asked Questions (FAQ)
                         </h2>
                         
                         <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How do I reduce an image under 100 KB or 200 KB for government or job application forms?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Upload your image and adjust the quality slider to approximately 50% - 65%. Click "Compress Image" and check the resulting file size. If still above your threshold, slide down to 40% and re-compress until it meets the exact portal requirement.</p>
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How do I reduce an image under 100 KB for government or job application forms?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Upload your image and set the compression quality slider between 55% and 65%. Click "Compress Image" and inspect the resulting output size. If the resulting file is still above 100 KB, adjust the slider down to 45%–50% and re-compress until it reaches your exact target.</p>
                             </div>
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Does ToolX Pro store copies of my personal photos?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No. The entire process runs in your client-side browser memory via HTML5 Canvas. No image data is sent across the internet, ensuring 100% privacy for confidential documents, IDs, and family photos.</p>
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Will compressing my image change its pixel width and height?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No. Our image compressor alters byte encoding density and quantization matrices without shrinking canvas pixel dimensions. If your photo is 1200×1200 pixels, it remains exactly 1200×1200 pixels after compression.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Can I compress PNG images with transparent backgrounds?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. When compressing PNG images, our engine preserves the 8-bit alpha transparency channel while optimizing byte filtering and palette indexing so that logos and icons remain crisp without dark edge halos.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Are my confidential NID cards, receipts, and personal photos secure?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">100% secure. ToolX Pro executes all encoding routines locally inside your client web browser memory via HTML5 Canvas. No image data is ever uploaded across the internet or stored on remote servers.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: What is the best format for fastest web page loading speed?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">For modern websites, WebP provides the best compression ratio, saving 25%–35% more bandwidth than standard JPEG. If your destination is a traditional job portal, stick to JPG for universal compatibility.</p>
                             </div>
                         </div>
 

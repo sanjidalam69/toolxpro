@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -123,58 +123,119 @@
                          ═══════════════════════════════════════════════════════ -->
                     <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
                         
-                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
-                            🔤 Unicode vs Bijoy ANSI Encoding in Bengali Typography
+                        <h2 style="font-family: var(--font-header); font-size: 1.55rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            🔤 Comprehensive Guide to Bengali Digital Typography: Unicode vs Bijoy ANSI
                         </h2>
                         <p style="margin-bottom: 1.2rem;">
-                            Bengali digital typography uses two major character encoding paradigms: standard international UTF-8 Unicode and legacy ANSI ASCII font encodings. Understanding how to transition between them is essential for publishers, graphic designers, newspaper editors, and government document typists.
+                            The Bengali computational landscape is uniquely divided between two distinct typographical systems: modern <strong>UTF-8 Unicode</strong> (the global standard for the Internet, mobile smartphones, and operating systems) and <strong>Bijoy ANSI / ASCII</strong> (the traditional standard for commercial offset printing, newspapers, desktop publishing, and vector graphic design in Adobe Creative Suite). Understanding how these encoding layers function and how to effortlessly convert between them is essential for students, freelance graphic designers, journalists, administrative typists, and software developers across Bangladesh and West Bengal.
                         </p>
 
-                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
+                            🏛️ Historical Background: The Evolution of Digital Bangla
+                        </h3>
+                        <p style="margin-bottom: 1rem;">
+                            The digital journey of the Bengali script began with mechanical typewriters like the Munir Optima layout in the 1960s. In 1988, Mustafa Jabbar released the Bijoy software for Apple Macintosh, bringing Bengali publishing into the personal computing era. Because early operating systems possessed zero native awareness of Indic scripts or complex text shaping, Bijoy ingeniously hijacked existing standard Latin ASCII character slots (0–255). Typing with the popular font <em>SutonnyMJ</em> simply mapped traditional English keystrokes onto corresponding Bengali glyph fragments.
+                        </p>
+                        <p style="margin-bottom: 1.2rem;">
+                            In the early 2000s, Dr. Mehdi Hasan Khan introduced <strong>Avro Keyboard</strong>, popularizing modern <strong>Unicode (UTF-8)</strong> across Bangladesh with phonetic typing. In the Unicode standard (block U+0980 through U+09FF), every Bengali character, vowel sign (kar), and auxiliary symbol possesses a unique, mathematically recognized code point globally supported by Windows, macOS, Android, iOS, and Linux without requiring proprietary fonts.
+                        </p>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
                             🖥️ Comparison of Bangla Typing Standards
                         </h3>
                         <div style="overflow-x: auto; margin: 1rem 0;">
-                            <table style="width: 100%; border-collapse: collapse; border: 1px solid var(--border-color); font-size: 0.95rem;">
+                            <table style="width: 100%; border-collapse: collapse; border: 1px solid var(--border-color); font-size: 0.95rem; background: var(--bg-secondary); border-radius: 10px; overflow: hidden;">
                                 <thead>
-                                    <tr style="background: var(--bg-secondary); border-bottom: 2px solid var(--border-color);">
-                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Feature</th>
-                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Unicode Bangla</th>
-                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Bijoy ANSI (SutonnyMJ)</th>
+                                    <tr style="background: var(--bg-primary); border-bottom: 2px solid var(--border-color);">
+                                        <th style="padding: 12px; text-align: left; font-weight: bold; color: var(--primary);">Feature</th>
+                                        <th style="padding: 12px; text-align: left; font-weight: bold; color: var(--primary);">Unicode Bangla (Avro / Web)</th>
+                                        <th style="padding: 12px; text-align: left; font-weight: bold; color: var(--primary);">Bijoy ANSI (SutonnyMJ / Print)</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr style="border-bottom: 1px solid var(--border-color);">
-                                        <td style="padding: 10px; font-weight: 600;">Encoding System</td>
+                                        <td style="padding: 10px; font-weight: 600;">Encoding Architecture</td>
                                         <td style="padding: 10px;">Universal UTF-8 (Hex U+0980 to U+09FF)</td>
                                         <td style="padding: 10px;">8-bit ASCII ANSI Code Page 1252</td>
                                     </tr>
                                     <tr style="border-bottom: 1px solid var(--border-color);">
-                                        <td style="padding: 10px; font-weight: 600;">Primary Environment</td>
-                                        <td style="padding: 10px;">Web browsers, Android/iOS smartphones, Google Docs</td>
-                                        <td style="padding: 10px;">Adobe Photoshop, Illustrator, InDesign, Print Press</td>
+                                        <td style="padding: 10px; font-weight: 600;">Operating System Support</td>
+                                        <td style="padding: 10px;">Native across iOS, Android, macOS, Windows</td>
+                                        <td style="padding: 10px;">Requires dedicated font files (SutonnyMJ) installed</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">Web & Social Media</td>
+                                        <td style="padding: 10px;">100% readable everywhere; searchable by Google & SEO</td>
+                                        <td style="padding: 10px;">Appears as unreadable gibberish (e.g. "Avgvi †mvbvi evsjv")</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid var(--border-color);">
+                                        <td style="padding: 10px; font-weight: 600;">Graphic Design Suitability</td>
+                                        <td style="padding: 10px;">Supported in modern Adobe CC with World-Ready composer</td>
+                                        <td style="padding: 10px;">Standard choice in commercial printing press, banners, books</td>
                                     </tr>
                                     <tr>
-                                        <td style="padding: 10px; font-weight: 600;">Typical Fonts</td>
-                                        <td style="padding: 10px;">Kalpurush, SolaimanLipi, Noto Serif Bengali</td>
-                                        <td style="padding: 10px;">SutonnyMJ, SutonnyOMJ, Siyam Rupali ANSI</td>
+                                        <td style="padding: 10px; font-weight: 600;">Popular Fonts</td>
+                                        <td style="padding: 10px;">Kalpurush, SolaimanLipi, Noto Serif Bengali, Ador</td>
+                                        <td style="padding: 10px;">SutonnyMJ, SutonnyOMJ, Boishakhi, Siyam Rupali ANSI</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
 
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
+                            🧩 How Bengali Ligatures (যুক্তবর্ণ - Juktakhor) are Handled
+                        </h3>
+                        <p style="margin-bottom: 1rem;">
+                            The Bengali script features hundreds of complex conjunct consonants (যুক্তাক্ষর). In Unicode, conjuncts are synthesized dynamically using the <strong>Virama / Hasant</strong> invisible code character (U+09CD <code>্</code>). For example:
+                        </p>
+                        <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.2rem; margin-bottom: 1.2rem;">
+                            <ul style="padding-left: 1.2rem; margin: 0; display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.95rem;">
+                                <li><strong>ক্ষ:</strong> ক (U+0995) + ্ (U+09CD) + ষ (U+09B7) = ক্ষ (Encoded cleanly as 3 logical units)</li>
+                                <li><strong>জ্ঞ:</strong> জ (U+099C) + ্ (U+09CD) + ঞ (U+099E) = জ্ঞ</li>
+                                <li><strong>ষ্ণ:</strong> ষ (U+09B7) + ্ (U+09CD) + ণ (U+09A3) = ষ্ণ</li>
+                                <li><strong>ত্র:</strong> ত (U+09A4) + ্ (U+09CD) + র (U+09B0) = ত্র</li>
+                            </ul>
+                        </div>
+                        <p style="margin-bottom: 1.2rem;">
+                            Conversely, in Bijoy ANSI, there is no font engine to synthesize conjuncts dynamically on the fly. Each ligature exists as a separate custom glyph assigned to a specific English ASCII key code. ToolX Pro's two-way converter features an exhaustive transformation dictionary that decomposes and maps every single ligature, modifier symbol, reph (র্), and vowel sign (হ্রস্ব-ই কার, দীর্ঘ-ঈ কার, ঋ-কার) with 100% typographic precision.
+                        </p>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
+                            🎨 Step-by-Step: Using Converted Bijoy Text in Adobe Photoshop & Illustrator
+                        </h3>
+                        <ol style="padding-left: 1.4rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.7rem;">
+                            <li><strong>Step 1 - Paste Unicode:</strong> Type or paste your Bangla text (from web, Facebook, or Avro) into the top Unicode field above.</li>
+                            <li><strong>Step 2 - Convert:</strong> Click the orange <strong>"Unicode to Bijoy ANSI ⬇️"</strong> button. The transformed ANSI text will populate in the bottom box.</li>
+                            <li><strong>Step 3 - Copy:</strong> Click <strong>"📋 Copy Bijoy"</strong> to copy the output directly to your device clipboard.</li>
+                            <li><strong>Step 4 - Paste in Adobe:</strong> Open Adobe Photoshop, Illustrator, or InDesign. Select the Horizontal Type Tool (T) and create a text box.</li>
+                            <li><strong>Step 5 - Set Font to SutonnyMJ:</strong> Highlight the text and change the active font to <code>SutonnyMJ</code> or <code>SutonnyOMJ</code>. Your converted text will instantly render into beautiful, flawless Bengali typography!</li>
+                        </ol>
+
                         <!-- FAQ Section -->
-                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2.2rem; margin-bottom: 1rem;">
                             ❓ Frequently Asked Questions (FAQ)
                         </h2>
                         
                         <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How do I use converted Bijoy text in Adobe Photoshop?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">1. Paste your Unicode text and click "Unicode to Bijoy ANSI ⬇️". 2. Click "Copy Bijoy". 3. Open Adobe Photoshop, select the Text Tool, choose the "SutonnyMJ" font, and paste the clipboard content.</p>
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How do I fix broken Bangla conjunct characters in Adobe Photoshop CC?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">If you are using modern Unicode in Adobe Photoshop CC, go to <em>Edit > Preferences > Type</em>, and check <strong>"World-Ready Layout"</strong> (or "Middle Eastern and South Asian"). Restart Photoshop. However, for legacy press files and SutonnyMJ fonts, converting to Bijoy ANSI via ToolX Pro remains the simplest and most foolproof solution.</p>
                             </div>
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Why does Bijoy text look like gibberish in English web browsers?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Bijoy ANSI maps Bengali glyphs over standard Latin ASCII character slots. When viewed with standard English fonts (Arial, Times New Roman), it renders as Latin characters. It requires the SutonnyMJ font to display as Bengali letters.</p>
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Why does Bijoy text appear as weird English letters when pasted into Facebook or Word?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Bijoy ANSI stores Bengali glyphs inside ASCII Latin letter slots. Without the specific font file (SutonnyMJ) explicitly assigned to that paragraph, the computer displays the raw English characters (such as "Avgvi †mvbvi evsjv"). Convert it to Unicode via ToolX Pro to post on Facebook, email, or websites.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Can I convert Bengali numbers (০, ১, ২, ৩...) between Unicode and Bijoy?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. ToolX Pro automatically identifies and maps all numerals (০ to ৯) between both standards, ensuring that invoice numbers, serials, and academic marks remain exact and error-free.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Is there any character limit for text conversion on ToolX Pro?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No. You can convert full books, novels, academic research papers, legal deeds, and news articles containing thousands of words instantly without limitations or slowdowns.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Is my pasted text sent to any external server?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No. The entire character mapping runs locally inside your browser's JavaScript engine. Your private documents, legal contracts, and personal writings never leave your device.</p>
                             </div>
                         </div>
 

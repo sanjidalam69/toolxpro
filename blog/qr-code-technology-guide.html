@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -133,6 +133,71 @@
                     <p>
                         To safeguard against quishing, modern security best practices emphasize using optical scanners like <a href="../tools/qr-scanner.html" style="color:var(--primary); font-weight:600;">ToolX Pro QR Scanner</a> that preview the complete raw text payload and destination domain before prompting users to open links.
                     </p>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.4rem; font-weight:700; color:var(--primary);">🔄 Static vs. Dynamic QR Codes: Architecture & Expiry Risks</h2>
+                    <p>
+                        Understanding the technical contrast between static and dynamic codes is vital when deploying printed collateral:
+                    </p>
+
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1rem; margin:0.8rem 0;">
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:12px; padding:1.2rem;">
+                            <h3 style="font-size:1.1rem; font-weight:700; color:var(--primary); margin-bottom:0.4rem;">🔒 Static QR Codes (Direct Encoding)</h3>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                The target payload (URL, text, Wi-Fi password, or vCard contact) is permanently hard-coded directly into the matrix modules. <strong>They never expire</strong>, require no subscription, and work indefinitely without relying on any intermediary third-party redirect server. ToolX Pro creates 100% static codes.
+                            </p>
+                        </div>
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:12px; padding:1.2rem;">
+                            <h3 style="font-size:1.1rem; font-weight:700; color:var(--primary); margin-bottom:0.4rem;">🌐 Dynamic QR Codes (Server Redirection)</h3>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                The matrix encodes a short URL leading to a vendor's proxy server, which then forwards the visitor to the final destination. While this allows changing the destination URL after printing, it introduces serious risks: if the vendor discontinues operations or imposes paywalls, the printed code breaks immediately.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.4rem; font-weight:700; color:var(--primary);">📏 Mathematical Sizing Rule: Scanning Distance Ratio</h2>
+                    <p>
+                        A frequent physical printing mistake is rendering codes too small for optical camera focus. Optical engineers recommend the <strong>10:1 Distance-to-Size Ratio ($D/10$)</strong> rule:
+                    </p>
+
+                    <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-left:4px solid var(--primary); padding:1.2rem; border-radius:12px; font-family:var(--font-en);">
+                        <code style="font-size:1.05rem; font-weight:bold; color:var(--primary);">Minimum QR Width = Scanning Distance (D) &divide; 10</code>
+                    </div>
+
+                    <p style="font-size:0.95rem; color:var(--text-secondary); margin-top:0.6rem;">
+                        For instance, a magazine or business card scanned from 10 inches (25 cm) away requires a minimum symbol dimension of 1.0 inch &times; 1.0 inch (2.5 cm). Conversely, an outdoor highway billboard or event stage banner intended to be scanned from 10 meters (33 feet) requires a minimum width of 1.0 meter (3.3 feet).
+                    </p>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.4rem; font-weight:700; color:var(--primary);">❓ Frequently Asked Questions (FAQ)</h2>
+                    
+                    <div style="display:flex; flex-direction:column; gap:0.9rem;">
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+                            <h3 style="font-size:1.05rem; font-weight:700; color:var(--primary); margin-bottom:0.4rem;">Do QR codes generated on ToolX Pro ever expire?</h3>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                Never. ToolX Pro creates permanent static QR codes where your content is embedded directly into the geometric pattern. Because no third-party redirect server is involved, your code remains functional forever without monthly renewals.
+                            </p>
+                        </div>
+
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+                            <h3 style="font-size:1.05rem; font-weight:700; color:var(--primary); margin-bottom:0.4rem;">What error correction level should I select when placing a brand logo in the center?</h3>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                Always select <strong>Level H (High)</strong> error correction. Level H provides up to 30% data recovery capacity, allowing the scanner to reconstruct obscured or replaced modules covered by your graphic insignia seamlessly.
+                            </p>
+                        </div>
+
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+                            <h3 style="font-size:1.05rem; font-weight:700; color:var(--primary); margin-bottom:0.4rem;">Can a QR code store data that works completely offline?</h3>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                Yes. QR codes can encode Wi-Fi network credentials (WPA/WPA2 SSID and key), vCard contact cards, calendar event appointments, plain text messages, and SMS prompts. Smartphones decode and execute these functions locally without active cell data or internet access.
+                            </p>
+                        </div>
+
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+                            <h3 style="font-size:1.05rem; font-weight:700; color:var(--primary); margin-bottom:0.4rem;">Why is a 'Quiet Zone' mandatory around the QR code?</h3>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                The Quiet Zone is the blank margin of at least 4 modules surrounding the barcode. It isolates the matrix pattern from nearby graphics, printed text, and backgrounds. Without this margin, optical image sensors cannot reliably detect the boundaries of the position markers.
+                            </p>
+                        </div>
+                    </div>
 
                     <div style="background:var(--bg-secondary); border:1px solid var(--border-color); padding:1.2rem; border-radius:12px; margin-top:1rem; text-align:center;">
                         <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:0.5rem; color:var(--text-primary);">Ready to Create or Scan QR Codes?</h3>

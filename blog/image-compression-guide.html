@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -43,40 +43,138 @@
                 </div>
 
                 <!-- Article Content -->
-                <div class="tool-body" style="font-size:1.05rem; line-height:1.7; color:var(--text-primary); display:flex; flex-direction:column; gap:1.2rem;">
+                <div class="tool-body" style="font-size:1.05rem; line-height:1.8; color:var(--text-primary); display:flex; flex-direction:column; gap:1.4rem;">
                     
-                    <p>High-resolution images captured by modern smartphones and cameras often result in massive file sizes (typically between 3MB and 15MB). While perfect for print publications, these files are too heavy for online usage. They slow down web pages, consume excess mobile data, and fail email upload limits.</p>
+                    <p>Modern smartphone cameras and digital DSLRs produce astonishingly detailed photographs, capturing images at resolutions exceeding 48 to 108 megapixels. However, these raw visual captures translate into massive files ranging between 5MB and 25MB each. While high bitrates are necessary for large-format physical canvas prints, loading uncompressed graphics on the web devastates user experience, drains mobile cellular data plans, and triggers harsh search engine ranking demotions under Google's <strong>Core Web Vitals (Largest Contentful Paint - LCP)</strong> metrics.</p>
 
-                    <h2 style="font-family:var(--font-header); font-size:1.4rem; font-weight:700; margin-top:1rem; color:var(--primary);">🚀 Why Image Compression Matters</h2>
-                    <p>Image optimization is one of the most critical aspects of website performance. Large, unoptimized images slow down page load times, directly impacting SEO rankings and user retention. By compressing your files, you benefit from:</p>
-                    <ul style="padding-left:20px; display:flex; flex-direction:column; gap:6px;">
-                        <li><b>Faster Page Loads:</b> Compressing images from megabytes down to kilobytes speeds up load times on mobile connections.</li>
-                        <li><b>Data Conservation:</b> Visitors consume far less data when loading compressed graphics.</li>
-                        <li><b>Storage Savings:</b> Reduces disk space on backup drives, databases, and hosting servers.</li>
-                    </ul>
+                    <p>Understanding the engineering science behind digital raster compression empowers web developers, digital marketers, job applicants, and students to shrink megabyte images into crisp kilobytes with zero perceptible degradation in visual fidelity.</p>
 
-                    <h2 style="font-family:var(--font-header); font-size:1.4rem; font-weight:700; margin-top:1rem; color:var(--primary);">🧩 Lossy vs. Lossless Compression</h2>
-                    <p>There are two primary methods used to compress images. Understanding them helps you choose the right settings:</p>
+                    <h2 style="font-family:var(--font-header); font-size:1.45rem; font-weight:700; margin-top:1rem; color:var(--primary);">🔬 The Mathematics of Compression: How JPEG & WebP Shrink Files</h2>
+                    <p>Raster compression exploits biological limitations of human visual perception through several mathematical stages:</p>
 
-                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap:15px; margin-top:10px;">
-                        <div style="background:var(--bg-secondary); padding:1rem; border-radius:8px; border:1px solid var(--border-color); border-left:4px solid var(--primary);">
-                            <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Lossy Compression</h3>
-                            <p style="font-size:0.9rem; line-height:1.45;">Removes minor, imperceptible details from the image structure. Extremely effective for decreasing JPG files, saving up to 80% of storage size while keeping the image crisp to the human eye.</p>
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem; margin:0.8rem 0;">
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:12px; padding:1.3rem;">
+                            <h4 style="font-size:1.05rem; font-weight:700; color:var(--primary); margin-bottom:0.4rem;">👁️ Chroma Subsampling (YCbCr 4:2:0)</h4>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                Human retinas contain roughly 120 million luminance-sensitive rods but only 6 million color-sensitive cones. Compression algorithms convert RGB pixels into Luminance (Y - brightness) and Chrominance (Cb/Cr - color). Halving the color resolution (4:2:0 subsampling) immediately slashes file weight by 50% without human eyes noticing any change.
+                            </p>
                         </div>
-                        <div style="background:var(--bg-secondary); padding:1rem; border-radius:8px; border:1px solid var(--border-color); border-left:4px solid var(--accent);">
-                            <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:6px;">Lossless Compression</h3>
-                            <p style="font-size:0.9rem; line-height:1.45;">Rewrites the file's data coding without deleting any visual information. Best suited for charts, screenshots, and logos (typically PNG format) where perfect pixel accuracy is required.</p>
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:12px; padding:1.3rem;">
+                            <h4 style="font-size:1.05rem; font-weight:700; color:var(--primary); margin-bottom:0.4rem;">📐 Discrete Cosine Transform (DCT) & Quantization</h4>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                Images are divided into 8×8 pixel spatial blocks and transformed into frequency coefficients. High-frequency details (imperceptible micro-textures and subtle background noise) are mathematically rounded to zero via quantization matrices, enabling extraordinary Huffman entropy compaction.
+                            </p>
                         </div>
                     </div>
 
-                    <h2 style="font-family:var(--font-header); font-size:1.4rem; font-weight:700; margin-top:1.5rem; color:var(--primary);">⚡ How to Compress Safely</h2>
-                    <p>To ensure total security, perform image processing client-side. The HTML5 Canvas API renders, resizes, and recompiles image layers directly in your local browser sandbox. This guarantees your photos never touch public web servers, ensuring maximum privacy.</p>
+                    <h2 style="font-family:var(--font-header); font-size:1.45rem; font-weight:700; margin-top:1rem; color:var(--primary);">📊 Format Comparison: JPEG vs PNG vs WebP vs AVIF</h2>
+                    
+                    <div style="overflow-x:auto; margin:0.8rem 0;">
+                        <table style="width:100%; border-collapse:collapse; border:1px solid var(--border-color); font-size:0.92rem; background:var(--bg-secondary); border-radius:10px; overflow:hidden;">
+                            <thead>
+                                <tr style="background:var(--bg-primary); border-bottom:2px solid var(--border-color);">
+                                    <th style="padding:10px 14px; text-align:left; color:var(--primary);">Format</th>
+                                    <th style="padding:10px 14px; text-align:left; color:var(--primary);">Compression Type</th>
+                                    <th style="padding:10px 14px; text-align:left; color:var(--primary);">Transparency</th>
+                                    <th style="padding:10px 14px; text-align:left; color:var(--primary);">Relative Efficiency</th>
+                                    <th style="padding:10px 14px; text-align:left; color:var(--primary);">Best Real-World Use</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:9px 14px; font-weight:700;">JPEG / JPG</td>
+                                    <td style="padding:9px 14px;">Lossy (DCT)</td>
+                                    <td style="padding:9px 14px; color:var(--danger);">No (Opaque)</td>
+                                    <td style="padding:9px 14px;">Baseline (1.0x)</td>
+                                    <td style="padding:9px 14px;">Camera photos, universal legacy compatibility</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:9px 14px; font-weight:700;">PNG</td>
+                                    <td style="padding:9px 14px;">Lossless (Deflate)</td>
+                                    <td style="padding:9px 14px; color:var(--success);">Yes (Alpha Channel)</td>
+                                    <td style="padding:9px 14px;">Heavy (2.0x–4.0x)</td>
+                                    <td style="padding:9px 14px;">Logos, UI icons, sharp text screenshots</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-color); background:var(--primary-glow);">
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--primary);">WebP</td>
+                                    <td style="padding:9px 14px;">Lossy & Lossless (VP8)</td>
+                                    <td style="padding:9px 14px; color:var(--success);">Yes (Alpha Channel)</td>
+                                    <td style="padding:9px 14px; color:var(--success); font-weight:700;">25%–35% smaller than JPEG</td>
+                                    <td style="padding:9px 14px;">Modern web publishing, blog featured headers</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:9px 14px; font-weight:700;">AVIF</td>
+                                    <td style="padding:9px 14px;">Lossy & Lossless (AV1)</td>
+                                    <td style="padding:9px 14px; color:var(--success);">Yes (HDR 12-bit)</td>
+                                    <td style="padding:9px 14px; color:var(--success); font-weight:700;">50% smaller than JPEG</td>
+                                    <td style="padding:9px 14px;">Cutting-edge e-commerce product catalogs</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.45rem; font-weight:700; margin-top:1rem; color:var(--primary);">🇧🇩 Official Teletalk BD & Government Job Circular Dimensions</h2>
+                    <p>In Bangladesh, submitting an online application via <em>alljobs.teletalk.com.bd</em>, the Bangladesh Public Service Commission (BPSC), or defense recruitment portals requires strict byte-level adherence:</p>
+
+                    <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem; margin:0.8rem 0;">
+                        <ul style="padding-left:1.2rem; margin:0; display:flex; flex-direction:column; gap:0.5rem; font-size:0.95rem;">
+                            <li><strong>Applicant Passport Photo:</strong> Exactly <code>300 × 300 pixels</code> (Width × Height), file size strictly <strong>under 100 KB</strong> (Recommended: 40 KB – 80 KB).</li>
+                            <li><strong>Applicant Signature:</strong> Exactly <code>300 × 80 pixels</code>, file size strictly <strong>under 60 KB</strong> (Recommended: 20 KB – 40 KB).</li>
+                        </ul>
+                    </div>
+                    <p style="font-size:0.95rem;">Using ToolX Pro's companion <a href="../tools/passport-photo.html" style="color:var(--primary); font-weight:600;">Passport Photo Maker</a> and <a href="../tools/image-compressor.html" style="color:var(--primary); font-weight:600;">Image Compressor</a> enables you to hit these pixel dimensions and byte caps simultaneously without blurry degradation.</p>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.45rem; font-weight:700; margin-top:1rem; color:var(--primary);">🎯 When to Choose Lossy vs Lossless Compression</h2>
+                    <p>Selecting the optimal compression strategy depends on the visual nature of your graphic assets:</p>
+                    <ul style="padding-left:1.4rem; display:flex; flex-direction:column; gap:0.5rem; margin:0.6rem 0; font-size:0.95rem;">
+                        <li><strong>Photographs & Complex Color Gradients:</strong> Always choose <em>Lossy compression</em> (JPEG or WebP 80%). The human visual system cannot distinguish subtle discarded color nuances, saving up to 85% bandwidth.</li>
+                        <li><strong>Vector Logos, Typography & Technical Diagrams:</strong> Always choose <em>Lossless compression</em> (PNG or lossless WebP). Lossy compression causes unsightly "mosquito noise" and fuzzy artifact ringing around high-contrast sharp text edges.</li>
+                    </ul>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.45rem; font-weight:700; margin-top:1rem; color:var(--primary);">⚡ The Impact on SEO: Google Core Web Vitals (LCP)</h2>
+                    <p>Search engine algorithms heavily penalize slow websites. Google's page experience ranking signals evaluate <strong>Largest Contentful Paint (LCP)</strong>—the time it takes for the largest visual element (usually the hero banner image) to render on screen:</p>
+                    <ul style="padding-left:1.4rem; display:flex; flex-direction:column; gap:0.5rem; margin:0.6rem 0; font-size:0.95rem;">
+                        <li><strong>Good (Passing):</strong> LCP under <code>2.5 seconds</code> (Requires hero images under 150 KB).</li>
+                        <li><strong>Needs Improvement:</strong> LCP between <code>2.5 and 4.0 seconds</code>.</li>
+                        <li><strong>Poor (Demoted):</strong> LCP exceeding <code>4.0 seconds</code>. Compressing images into next-gen WebP formats reduces LCP by an average of 40% on mobile devices.</li>
+                    </ul>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.45rem; font-weight:700; margin-top:1.2rem; color:var(--primary);">❓ Frequently Asked Questions (FAQ)</h2>
+                    
+                    <div style="display:flex; flex-direction:column; gap:12px; margin-top:0.6rem;">
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.1rem;">
+                            <h4 style="font-size:1rem; font-weight:700; color:var(--text-primary); margin-bottom:4px;">Q: Does compressing an image reduce its physical resolution (pixel dimensions)?</h4>
+                            <p style="font-size:0.9rem; color:var(--text-secondary); margin:0;">Not necessarily. Standard compression reduces file weight (kilobytes) by optimizing mathematical color encoding and quantization matrices while keeping the width and height (e.g. 1920×1080) unchanged. Resolution scaling is optional if further byte savings are desired.</p>
+                        </div>
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.1rem;">
+                            <h4 style="font-size:1rem; font-weight:700; color:var(--text-primary); margin-bottom:4px;">Q: Are my confidential photos uploaded to an external cloud server?</h4>
+                            <p style="font-size:0.9rem; color:var(--text-secondary); margin:0;">No. ToolX Pro executes 100% of image compression client-side inside your browser's local sandbox memory using the HTML5 Canvas API. Your family pictures, identity certificates, and signatures never leave your device.</p>
+                        </div>
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.1rem;">
+                            <h4 style="font-size:1rem; font-weight:700; color:var(--text-primary); margin-bottom:4px;">Q: What is the optimal JPEG quality slider setting?</h4>
+                            <p style="font-size:0.9rem; color:var(--text-secondary); margin:0;">Extensive subjective testing reveals that a quality level between <strong>80% and 85%</strong> (or 0.80 to 0.85) yields the sweet spot: reducing file size by 70% to 80% while remaining completely visually indistinguishable from the uncompressed original.</p>
+                        </div>
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.1rem;">
+                            <h4 style="font-size:1rem; font-weight:700; color:var(--text-primary); margin-bottom:4px;">Q: Can I compress photos offline on mobile airplane mode?</h4>
+                            <p style="font-size:0.9rem; color:var(--text-secondary); margin:0;">Yes. Because ToolX Pro runs on Progressive Web App (PWA) Service Worker architecture, the HTML5 canvas compression script remains stored locally in your device cache, allowing instant offline compression anywhere without mobile internet data.</p>
+                        </div>
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.1rem;">
+                            <h4 style="font-size:1rem; font-weight:700; color:var(--text-primary); margin-bottom:4px;">Q: How do I remove photographic backgrounds before compressing?</h4>
+                            <p style="font-size:0.9rem; color:var(--text-secondary); margin:0;">Use our companion <a href="../tools/bg-remover.html" style="color:var(--primary); font-weight:600;">AI Background Remover</a> to isolate foreground subjects and export transparent PNGs or clean white portraits in seconds.</p>
+                        </div>
+                    </div>
 
                     <hr style="border:none; border-top:1px dashed var(--border-color); margin:1.5rem 0;">
 
-                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;">
-                        <p style="font-size:0.95rem; font-weight:600;">Want to optimize your photo files immediately?</p>
-                        <a href="../tools/image-compressor.html" class="btn btn-primary" style="width:auto; padding:10px 20px;">📉 Compress Image Size</a>
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; background:var(--bg-secondary); padding:1.2rem; border-radius:12px; border:1px solid var(--border-color);">
+                        <div>
+                            <p style="font-size:1rem; font-weight:700; margin-bottom:4px;">Compress Your Images to Target Kilobytes Instantly</p>
+                            <p style="font-size:0.88rem; color:var(--text-secondary); margin:0;">Free, private, in-browser image optimization with custom target size controls.</p>
+                        </div>
+                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                            <a href="../tools/image-compressor.html" class="btn btn-primary" style="width:auto; padding:10px 18px;">📉 Image Compressor</a>
+                            <a href="../tools/image-converter.html" class="btn btn-secondary" style="width:auto; padding:10px 18px;">🔄 Image Converter</a>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -43,40 +43,170 @@
                 </div>
 
                 <!-- Article Content -->
-                <div class="tool-body" style="font-size:1.05rem; line-height:1.7; color:var(--text-primary); display:flex; flex-direction:column; gap:1.2rem;">
+                <div class="tool-body" style="font-size:1.05rem; line-height:1.8; color:var(--text-primary); display:flex; flex-direction:column; gap:1.4rem;">
                     
-                    <p>Understanding how Grade Point Average (GPA) and Cumulative Grade Point Average (CGPA) are calculated in Bangladesh can be confusing because the calculation rules differ significantly between school board examinations (SSC/HSC) and University semester systems.</p>
+                    <p>Navigating the academic grading systems in Bangladesh is often confusing for students, parents, and job applicants. The nation operates under two fundamentally different scoring paradigms: the <strong>NCTB 5.00 Grade Point Average (GPA)</strong> system used by all secondary education boards (SSC and HSC), and the <strong>UGC 4.00 Cumulative Grade Point Average (CGPA)</strong> uniform system employed by universities, National University colleges, and polytechnic institutes.</p>
 
-                    <h2 style="font-family:var(--font-header); font-size:1.4rem; font-weight:700; margin-top:1rem; color:var(--primary);">🇧🇩 1. SSC & HSC 4th Subject Rule Explained</h2>
-                    <p>In Bangladeshi secondary and higher secondary education boards (Dhaka, Chittagong, Rajshahi, Comilla, etc.), the 4th optional subject provides a bonus boost to your final GPA:</p>
+                    <p>Understanding how your final scores are mathematically compiled—including 4th subject bonus points and credit-hour weighting—is essential for university admission test eligibility and civil service job recruitment (such as BCS and bank circulars).</p>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.45rem; font-weight:700; margin-top:1rem; color:var(--primary);">🇧🇩 1. The NCTB 5.00 Board Scale: SSC & HSC 4th Subject Math</h2>
                     
-                    <div style="background:var(--bg-secondary); border:1px solid var(--border-color); padding:1.2rem; border-radius:8px; border-left:4px solid var(--primary);">
-                        <p><strong>The Official Board Rule:</strong></p>
-                        <p style="margin-top: 6px;">Any grade points in the 4th subject <em>above 2.00</em> are added to the total grade point sum of your main subjects.</p>
-                        <p style="margin-top: 6px; font-family:monospace; color:var(--accent);">Added Points = Math.max(0, 4th_Subject_GP - 2.0)</p>
-                        <p style="margin-top: 6px;">Final GPA is then calculated by dividing the sum by the number of mandatory subjects (Maximum cap is always 5.00).</p>
+                    <p>In all 9 general education boards (Dhaka, Rajshahi, Chittagong, Comilla, Barisal, Sylhet, Dinajpur, Jessore, Mymensingh), as well as Madrasah (Dakhil/Alim) and Technical boards, student achievement is evaluated on a 5-point scale across letter grades:</p>
+
+                    <div style="overflow-x:auto; margin:0.8rem 0;">
+                        <table style="width:100%; border-collapse:collapse; border:1px solid var(--border-color); font-size:0.92rem; background:var(--bg-secondary); border-radius:10px; overflow:hidden;">
+                            <thead>
+                                <tr style="background:var(--bg-primary); border-bottom:2px solid var(--border-color);">
+                                    <th style="padding:10px 14px; text-align:left; color:var(--primary);">Marks Range (%)</th>
+                                    <th style="padding:10px 14px; text-align:left; color:var(--primary);">Letter Grade</th>
+                                    <th style="padding:10px 14px; text-align:left; color:var(--primary);">Grade Point (GP)</th>
+                                    <th style="padding:10px 14px; text-align:left; color:var(--primary);">Academic Assessment</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:9px 14px; font-weight:600;">80% – 100%</td>
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--success);">A+</td>
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--primary);">5.00</td>
+                                    <td style="padding:9px 14px;">Outstanding / Excellent</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:9px 14px; font-weight:600;">70% – 79%</td>
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--success);">A</td>
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--primary);">4.00</td>
+                                    <td style="padding:9px 14px;">Very Good</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:9px 14px; font-weight:600;">60% – 69%</td>
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--success);">A-</td>
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--primary);">3.50</td>
+                                    <td style="padding:9px 14px;">Good</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:9px 14px; font-weight:600;">50% – 59%</td>
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--warning);">B</td>
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--primary);">3.00</td>
+                                    <td style="padding:9px 14px;">Satisfactory</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:9px 14px; font-weight:600;">40% – 49%</td>
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--warning);">C</td>
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--primary);">2.00</td>
+                                    <td style="padding:9px 14px;">Acceptable / Pass</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:9px 14px; font-weight:600;">33% – 39%</td>
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--warning);">D</td>
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--primary);">1.00</td>
+                                    <td style="padding:9px 14px;">Bare Minimum Pass</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:9px 14px; font-weight:600; color:var(--danger);">0% – 32%</td>
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--danger);">F</td>
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--danger);">0.00</td>
+                                    <td style="padding:9px 14px; color:var(--danger);">Fail (Disqualified)</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
 
-                    <h2 style="font-family:var(--font-header); font-size:1.4rem; font-weight:700; margin-top:1rem; color:var(--primary);">🎓 2. University CGPA Credit-Weighted Formula</h2>
-                    <p>For Bangladeshi universities (National University, Public and Private Universities under the UGC uniform grading system), CGPA is credit-weighted:</p>
+                    <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-top:0.8rem;">🧮 The Official 4th Subject Bonus Formula</h3>
+                    <p>In SSC and HSC, your 4th optional subject (e.g. Higher Math, Biology, Agriculture, or Statistics) acts as a grade booster:</p>
                     
-                    <div style="background:var(--bg-secondary); border:1px solid var(--border-color); padding:1.2rem; border-radius:8px; border-left:4px solid var(--primary);">
-                        <code style="font-size:1.1rem; font-weight:bold; color:var(--primary);">CGPA = Σ(Course GPA × Course Credits) / Total Credits Completed</code>
+                    <div style="background:var(--bg-secondary); border:1px solid var(--border-color); padding:1.2rem; border-radius:10px; border-left:4px solid var(--primary);">
+                        <p style="margin:0 0 6px 0; font-weight:700; color:var(--primary);">The Official Bangladesh Education Board Rule:</p>
+                        <p style="margin:0 0 6px 0; font-size:0.95rem;">1. You must score above 2.00 in the 4th subject to receive any bonus points.</p>
+                        <p style="margin:0 0 6px 0; font-size:0.95rem;">2. <code>Bonus Points = 4th Subject Grade Point - 2.00</code> (If GP &le; 2.00, Bonus = 0).</p>
+                        <p style="margin:0 0 6px 0; font-size:0.95rem;">3. <code>Final GPA = (Sum of Mandatory Subject Grade Points + Bonus Points) / (Number of Mandatory Subjects)</code></p>
+                        <p style="margin:0; font-size:0.95rem; font-weight:600; color:var(--text-secondary);">4. Even if the calculation exceeds 5.00, the maximum official score is capped at <strong>5.00</strong>.</p>
                     </div>
 
-                    <h2 style="font-family:var(--font-header); font-size:1.4rem; font-weight:700; margin-top:1rem; color:var(--primary);">⚡ Fast & Automated Calculations</h2>
-                    <p>Instead of manually calculating complex weighted formulas and grade charts, use ToolX Pro's built-in calculators designed specifically for Bangladeshi students:</p>
-                    
-                    <ul style="padding-left:20px; display:flex; flex-direction:column; gap:8px;">
-                        <li><strong>SSC & HSC GPA Calculator:</strong> Automatically computes with 4th subject logic and marks thresholds.</li>
-                        <li><strong>BD University CGPA Calculator:</strong> Add semester credits with live GPA classification tracking.</li>
+                    <h2 style="font-family:var(--font-header); font-size:1.45rem; font-weight:700; margin-top:1.2rem; color:var(--primary);">🎓 2. The UGC 4.00 Uniform Grading System for Universities</h2>
+                    <p>Unlike school boards where all subjects are weighted equally, tertiary institutions under the University Grants Commission (UGC) of Bangladesh calculate <strong>Semester Grade Point Average (SGPA)</strong> and <strong>Cumulative Grade Point Average (CGPA)</strong> using credit-hour weighting:</p>
+
+                    <div style="background:var(--bg-secondary); border:1px solid var(--border-color); padding:1.2rem; border-radius:10px; border-left:4px solid var(--primary); margin:0.8rem 0;">
+                        <code style="font-size:1.05rem; font-weight:bold; color:var(--primary); display:block; margin-bottom:6px;">CGPA = Σ(Course Grade Point × Course Credit Hours) / Total Credit Hours Attempted</code>
+                        <span style="font-size:0.9rem; color:var(--text-secondary);">For example, securing an A+ (4.00) in a heavy 4.0-credit engineering course exerts four times the influence of an A+ in a 1.0-credit lab session.</span>
+                    </div>
+
+                    <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-top:0.8rem;">🏛️ UGC CGPA to Traditional Division Equivalence</h3>
+                    <p>When applying for government jobs (such as BCS or Public Service Commission circulars) that reference legacy 1st Class or 2nd Class divisions, the Ministry of Public Administration applies these official conversion thresholds:</p>
+
+                    <div style="overflow-x:auto; margin:0.8rem 0;">
+                        <table style="width:100%; border-collapse:collapse; border:1px solid var(--border-color); font-size:0.92rem; background:var(--bg-secondary); border-radius:10px; overflow:hidden;">
+                            <thead>
+                                <tr style="background:var(--bg-primary); border-bottom:2px solid var(--border-color);">
+                                    <th style="padding:10px 14px; text-align:left; color:var(--primary);">CGPA Range (4.00 Scale)</th>
+                                    <th style="padding:10px 14px; text-align:left; color:var(--primary);">GPA Range (5.00 Scale)</th>
+                                    <th style="padding:10px 14px; text-align:left; color:var(--primary);">Equivalent Traditional Division</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--success);">3.00 to 4.00</td>
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--success);">3.00 to 5.00</td>
+                                    <td style="padding:9px 14px; font-weight:700; color:var(--success);">First Class / First Division</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:9px 14px; font-weight:600; color:var(--warning);">2.25 to 2.99</td>
+                                    <td style="padding:9px 14px; font-weight:600; color:var(--warning);">2.00 to 2.99</td>
+                                    <td style="padding:9px 14px; font-weight:600; color:var(--warning);">Second Class / Second Division</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:9px 14px; font-weight:600;">2.00 to 2.24</td>
+                                    <td style="padding:9px 14px; font-weight:600;">1.00 to 1.99</td>
+                                    <td style="padding:9px 14px;">Third Class / Third Division</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3 style="font-size:1.2rem; font-weight:700; color:var(--primary); margin-top:0.8rem;">📝 Step-by-Step Numerical Example: Semester SGPA Calculation</h3>
+                    <p>Suppose an undergraduate student completes four courses in a semester:</p>
+                    <ul style="padding-left:1.4rem; font-size:0.95rem; margin:0.6rem 0; display:flex; flex-direction:column; gap:0.4rem;">
+                        <li><strong>Data Structures (3.0 Credits):</strong> Grade A (3.75) &rarr; Quality Points = <code>3.0 × 3.75 = 11.25</code></li>
+                        <li><strong>Database Systems (3.0 Credits):</strong> Grade A+ (4.00) &rarr; Quality Points = <code>3.0 × 4.00 = 12.00</code></li>
+                        <li><strong>Database Lab (1.5 Credits):</strong> Grade A- (3.50) &rarr; Quality Points = <code>1.5 × 3.50 = 5.25</code></li>
+                        <li><strong>Business English (2.0 Credits):</strong> Grade B+ (3.25) &rarr; Quality Points = <code>2.0 × 3.25 = 6.50</code></li>
                     </ul>
+                    <p style="font-size:0.95rem;">
+                        <strong>Total Quality Points:</strong> <code>11.25 + 12.00 + 5.25 + 6.50 = 35.00</code><br>
+                        <strong>Total Credits Completed:</strong> <code>3.0 + 3.0 + 1.5 + 2.0 = 9.5 Credits</code><br>
+                        <strong>Semester SGPA:</strong> <code>35.00 ÷ 9.5 = 3.68</code>
+                    </p>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.45rem; font-weight:700; margin-top:1.2rem; color:var(--primary);">❓ Frequently Asked Questions (FAQ)</h2>
+                    
+                    <div style="display:flex; flex-direction:column; gap:12px; margin-top:0.6rem;">
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.1rem;">
+                            <h4 style="font-size:1rem; font-weight:700; color:var(--text-primary); margin-bottom:4px;">Q: What is the difference between "Golden A+" and standard GPA 5.00?</h4>
+                            <p style="font-size:0.9rem; color:var(--text-secondary); margin:0;">Standard GPA 5.00 means your final average after adding 4th subject bonus points reached 5.00. "Golden A+" is an unofficial term meaning you scored 80%+ (Grade Point 5.00) in every single individual subject without needing 4th subject bonus points.</p>
+                        </div>
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.1rem;">
+                            <h4 style="font-size:1rem; font-weight:700; color:var(--text-primary); margin-bottom:4px;">Q: Can I fail the 4th optional subject and still pass SSC or HSC?</h4>
+                            <p style="font-size:0.9rem; color:var(--text-secondary); margin:0;">Yes. Failing (receiving an F) in your 4th optional subject does not disqualify you from passing the board exam, provided you pass all mandatory subjects. However, you will receive zero bonus points from it.</p>
+                        </div>
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.1rem;">
+                            <h4 style="font-size:1rem; font-weight:700; color:var(--text-primary); margin-bottom:4px;">Q: How does retaking / repeating a university course affect my CGPA?</h4>
+                            <p style="font-size:0.9rem; color:var(--text-secondary); margin:0;">Under standard UGC guidelines, when you retake an eligible course (typically courses graded B or below), the new improved grade replaces the previous grade point in your cumulative calculation. However, both attempts remain recorded on your official academic transcript.</p>
+                        </div>
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.1rem;">
+                            <h4 style="font-size:1rem; font-weight:700; color:var(--text-primary); margin-bottom:4px;">Q: What CGPA is required for university faculty appointment or overseas scholarships?</h4>
+                            <p style="font-size:0.9rem; color:var(--text-secondary); margin:0;">For public university lecturer recruitment in Bangladesh, candidates typically require a minimum CGPA of 3.60 to 3.80. For prestigious international scholarships (such as Fulbright, Commonwealth, or Erasmus Mundus), maintaining a CGPA of 3.50 or higher (First Class) is strongly recommended.</p>
+                        </div>
+                    </div>
 
                     <hr style="border:none; border-top:1px dashed var(--border-color); margin:1.5rem 0;">
 
-                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px;">
-                        <p style="font-size:0.95rem; font-weight:600;">Calculate your GPA or CGPA now:</p>
-                        <a href="../tools/bd-gpa.html" class="btn btn-primary" style="width:auto; padding:10px 20px;">🎓 Run SSC/HSC GPA Calculator</a>
+                    <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:15px; background:var(--bg-secondary); padding:1.2rem; border-radius:12px; border:1px solid var(--border-color);">
+                        <div>
+                            <p style="font-size:1rem; font-weight:700; margin-bottom:4px;">Calculate Your GPA or CGPA Instantly</p>
+                            <p style="font-size:0.88rem; color:var(--text-secondary); margin:0;">ToolX Pro offers tailored calculators with 4th subject logic and UGC credit weighting.</p>
+                        </div>
+                        <div style="display:flex; gap:10px; flex-wrap:wrap;">
+                            <a href="../tools/bd-gpa.html" class="btn btn-primary" style="width:auto; padding:10px 18px;">🎓 SSC/HSC GPA Calculator</a>
+                            <a href="../tools/bd-cgpa.html" class="btn btn-secondary" style="width:auto; padding:10px 18px;">🏛️ University CGPA Calculator</a>
+                        </div>
                     </div>
                 </div>
             </div>

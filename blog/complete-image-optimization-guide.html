@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -104,6 +104,139 @@
                         <p style="margin:0; font-size:0.95rem; color:var(--text-secondary);">
                             Google's Largest Contentful Paint (LCP) metric measures the render time of the largest visual element in the viewport—usually the main hero banner. Serving optimized WebP images compressed using <a href="../tools/image-compressor.html" style="color:var(--primary); font-weight:600;">ToolX Pro Image Compressor</a> allows sites to consistently achieve sub-second LCP scores (&lt;1.2s), securing maximum Google ranking benefits.
                         </p>
+                    </div>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.4rem; font-weight:700; color:var(--primary);">📊 Image Format Comparison Matrix</h2>
+                    <p>
+                        Selecting the appropriate file container is critical for balancing rendering performance against visual fidelity across desktop and mobile devices:
+                    </p>
+
+                    <div style="overflow-x:auto;">
+                        <table style="width:100%; border-collapse:collapse; margin:0.8rem 0; font-size:0.92rem; border:1px solid var(--border-color);">
+                            <thead>
+                                <tr style="background:var(--bg-secondary); border-bottom:2px solid var(--border-color);">
+                                    <th style="padding:10px; text-align:left;">Format</th>
+                                    <th style="padding:10px; text-align:left;">Compression Type</th>
+                                    <th style="padding:10px; text-align:left;">Transparency (Alpha)</th>
+                                    <th style="padding:10px; text-align:left;">Relative File Size</th>
+                                    <th style="padding:10px; text-align:left;">Best Use Case</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--border-color); background:var(--primary-glow);">
+                                    <td style="padding:10px; font-weight:700; color:var(--primary);">WebP</td>
+                                    <td style="padding:10px;">Lossy & Lossless</td>
+                                    <td style="padding:10px;">Yes (8-bit alpha)</td>
+                                    <td style="padding:10px; font-weight:700;">25%–35% smaller than JPEG</td>
+                                    <td style="padding:10px;">Universal web imagery, blog illustrations, hero banners</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:10px; font-weight:700;">AVIF</td>
+                                    <td style="padding:10px;">Lossy & Lossless (AV1)</td>
+                                    <td style="padding:10px;">Yes (10/12-bit HDR)</td>
+                                    <td style="padding:10px; font-weight:700;">45%–50% smaller than JPEG</td>
+                                    <td style="padding:10px;">High-traffic ecommerce, next-gen mobile hero photos</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:10px; font-weight:700;">JPEG / JPG</td>
+                                    <td style="padding:10px;">Lossy (DCT)</td>
+                                    <td style="padding:10px;">No</td>
+                                    <td style="padding:10px;">Baseline standard (100%)</td>
+                                    <td style="padding:10px;">Legacy system compatibility, email newsletters</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:10px; font-weight:700;">PNG</td>
+                                    <td style="padding:10px;">Lossless (DEFLATE)</td>
+                                    <td style="padding:10px;">Yes (Full alpha)</td>
+                                    <td style="padding:10px;">3x to 5x larger than WebP</td>
+                                    <td style="padding:10px;">UI screenshots, vector logos, transparent app icons</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:10px; font-weight:700;">SVG</td>
+                                    <td style="padding:10px;">Vector (XML XML-based)</td>
+                                    <td style="padding:10px;">Yes (Infinite scale)</td>
+                                    <td style="padding:10px;">Microscopic (&lt;5 KB)</td>
+                                    <td style="padding:10px;">Brand logos, simple geometric icons, user interfaces</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.4rem; font-weight:700; color:var(--primary);">🖼️ Responsive Implementation with Modern HTML5</h2>
+                    <p>
+                        To ensure modern browsers download the smallest possible byte payload without breaking backward compatibility for older browsers, implement the HTML5 <code>&lt;picture&gt;</code> element combined with modern media directives:
+                    </p>
+
+                    <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:12px; padding:1.2rem; font-family:monospace; font-size:0.88rem; overflow-x:auto;">
+                        <pre style="margin:0; color:var(--text-primary);"><code>&lt;picture&gt;
+  &lt;!-- Serve next-gen AVIF if supported by the browser --&gt;
+  &lt;source type="image/avif" srcset="hero.avif"&gt;
+  &lt;!-- Fallback to Google WebP for modern universal delivery --&gt;
+  &lt;source type="image/webp" srcset="hero.webp"&gt;
+  &lt;!-- Default legacy JPEG fallback for older clients --&gt;
+  &lt;img src="hero.jpg" alt="Optimized ToolX Pro Graphic" width="1200" height="630" loading="lazy" decoding="async"&gt;
+&lt;/picture&gt;</code></pre>
+                    </div>
+
+                    <p>
+                        Adding the native attributes <code>loading="lazy"</code> and <code>decoding="async"</code> defers off-screen image decoding until the user scrolls near the element, immediately freeing up JavaScript execution threads during initial DOM parsing.
+                    </p>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.4rem; font-weight:700; color:var(--primary);">🛠️ Production Workflow: From Camera to Production Web Page</h2>
+                    <p>
+                        To maximize website loading speeds while maintaining pristine photographic clarity, follow this professional 4-step optimization pipeline:
+                    </p>
+
+                    <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:1rem; margin:0.8rem 0;">
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+                            <h4 style="color:var(--primary); margin-top:0; margin-bottom:0.4rem;">1. Dimensional Downsampling</h4>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                Never upload raw 4000&times;3000px camera photos. Resize images to the exact maximum render width required by your layout (e.g., 1200px for desktop hero banners or 800px for blog body articles).
+                            </p>
+                        </div>
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+                            <h4 style="color:var(--primary); margin-top:0; margin-bottom:0.4rem;">2. WebP Container Conversion</h4>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                Convert uncompressed PNG and JPEG files to modern WebP using our <a href="../tools/image-converter.html" style="color:var(--primary); font-weight:600;">ToolX Pro Image Converter</a> to unlock instant 30%+ byte reductions.
+                            </p>
+                        </div>
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+                            <h4 style="color:var(--primary); margin-top:0; margin-bottom:0.4rem;">3. Perceptual Quantization</h4>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                Apply perceptual lossy compression with a quality setting of 75% to 82%. This strips invisible high-frequency chrominance data while remaining visually indistinguishable to human eyes.
+                            </p>
+                        </div>
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+                            <h4 style="color:var(--primary); margin-top:0; margin-bottom:0.4rem;">4. Metadata Stripping</h4>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                Remove EXIF camera settings, GPS geographic tags, and embedded color profile blocks. This saves an extra 15 KB to 80 KB per photo and protects privacy.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.4rem; font-weight:700; color:var(--primary);">❓ Frequently Asked Questions (FAQ)</h2>
+                    
+                    <div style="display:flex; flex-direction:column; gap:0.9rem;">
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+                            <h3 style="font-size:1.05rem; font-weight:700; color:var(--primary); margin-bottom:0.4rem;">Is WebP supported on all major web browsers?</h3>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                Yes. According to Can I Use statistics, WebP enjoys over 96.8% global browser support, including all modern versions of Google Chrome, Apple Safari (macOS and iOS 14+), Mozilla Firefox, Microsoft Edge, and Opera.
+                            </p>
+                        </div>
+
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+                            <h3 style="font-size:1.05rem; font-weight:700; color:var(--primary); margin-bottom:0.4rem;">Does image compression harm visual display quality on Retina screens?</h3>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                Not when properly configured. By resizing your image to 2&times; display density (e.g., 1600px wide for an 800px container) and applying 80% lossy compression, the resulting file is significantly smaller than an uncompressed 1&times; image while appearing razor-sharp on high-DPI smartphone and Retina displays.
+                            </p>
+                        </div>
+
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.2rem;">
+                            <h3 style="font-size:1.05rem; font-weight:700; color:var(--primary); margin-bottom:0.4rem;">How does ToolX Pro protect user privacy when processing images?</h3>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                Unlike traditional online converters that upload your photos to remote cloud servers, ToolX Pro performs image compression and format conversion directly inside your browser using HTML5 Canvas and client-side JavaScript APIs. Your photos never leave your device, ensuring complete privacy.
+                            </p>
+                        </div>
                     </div>
 
                     <div style="background:var(--bg-secondary); border:1px solid var(--border-color); padding:1.2rem; border-radius:12px; margin-top:1rem; text-align:center;">

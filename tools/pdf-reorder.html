@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -126,35 +126,85 @@
                          ═══════════════════════════════════════════════════════ -->
                     <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
                         
-                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
-                            ✂️ Cleaning and Restructuring Multi-Page PDF Files
+                        <h2 style="font-family: var(--font-header); font-size: 1.55rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            ✂️ Complete Guide to PDF Page Reordering, Splitting & Structural Reorganization
                         </h2>
                         <p style="margin-bottom: 1.2rem;">
-                            Automatic document feeders (ADF) on office scanners often capture documents out of order or include unwanted blank separator sheets. Reorganizing and pruning unnecessary pages produces a streamlined, professional document suitable for clients and examination boards.
+                            Multi-page PDF documents frequently suffer from sequencing errors, inverted duplex scans, or extraneous blank divider pages captured by automatic document feeders (ADF). Submitting an academic report with upside-down appendices or inverted pages creates an unprofessional impression and can delay bureaucratic approvals. ToolX Pro’s <strong>PDF Page Reorder & Splitter</strong> gives you surgical control over document sequencing, enabling instant page reordering, chapter extraction, page duplication, and blank sheet removal entirely within your local browser.
                         </p>
 
-                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
-                            📋 Typical Scenarios for PDF Page Reordering
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
+                            🔄 Common Structural Scenarios & Practical Solutions
                         </h3>
-                        <ol style="padding-left: 1.4rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem;">
-                            <li><strong>Duplex Scan Fixes:</strong> When two-sided scanning captures odd pages (1, 3, 5) followed by even pages (6, 4, 2), enter the interleaved sequence to restore natural reading order.</li>
-                            <li><strong>Removing Blank Divider Pages:</strong> Easily strip out blank trailing pages generated during scanner feeds.</li>
-                            <li><strong>Extracting Executive Summaries:</strong> Create concise summary packets by extracting only key pages (e.g. pages 1, 2, and 12) from large annual reports.</li>
-                        </ol>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.5rem 0;">
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">📑 1. Duplex Scanner Interleaving Fixes</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                                    Single-pass office duplex scanners frequently output all odd pages first (1, 3, 5, 7) followed by flipped even pages (8, 6, 4, 2). Entering the correct sequence (e.g., <code>1, 8, 3, 6, 5, 4, 7, 2</code>) restores the natural chronological reading order instantaneously.
+                                </p>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">🗑️ 2. Purging Blank & Separator Sheets</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                                    Photocopiers often inject unwanted blank reverse pages between exam question papers. Omit the blank page indices from your target sequence (e.g., <code>1, 2, 4, 5</code> to omit page 3) to produce a clean, compact file without dead space.
+                                </p>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">📑 3. Extracting Specific Sections</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                                    If you only need to submit Chapter 4 or an executive summary from a massive 200-page book or thesis, simply enter the specific page range (e.g., <code>45-60</code>) to extract a standalone lightweight PDF document.
+                                </p>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">🔁 4. Page Duplication for Printing</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                                    Need to print multiple identical receipts, certificate coupons, or questionnaire slips? Inputting <code>1, 1, 1, 2, 2, 2</code> duplicates the selected pages consecutively without re-scanning.
+                                </p>
+                            </div>
+                        </div>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
+                            🔬 How PDF Page Tree Splicing Works Locally
+                        </h3>
+                        <p style="margin-bottom: 1rem;">
+                            Unlike naive image converters that convert PDF pages into lossy JPG snapshots and re-encode them, ToolX Pro manipulates the document at the binary PDF object level using PDF-Lib:
+                        </p>
+                        <ul style="padding-left: 1.4rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem;">
+                            <li><strong>Lossless Vector Preservation:</strong> Original text streams, vector font descriptions, architectural line drawings, and tables remain 100% crisp at vector resolution.</li>
+                            <li><strong>Retains Searchable Text:</strong> Optical Character Recognition (OCR) layers and Unicode text streams stay completely intact, ensuring text remains selectable and searchable (Ctrl+F).</li>
+                            <li><strong>Preserves Annotations & MediaBoxes:</strong> Individual page rotation metadata (90°, 180°, 270°) and dimension bounds are mapped faithfully into the new PDF structure.</li>
+                        </ul>
 
                         <!-- FAQ Section -->
-                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2.2rem; margin-bottom: 1rem;">
                             ❓ Frequently Asked Questions (FAQ)
                         </h2>
                         
                         <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Can I duplicate a page within the document?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. Entering a sequence such as "1, 2, 2, 3" will duplicate page 2 twice in the resulting PDF output.</p>
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Can I use hyphenated page ranges like "1-5, 8, 12-15"?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. Our sequence parser supports both comma-separated numbers (1, 2, 3) and hyphenated ranges (1-10, 15-20), allowing you to extract large document spans effortlessly.</p>
                             </div>
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Is my document data sent to external cloud servers?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No. The rearrangement logic runs 100% locally within your browser sandbox via client-side WebAssembly.</p>
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Will reordering pages decrease the visual quality of my PDF?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No. The process is completely lossless. The engine reconstructs the internal page reference pointer array without re-compressing or rasterizing any embedded text, fonts, or images.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Are confidential financial audits and legal records safe?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">100% yes. ToolX Pro executes all PDF manipulation in your client browser memory sandbox. Your private files never travel across the internet or touch remote servers.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Can I duplicate a single page multiple times in the new PDF?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. If you enter the same page index multiple times (such as "1, 2, 2, 2, 3"), the engine references that page multiple times in the newly generated document.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: What should I do if my reordered PDF exceeds email file size limits?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Simply pass the downloaded PDF through our companion <a href="pdf-compressor.html" style="color:var(--accent); font-weight:600;">PDF Compressor Tool</a> to optimize embedded streams and downsample file weight under 10MB or 25MB.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Can I reorder PDF pages offline without an internet connection?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. ToolX Pro operates as an installable Progressive Web App (PWA). Once loaded, the pdf-lib WebAssembly engine remains cached in your browser through our Service Worker, allowing complete offline document reordering, deletion, and rearrangement on mobile and desktop without consuming cellular data.</p>
                             </div>
                         </div>
 

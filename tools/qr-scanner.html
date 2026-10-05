@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -135,43 +135,93 @@
                          ═══════════════════════════════════════════════════════ -->
                     <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
                         
-                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
-                            🔍 How Browser-Based Optical QR Decoding Works
+                        <h2 style="font-family: var(--font-header); font-size: 1.55rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            📷 The Science of Optical QR Code Decoding: Computer Vision & Matrix Architecture
                         </h2>
                         <p style="margin-bottom: 1.2rem;">
-                            Traditional QR scanning required downloading native mobile applications from third-party app stores, which frequently requested unnecessary system permissions. With modern WebRTC (Web Real-Time Communication) and HTML5 Canvas APIs, optical barcode reading occurs securely inside your browser window without installing any executables.
+                            Invented in 1994 by Masahiro Hara at the Japanese automotive corporation Denso Wave, the <strong>Quick Response (QR) Code</strong> revolutionized physical-to-digital interactions. Unlike traditional one-dimensional linear barcodes (such as UPC or EAN-13) which store merely 20 numeric digits horizontally, two-dimensional matrix barcodes store data across both horizontal and vertical axes, holding up to <strong>7,089 numeric characters</strong> or <strong>4,296 alphanumeric characters</strong>.
                         </p>
 
-                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
+                            🔬 Anatomy of a 2D QR Matrix: How Optical Sensors Recognize Patterns
+                        </h3>
+                        <p style="margin-bottom: 1rem;">
+                            When you point your camera at a QR code, the client-side computer vision algorithm performs real-time edge detection and pattern matching across several distinct functional zones:
+                        </p>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.5rem 0;">
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">📐 Finder & Alignment Patterns</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                                    The three prominent square targets at the top-left, top-right, and bottom-left corners feature a unique <code>1:1:3:1:1</code> width ratio. This nested concentric geometry allows the optical sensor to immediately locate the code and calculate its precise 3D rotational angle (pitch, yaw, and roll). Larger versions include secondary alignment targets to compensate for paper curves.
+                                </p>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">⏱️ Timing & Format Tracks</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                                    Alternating black and white module tracks connect the position targets horizontally and vertically. These synchronize the coordinate grid so the decoder knows the exact matrix resolution (from Version 1 at 21×21 modules up to Version 40 at 177×177 modules). Adjacent cells store the active error correction level and masking pattern.
+                                </p>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">🛡️ Reed-Solomon Redundancy</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                                    QR codes embed Galois Field GF(256) polynomial mathematics developed by Irving Reed and Gustave Solomon. Even if the physical print is stained by coffee, torn, scratched, or partially covered by a company logo, the parity codewords reconstruct missing bits seamlessly without data corruption.
+                                </p>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">⚪ Quiet Zone Isolation</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                                    Every valid QR code requires an empty buffer boundary of at least four modules on all four sides. This quiet zone ensures the optical computer vision engine distinguishes code modules from surrounding typography, photographs, or packaging artwork.
+                                </p>
+                            </div>
+                        </div>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
                             🛡️ Safety Precautions Against QR Phishing ("Quishing")
                         </h3>
                         <p style="margin-bottom: 1rem;">
-                            Cybercriminals sometimes paste deceptive QR stickers over legitimate restaurant or parking meter codes. Our scanner prioritizes user security by displaying the complete decoded payload before opening:
+                            Because human eyes cannot parse encoded pixels, cybercriminals exploit physical environments by pasting fraudulent QR stickers over authentic restaurant menus, parking payment meters, or public kiosks—an attack vector known as <strong>Quishing</strong>. ToolX Pro implements client-side zero-trust security:
                         </p>
                         <ol style="padding-left: 1.4rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem;">
-                            <li><strong>Inspect the Domain:</strong> Always verify that the top-level domain matches the legitimate company before clicking or entering credentials.</li>
-                            <li><strong>Beware of Shortened URLs:</strong> Exercise caution if the decoded text points to unfamiliar link shorteners (such as bit.ly or tinyurl) in public physical locations.</li>
-                            <li><strong>Check for SSL/TLS:</strong> Confirm that the destination URL begins with <code>https://</code> rather than unencrypted <code>http://</code>.</li>
-                            <li><strong>Review WiFi Credentials:</strong> When connecting to networks via QR codes, ensure the network name (SSID) matches your official venue.</li>
+                            <li><strong>Pre-Execution Inspection:</strong> Unlike default mobile camera apps that immediately launch links, our scanner displays the complete decoded string in plain text first, giving you full control to inspect the destination domain before visiting.</li>
+                            <li><strong>Spotting Shortened Redirections:</strong> Beware of public physical stickers containing link shorteners (such as bit.ly, tinyurl, or is.gd). Legitimate business portals generally link to official brand domains directly.</li>
+                            <li><strong>Checking Cryptographic Handshakes:</strong> Verify that destination URLs employ <code>https://</code> with valid SSL/TLS certificates rather than vulnerable plain HTTP.</li>
+                            <li><strong>Verifying WiFi Access Credentials:</strong> When joining wireless networks via decoded QR data, inspect the SSID and WPA2/WPA3 passphrase to confirm authenticity.</li>
                         </ol>
 
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
+                            💡 Best Practices for Scanning Distorted, Low-Light, or Glared Codes
+                        </h3>
+                        <ul style="padding-left: 1.4rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem;">
+                            <li><strong>Angle Adjustment:</strong> If glossy lamination or glass displays reflect light into your camera lens, tilt your smartphone 15 to 30 degrees to deflect specular highlights away from the sensor.</li>
+                            <li><strong>Optimal Focal Distance:</strong> Position your device camera so the QR code fills roughly 60% to 75% of the active scanning viewfinder. Holding the camera too close prevents autofocus lenses from locking.</li>
+                            <li><strong>Screenshot Uploads:</strong> If camera lighting is insufficient or the physical screen has severe scanline flicker, take a photo or screenshot and upload it via the <em>"Upload Image File"</em> tab for direct binary decoding.</li>
+                        </ul>
+
                         <!-- FAQ Section -->
-                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2.2rem; margin-bottom: 1rem;">
                             ❓ Frequently Asked Questions (FAQ)
                         </h2>
                         
                         <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Can I scan a damaged or poorly lit QR code?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. QR codes feature built-in Reed-Solomon error correction algorithms, allowing the scanner to reconstruct lost pixels if between 7% and 30% of the pattern is obscured.</p>
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Can I scan a QR code from an image or screenshot saved on my computer?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. Switch to the "📁 Upload Image File" tab and drop your image (PNG, JPG, WebP) directly into the upload area. The optical parsing engine extracts and decodes the matrix data instantly without needing a physical webcam.</p>
                             </div>
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Does this scanner support barcodes like UPC or EAN-13?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Our engine is primarily optimized for 2D QR matrix codes, Micro QR codes, and Data Matrix standards, which are standard for modern web and mobile communications.</p>
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Does ToolX Pro upload my camera stream or photos to a remote cloud server?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No. The camera stream is decoded entirely within your local browser's memory via HTML5 Canvas and client-side JavaScript. Neither your video feed, screenshots, nor the decoded text payloads are ever transmitted across the internet.</p>
                             </div>
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Are camera permissions stored permanently?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Camera permissions are managed exclusively by your browser's security sandbox. The video stream is immediately terminated when you click "Stop Camera" or close the browser tab.</p>
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Why does the scanner fail on inverted color (white modules on black background) QR codes?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">The official ISO/IEC 18004 specification defines standard QR codes as dark modules placed against a reflective light background. While many modern decoders handle inversion, inverted low-contrast patterns can confuse edge detection algorithms. If a code fails to scan, capturing an image and inverting colors in a photo editor will restore instant readability.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Can I scan a damaged, crumpled, or partially covered QR code?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. QR codes utilize Reed-Solomon error correction across four standard levels: Level L (7% recovery), Level M (15% recovery), Level Q (25% recovery), and Level H (30% recovery). Even if nearly a third of the code is torn or obscured, our optical engine can fully restore the original payload.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Can I use this QR scanner without an active internet connection?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. Thanks to ToolX Pro's Progressive Web App (PWA) architecture and Service Worker caching, once this tool has loaded in your browser, it remains fully operational offline in airplane mode.</p>
                             </div>
                         </div>
 

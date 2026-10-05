@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -126,71 +126,136 @@
                          ═══════════════════════════════════════════════════════ -->
                     <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
                         
-                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
-                            💽 Digital Storage Unit Hierarchy Explained
+                        <h2 style="font-family: var(--font-header); font-size: 1.55rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            💽 The Definitive Guide to Digital Data Storage, Memory Architecture & Units
                         </h2>
                         <p style="margin-bottom: 1.2rem;">
-                            Digital computing architecture is built upon binary bits (0s and 1s). Grouping 8 bits forms a single Byte, capable of encoding an ASCII character. As digital storage scales from floppy disks to cloud data warehouses, standardized prefixes describe magnitude.
+                            Digital computing architecture is founded upon microscopic transistors that switch between two physical states: electrical voltage on (1) or off (0). This fundamental binary unit is called a <strong>Bit (b)</strong>. When grouped into clusters of eight, bits form a <strong>Byte (B)</strong>, which can represent 256 distinct values—enough to encode an alphanumeric character, punctuation symbol, or pixel component. As digital infrastructure has expanded from magnetic punch tapes to exascale cloud datacenters, understanding the mathematical relationships between Kilobytes, Megabytes, Gigabytes, and Terabytes is essential for hardware purchasing, cloud hosting, and data management.
                         </p>
 
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
+                            ⚠️ Why Does Your 1TB Hard Drive Only Show 931 GB in Windows?
+                        </h3>
+                        <p style="margin-bottom: 1rem;">
+                            Every consumer experiences confusion when buying a brand-new 1 Terabyte external SSD or flash drive, only to plug it into Windows and discover only <strong>931 GB</strong> of usable space. This is not hardware theft or hidden software bloat—it is the direct result of a fundamental industry divergence between decimal (base-10) and binary (base-2) numbering systems:
+                        </p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.5rem 0;">
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">🏭 Storage Manufacturers (Decimal / Base 10)</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.6rem;">
+                                    Hardware manufacturers (Samsung, Western Digital, Seagate) calculate prefixes using standard SI metric base-10:
+                                </p>
+                                <ul style="padding-left: 1.2rem; font-size: 0.88rem; color: var(--text-secondary); margin: 0;">
+                                    <li>1 KB = 1,000 Bytes (10³)</li>
+                                    <li>1 MB = 1,000,000 Bytes (10⁶)</li>
+                                    <li>1 GB = 1,000,000,000 Bytes (10⁹)</li>
+                                    <li><strong>1 TB = 1,000,000,000,000 Bytes (10¹²)</strong></li>
+                                </ul>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">💻 Operating Systems (Binary / Base 2)</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.6rem;">
+                                    Computer processors and operating systems (Windows, Linux memory) address memory in binary powers of two:
+                                </p>
+                                <ul style="padding-left: 1.2rem; font-size: 0.88rem; color: var(--text-secondary); margin: 0;">
+                                    <li>1 KiB = 1,024 Bytes (2¹⁰)</li>
+                                    <li>1 MiB = 1,048,576 Bytes (2²⁰)</li>
+                                    <li>1 GiB = 1,073,741,824 Bytes (2³⁰)</li>
+                                    <li><strong>1 TiB = 1,099,511,627,776 Bytes (2⁴⁰)</strong></li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <p style="margin-bottom: 1.2rem; font-size: 0.92rem; color: var(--text-secondary);">
+                            When Windows divides 1,000,000,000,000 bytes by 1,073,741,824 (binary gigabytes), the math yields: <code>1,000,000,000,000 ÷ 1,073,741,824 = 931.32 GiB</code>. ToolX Pro lets you seamlessly bridge this gap with real-time conversion across all standard storage boundaries.
+                        </p>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
+                            🌐 Bits (b) vs Bytes (B): Understanding Internet Speeds
+                        </h3>
+                        <p style="margin-bottom: 1rem;">
+                            Another common point of consumer confusion is the difference between Internet Service Provider (ISP) marketing and actual file download rates:
+                        </p>
+                        <ul style="padding-left: 1.4rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem;">
+                            <li><strong>Internet Speeds are measured in Megabits per second (Mbps with lowercase 'b'):</strong> A broadband connection advertised as <em>100 Mbps</em> transmits 100 million bits per second.</li>
+                            <li><strong>File Sizes are stored in Megabytes (MB with uppercase 'B'):</strong> Because there are exactly 8 bits in every byte, you must divide your internet speed by 8 to determine true download velocity.</li>
+                            <li><strong>Real-world calculation:</strong> <code>100 Mbps ÷ 8 = 12.5 MB/s</code>. Therefore, downloading a 1,000 MB (1 GB) video takes approximately 80 seconds under theoretical full throughput.</li>
+                        </ul>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
+                            📊 Complete Binary Storage Hierarchy Reference
+                        </h3>
                         <div style="overflow-x: auto; margin: 1rem 0;">
-                            <table style="width: 100%; border-collapse: collapse; border: 1px solid var(--border-color); font-size: 0.95rem;">
+                            <table style="width: 100%; border-collapse: collapse; border: 1px solid var(--border-color); font-size: 0.92rem; background: var(--bg-secondary); border-radius: 10px; overflow: hidden;">
                                 <thead>
-                                    <tr style="background: var(--bg-secondary); border-bottom: 2px solid var(--border-color);">
-                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Unit Name</th>
-                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Abbreviation</th>
-                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Binary Equivalent (Base 2)</th>
-                                        <th style="padding: 12px; text-align: left; font-weight: bold;">Typical Real-World Example</th>
+                                    <tr style="background: var(--bg-primary); border-bottom: 2px solid var(--border-color);">
+                                        <th style="padding: 10px 16px; color: var(--primary);">Unit Name</th>
+                                        <th style="padding: 10px 16px; color: var(--primary);">Abbreviation</th>
+                                        <th style="padding: 10px 16px; color: var(--primary);">Binary Equivalent</th>
+                                        <th style="padding: 10px 16px; color: var(--primary);">Typical Real-World Example</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr style="border-bottom: 1px solid var(--border-color);">
-                                        <td style="padding: 10px; font-weight: 600;">Kilobyte</td>
-                                        <td style="padding: 10px;">KB</td>
-                                        <td style="padding: 10px;">1,024 Bytes</td>
-                                        <td style="padding: 10px;">Plain text email, small icon</td>
+                                        <td style="padding: 9px 16px; font-weight: 600;">Kilobyte</td>
+                                        <td style="padding: 9px 16px;">KB</td>
+                                        <td style="padding: 9px 16px;">1,024 Bytes</td>
+                                        <td style="padding: 9px 16px;">Plain text document, small icon</td>
                                     </tr>
                                     <tr style="border-bottom: 1px solid var(--border-color);">
-                                        <td style="padding: 10px; font-weight: 600;">Megabyte</td>
-                                        <td style="padding: 10px;">MB</td>
-                                        <td style="padding: 10px;">1,024 KB (1,048,576 B)</td>
-                                        <td style="padding: 10px;">High-res camera photo, MP3 song</td>
+                                        <td style="padding: 9px 16px; font-weight: 600;">Megabyte</td>
+                                        <td style="padding: 9px 16px;">MB</td>
+                                        <td style="padding: 9px 16px;">1,024 KB</td>
+                                        <td style="padding: 9px 16px;">High-res camera photo, MP3 song</td>
                                     </tr>
                                     <tr style="border-bottom: 1px solid var(--border-color);">
-                                        <td style="padding: 10px; font-weight: 600;">Gigabyte</td>
-                                        <td style="padding: 10px;">GB</td>
-                                        <td style="padding: 10px;">1,024 MB (1,073,741,824 B)</td>
-                                        <td style="padding: 10px;">HD movie, smartphone RAM, video games</td>
+                                        <td style="padding: 9px 16px; font-weight: 600;">Gigabyte</td>
+                                        <td style="padding: 9px 16px;">GB</td>
+                                        <td style="padding: 9px 16px;">1,024 MB</td>
+                                        <td style="padding: 9px 16px;">HD movie, modern video game, smartphone RAM</td>
                                     </tr>
                                     <tr style="border-bottom: 1px solid var(--border-color);">
-                                        <td style="padding: 10px; font-weight: 600;">Terabyte</td>
-                                        <td style="padding: 10px;">TB</td>
-                                        <td style="padding: 10px;">1,024 GB (1,099,511,627,776 B)</td>
-                                        <td style="padding: 10px;">Computer SSD, external backup drives</td>
+                                        <td style="padding: 9px 16px; font-weight: 600;">Terabyte</td>
+                                        <td style="padding: 9px 16px;">TB</td>
+                                        <td style="padding: 9px 16px;">1,024 GB</td>
+                                        <td style="padding: 9px 16px;">Laptop SSD storage, enterprise backup array</td>
                                     </tr>
                                     <tr>
-                                        <td style="padding: 10px; font-weight: 600;">Petabyte</td>
-                                        <td style="padding: 10px;">PB</td>
-                                        <td style="padding: 10px;">1,024 TB (1,125,899,906,842,624 B)</td>
-                                        <td style="padding: 10px;">Enterprise server data centers, YouTube video archive</td>
+                                        <td style="padding: 9px 16px; font-weight: 600;">Petabyte</td>
+                                        <td style="padding: 9px 16px;">PB</td>
+                                        <td style="padding: 9px 16px;">1,024 TB</td>
+                                        <td style="padding: 9px 16px;">YouTube video archives, CERN particle physics data</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
 
                         <!-- FAQ Section -->
-                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2.2rem; margin-bottom: 1rem;">
                             ❓ Frequently Asked Questions (FAQ)
                         </h2>
                         
                         <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How do I calculate download time based on file size?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Convert your connection speed from Megabits to Megabytes (divide Mbps by 8). Then divide the total file size in MB by your download speed in MB/s.</p>
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How do I calculate download duration based on my file size?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Convert your connection speed from Megabits (Mbps) to Megabytes (MB/s) by dividing by 8. Then divide your total file size in MB by that transfer rate. For example, a 500 MB file at 10 MB/s takes 50 seconds to download.</p>
                             </div>
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: What is a Kibibyte (KiB) or Mebibyte (MiB)?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">In 1998, the International Electrotechnical Commission (IEC) introduced binary prefixes (KiB = 1024 B, MiB = 1024 KiB) to disambiguate from decimal metric prefixes (KB = 1000 B, MB = 1000 KB).</p>
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: What is the formal difference between KB and KiB?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">In 1998, the International Electrotechnical Commission (IEC) standardized <strong>KiB (Kibibyte)</strong> as strictly 1,024 bytes (binary 2¹⁰), while defining <strong>KB (Kilobyte)</strong> as exactly 1,000 bytes (decimal 10³). While technical specifications distinguish them, everyday computer culture still uses KB and MB colloquially to mean 1,024.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How many photos can fit on a 128 GB smartphone?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Assuming an average 12-megapixel smartphone photo consumes roughly 3.5 MB, a 128 GB drive (with approximately 115 GB usable space after the OS installation) can store roughly <strong>32,000 high-resolution photos</strong>.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: What is a Nibble in computer science?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">A nibble (or nybble) is half of a standard byte, consisting of exactly <strong>4 bits</strong>. One nibble corresponds cleanly to a single hexadecimal digit (values from 0 to F).</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Does this converter run locally without consuming cellular data?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Yes. ToolX Pro executes all mathematical conversions locally inside your client web browser memory via our PWA offline engine.</p>
                             </div>
                         </div>
 

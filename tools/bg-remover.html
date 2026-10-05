@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -138,40 +138,122 @@
                          ═══════════════════════════════════════════════════════ -->
                     <div class="tool-editorial-content" style="margin-top: 2.5rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
                         
-                        <h2 style="font-family: var(--font-header); font-size: 1.5rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
-                            ✂️ How Browser-Based AI Background Removal Operates
+                        <h2 style="font-family: var(--font-header); font-size: 1.55rem; font-weight: 700; color: var(--primary); margin-bottom: 1rem;">
+                            ✂️ Complete Guide to AI Background Removal & Transparent PNG Generation
                         </h2>
                         <p style="margin-bottom: 1.2rem;">
-                            Traditional background removal required manual pen-tool clipping in desktop graphic suites. ToolX Pro incorporates client-side MediaPipe Selfie Segmentation neural networks to classify portrait foreground pixels and alpha-matte transitions directly inside your WebGL canvas pipeline in real-time.
+                            Isolating subjects from their backgrounds has historically been one of the most tedious tasks in graphic design. Before browser-based machine learning, editors spent hours meticulously tracing contours with Photoshop's Pen Tool or lasso selectors. ToolX Pro’s <strong>AI Background Remover & Transparent PNG Generator</strong> changes that by running state-of-the-art computer vision neural networks directly inside your client browser sandbox. Whether you need to extract a crisp digital signature for an official university form, prepare an e-commerce product cutout for an online store, or create a transparent portrait for a resume, our tool achieves studio-grade alpha separation without sending your private images to third-party servers.
                         </p>
 
-                        <h3 style="font-family: var(--font-header); font-size: 1.25rem; font-weight: 700; color: var(--text-primary); margin-top: 1.5rem; margin-bottom: 0.75rem;">
-                            🎯 Dual Removal Engines
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
+                            🧠 How Browser-Based Neural Segmentation Works Under the Hood
                         </h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 1.2rem 0;">
-                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">🤖 AI Neural Segmentation</h4>
-                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">Automated deep learning model designed for human portraits, street backgrounds, room walls, and selfie cutouts.</p>
+                        <p style="margin-bottom: 1rem;">
+                            Our engine combines two complementary extraction pipelines to handle both organic real-world photography and crisp graphic assets:
+                        </p>
+                        
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.5rem 0;">
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">🤖 1. MediaPipe Neural Segmentation</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+                                    Powered by a convolutional neural network (CNN) trained on thousands of portrait datasets. The model executes real-time semantic segmentation on your device's WebGL / WebAssembly pipeline, classifying each pixel into "foreground subject" or "background environment."
+                                </p>
+                                <ul style="padding-left: 1.2rem; font-size: 0.88rem; color: var(--text-secondary); margin: 0;">
+                                    <li>Ideal for human headshots, selfies, and group pictures.</li>
+                                    <li>Accurately separates hair strands, shoulders, and fabric textures.</li>
+                                    <li>Handles complex, busy backgrounds (brick walls, crowded streets, outdoor foliage).</li>
+                                </ul>
                             </div>
-                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">🎨 Chroma & Color Keying</h4>
-                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">Sample solid background pixels with adjustable tolerance to extract clean digital signatures, brand logos, and vector clip art.</p>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.5rem;">🎨 2. Chroma Key & Delta-E Color Sampler</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 0.75rem;">
+                                    Designed for signatures, company logos, badges, and graphics photographed against solid backdrops (white paper, green screens, or solid studio canvas).
+                                </p>
+                                <ul style="padding-left: 1.2rem; font-size: 0.88rem; color: var(--text-secondary); margin: 0;">
+                                    <li>Tap or click any region of the image to pick the target key color.</li>
+                                    <li>Adjustable Euclidean color distance tolerance (2% to 50%).</li>
+                                    <li>Preserves fine ink strokes, text characters, and sharp vector edges.</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
+                            🔬 Understanding Alpha Channels and PNG Transparency
+                        </h3>
+                        <p style="margin-bottom: 1rem;">
+                            Standard JPEG images store color across three 8-bit channels: Red (R), Green (G), and Blue (B), producing an opaque 24-bit canvas. Transparent PNG files introduce a fourth 8-bit channel called the <strong>Alpha Channel (A)</strong>, yielding a 32-bit RGBA pixel space:
+                        </p>
+                        <ul style="padding-left: 1.4rem; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem;">
+                            <li><strong>Alpha Value 255 (100% Opaque):</strong> Pixels belonging strictly to the foreground subject remain completely solid and visible.</li>
+                            <li><strong>Alpha Value 0 (100% Transparent):</strong> Pixels classified as background are cleared to zero opacity, revealing whatever background surface the image is later placed on.</li>
+                            <li><strong>Sub-Pixel Feathering (Values 1 to 254):</strong> Boundary pixels along soft contours (such as hair or garment borders) receive gradual semi-transparency to eliminate harsh pixelated jaggedness and color halos.</li>
+                        </ul>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
+                            📋 Step-by-Step Instructions: How to Remove Backgrounds Perfectly
+                        </h3>
+                        <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; margin-bottom: 1.5rem;">
+                            <ol style="padding-left: 1.4rem; display: flex; flex-direction: column; gap: 0.8rem; margin: 0;">
+                                <li><strong>Upload Your Image:</strong> Click the "Upload Photo / Logo / Signature" button or drag and drop your JPG, PNG, or WebP file into the upload zone.</li>
+                                <li><strong>Choose Your Extraction Engine:</strong>
+                                    <ul style="padding-left: 1.2rem; margin-top: 0.4rem;">
+                                        <li>For people and portraits, select <em>AI Human Photo Cutout</em>.</li>
+                                        <li>For digital signatures, logos, or solid color backgrounds, select <em>Color Key / Click Sampler</em>, click on the background area on the preview canvas to sample its color, and fine-tune the tolerance slider.</li>
+                                    </ul>
+                                </li>
+                                <li><strong>Execute Segmentation:</strong> Click <em>Remove Background Now</em>. The neural network processes the canvas in approximately 1 to 3 seconds.</li>
+                                <li><strong>Refine with Touchup Brushes (Optional):</strong> Use the built-in <em>Erase Brush</em> to clean up stray artifacts, or the <em>Restore Brush</em> to paint back any accidentally erased foreground details.</li>
+                                <li><strong>Download Transparent PNG:</strong> Click <em>Download Transparent PNG</em> to save your finished asset with clean alpha transparency ready for professional publishing.</li>
+                            </ol>
+                        </div>
+
+                        <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
+                            💼 Top Practical Use-Cases for Transparent PNGs
+                        </h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 1.2rem 0;">
+                            <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.2rem;">
+                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.3rem;">📄 Digital Signatures</h4>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">Sign on white paper, snap a phone photo, and use Color Key mode to create a clean transparent signature for signing PDFs, university cover sheets, and bank forms.</p>
+                            </div>
+                            <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.2rem;">
+                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.3rem;">🛍️ E-Commerce & Daraz Listings</h4>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">Marketplaces like Amazon, Shopify, and Daraz require clean white or transparent product presentations. Remove cluttered shop or room backdrops in seconds.</p>
+                            </div>
+                            <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.2rem;">
+                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.3rem;">🎓 Academic & Cover Design</h4>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">Isolate university crests, department logos, or team portraits to integrate directly onto lab reports, research posters, and student slide presentations.</p>
+                            </div>
+                            <div style="background: var(--bg-primary); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.2rem;">
+                                <h4 style="font-size: 1rem; font-weight: 700; color: var(--primary); margin-bottom: 0.3rem;">🎨 Marketing Flyers & YouTube Thumbnails</h4>
+                                <p style="font-size: 0.88rem; color: var(--text-secondary); margin: 0;">Place cutouts of speakers, presenters, or products over vibrant gradients, textured canvases, or branded promotional banners without ugly white boxes.</p>
                             </div>
                         </div>
 
                         <!-- FAQ Section -->
-                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2rem; margin-bottom: 1rem;">
+                        <h2 style="font-family: var(--font-header); font-size: 1.4rem; font-weight: 700; color: var(--primary); margin-top: 2.2rem; margin-bottom: 1rem;">
                             ❓ Frequently Asked Questions (FAQ)
                         </h2>
                         
                         <div class="faq-container" style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Is my personal photo uploaded to any server?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No. 100% of the AI neural segmentation and pixel erasing occurs on your device's local GPU/CPU. Your private photos never touch external servers.</p>
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Is my personal photo uploaded or stored on any external server?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">No. 100% of the neural segmentation, color matrix computation, and pixel erasing occurs locally inside your web browser via WebGL and WebAssembly. Your photos, private signatures, and documents never leave your physical device.</p>
                             </div>
                             <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
-                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How do I export a transparent PNG?</h3>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Once the background is erased, click the "Download Transparent PNG" button. The resulting image contains an alpha channel that places seamlessly onto colored posters, web designs, or presentations.</p>
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: How do I remove a white background from a photographed signature?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Upload your signature photo, select <strong>Color Key / Click Sampler</strong> from the tool dropdown, and click anywhere on the white paper in the preview canvas. Set tolerance between 12% and 18% to erase the paper while keeping the ink strokes sharp.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Why does a downloaded PNG show a black background when viewed in some galleries?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">Some default smartphone image viewers render transparent alpha pixels against a solid black or dark gray backdrop by default. When you insert the downloaded PNG into Word, Canva, PowerPoint, or web pages, the transparency functions correctly without any background color.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: What is the maximum image resolution supported?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">ToolX Pro supports full high-resolution images up to 4K resolution (4096×4096 px). Performance depends on your device's GPU capabilities. For extremely fast processing on low-end smartphones, images between 1080p and 2K are ideal.</p>
+                            </div>
+                            <div class="faq-item" style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.2rem;">
+                                <h3 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Q: Can I remove backgrounds from animal or non-human photos?</h3>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">The AI Selfie model is specifically tuned for human subjects. For non-human objects, animals, or products photographed against single-color backgrounds, switch to the <strong>Color Key / Chroma Sampler</strong> mode, which works on any object regardless of category.</p>
                             </div>
                         </div>
 

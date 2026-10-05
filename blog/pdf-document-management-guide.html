@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -94,7 +94,87 @@
                         This architectural paradigm shift ensures that confidential data—including bank statements, tax returns, and identity cards—never traverses internet backbones or sits in temporary server disk caches.
                     </p>
 
-                    <div style="background:var(--bg-secondary); border:1px solid var(--border-color); padding:1.2rem; border-radius:12px; margin-top:1rem; text-align:center;">
+                    <h2 style="font-family:var(--font-header); font-size:1.45rem; font-weight:700; color:var(--primary);">🔬 The Internal Object Hierarchy of ISO 32000 PDF</h2>
+                    <p>
+                        A PDF is structured as a directed acyclic graph of indirect objects. Understanding this taxonomy helps users manage large multi-gigabyte document archives efficiently:
+                    </p>
+
+                    <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.25rem; margin:0.8rem 0;">
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:12px; padding:1.3rem;">
+                            <h4 style="font-size:1.05rem; font-weight:700; color:var(--primary); margin-bottom:0.4rem;">🌲 The Page Tree Hierarchy</h4>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                Rather than storing pages linearly, PDFs store pages as balanced tree nodes (<code>/Pages</code>) containing leaves (<code>/Page</code>). Reordering or deleting pages simply alters integer pointers in the tree catalog without needing to re-encode the underlying binary graphics.
+                            </p>
+                        </div>
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:12px; padding:1.3rem;">
+                            <h4 style="font-size:1.05rem; font-weight:700; color:var(--primary); margin-bottom:0.4rem;">📦 XObject & Content Streams</h4>
+                            <p style="font-size:0.92rem; color:var(--text-secondary); margin:0;">
+                                Text draw calls, vector lines, and embedded bitmap photos exist inside compressed <code>FlateDecode</code> streams. Deduplicating repeated fonts and downsampling raster bitmaps achieves massive file size reductions without compromising legibility.
+                            </p>
+                        </div>
+                    </div>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.45rem; font-weight:700; color:var(--primary);">🏛️ PDF Standards Comparison: PDF 1.7 vs PDF 2.0 vs PDF/A</h2>
+                    
+                    <div style="overflow-x:auto; margin:0.8rem 0;">
+                        <table style="width:100%; border-collapse:collapse; border:1px solid var(--border-color); font-size:0.92rem; background:var(--bg-secondary); border-radius:10px; overflow:hidden;">
+                            <thead>
+                                <tr style="background:var(--bg-primary); border-bottom:2px solid var(--border-color);">
+                                    <th style="padding:10px 14px; text-align:left; color:var(--primary);">Standard Specification</th>
+                                    <th style="padding:10px 14px; text-align:left; color:var(--primary);">Primary Purpose</th>
+                                    <th style="padding:10px 14px; text-align:left; color:var(--primary);">Key Architectural Characteristics</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:9px 14px; font-weight:700;">PDF 1.7 (ISO 32000-1)</td>
+                                    <td style="padding:9px 14px;">Universal Document Exchange</td>
+                                    <td style="padding:9px 14px;">Default standard supported by 100% of modern web browsers and mobile viewers</td>
+                                </tr>
+                                <tr style="border-bottom:1px solid var(--border-color);">
+                                    <td style="padding:9px 14px; font-weight:700;">PDF 2.0 (ISO 32000-2)</td>
+                                    <td style="padding:9px 14px;">Next-Gen Modern Workflow</td>
+                                    <td style="padding:9px 14px;">Enhanced 256-bit AES encryption, UTF-8 metadata strings, and rich uncompressed media tags</td>
+                                </tr>
+                                <tr>
+                                    <td style="padding:9px 14px; font-weight:700;">PDF/A (ISO 19005)</td>
+                                    <td style="padding:9px 14px;">Long-Term Legal & Govt Archiving</td>
+                                    <td style="padding:9px 14px;">Mandates 100% embedded font subsets; prohibits JavaScript, audio, video, and external hyperlinked font references</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.45rem; font-weight:700; color:var(--primary);">📐 Resolution Optimization Standards (DPI Targets)</h2>
+                    <p>When preparing documents for digital distribution, set your image resolutions to match the target viewing medium:</p>
+                    <ul style="padding-left:1.4rem; display:flex; flex-direction:column; gap:0.5rem; margin:0.6rem 0; font-size:0.95rem;">
+                        <li><strong>Screen & Email Distribution (72–96 DPI):</strong> Reduces a 25MB scanned document down to <code>1MB–2MB</code>, loading instantly on mobile devices.</li>
+                        <li><strong>Standard Office Laser Printing (150 DPI):</strong> Crisp text and graphics suitable for internal business reports and student homework submissions.</li>
+                        <li><strong>Commercial Offset Printing (300 DPI):</strong> Necessary only for high-end marketing brochures, academic hardcovers, and photographic portfolios.</li>
+                    </ul>
+
+                    <h2 style="font-family:var(--font-header); font-size:1.45rem; font-weight:700; color:var(--primary);">❓ Frequently Asked Questions (FAQ)</h2>
+                    
+                    <div style="display:flex; flex-direction:column; gap:12px; margin-top:0.6rem;">
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.1rem;">
+                            <h4 style="font-size:1rem; font-weight:700; color:var(--text-primary); margin-bottom:4px;">Q: How does client-side PDF compression work without losing text crispness?</h4>
+                            <p style="font-size:0.9rem; color:var(--text-secondary); margin:0;">PDF text is defined using mathematical vector paths and TrueType/OpenType font outlines. Compression targets raster bitmap images (downsampling excessive megapixel scans) and strips unused duplicate font subsets, leaving vector text 100% sharp and scalable at any zoom level.</p>
+                        </div>
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.1rem;">
+                            <h4 style="font-size:1rem; font-weight:700; color:var(--text-primary); margin-bottom:4px;">Q: What is the best way to merge out-of-order scanned duplex documents?</h4>
+                            <p style="font-size:0.9rem; color:var(--text-secondary); margin:0;">Combine the front-side and back-side scan files using ToolX Pro's <a href="../tools/pdf-merge.html" style="color:var(--primary); font-weight:600;">PDF Merge Tool</a>, then rearrange the thumbnail grid in our <a href="../tools/pdf-reorder.html" style="color:var(--primary); font-weight:600;">PDF Reorder Tool</a> to interleave even and odd pages in perfect sequence.</p>
+                        </div>
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.1rem;">
+                            <h4 style="font-size:1rem; font-weight:700; color:var(--text-primary); margin-bottom:4px;">Q: Are my confidential financial audits and medical histories secure?</h4>
+                            <p style="font-size:0.9rem; color:var(--text-secondary); margin:0;">Yes. Unlike traditional online converters that upload your PDFs to remote servers, ToolX Pro processes all documents locally in your browser's private memory sandbox using client-side JavaScript (pdf-lib & PDF.js). No bytes ever leave your device.</p>
+                        </div>
+                        <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.1rem;">
+                            <h4 style="font-size:1rem; font-weight:700; color:var(--text-primary); margin-bottom:4px;">Q: Can I manage and merge PDF documents without an internet connection?</h4>
+                            <p style="font-size:0.9rem; color:var(--text-secondary); margin:0;">Yes. Through ToolX Pro's Progressive Web App (PWA) Service Worker, the client-side parsing libraries remain permanently cached in your browser. You can merge contracts, downsample image payloads, and reorder document trees even when offline on flights or remote job sites.</p>
+                        </div>
+                    </div>
+
+                    <div style="background:var(--bg-secondary); border:1px solid var(--border-color); padding:1.2rem; border-radius:12px; margin-top:1.5rem; text-align:center;">
                         <h3 style="font-size:1.1rem; font-weight:700; margin-bottom:0.5rem; color:var(--text-primary);">Access Free Client-Side PDF Tools</h3>
                         <p style="font-size:0.92rem; color:var(--text-secondary); margin-bottom:1rem;">Process, compress, merge, and convert your PDF files securely with zero subscriptions:</p>
                         <div style="display:flex; justify-content:center; gap:12px; flex-wrap:wrap;">
