@@ -988,14 +988,19 @@ function injectRelatedTools(toolsPrefix, homePath) {
         </div>
     `;
 
-    // Append to content area before footer
-    const contentArea = document.querySelector(".content-area, .main-wrapper");
+    // Append to content area at the bottom before footer
+    const contentArea = document.querySelector(".content-area");
     if (contentArea) {
         contentArea.appendChild(section);
     } else {
-        const footer = document.getElementById("main-footer");
-        if (footer && footer.parentNode) {
-            footer.parentNode.insertBefore(section, footer);
+        const mainWrapper = document.querySelector(".main-wrapper");
+        if (mainWrapper) {
+            mainWrapper.appendChild(section);
+        } else {
+            const footer = document.getElementById("main-footer");
+            if (footer && footer.parentNode) {
+                footer.parentNode.insertBefore(section, footer);
+            }
         }
     }
 }

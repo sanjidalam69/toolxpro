@@ -4056,15 +4056,29 @@ aside#main-sidebar,
     display: none !important;
 }
 
+.main-wrapper {
+    flex-direction: column !important;
+    align-items: center !important;
+}
+
 .content-area {
     width: 100% !important;
     max-width: 960px !important;
     margin: 0 auto !important;
+    display: flex !important;
+    flex-direction: column !important;
 }
 
 .tool-container {
     width: 100% !important;
     margin: 0 auto !important;
+}
+
+.tool-related-section {
+    width: 100% !important;
+    max-width: 960px !important;
+    margin: 3rem auto 2rem auto !important;
+    box-sizing: border-box !important;
 }
 
 /* =========================================================
