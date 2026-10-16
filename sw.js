@@ -48,7 +48,6 @@ self.addEventListener('fetch', (event) => {
         url.hostname.includes('googlesyndication') ||
         url.hostname.includes('google-analytics') ||
         url.hostname.includes('doubleclick') ||
-        url.hostname.includes('highperformanceformat') ||
         url.pathname.startsWith('/api/')) {
         return;
     }
