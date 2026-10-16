@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bangla Voice Typing & Speech Translator - ToolX Pro</title>
-    <meta name="description" content="Free AI-powered real-time Bangla Voice Typing and Speech-to-Bangla Translator. Speak in Bengali or English to convert speech to clean Bangla text, translate instantly, and convert to Bijoy 52.">
-    <meta name="keywords" content="bangla voice typing, speech to bangla, voice to text bangla, english to bangla voice translator, bangla speech recognition, bengali typing, voice translator, bijoy 52 converter">
+    <title>বাংলা ভয়েস টাইপিং - মুখে কথা বলে বাংলা লেখা | Bangla Voice Typing Online - ToolX Pro</title>
+    <meta name="description" content="মুখে কথা বলে সহজে ও দ্রুত বাংলায় লিখুন। ফ্রি অনলাইন বাংলা ভয়েস টাইপিং (Bangla Voice Typing), কথা বলে বাংলা লেখা, স্পিচ টু টেক্সট, লাইভ ইংরেজি অনুবাদ এবং ১-ক্লিকে বিজয় ৫২ কনভার্টার।">
+    <meta name="keywords" content="বাংলায় কথা বলা, banglai kotha bola, কথা বলে বাংলা লেখা, kotha bole bangla lekha, মুখে বলে বাংলা টাইপ, mukhe bole bangla type, বাংলা ভয়েস টাইপিং, bangla voice typing, bangla speech to text, bangla voice to text, bangla voice typing online, voice typing bangla, bengali voice typing, ইংরেজি থেকে বাংলা ভয়েস অনুবাদ, voice to bijoy 52 converter">
     <link rel="stylesheet" href="../css/style.css?v=70.0">
     
     <!-- Open Graph -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://toolxpro.live/tools/speech-to-bangla">
-    <meta property="og:title" content="Bangla Voice Typing & Speech Translator - ToolX Pro">
-    <meta property="og:description" content="Speak in Bengali or English to convert voice into clean Bangla text in real time with instant AI translation.">
+    <meta property="og:title" content="বাংলা ভয়েস টাইপিং - মুখে কথা বলে বাংলা লেখা | ToolX Pro">
+    <meta property="og:description" content="মুখে কথা বলে সহজে ও দ্রুত বাংলায় লিখুন। ১০০% ফ্রি অনলাইন বাংলা ভয়েস টাইপিং, লাইভ অনুবাদ ও বিজয় ৫২ কনভার্টার।">
     <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
 
         <!-- Google tag (gtag.js) -->
@@ -249,6 +249,95 @@
             gap: 4px;
             color: #ef4444;
             font-weight: 700;
+        }
+
+        /* Audio Sound Waves */
+        .audio-wave {
+            display: none;
+            align-items: center;
+            gap: 3px;
+            height: 18px;
+            margin-left: 4px;
+        }
+        .audio-wave.active {
+            display: inline-flex;
+        }
+        .audio-wave-bar {
+            width: 3px;
+            background: #ef4444;
+            border-radius: 2px;
+            animation: soundWave 0.8s ease-in-out infinite alternate;
+        }
+        .audio-wave-bar:nth-child(1) { height: 6px; animation-delay: 0.1s; }
+        .audio-wave-bar:nth-child(2) { height: 16px; animation-delay: 0.25s; }
+        .audio-wave-bar:nth-child(3) { height: 20px; animation-delay: 0.4s; }
+        .audio-wave-bar:nth-child(4) { height: 13px; animation-delay: 0.2s; }
+        .audio-wave-bar:nth-child(5) { height: 7px; animation-delay: 0.35s; }
+        @keyframes soundWave {
+            0% { transform: scaleY(0.3); opacity: 0.7; }
+            100% { transform: scaleY(1); opacity: 1; }
+        }
+
+        /* ── Quick Punctuation Bar ── */
+        .quick-punctuation-bar {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 10px;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            margin-bottom: 10px;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            scrollbar-width: thin;
+        }
+        .quick-punctuation-bar::-webkit-scrollbar {
+            height: 3px;
+        }
+        .quick-punctuation-bar::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 3px;
+        }
+        .punct-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--text-secondary);
+            white-space: nowrap;
+            margin-right: 2px;
+        }
+        .punct-buttons {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: nowrap;
+        }
+        .btn-punct {
+            padding: 4px 9px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 7px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            cursor: pointer;
+            white-space: nowrap;
+            transition: all 0.15s ease;
+            user-select: none;
+            touch-action: manipulation;
+        }
+        .btn-punct:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-1px);
+        }
+        .btn-punct:active {
+            transform: scale(0.95);
+        }
+        .btn-punct.btn-punct-action {
+            background: rgba(245, 158, 11, 0.08);
+            color: var(--accent);
+            border-color: rgba(245, 158, 11, 0.25);
         }
 
         /* Action Buttons Group */
@@ -489,15 +578,21 @@
                     
                     <!-- Clean Tool Header -->
                     <div class="voice-header">
-                        <h1>🎙️ Bangla Voice Typing & Translator</h1>
-                        <p>মুখে বাংলায় বা ইংরেজিতে কথা বলুন—সরাসরি রিয়েল-টাইমে নির্ভুল বাংলা টেক্সট ও অনুবাদ হয়ে যাবে।</p>
+                        <h1>🎙️ বাংলা ভয়েস টাইপিং - মুখে কথা বলে বাংলা লেখা</h1>
+                        <p>মুখে স্বাভাবিকভাবে কথা বলুন—সরাসরি রিয়েল-টাইমে নির্ভুল ইউনিকোড বাংলা টেক্সট টাইপ হবে। লাইভ স্পিচ ট্রান্সলেটর ও ১-ক্লিকে বিজয় ৫২ সাপোর্ট সহ ১০০% ফ্রি।</p>
+                        <div class="voice-seo-tags" style="display:flex; justify-content:center; gap:6px; flex-wrap:wrap; margin-top:8px;">
+                            <span style="font-size:0.75rem; background:rgba(245,158,11,0.12); color:var(--accent); padding:3px 10px; border-radius:12px; font-weight:700;">🔥 বাংলায় কথা বলা</span>
+                            <span style="font-size:0.75rem; background:rgba(245,158,11,0.12); color:var(--accent); padding:3px 10px; border-radius:12px; font-weight:700;">🗣️ কথা বলে বাংলা লেখা</span>
+                            <span style="font-size:0.75rem; background:rgba(245,158,11,0.12); color:var(--accent); padding:3px 10px; border-radius:12px; font-weight:700;">⚡ Bangla Speech to Text</span>
+                            <span style="font-size:0.75rem; background:rgba(245,158,11,0.12); color:var(--accent); padding:3px 10px; border-radius:12px; font-weight:700;">✍️ বিজয় ৫২ কনভার্টার</span>
+                        </div>
                     </div>
 
                     <!-- Clean Main App Card -->
                     <div class="voice-app-card">
                         
-                        <!-- Top Mode Selector Tabs (Clean 3-Segment Bar) -->
-                        <div class="voice-tabs-bar">
+                        <!-- Top Mode Selector Tabs (Clean 3-Segment Bar + Dialect) -->
+                        <div class="voice-tabs-bar" style="flex-wrap:wrap;">
                             <button class="v-tab-btn active" data-mode="bn-type">
                                 🇧🇩 বাংলা টাইপিং
                             </button>
@@ -507,6 +602,12 @@
                             <button class="v-tab-btn" data-mode="bn-to-en">
                                 🔄 বাংলা ➔ En
                             </button>
+                            <div style="display:flex; align-items:center; margin-left:auto; padding:2px 4px;">
+                                <select id="select-dialect" title="ভয়েস ডায়ালেক্ট নির্বাচন করুন" style="padding:4px 8px; border-radius:20px; border:1px solid var(--border-color); background:var(--card-bg); color:var(--text-primary); font-size:0.78rem; font-weight:700; cursor:pointer;">
+                                    <option value="bn-BD" selected>🇧🇩 বাংলা (BD)</option>
+                                    <option value="bn-IN">🇮🇳 বাংলা (IN)</option>
+                                </select>
+                            </div>
                         </div>
 
                         <!-- Workspace Text Area(s) -->
@@ -516,9 +617,31 @@
                             <div class="editor-box">
                                 <div class="editor-box-header">
                                     <div id="primary-box-title" class="box-title">✍️ বাংলা টেক্সট</div>
-                                    <div id="primary-stats" class="box-stats">0 words</div>
+                                    <div style="display:flex; align-items:center; gap:8px;">
+                                        <div style="display:flex; gap:3px;">
+                                            <button type="button" id="btn-font-dec" title="ফন্ট ছোট করুন" style="padding:2px 7px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-primary); border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">A-</button>
+                                            <button type="button" id="btn-font-inc" title="ফন্ট বড় করুন" style="padding:2px 7px; border:1px solid var(--border-color); background:var(--bg-primary); color:var(--text-primary); border-radius:6px; font-size:0.75rem; font-weight:700; cursor:pointer;">A+</button>
+                                        </div>
+                                        <div id="primary-stats" class="box-stats">0 words</div>
+                                    </div>
                                 </div>
-                                <textarea id="primary-text" class="main-textarea" placeholder="এখানে কথা বলুন বা টাইপ করুন..."></textarea>
+
+                                <!-- Quick Punctuation Bar -->
+                                <div class="quick-punctuation-bar">
+                                    <span class="punct-label">⚡ দ্রুত বিরামচিহ্ন:</span>
+                                    <div class="punct-buttons">
+                                        <button type="button" class="btn-punct" data-insert="।">। (দাঁড়ি)</button>
+                                        <button type="button" class="btn-punct" data-insert=",">, (কমা)</button>
+                                        <button type="button" class="btn-punct" data-insert="?">? (প্রশ্নবোধক)</button>
+                                        <button type="button" class="btn-punct" data-insert="!">! (বিস্ময়)</button>
+                                        <button type="button" class="btn-punct" data-insert="-">- (ড্যাশ)</button>
+                                        <button type="button" class="btn-punct" data-insert="“">“ ” (কোট)</button>
+                                        <button type="button" class="btn-punct btn-punct-action" data-insert="\n">↵ নতুন লাইন</button>
+                                        <button type="button" class="btn-punct btn-punct-action" id="btn-punct-undo" title="শেষ চিহ্ন মুছুন">⌫</button>
+                                    </div>
+                                </div>
+
+                                <textarea id="primary-text" class="main-textarea" placeholder="এখানে সরাসরি কথা বলে টাইপ করতে নিচে 'Start Speaking' বাটনে চাপুন..."></textarea>
                             </div>
 
                             <!-- Translation Box (Shown in translation modes) -->
@@ -545,6 +668,13 @@
                                     <span id="recording-timer" class="recording-timer-badge">
                                         🔴 <span id="timer-count">00:00</span>
                                     </span>
+                                    <div id="audio-wave" class="audio-wave">
+                                        <span class="audio-wave-bar"></span>
+                                        <span class="audio-wave-bar"></span>
+                                        <span class="audio-wave-bar"></span>
+                                        <span class="audio-wave-bar"></span>
+                                        <span class="audio-wave-bar"></span>
+                                    </div>
                                 </div>
                             </div>
 
@@ -582,62 +712,71 @@
                     <div class="tool-editorial-content" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-color); color: var(--text-primary); line-height: 1.8;">
                         
                         <h2 style="font-family: var(--font-header); font-size: 1.6rem; font-weight: 700; color: var(--accent); margin-bottom: 1rem;">
-                            🎙️ মুখে কথা বলে বাংলায় দ্রুত টাইপিং ও রিয়েল-টাইম অনুবাদের পূর্ণাঙ্গ নির্দেশিকা
+                            🎙️ বাংলায় কথা বলা ও মুখে বলে বাংলা টাইপিংয়ের সহজ গাইড (Bangla Voice to Text)
                         </h2>
                         <p style="margin-bottom: 1.2rem;">
-                            কিবোর্ডের মাধ্যমে একটি একটি বোতাম চেপে দীর্ঘ বাংলা নিবন্ধ, বিশ্ববিদ্যালয়ের অ্যাসাইনমেন্ট, দাপ্তরিক চিঠি বা ব্লগের কনটেন্ট লেখা অত্যন্ত সময়সাপেক্ষ ও ক্লান্তিকর। বিশেষ করে বাংলায় জটিল সব যুক্তাক্ষর টাইপ করতে গিয়ে অনেক সময় বানান ভুল হয়ে যায়। ToolX Pro-এর <strong>AI স্পিচ টু বাংলা ভয়েস টাইপিং টুল</strong> ব্যবহার করে আপনি কোনো অ্যাপ বা সফটওয়্যার ইনস্টল ছাড়াই সরাসরি ব্রাউজারে মুখে স্বাভাবিক গতিতে কথা বলে চোখের পলকে নির্ভুল ইউনিকোড বাংলা টেক্সট প্রস্তুত করতে পারবেন।
+                            কিবোর্ডের মাধ্যমে একটি একটি বোতাম চেপে দীর্ঘ বাংলা প্রবন্ধ, বিশ্ববিদ্যালয়ের অ্যাসাইনমেন্ট, ফেসবুক স্ট্যাটাস, দাপ্তরিক চিঠি বা ব্লগের কনটেন্ট লেখা অত্যন্ত সময়সাপেক্ষ ও ক্লান্তিকর। বিশেষ করে বাংলায় জটিল সব যুক্তাক্ষর টাইপ করতে গিয়ে অনেক সময় বানান ভুল হয়ে যায়। ToolX Pro-এর <strong>AI স্পিচ টু বাংলা ভয়েস টাইপিং টুল (Bangla Voice Typing Online)</strong> ব্যবহার করে আপনি কোনো অ্যাপ বা সফটওয়্যার ইনস্টল ছাড়াই সরাসরি ব্রাউজারে মুখে স্বাভাবিক গতিতে <strong>বাংলায় কথা বলে</strong> চোখের পলকে নির্ভুল ইউনিকোড বাংলা টেক্সট প্রস্তুত করতে পারবেন।
                         </p>
 
                         <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
-                            🧠 আধুনিক ওয়েব স্পিচ ইঞ্জিন কীভাবে কাজ করে?
+                            💡 কথা বলে বাংলা লেখার প্রধান সুবিধাসমূহ
                         </h3>
-                        <p style="margin-bottom: 1rem;">
-                            এই টুলটি আধুনিক এইচটিএমএল৫ <strong>Web Speech API</strong> এবং গুগলের উচ্চ ক্ষমতাসম্পন্ন বাংলা ডিপ নিউরাল ল্যাঙ্গুয়েজ মডেলের সাহায্যে চলে। আপনার মাইক্রোফোনে ধারণ করা অডিও ফ্রিকোয়েন্সি তাৎক্ষণিকভাবে ফোনেটিক শব্দ তরঙ্গে বিশ্লেষিত হয়ে ইউনিকোড বাংলা অক্ষরে রূপান্তরিত হয়।
-                        </p>
-                        
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.25rem; margin: 1.5rem 0;">
                             <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
-                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem;">🎯 ১. ৯৯% নির্ভুলতার জন্য প্রমিত উচ্চারণ</h4>
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem;">⚡ ১. ৩ গুণ দ্রুত টাইপিং স্পিড</h4>
                                 <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
-                                    অত্যধিক দ্রুত কথা না বলে স্বাভাবিক বাকভঙ্গিতে স্পষ্ট উচ্চারণে কথা বললে নিউরাল মডেল প্রতিটি শব্দের অর্থ সহজে অনুধাবন করতে পারে এবং যুক্তাক্ষরগুলো নিখুঁতভাবে টাইপ করে।
+                                    কিবোর্ডে সাধারণ মানুষ গড়ে মিনিটে ৩০-৩৫টি শব্দ টাইপ করতে পারেন, অথচ মুখে কথা বলে মিনিটে ১২০ থেকে ১৫০টি শব্দ অনায়াসে রচনা করা সম্ভব।
                                 </p>
                             </div>
                             <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
-                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem;">🎨 ২. ১ ক্লিকে বিজয় ৫২ (SutonnyMJ) সাপোর্ট</h4>
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem;">🎯 ২. স্বয়ংক্রিয় বিরামচিহ্ন ও যুক্তাক্ষর</h4>
                                 <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
-                                    টাইপ করা লেখা সরাসরি 'Bijoy 52' বাটনে চাপ দিয়ে এএনএসআই কোডে কনভার্ট করে অ্যাডোবি ফটোশপ বা ইলাস্ট্রেটরে পেস্ট করা যায়, যা গ্রাফিক্স ডিজাইনারদের জন্য অত্যন্ত সুবিধাজনক।
+                                    'দাঁড়ি', 'কমা', বা 'প্রশ্নবোধক' মুখে বললেই স্বয়ংক্রিয়ভাবে চিহ্ন বসে যাবে অথবা এডিটরের উপরে থাকা ১-ক্লিক বিরামচিহ্ন বাটন দিয়ে মুহূর্তেই পাঙ্কচুয়েশন সাজিয়ে নেওয়া যায়।
                                 </p>
                             </div>
                             <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
-                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem;">🌐 ৩. ইংরেজি টু বাংলা লাইভ অনুবাদ</h4>
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem;">🎨 ৩. ১ ক্লিকে বিজয় ৫২ (SutonnyMJ) সাপোর্ট</h4>
                                 <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
-                                    আপনি ইংরেজিতে কোনো বক্তব্য দিলে সেটি স্বয়ংক্রিয়ভাবে প্রমিত বাংলায় অনুবাদ হয়ে স্ক্রিনে প্রদর্শিত হবে, যা আন্তর্জাতিক কনফারেন্স বা ক্লাসের জন্য দারুণ সহায়ক।
+                                    টাইপ করা লেখা সরাসরি 'Bijoy 52' বাটনে চাপ দিয়ে এএনএসআই কোডে কনভার্ট করে অ্যাডোবি ফটোশপ বা এমএস ওয়ার্ডে পেস্ট করা যায়, যা গ্রাফিক্স ডিজাইনার ও প্রেসের জন্য সেরা।
+                                </p>
+                            </div>
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--accent); margin-bottom: 0.5rem;">🌐 ৪. ইংরেজি থেকে বাংলা লাইভ ভয়েস অনুবাদ</h4>
+                                <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">
+                                    মুখে ইংরেজিতে কোনো বক্তব্য দিলে স্বয়ংক্রিয়ভাবে তা সাবলীল বাংলায় অনুবাদ হয়ে যায়, যা আন্তর্জাতিক ক্লাস, লেকচার বা কনফারেন্স নোট নেওয়ার জন্য অসাধারণ।
                                 </p>
                             </div>
                         </div>
 
                         <h3 style="font-family: var(--font-header); font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-top: 1.8rem; margin-bottom: 0.8rem;">
-                            ❓ সচরাচর জিজ্ঞাসিত প্রশ্নাবলী (FAQ)
+                            ❓ সচরাচর জিজ্ঞাসিত প্রশ্নাবলী (FAQ) - বাংলায় কথা বলা ও ভয়েস টাইপিং
                         </h3>
                         <div style="display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: 2rem;">
                             <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.2rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--accent); margin-bottom: 0.4rem;">কীভাবে বাংলায় কথা বলে লিখব (How to Voice Type in Bangla)?</h4>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">
+                                    খুব সহজ! প্রথমে 'Start Speaking' বাটনে ক্লিক করে ব্রাউজার থেকে মাইক্রোফোনের অনুমতি (Allow) দিন। এরপর স্বাভাবিক গতিতে স্পষ্ট উচ্চারণে বাংলায় কথা বলুন। আপনার মুখের প্রতিটি বাক্য সরাসরি স্ক্রিনে ইউনিকোড বাংলায় টাইপ হয়ে যাবে। কথা শেষ হলে 'Stop' বাটনে চাপুন।
+                                </p>
+                            </div>
+
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.2rem;">
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--accent); margin-bottom: 0.4rem;">মোবাইল ফোনে কি মুখে বলে বাংলা টাইপ করা যায়?</h4>
+                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">
+                                    হ্যাঁ, অ্যান্ড্রয়েড ফোনের গুগল ক্রোম এবং আইফোনের সাফারি ব্রাউজারে এটি কোনো আলাদা অ্যাপ ছাড়াই ১০০% স্মুথলি কাজ করে। মোবাইল স্ক্রিন জুম না হয়ে সহজে পড়তে ফন্ট সাইজ বড়/ছোট করার বাটনও রাখা হয়েছে।
+                                </p>
+                            </div>
+
+                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.2rem;">
                                 <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--accent); margin-bottom: 0.4rem;">আমার কণ্ঠস্বর বা ব্যক্তিগত লেখার কি কোনো গোপনীয়তা ঝুঁকি আছে?</h4>
                                 <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">
-                                    না। ToolX Pro আপনার কোনো অডিও ভয়েস বা টাইপ করা টেক্সট সার্ভারে সেভ করে রাখে না। পুরো প্রক্রিয়াকরণ ব্রাউজার স্যান্ডবক্সের ভেতরেই সম্পন্ন হয়, ফলে আপনার তথ্যের গোপনীয়তা শতভাগ সুরক্ষিত থাকে।
+                                    না, কোনো গোপনীয়তা ঝুঁকি নেই। ToolX Pro আপনার অডিও ভয়েস বা টাইপ করা টেক্সট কোনো সার্ভারে ডাটা ট্র্যাকিংয়ের জন্য সংরক্ষণ করে না। সম্পূর্ণ টাইপিং প্রসেস ব্রাউজারের ভেতর নিরাপদে সম্পন্ন হয়।
                                 </p>
                             </div>
 
                             <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.2rem;">
-                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--accent); margin-bottom: 0.4rem;">মোবাইল ফোনে কি এই ভয়েস টাইপিং কাজ করবে?</h4>
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--accent); margin-bottom: 0.4rem;">দাঁড়ি (।), কমা (,) ও বিরামচিহ্ন কীভাবে সহজে বসাব?</h4>
                                 <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">
-                                    হ্যাঁ, অ্যান্ড্রয়েড ফোনের গুগল ক্রোম এবং আইফোনের সাফারি বা ক্রোম ব্রাউজারে এটি সম্পূর্ণ স্মুথলি কাজ করে। আলাদা কোনো থার্ড-পার্টি কীবোর্ড অ্যাপ ইনস্টল করতে হয় না।
-                                </p>
-                            </div>
-
-                            <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.2rem;">
-                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--accent); margin-bottom: 0.4rem;">দাঁড়ি বা কমা কীভাবে বসাব?</h4>
-                                <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">
-                                    কথা বলা শেষ হলে এডিটরের উপরে থাকা দাঁড়ি (।), কমা (,), বা প্রশ্নবোধক (?) বাটনে ক্লিক করলেই এক ক্লিকে সঠিক স্থানে বিরামচিহ্ন বসে যাবে।
+                                    কথা বলার সময় আপনি মুখে 'দাঁড়ি' বা 'কমা' বলতে পারেন অথবা এডিটরের ঠিক উপরে থাকা ১-ক্লিক বিরামচিহ্ন বাটনসমূহ (। , ? ! - “ ” ↵) ব্যবহার করে চোখের পলকে নিখুঁত পাঙ্কচুয়েশন সাজিয়ে নিতে পারেন।
                                 </p>
                             </div>
                         </div>

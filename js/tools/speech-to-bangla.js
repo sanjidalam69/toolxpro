@@ -32,6 +32,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const convertBijoyBtn = document.getElementById("convert-bijoy-btn");
     const clearBtn = document.getElementById("clear-btn");
 
+    // New Controls: Dialect, Wave, Font, Punctuation
+    const selectDialect = document.getElementById("select-dialect");
+    const audioWave = document.getElementById("audio-wave");
+    const btnFontInc = document.getElementById("btn-font-inc");
+    const btnFontDec = document.getElementById("btn-font-dec");
+    const punctButtons = document.querySelectorAll(".btn-punct");
+    const btnPunctUndo = document.getElementById("btn-punct-undo");
+
     // Toast
     const toast = document.getElementById("clean-toast");
     const toastIcon = document.getElementById("toast-icon");
@@ -39,6 +47,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // ── State Variables ──
     let currentMode = "bn-type"; // "bn-type" | "en-to-bn" | "bn-to-en"
+    let currentDialect = "bn-BD";
+    let currentFontSize = 1.15;
     let isRecording = false;
     let recognition = null;
     let finalTranscript = "";
@@ -82,7 +92,7 @@ document.addEventListener("DOMContentLoaded", () => {
         if (currentMode === "en-to-bn") {
             recognition.lang = "en-US";
         } else {
-            recognition.lang = "bn-BD"; // বাংলা (বাংলাদেশ)
+            recognition.lang = currentDialect || "bn-BD"; // বাংলা (বাংলাদেশ বা ভারত)
         }
 
         recognition.onstart = () => {
@@ -91,12 +101,13 @@ document.addEventListener("DOMContentLoaded", () => {
             micIcon.textContent = "⏹️";
             micBtnText.textContent = "Stop Speaking";
             recordingTimer.style.display = "inline-flex";
+            if (audioWave) audioWave.classList.add("active");
             startTimer();
 
             if (currentMode === "en-to-bn") {
                 micStatusText.textContent = "Listening in English...";
             } else {
-                micStatusText.textContent = "বাংলায় শুনছি... কথা বলুন";
+                micStatusText.textContent = (currentDialect === "bn-IN") ? "বাংলায় শুনছি (ভারত)..." : "বাংলায় শুনছি... কথা বলুন";
             }
         };
 
@@ -220,6 +231,7 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         stopTimer();
         micToggleBtn.classList.remove("recording");
+        if (audioWave) audioWave.classList.remove("active");
         micIcon.textContent = "🎤";
         micBtnText.textContent = "Start Speaking";
         micStatusText.textContent = "মাইক বন্ধ আছে";
@@ -395,4 +407,106 @@ document.addEventListener("DOMContentLoaded", () => {
         if (translationStats) translationStats.textContent = "0 words";
         showToast("সব লেখা মুছে ফেলা হয়েছে", "🧹");
     });
+
+    // ── Dialect Selection ──
+    if (selectDialect) {
+        selectDialect.addEventListener("change", (e) => {
+            currentDialect = e.target.value;
+            if (isRecording) {
+                // Restart recognition with new dialect
+                stopRecording();
+                setTimeout(() => startRecording(), 200);
+            }
+            showToast(`ভয়েস ভাষা: ${currentDialect === "bn-IN" ? "ভারত" : "বাংলাদেশ"} সেট হয়েছে`, "🌐");
+        });
+    }
+
+    // ── Font Size Zoom Controls ──
+    if (btnFontInc) {
+        btnFontInc.addEventListener("click", () => {
+            if (currentFontSize < 1.9) {
+                currentFontSize += 0.12;
+                primaryText.style.fontSize = `${currentFontSize}rem`;
+                if (translationText) translationText.style.fontSize = `${currentFontSize}rem`;
+            }
+        });
+    }
+    if (btnFontDec) {
+        btnFontDec.addEventListener("click", () => {
+            if (currentFontSize > 0.85) {
+                currentFontSize -= 0.12;
+                primaryText.style.fontSize = `${currentFontSize}rem`;
+                if (translationText) translationText.style.fontSize = `${currentFontSize}rem`;
+            }
+        });
+    }
+
+    // ── Quick Punctuation Insert Toolbar ──
+    if (punctButtons) {
+        punctButtons.forEach(btn => {
+            const charToInsert = btn.getAttribute("data-insert");
+            if (!charToInsert) return;
+
+            btn.addEventListener("click", () => {
+                const textarea = primaryText;
+                const start = textarea.selectionStart || textarea.value.length;
+                const end = textarea.selectionEnd || textarea.value.length;
+                const val = textarea.value;
+
+                let insertVal = charToInsert;
+                if (insertVal === "“") {
+                    insertVal = '“ ”';
+                }
+
+                if (insertVal === "।" || insertVal === "?" || insertVal === "!") {
+                    const before = val.substring(0, start).replace(/\s+$/, "");
+                    const after = val.substring(end).replace(/^\s*/, " ");
+                    textarea.value = before + insertVal + after;
+                    const newPos = before.length + insertVal.length + 1;
+                    textarea.selectionStart = textarea.selectionEnd = newPos;
+                } else if (insertVal === ",") {
+                    const before = val.substring(0, start).replace(/\s+$/, "");
+                    const after = val.substring(end).replace(/^\s*/, " ");
+                    textarea.value = before + ", " + after;
+                    const newPos = before.length + 2;
+                    textarea.selectionStart = textarea.selectionEnd = newPos;
+                } else if (insertVal === "\n") {
+                    const before = val.substring(0, start);
+                    const after = val.substring(end);
+                    textarea.value = before + "\n" + after;
+                    const newPos = before.length + 1;
+                    textarea.selectionStart = textarea.selectionEnd = newPos;
+                } else {
+                    const before = val.substring(0, start);
+                    const after = val.substring(end);
+                    textarea.value = before + insertVal + after;
+                    const newPos = before.length + insertVal.length;
+                    textarea.selectionStart = textarea.selectionEnd = newPos;
+                }
+
+                finalTranscript = textarea.value;
+                updateStats();
+                textarea.focus();
+            });
+        });
+    }
+
+    if (btnPunctUndo) {
+        btnPunctUndo.addEventListener("click", () => {
+            const textarea = primaryText;
+            const start = textarea.selectionStart;
+            const end = textarea.selectionEnd;
+            const val = textarea.value;
+            if (start > 0 && start === end) {
+                textarea.value = val.substring(0, start - 1) + val.substring(end);
+                textarea.selectionStart = textarea.selectionEnd = start - 1;
+            } else if (start !== end) {
+                textarea.value = val.substring(0, start) + val.substring(end);
+                textarea.selectionStart = textarea.selectionEnd = start;
+            }
+            finalTranscript = textarea.value;
+            updateStats();
+            textarea.focus();
+        });
+    }
 });

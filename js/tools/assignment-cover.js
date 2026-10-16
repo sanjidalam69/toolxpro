@@ -30,6 +30,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const inpTeacherDesig= document.getElementById("inp-teacher-desig");
     const inpDate        = document.getElementById("inp-date");
     const inpLogo        = document.getElementById("inp-logo");
+    const selectUniPreset= document.getElementById("select-university-preset");
+    const activeLogoBadge= document.getElementById("active-logo-badge");
+    const badgeLogoImg   = document.getElementById("badge-logo-img");
+    const badgeLogoText  = document.getElementById("badge-logo-text");
+    const uniPills       = document.querySelectorAll(".btn-uni-pill");
 
     const preview   = document.getElementById("a4-preview");
     const btnModeAll = document.getElementById("btn-mode-all");
@@ -43,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
     let currentTemplate = "royal";
     let currentMode = "all"; // 'all' or 'seu'
     let submissionType = "individual"; // 'individual' or 'group'
+    let selectedPresetUni = null;
 
     const defaultLogo = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='45' fill='%23e5e7eb'/%3E%3Ctext x='50' y='58' font-size='18' text-anchor='middle' fill='%236b7280' font-family='sans-serif'%3ELOGO%3C/text%3E%3C/svg%3E";
 
@@ -76,7 +82,9 @@ document.addEventListener("DOMContentLoaded", () => {
             inpUni.value = "";
             inpUni.readOnly = false;
             inpUni.placeholder = "";
+            if (selectUniPreset) selectUniPreset.value = "";
             logoSrc = customLogoSrc || defaultLogo;
+            updateLogoBadge(customLogoSrc ? "Custom Logo" : "", logoSrc, !!customLogoSrc);
             render();
         });
 
@@ -91,11 +99,7 @@ document.addEventListener("DOMContentLoaded", () => {
             btnModeAll.style.color = "var(--text-primary)";
             btnModeAll.style.borderColor = "var(--border-color)";
 
-            inpUni.value = "Southeast University";
-            inpUni.readOnly = true;
-            logoSrc = seuLogo;
-            inpColor.value = "#003366";
-            render();
+            applyUniversityPreset("seu");
         });
 
     } // end if (btnModeAll && btnModeSeu)
@@ -655,8 +659,94 @@ document.addEventListener("DOMContentLoaded", () => {
     if (inpColor) inpColor.addEventListener("input", render);
     if (inpFont) inpFont.addEventListener("change", render);
 
-    // ── Logo Upload & Reset ───────────────────────────────────────────
+    // ── University Preset & Logo Logic ──────────────────────────────
     const btnResetLogo = document.getElementById("btn-reset-logo");
+
+    function updateLogoBadge(name, src, isCustom = false) {
+        if (!activeLogoBadge) return;
+        if (src && src !== defaultLogo) {
+            activeLogoBadge.style.display = "flex";
+            if (badgeLogoImg) badgeLogoImg.src = src;
+            if (badgeLogoText) badgeLogoText.textContent = isCustom ? "Custom Uploaded Logo" : (name || "Official Logo");
+            if (btnResetLogo) btnResetLogo.style.display = "inline-block";
+        } else {
+            activeLogoBadge.style.display = "none";
+            if (btnResetLogo) btnResetLogo.style.display = "none";
+        }
+    }
+
+    function applyUniversityPreset(uniId, autoColor = true) {
+        if (!uniId || uniId === "custom") {
+            selectedPresetUni = null;
+            if (selectUniPreset) selectUniPreset.value = uniId || "";
+            if (customLogoSrc) {
+                logoSrc = customLogoSrc;
+                updateLogoBadge("Custom Logo", customLogoSrc, true);
+            } else {
+                logoSrc = (currentMode === "seu" ? seuLogo : defaultLogo);
+                updateLogoBadge(currentMode === "seu" ? "Southeast University" : "", logoSrc);
+            }
+            if (uniPills) {
+                uniPills.forEach(pill => {
+                    pill.style.background = "var(--bg-primary)";
+                    pill.style.color = "var(--text-primary)";
+                    pill.style.borderColor = "var(--border-color)";
+                });
+            }
+            render();
+            return;
+        }
+
+        const uni = (typeof BD_UNIVERSITIES !== "undefined") ? BD_UNIVERSITIES.find(u => u.id === uniId) : null;
+        if (uni) {
+            selectedPresetUni = uni;
+            if (selectUniPreset) selectUniPreset.value = uni.id;
+            if (inpUni) {
+                inpUni.value = uni.name;
+                inpUni.readOnly = false;
+            }
+            if (autoColor && uni.color && inpColor) {
+                inpColor.value = uni.color;
+            }
+            customLogoSrc = null;
+            if (inpLogo) inpLogo.value = "";
+            logoSrc = uni.logo;
+            updateLogoBadge(uni.name, uni.logo, false);
+
+            if (uniPills) {
+                uniPills.forEach(pill => {
+                    if (pill.dataset.uni === uni.id) {
+                        pill.style.background = "var(--primary)";
+                        pill.style.color = "#fff";
+                        pill.style.borderColor = "var(--primary)";
+                        try {
+                            pill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                        } catch(e) {}
+                    } else {
+                        pill.style.background = "var(--bg-primary)";
+                        pill.style.color = "var(--text-primary)";
+                        pill.style.borderColor = "var(--border-color)";
+                    }
+                });
+            }
+            render();
+        }
+    }
+
+    if (selectUniPreset) {
+        selectUniPreset.addEventListener("change", (e) => {
+            applyUniversityPreset(e.target.value);
+        });
+    }
+
+    if (uniPills) {
+        uniPills.forEach(pill => {
+            pill.addEventListener("click", () => {
+                applyUniversityPreset(pill.dataset.uni);
+            });
+        });
+    }
+
     if (inpLogo) {
         inpLogo.addEventListener("change", (e) => {
             const file = e.target.files[0];
@@ -665,7 +755,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 reader.onload = (event) => {
                     customLogoSrc = event.target.result;
                     logoSrc = customLogoSrc;
-                    if (btnResetLogo) btnResetLogo.style.display = "inline-block";
+                    updateLogoBadge("Custom Uploaded Logo", customLogoSrc, true);
                     render();
                 };
                 reader.readAsDataURL(file);
@@ -677,8 +767,16 @@ document.addEventListener("DOMContentLoaded", () => {
         btnResetLogo.addEventListener("click", () => {
             customLogoSrc = null;
             if (inpLogo) inpLogo.value = "";
-            logoSrc = (currentMode === "seu" ? seuLogo : defaultLogo);
-            btnResetLogo.style.display = "none";
+            if (selectedPresetUni) {
+                logoSrc = selectedPresetUni.logo;
+                updateLogoBadge(selectedPresetUni.name, selectedPresetUni.logo, false);
+            } else if (currentMode === "seu") {
+                logoSrc = seuLogo;
+                updateLogoBadge("Southeast University", seuLogo, false);
+            } else {
+                logoSrc = defaultLogo;
+                updateLogoBadge("", defaultLogo);
+            }
             render();
         });
     }
@@ -846,18 +944,21 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const toolTitleEl = document.querySelector(".tool-title");
+        const urlUni = urlParams.get("uni");
         if (urlMode === "seu") {
-            inpUni.value = "Southeast University";
-            inpUni.readOnly = true;
-            logoSrc = seuLogo;
-            if (inpColor) inpColor.value = "#003366";
+            applyUniversityPreset("seu");
             if (toolTitleEl) toolTitleEl.textContent = "📄 Assignment Cover Generator (SEU)";
             document.title = "Assignment Cover Generator (SEU) - ToolX Pro";
+        } else if (urlUni) {
+            applyUniversityPreset(urlUni.toLowerCase());
+            if (toolTitleEl) toolTitleEl.textContent = "📄 Assignment Cover Generator";
+            document.title = "Assignment Cover Generator - ToolX Pro";
         } else {
             inpUni.value = "";
             inpUni.readOnly = false;
             inpUni.placeholder = "e.g. University of Dhaka";
             logoSrc = defaultLogo;
+            updateLogoBadge("", defaultLogo);
             if (toolTitleEl) toolTitleEl.textContent = "📄 Assignment Cover Generator (All Universities)";
             document.title = "Assignment Cover Generator (All Universities) - ToolX Pro";
         }

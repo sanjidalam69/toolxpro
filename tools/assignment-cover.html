@@ -260,6 +260,62 @@
             }
         }
 
+        /* ── Mobile-friendly University Presets & Swipeable Pills ── */
+        .uni-preset-box {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 12px;
+            margin-bottom: 14px;
+        }
+        .uni-quick-pills {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            gap: 6px;
+            padding: 2px 2px 8px 2px;
+            scrollbar-width: thin;
+        }
+        .uni-quick-pills::-webkit-scrollbar {
+            height: 4px;
+        }
+        .uni-quick-pills::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+        .btn-uni-pill {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 5px 12px;
+            font-size: 0.76rem;
+            font-weight: 600;
+            cursor: pointer;
+            color: var(--text-primary);
+            white-space: nowrap;
+            flex-shrink: 0;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+            touch-action: manipulation;
+            transition: all 0.2s ease;
+        }
+        .btn-uni-pill:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+        @media (max-width: 576px) {
+            .uni-preset-box {
+                padding: 10px;
+            }
+            .btn-uni-pill {
+                padding: 6px 11px;
+                font-size: 0.74rem;
+                min-height: 32px;
+            }
+        }
+
         .action-buttons {
             display: flex;
             gap: 12px;
@@ -1249,17 +1305,109 @@
 
                             <!-- University Info -->
                             <h3 class="form-section-title">🏛️ University Details</h3>
+                            
+                            <div class="uni-preset-box">
+                                <label class="form-label" for="select-university-preset" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:4px;">
+                                    <span style="font-weight:700;">Select University (Auto-fill Logo & Name)</span>
+                                    <span style="font-size:0.75rem; background:rgba(30,58,138,0.1); color:var(--primary); padding:2px 8px; border-radius:12px; font-weight:700;">⚡ 31+ Official BD Logos</span>
+                                </label>
+                                <select id="select-university-preset" class="form-control-sm" style="width:100%; cursor:pointer; font-weight:600; padding:10px 10px; margin-bottom:10px;">
+                                    <option value="">-- Choose Bangladeshi University --</option>
+                                    <optgroup label="🏢 Top Private Universities (14)">
+                                        <option value="nsu">North South University (NSU)</option>
+                                        <option value="bracu">BRAC University (BRACU)</option>
+                                        <option value="iub">Independent University, Bangladesh (IUB)</option>
+                                        <option value="ewu">East West University (EWU)</option>
+                                        <option value="seu">Southeast University (SEU)</option>
+                                        <option value="aiub">American International University-Bangladesh (AIUB)</option>
+                                        <option value="uiu">United International University (UIU)</option>
+                                        <option value="ulab">University of Liberal Arts Bangladesh (ULAB)</option>
+                                        <option value="diu">Daffodil International University (DIU)</option>
+                                        <option value="aust">Ahsanullah University of Science and Technology (AUST)</option>
+                                        <option value="uap">University of Asia Pacific (UAP)</option>
+                                        <option value="bubt">Bangladesh University of Business and Technology (BUBT)</option>
+                                        <option value="iiuc">International Islamic University Chittagong (IIUC)</option>
+                                        <option value="gub">Green University of Bangladesh (GUB)</option>
+                                    </optgroup>
+                                    <optgroup label="🏛️ Top Public Universities (17)">
+                                        <option value="du">University of Dhaka (DU)</option>
+                                        <option value="buet">Bangladesh University of Engineering and Technology (BUET)</option>
+                                        <option value="kuet">Khulna University of Engineering & Technology (KUET)</option>
+                                        <option value="sust">Shahjalal University of Science and Technology (SUST)</option>
+                                        <option value="ju">Jahangirnagar University (JU)</option>
+                                        <option value="ru">University of Rajshahi (RU)</option>
+                                        <option value="cu">University of Chittagong (CU)</option>
+                                        <option value="cuet">Chittagong University of Engineering & Technology (CUET)</option>
+                                        <option value="ruet">Rajshahi University of Engineering & Technology (RUET)</option>
+                                        <option value="ku">Khulna University (KU)</option>
+                                        <option value="bau">Bangladesh Agricultural University (BAU)</option>
+                                        <option value="butex">Bangladesh University of Textiles (BUTEX)</option>
+                                        <option value="bup">Bangladesh University of Professionals (BUP)</option>
+                                        <option value="jnu">Jagannath University (JnU)</option>
+                                        <option value="cou">Comilla University (CoU)</option>
+                                        <option value="iu">Islamic University, Bangladesh (IU)</option>
+                                        <option value="nu">National University (NU)</option>
+                                    </optgroup>
+                                    <option value="custom">✏️ Custom University (Manual Entry)</option>
+                                </select>
+
+                                <!-- Mobile swipeable quick preset badges -->
+                                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">
+                                    <span style="font-size:0.75rem; color:var(--text-secondary); font-weight:700;">⚡ Quick 1-Click Pick:</span>
+                                    <span style="font-size:0.7rem; color:var(--text-secondary); font-weight:600;">👈 Swipe 👉</span>
+                                </div>
+                                <div class="uni-quick-pills">
+                                    <button type="button" class="btn-uni-pill" data-uni="nsu">🏢 NSU</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="bracu">🏢 BRACU</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="iub">🏢 IUB</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="ewu">🏢 EWU</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="seu">🏢 SEU</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="aiub">🏢 AIUB</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="uiu">🏢 UIU</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="ulab">🏢 ULAB</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="diu">🏢 DIU</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="aust">🏢 AUST</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="uap">🏢 UAP</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="bubt">🏢 BUBT</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="iiuc">🏢 IIUC</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="gub">🏢 GUB</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="du">🏛️ DU</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="buet">🏛️ BUET</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="kuet">🏛️ KUET</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="sust">🏛️ SUST</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="ju">🏛️ JU</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="ru">🏛️ RU</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="cu">🏛️ CU</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="cuet">🏛️ CUET</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="ruet">🏛️ RUET</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="ku">🏛️ KU</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="bau">🏛️ BAU</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="butex">🏛️ BUTEX</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="bup">🏛️ BUP</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="jnu">🏛️ JnU</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="cou">🏛️ CoU</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="iu">🏛️ IU</button>
+                                    <button type="button" class="btn-uni-pill" data-uni="nu">🏛️ NU</button>
+                                </div>
+                            </div>
+
                             <div class="input-grid full">
                                 <div>
                                     <label class="form-label">University Name</label>
-                                    <input type="text" id="inp-uni" class="form-control-sm" value="" placeholder="">
+                                    <input type="text" id="inp-uni" class="form-control-sm" value="" placeholder="e.g. University of Dhaka">
                                 </div>
                                 <div>
                                     <div style="display:flex; justify-content:space-between; align-items:center;">
-                                        <label class="form-label" style="margin-bottom:0;">Upload Logo</label>
+                                        <label class="form-label" style="margin-bottom:0;">University Logo</label>
                                         <button type="button" id="btn-reset-logo" style="display:none; background:none; border:none; color:#ef4444; font-size:0.78rem; font-weight:700; cursor:pointer; padding:0 4px;">✖ Reset</button>
                                     </div>
+                                    <div id="active-logo-badge" style="display:none; align-items:center; gap:8px; padding:6px 10px; background:var(--bg-primary); border:1px solid var(--border-color); border-radius:6px; margin:4px 0 6px 0;">
+                                        <img id="badge-logo-img" src="" alt="Logo" style="height:26px; width:26px; object-fit:contain; border-radius:3px; background:#fff;">
+                                        <span id="badge-logo-text" style="font-size:0.8rem; font-weight:600; color:var(--text-primary); flex:1; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;">Official Logo</span>
+                                        <span style="font-size:0.7rem; background:#10b981; color:#fff; padding:1px 6px; border-radius:4px; font-weight:700;">Active</span>
+                                    </div>
                                     <input type="file" id="inp-logo" accept="image/*" class="form-control-sm" style="margin-top:4px;">
+                                    <span style="display:block; font-size:0.72rem; color:var(--text-secondary); margin-top:2px;">Upload custom logo image to override preset</span>
                                 </div>
                             </div>
 
@@ -1544,16 +1692,16 @@
                         </h3>
                         <div style="display: flex; flex-direction: column; gap: 0.9rem; margin-bottom: 2rem;">
                             <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.2rem;">
-                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">Can I use this assignment cover generator for any university?</h4>
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">Can I use this assignment cover generator for my university?</h4>
                                 <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">
-                                    Yes! Under the 'All Universities' mode, you can type your university or college name, department, course information, and upload your custom institution logo. It works for public universities (DU, BUET, RU, JU), private universities (NSU, BRACU, AIUB, UIU, SEU, DIU), national university affiliated colleges, and schools.
+                                    Yes! ToolX Pro features built-in official logos and verified branding for <strong>31+ top Bangladeshi universities</strong>—including top Private Universities (NSU, BRACU, IUB, EWU, SEU, AIUB, UIU, ULAB, DIU, AUST, UAP, BUBT, IIUC, GUB) and Public Universities (DU, BUET, KUET, SUST, JU, RU, CU, CUET, RUET, KU, BAU, BUTEX, BUP, JnU, CoU, IU, NU). You can select your university with 1 click or mobile swipe, or choose 'Custom University' to type any university/college name and upload your own institution logo.
                                 </p>
                             </div>
 
                             <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.2rem;">
-                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">How do I upload my university's official logo?</h4>
+                                <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 0.4rem;">How do I select or upload my university's official logo?</h4>
                                 <p style="font-size: 0.92rem; color: var(--text-secondary); margin: 0;">
-                                    In the form controls under 'Institution Logo', click 'Upload Custom Logo' and choose any PNG, JPG, or SVG image file from your device. For optimal visual quality, use a transparent PNG emblem with at least 500&times;500 pixel resolution.
+                                    Simply choose your university from the 'Select University' dropdown or swipe through the 1-click quick badges at the top of the form. The official vector logo, university title, and verified institutional theme color will automatically load. If your department uses a specialized crest or your university is not in the preset list, choose 'Upload custom logo image' to upload any PNG, JPG, or SVG emblem file from your device.
                                 </p>
                             </div>
 
@@ -1608,7 +1756,8 @@
     </div>
     
     <script src="../js/layout.js?v=73.0"></script>
-    <script src="../js/tools/assignment-cover.js?v=73.0"></script>
+    <script src="../js/bd-universities.js"></script>
+    <script src="../js/tools/assignment-cover.js?v=74.0"></script>
 </body>
 </html>
 

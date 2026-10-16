@@ -7,6 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
     const inpDeptName       = document.getElementById("inp-dept-name");
     const inpLogoFile       = document.getElementById("inp-logo-file");
     const btnResetLogo      = document.getElementById("btn-reset-logo");
+    const btnResetLogoAction= document.getElementById("btn-reset-logo-action");
+    const selectUniPreset   = document.getElementById("select-university-preset");
+    const activeLogoBadge   = document.getElementById("active-logo-badge");
+    const badgeLogoImg      = document.getElementById("badge-logo-img");
+    const badgeLogoText     = document.getElementById("badge-logo-text");
+    const uniPills          = document.querySelectorAll(".btn-uni-pill");
+    let selectedPresetUni   = null;
 
     const inpCourseTitle    = document.getElementById("inp-course-title");
     const inpCourseCode     = document.getElementById("inp-course-code");
@@ -64,6 +71,78 @@ document.addEventListener("DOMContentLoaded", () => {
     let activeLogo = defaultLogo;
     let customLogoSrc = null;
 
+    // ── University Preset & Badge Helpers ──────────────────────────────
+    function updateLogoBadge(name, src, isCustom = false) {
+        if (!activeLogoBadge) return;
+        if (src && src !== defaultLogo) {
+            activeLogoBadge.style.display = "flex";
+            if (badgeLogoImg) badgeLogoImg.src = src;
+            if (badgeLogoText) badgeLogoText.textContent = isCustom ? "Custom Uploaded Logo" : (name || "Official Logo");
+            if (btnResetLogo) btnResetLogo.style.display = "inline-block";
+        } else {
+            activeLogoBadge.style.display = "none";
+            if (btnResetLogo) btnResetLogo.style.display = "none";
+        }
+    }
+
+    function applyUniversityPreset(uniId, autoColor = true) {
+        if (!uniId || uniId === "custom") {
+            selectedPresetUni = null;
+            if (selectUniPreset) selectUniPreset.value = uniId || "";
+            if (customLogoSrc) {
+                activeLogo = customLogoSrc;
+                updateLogoBadge("Custom Logo", customLogoSrc, true);
+            } else {
+                activeLogo = (currentMode === "seu" ? seuLogo : defaultLogo);
+                updateLogoBadge(currentMode === "seu" ? "Southeast University" : "", activeLogo);
+            }
+            if (uniPills) {
+                uniPills.forEach(pill => {
+                    pill.style.background = "var(--bg-primary)";
+                    pill.style.color = "var(--text-primary)";
+                    pill.style.borderColor = "var(--border-color)";
+                });
+            }
+            renderPreview();
+            return;
+        }
+
+        const uni = (typeof BD_UNIVERSITIES !== "undefined") ? BD_UNIVERSITIES.find(u => u.id === uniId) : null;
+        if (uni) {
+            selectedPresetUni = uni;
+            if (selectUniPreset) selectUniPreset.value = uni.id;
+            if (inpUniName) {
+                inpUniName.value = uni.name.toUpperCase();
+                inpUniName.placeholder = uni.name.toUpperCase();
+            }
+            if (autoColor && uni.color && inpColor) {
+                inpColor.value = uni.color;
+            }
+            customLogoSrc = null;
+            if (inpLogoFile) inpLogoFile.value = "";
+            activeLogo = uni.logo;
+            updateLogoBadge(uni.name, uni.logo, false);
+
+            if (uniPills) {
+                uniPills.forEach(pill => {
+                    if (pill.dataset.uni === uni.id) {
+                        pill.style.background = "var(--primary)";
+                        pill.style.color = "#fff";
+                        pill.style.borderColor = "var(--primary)";
+                        try {
+                            pill.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                        } catch(e) {}
+                    } else {
+                        pill.style.background = "var(--bg-primary)";
+                        pill.style.color = "var(--text-primary)";
+                        pill.style.borderColor = "var(--border-color)";
+                    }
+                });
+            }
+            renderPreview();
+        }
+    }
+
     // ── Mode Initialization ────────────────────────────────────────────
     const urlParams = new URLSearchParams(window.location.search);
     const urlMode   = urlParams.get("mode"); // 'all', 'seu', or null
@@ -86,15 +165,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         const toolTitleEl = document.querySelector(".tool-title");
+        const urlUni = urlParams.get("uni");
         if (urlMode === "seu") {
-            if (inpUniName) {
-                inpUniName.value = "SOUTHEAST UNIVERSITY";
-                inpUniName.placeholder = "SOUTHEAST UNIVERSITY";
-            }
-            if (inpColor) inpColor.value = "#003366";
-            activeLogo = seuLogo;
+            applyUniversityPreset("seu");
             if (toolTitleEl) toolTitleEl.textContent = "🧪 Lab Report Cover Generator (SEU)";
             document.title = "Lab Report Cover Generator (SEU) - ToolX Pro";
+        } else if (urlUni) {
+            applyUniversityPreset(urlUni.toLowerCase());
+            if (toolTitleEl) toolTitleEl.textContent = "🧪 Lab Report Cover Generator";
+            document.title = "Lab Report Cover Generator - ToolX Pro";
         } else {
             if (inpUniName) {
                 inpUniName.value = "";
@@ -102,6 +181,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
             if (inpColor) inpColor.value = "#003366";
             activeLogo = customLogoSrc || defaultLogo;
+            updateLogoBadge("", defaultLogo);
             if (toolTitleEl) toolTitleEl.textContent = "🧪 Lab Report Cover Generator (All Universities)";
             document.title = "Lab Report Cover Generator (All Universities) - ToolX Pro";
         }
@@ -215,7 +295,21 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    // ── Logo Upload & Reset ────────────────────────────────────────────
+    // ── University Preset & Logo Listeners ─────────────────────────────
+    if (selectUniPreset) {
+        selectUniPreset.addEventListener("change", (e) => {
+            applyUniversityPreset(e.target.value);
+        });
+    }
+
+    if (uniPills) {
+        uniPills.forEach(pill => {
+            pill.addEventListener("click", () => {
+                applyUniversityPreset(pill.dataset.uni);
+            });
+        });
+    }
+
     if (inpLogoFile) {
         inpLogoFile.addEventListener("change", (e) => {
             const file = e.target.files[0];
@@ -224,6 +318,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 reader.onload = (event) => {
                     customLogoSrc = event.target.result;
                     activeLogo = customLogoSrc;
+                    updateLogoBadge("Custom Uploaded Logo", customLogoSrc, true);
                     renderPreview();
                 };
                 reader.readAsDataURL(file);
@@ -231,14 +326,24 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-    if (btnResetLogo) {
-        btnResetLogo.addEventListener("click", () => {
-            customLogoSrc = null;
-            if (inpLogoFile) inpLogoFile.value = "";
-            activeLogo = (currentMode === "seu") ? seuLogo : defaultLogo;
-            renderPreview();
-        });
-    }
+    const resetLogoHandler = () => {
+        customLogoSrc = null;
+        if (inpLogoFile) inpLogoFile.value = "";
+        if (selectedPresetUni) {
+            activeLogo = selectedPresetUni.logo;
+            updateLogoBadge(selectedPresetUni.name, selectedPresetUni.logo, false);
+        } else if (currentMode === "seu") {
+            activeLogo = seuLogo;
+            updateLogoBadge("Southeast University", seuLogo, false);
+        } else {
+            activeLogo = defaultLogo;
+            updateLogoBadge("", defaultLogo);
+        }
+        renderPreview();
+    };
+
+    if (btnResetLogo) btnResetLogo.addEventListener("click", resetLogoHandler);
+    if (btnResetLogoAction) btnResetLogoAction.addEventListener("click", resetLogoHandler);
 
     // ── Template Picker Handlers ───────────────────────────────────────
     const tplBtns = document.querySelectorAll(".tpl-btn");
