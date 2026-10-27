@@ -193,7 +193,33 @@
                         </div>
                     </div>
 
-                    <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-primary); margin-top: 2rem; margin-bottom: 1rem;">
+                    
+                    <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-primary); margin-top: 2rem; margin-bottom: 0.8rem;">
+                        Ethical Guidelines for AI-Assisted Writing & Content Integrity
+                    </h3>
+                    <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1rem;">
+                        Artificial intelligence should serve as an intellectual multiplier rather than an uncritical replacement for human thought. When integrating generative tools into academic manuscripts, creative storytelling, or professional communications, adhering to proven editorial standards ensures your work maintains its authentic voice, scholarly rigor, and credibility.
+                    </p>
+                    <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem; margin-bottom: 1.5rem;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">
+                            The Four Pillars of High-Integrity AI Workflow:
+                        </h4>
+                        <ul style="padding-left: 1.4rem; font-size: 0.92rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 8px; margin: 0;">
+                            <li><strong>Syntactic Re-Cadence:</strong> Large language models produce uniform, mid-length sentences. Real human prose alternates between crisp, punchy assertions and detailed explanatory clauses.</li>
+                            <li><strong>Fact & Source Verification:</strong> Never accept statistical data, legal citations, or historical dates from an AI model without independently consulting primary peer-reviewed sources.</li>
+                            <li><strong>Tone & Cultural Contextualization:</strong> AI defaults to a corporate, risk-averse dialect. Tailor vocabulary choices to reflect regional terminology, institutional conventions, and personal experiences.</li>
+                            <li><strong>Transparent Academic Compliance:</strong> Familiarize yourself with institutional guidelines (such as UGC Bangladesh, APA 7th edition, or IEEE standards) regarding permissible AI collaboration and proper attribution.</li>
+                        </ul>
+                    </div>
+
+                    <h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-primary); margin-top: 2rem; margin-bottom: 0.8rem;">
+                        Data Privacy & Zero-Retention Security Architecture
+                    </h3>
+                    <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 1.5rem;">
+                        Many commercial AI writing platforms harvest submitted drafts to train upcoming iterations of their proprietary models, posing severe risks for non-disclosure agreements, proprietary corporate research, and unpublished student theses. ToolX Pro routes requests through secure stateless serverless edge workers without retaining a single paragraph in long-term databases. When you close the browser tab, all session caches are immediately cleared from volatile RAM.
+                    </p>
+
+<h3 style="font-size: 1.3rem; font-weight: 800; color: var(--text-primary); margin-top: 2rem; margin-bottom: 1rem;">
                         Frequently Asked Questions (FAQ)
                     </h3>
                     <div style="display: flex; flex-direction: column; gap: 1rem;">
@@ -205,7 +231,16 @@
                             <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem;">Q: Is my submitted text retained or used to train AI models?</h4>
                             <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">Never. Queries are routed securely via stateless Cloudflare Workers directly to inference endpoints with zero persistent logging, memory caching, or model retraining.</p>
                         </div>
-                    </div>
+                    
+                        <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.2rem;">
+                            <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem;">Q: Can AI detectors accurately tell the difference between human and machine writing?</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">AI detectors rely on mathematical approximations of perplexity (word choice unpredictability) and burstiness (sentence rhythm variation). While they are effective at identifying repetitive synthetic patterns, they can occasionally flag highly technical human writing as AI. ToolX Pro recommends using detection results as an editorial guide rather than an absolute verdict.</p>
+                        </div>
+                        <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; padding: 1.2rem;">
+                            <h4 style="font-size: 1rem; font-weight: 700; margin-bottom: 0.4rem;">Q: Are ToolX Pro AI tools compatible with low-bandwidth mobile networks?</h4>
+                            <p style="font-size: 0.9rem; color: var(--text-secondary); margin: 0;">Yes. Our interface uses lightweight, client-side web components with minimal script overhead. The actual API payloads are compressed via HTTP/2 and HTTP/3 streaming, ensuring ultra-fast response times even on 3G and 4G mobile connections across Bangladesh.</p>
+                        </div>
+</div>
 
                 </article>
 

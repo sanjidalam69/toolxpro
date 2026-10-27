@@ -163,7 +163,24 @@
                         <li><strong>Commercial Offset Printing (300 DPI):</strong> Necessary only for high-end marketing brochures, academic hardcovers, and photographic portfolios.</li>
                     </ul>
 
-                    <h2 style="font-family:var(--font-header); font-size:1.45rem; font-weight:700; color:var(--primary);">❓ Frequently Asked Questions (FAQ)</h2>
+                    
+                    <h2 style="font-family:var(--font-header); font-size:1.45rem; font-weight:700; color:var(--primary);">🏛️ Long-Term Preservation & PDF/A Conformance Guidelines</h2>
+                    <p>
+                        Standard PDF files frequently link to external fonts installed on the creator's local computer or reference dynamic external media scripts. If that document is opened a decade later on a different computer where those fonts do not exist, the visual formatting can degrade severely. For legal contracts, government filings, medical records, and university theses, the International Organization for Standardization (ISO) established the <strong>PDF/A (PDF for Archiving)</strong> standard.
+                    </p>
+                    <div style="background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.4rem; margin-bottom: 1.5rem;">
+                        <h4 style="font-size: 1.05rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">
+                            Core Requirements of Long-Term PDF/A Compliance:
+                        </h4>
+                        <ul style="padding-left: 1.4rem; font-size: 0.92rem; color: var(--text-secondary); display: flex; flex-direction: column; gap: 8px; margin: 0;">
+                            <li><strong>Mandatory 100% Font Embedding:</strong> Every character glyph used in the document must be physically embedded within the file's binary stream, ensuring exact visual fidelity 50 years into the future.</li>
+                            <li><strong>Device-Independent Color Profiles:</strong> Colors must be defined using standardized ICC color profiles (such as sRGB) rather than device-dependent RGB or CMYK spaces.</li>
+                            <li><strong>Ban on Dynamic Content & Encryption:</strong> PDF/A strictly forbids JavaScript, audio/video embeds, and password encryption, ensuring the document can be opened and verified without external keys or proprietary plugins.</li>
+                            <li><strong>Structured Extensible Metadata (XMP):</strong> Incorporates formal Dublin Core and ISO schema tags (title, author, creation timestamp, copyright) embedded directly into the file header.</li>
+                        </ul>
+                    </div>
+
+<h2 style="font-family:var(--font-header); font-size:1.45rem; font-weight:700; color:var(--primary);">❓ Frequently Asked Questions (FAQ)</h2>
                     
                     <div style="display:flex; flex-direction:column; gap:12px; margin-top:0.6rem;">
                         <div style="background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:10px; padding:1.1rem;">

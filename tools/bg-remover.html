@@ -39,6 +39,40 @@
     <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
     <link rel="manifest" href="/site.webmanifest">
     <meta name="theme-color" content="#F57C00">
+
+    <!-- Schema.org FAQPage -->
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+        {
+            "@type": "Question",
+            "name": "Is my personal photo uploaded or stored on any external server?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "No. 100% of the neural segmentation, color matrix computation, and pixel erasing occurs locally inside your web browser via WebGL and WebAssembly. Your photos, private signatures, and documents never leave your physical device."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "How do I remove a white background from a photographed signature?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Upload your signature photo, select Color Key / Click Sampler from the tool dropdown, and click once on the white paper background. ToolX Pro instantly renders the paper transparent while preserving crisp pen ink lines."
+            }
+        },
+        {
+            "@type": "Question",
+            "name": "What image formats are supported for background removal?",
+            "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "ToolX Pro supports JPG, JPEG, PNG, and WebP image formats with instant client-side transparent PNG export."
+            }
+        }
+    ]
+}
+    </script>
 </head>
 <body>
     <div id="app-container">
