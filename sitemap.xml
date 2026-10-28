@@ -3,7 +3,7 @@
     <!-- Homepage -->
     <url>
         <loc>https://toolxpro.live/</loc>
-        <lastmod>2026-10-16</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>daily</changefreq>
         <priority>1.0</priority>
     </url>
@@ -11,69 +11,75 @@
     <!-- Essential Policy & Info Pages -->
     <url>
         <loc>https://toolxpro.live/about</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/contact</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/privacy-policy</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.8</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/terms</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/disclaimer</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>monthly</changefreq>
         <priority>0.7</priority>
     </url>
 
     <!-- 6 Category Hub Pages (Hub-and-Spoke Architecture) -->
     <url>
+        <loc>https://toolxpro.live/blog</loc>
+        <lastmod>2026-10-28</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+    </url>
+    <url>
         <loc>https://toolxpro.live/categories/student</loc>
-        <lastmod>2026-10-16</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.95</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/categories/pdf</loc>
-        <lastmod>2026-09-27</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.95</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/categories/image</loc>
-        <lastmod>2026-09-27</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.95</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/categories/ai</loc>
-        <lastmod>2026-10-16</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.95</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/categories/calculators</loc>
-        <lastmod>2026-09-27</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.95</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/categories/bangla</loc>
-        <lastmod>2026-10-16</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.95</priority>
     </url>
@@ -81,79 +87,79 @@
     <!-- Blog & Guides (12 Authoritative Guides) -->
     <url>
         <loc>https://toolxpro.live/blog/ai-detector-guide</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/blog/bangla-voice-typing-guide</loc>
-        <lastmod>2026-10-16</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/blog/ai-writing-guide</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/blog/bd-cgpa-guide</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/blog/assignment-cover-guide</loc>
-        <lastmod>2026-10-16</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/blog/lab-report-cover-guide</loc>
-        <lastmod>2026-10-16</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/blog/how-to-calculate-bmi</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/blog/best-pdf-tools</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/blog/image-compression-guide</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/blog/qr-code-technology-guide</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/blog/complete-image-optimization-guide</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/blog/academic-grading-systems-guide</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/blog/pdf-document-management-guide</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
     </url>
@@ -161,151 +167,151 @@
     <!-- 24 Production Utility Tools -->
     <url>
         <loc>https://toolxpro.live/tools/ai-detector</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.95</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/ai-humanizer</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.95</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/speech-to-bangla</loc>
-        <lastmod>2026-10-16</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.95</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/grammar-fixer</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.95</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/assignment-cover</loc>
-        <lastmod>2026-10-16</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.95</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/lab-report-cover</loc>
-        <lastmod>2026-10-16</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.95</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/bd-gpa</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/bd-cgpa</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/pdf-to-word</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/pdf-merge</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/image-to-pdf</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/pdf-compressor</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/pdf-reorder</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/image-compressor</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/image-converter</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/passport-photo</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/bg-remover</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/age-calculator</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/bmi-calculator</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/word-counter</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/bangla-unicode</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/qr-generator</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.9</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/qr-scanner</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/unit-converter</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
     </url>
     <url>
         <loc>https://toolxpro.live/tools/file-size-converter</loc>
-        <lastmod>2026-09-25</lastmod>
+        <lastmod>2026-10-28</lastmod>
         <changefreq>weekly</changefreq>
         <priority>0.85</priority>
     </url>
