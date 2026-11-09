@@ -21,6 +21,7 @@
 
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-6731712917349369">
 
     <!-- Open Graph / Social -->
     <meta property="og:type" content="website">
@@ -74,7 +75,47 @@
 <body>
     <div id="app-container">
         <!-- Header Injected dynamically by layout.js -->
-        <header id="main-header"></header>
+        <header id="main-header" class="header-nav">
+        <a href="/" class="logo-container" style="display:flex; align-items:center; gap:8px;">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 6px rgba(251, 140, 0, 0.4)); flex-shrink:0;">
+                <rect width="32" height="32" rx="10" fill="url(#logo-grad-header)" />
+                <path d="M10 10L22 22" stroke="white" stroke-width="4" stroke-linecap="round" />
+                <path d="M22 10L10 22" stroke="rgba(255,255,255,0.6)" stroke-width="4" stroke-linecap="round" />
+                <circle cx="16" cy="16" r="3" fill="#E65100" />
+                <defs>
+                    <linearGradient id="logo-grad-header" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#FFCA28" />
+                        <stop offset="1" stop-color="#F57C00" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            <span class="logo-text">ToolX<span class="logo-pro-badge">PRO</span></span>
+        </a>
+        <nav aria-label="Main Navigation">
+        <ul class="nav-menu">
+            <li><a href="/" class="nav-menu-link">Home</a></li>
+            <li><a href="/#categories-section" class="nav-menu-link">Categories</a></li>
+            <li><a href="/blog" class="nav-menu-link">Blog</a></li>
+            <li><a href="/about" class="nav-menu-link">About</a></li>
+            <li><a href="/contact" class="nav-menu-link">Contact</a></li>
+        </ul>
+        </nav>
+        <div class="nav-actions">
+            <button id="header-install-pwa-btn" class="header-install-app-btn" title="Install ToolX Pro Web App" style="display:none;" aria-label="Install App">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                </svg>
+                <span>Install App</span>
+            </button>
+            <div id="theme-toggle-btn" class="theme-switch" role="button" tabindex="0" title="Toggle Light/Dark Theme">
+                <span class="switch-icon sun">☀️</span>
+                <span class="switch-icon moon">🌙</span>
+                <span class="switch-thumb"></span>
+            </div>
+            <button id="hamburger-menu-btn" class="hamburger-btn" title="Open Menu">☰</button>
+        </div>
+    </header>
 
         <main class="main-wrapper" style="flex-direction: column;">
             
@@ -108,7 +149,7 @@
                 <div class="tools-grid" id="category-tools-grid">
                     
                     <!-- 1. Unicode to Bijoy Converter -->
-                    <a href="../tools/bangla-unicode.html" class="tool-card" data-keywords="unicode to bijoy converter avro to bijoy sutonnymj ms word illustrator photoshop printing press popular">
+                    <a href="../tools/bangla-unicode" class="tool-card" data-keywords="unicode to bijoy converter avro to bijoy sutonnymj ms word illustrator photoshop printing press popular">
                         <span class="tool-badge badge-popular">Popular</span>
                         <div class="tool-card-icon icon-unicode">🔄</div>
                         <h3 class="tool-card-title">Unicode → Bijoy Converter</h3>
@@ -117,7 +158,7 @@
                     </a>
 
                     <!-- 2. Bijoy to Unicode Converter -->
-                    <a href="../tools/bangla-unicode.html" class="tool-card" data-keywords="bijoy to unicode converter sutonnymj to avro web bangla facebook website article publish">
+                    <a href="../tools/bangla-unicode" class="tool-card" data-keywords="bijoy to unicode converter sutonnymj to avro web bangla facebook website article publish">
                         <span class="tool-badge badge-secure">Essential</span>
                         <div class="tool-card-icon icon-unicode">🔤</div>
                         <h3 class="tool-card-title">Bijoy → Unicode Converter</h3>
@@ -126,7 +167,7 @@
                     </a>
 
                     <!-- 3. Bangla Voice Typing & Real-time Speech-to-Text -->
-                    <a href="../tools/speech-to-bangla.html" class="tool-card" data-keywords="bangla voice typing বাংলায় কথা বলা banglai kotha bola কথা বলে বাংলা লেখা kotha bole bangla lekha মুখে বলে বাংলা টাইপ mukhe bole bangla type speech to text bangla voice to text english to bangla voice translator voice to bijoy 52 converter">
+                    <a href="../tools/speech-to-bangla" class="tool-card" data-keywords="bangla voice typing বাংলায় কথা বলা banglai kotha bola কথা বলে বাংলা লেখা kotha bole bangla lekha মুখে বলে বাংলা টাইপ mukhe bole bangla type speech to text bangla voice to text english to bangla voice translator voice to bijoy 52 converter">
                         <span class="tool-badge badge-popular" style="background: linear-gradient(135deg, #f59e0b, #d97706); color: #fff;">Voice AI</span>
                         <div class="tool-card-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">🎙️</div>
                         <h3 class="tool-card-title">Bangla Voice Typing & Translator</h3>
@@ -232,31 +273,31 @@
                         Explore Other Tool Categories on ToolX Pro
                     </h3>
                     <div class="compact-category-grid">
-                        <a href="student.html" class="compact-cat-card">
+                        <a href="student" class="compact-cat-card">
                             <div class="cat-icon-small bg-purple">🎓</div>
                             <span class="cat-name">Student Corner</span>
                             <span class="cat-sub">4 Tools</span>
                             <div class="cat-line line-purple"></div>
                         </a>
-                        <a href="pdf.html" class="compact-cat-card">
+                        <a href="pdf" class="compact-cat-card">
                             <div class="cat-icon-small bg-red">📄</div>
                             <span class="cat-name">PDF Tools</span>
                             <span class="cat-sub">5 Tools</span>
                             <div class="cat-line line-red"></div>
                         </a>
-                        <a href="image.html" class="compact-cat-card">
+                        <a href="image" class="compact-cat-card">
                             <div class="cat-icon-small bg-green">🖼️</div>
                             <span class="cat-name">Image Tools</span>
                             <span class="cat-sub">4 Tools</span>
                             <div class="cat-line line-green"></div>
                         </a>
-                        <a href="ai.html" class="compact-cat-card">
+                        <a href="ai" class="compact-cat-card">
                             <div class="cat-icon-small bg-pink">🤖</div>
                             <span class="cat-name">AI Tools</span>
                             <span class="cat-sub">4 Tools</span>
                             <div class="cat-line line-pink"></div>
                         </a>
-                        <a href="calculators.html" class="compact-cat-card">
+                        <a href="calculators" class="compact-cat-card">
                             <div class="cat-icon-small bg-teal">🧮</div>
                             <span class="cat-name">Calculators</span>
                             <span class="cat-sub">6 Tools</span>
@@ -266,10 +307,71 @@
                 </section>
 
             </div>
-        </main>
+        
+                <div class="page-meta-info" style="margin-top: 2rem; padding: 1rem 1.5rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; font-size: 0.88rem; color: var(--text-secondary); display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center;">
+                        <span>✍️ Published by <strong style="color: var(--text-primary);">SmartVibe Labs</strong> (Sanjid Alam)</span>
+                        <span>📅 Last Updated: <strong style="color: var(--text-primary);">2026-11-08</strong></span>
+                    </div>
+            </main>
 
         <!-- Footer Injected dynamically by layout.js -->
-        <footer id="main-footer"></footer>
+        <footer id="main-footer" class="footer-container">
+        <div class="footer-compact-wrapper">
+            <div class="footer-compact-top">
+                <a href="/" class="footer-brand-logo" title="ToolX Pro Homepage">
+                    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+                        <rect width="32" height="32" rx="8" fill="url(#logo-grad-footer)" />
+                        <path d="M10 10L22 22" stroke="white" stroke-width="4" stroke-linecap="round" />
+                        <path d="M22 10L10 22" stroke="rgba(255,255,255,0.65)" stroke-width="4" stroke-linecap="round" />
+                        <circle cx="16" cy="16" r="3" fill="#E65100" />
+                        <defs>
+                            <linearGradient id="logo-grad-footer" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#FFCA28" />
+                                <stop offset="1" stop-color="#F57C00" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text" style="font-size:1.15rem;">ToolX<span class="logo-pro-badge" style="font-size:0.65rem;">PRO</span></span>
+                </a>
+
+                <nav class="footer-compact-nav" aria-label="Footer Navigation">
+                    <a href="/about">About</a>
+                    <span class="footer-nav-dot">•</span>
+                    <a href="/contact">Contact</a>
+                    <span class="footer-nav-dot">•</span>
+                    <a href="/blog">Blog</a>
+                    <span class="footer-nav-dot">•</span>
+                    <a href="/privacy-policy">Privacy Policy</a>
+                    <span class="footer-nav-dot">•</span>
+                    <a href="/terms">Terms</a>
+                    <span class="footer-nav-dot">•</span>
+                    <a href="/disclaimer">Disclaimer</a>
+                </nav>
+
+                <div class="footer-social-icons">
+                    <a href="https://github.com/sanjidalam69" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="GitHub" aria-label="GitHub">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/sanjid-alam-29752619b/" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="LinkedIn" aria-label="LinkedIn">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="https://www.facebook.com/sanjidalam69" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="Facebook" aria-label="Facebook">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="mailto:ai.sanjid.alam@gmail.com" class="footer-social-btn" title="Email" aria-label="Email">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-compact-bottom">
+                <p class="footer-copyright">
+                    © 2026 <strong>ToolX Pro</strong>. Founded &amp; developed by <a href="https://www.linkedin.com/in/sanjid-alam-29752619b/" target="_blank" rel="noopener noreferrer" class="footer-author-link">Sanjid Alam</a>. All rights reserved.
+                </p>
+                <span class="footer-client-tag">🔒 Privacy-Focused • No Account Required</span>
+            </div>
+        </div>
+    </footer>
     </div>
 
     <!-- Layout Script -->

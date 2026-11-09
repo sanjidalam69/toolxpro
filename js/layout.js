@@ -4,54 +4,54 @@ const CATEGORIES_DATA = [
         id: 'student',
         name: 'Student Corner',
         icon: '🎓',
-        file: 'student.html',
+        file: 'student',
         desc: 'Academic tools for Bangladeshi students: cover generators & GPA calculators.',
         tools: [
-            { id: 'assignment-cover', name: 'Assignment Cover Generator', desc: 'Create and download custom print-ready assignment cover pages for All Universities or Southeast University.', path: 'assignment-cover.html' },
-            { id: 'lab-report-cover', name: 'Lab Report Cover Generator', desc: 'Create and download print-ready Lab Report front pages with experiment details, dates, and faculty grading rubric.', path: 'lab-report-cover.html' },
-            { id: 'bd-gpa', name: 'SSC & HSC GPA Calculator', desc: 'Calculate your SSC/HSC board exam GPA with official 4th subject bonus rules (5.00 Scale).', path: 'bd-gpa.html' },
-            { id: 'bd-cgpa', name: 'BD University CGPA Calculator', desc: 'Calculate Cumulative CGPA & Semester GPA for National University, Public & Private Universities (UGC 4.00 Scale).', path: 'bd-cgpa.html' }
+            { id: 'assignment-cover', name: 'Assignment Cover Generator', desc: 'Create and download custom print-ready assignment cover pages for All Universities or Southeast University.', path: 'assignment-cover' },
+            { id: 'lab-report-cover', name: 'Lab Report Cover Generator', desc: 'Create and download print-ready Lab Report front pages with experiment details, dates, and faculty grading rubric.', path: 'lab-report-cover' },
+            { id: 'bd-gpa', name: 'SSC & HSC GPA Calculator', desc: 'Calculate your SSC/HSC board exam GPA with official 4th subject bonus rules (5.00 Scale).', path: 'bd-gpa' },
+            { id: 'bd-cgpa', name: 'BD University CGPA Calculator', desc: 'Calculate Cumulative CGPA & Semester GPA for National University, Public & Private Universities (UGC 4.00 Scale).', path: 'bd-cgpa' }
         ]
     },
     {
         id: 'pdf',
         name: 'PDF Tools',
         icon: '📄',
-        file: 'pdf.html',
+        file: 'pdf',
         desc: 'Convert, compress, merge, and split PDF documents locally.',
         tools: [
-            { id: 'pdf-compressor', name: 'PDF Compressor', desc: 'Reduce storage size of PDF files.', path: 'pdf-compressor.html' },
-            { id: 'pdf-merge', name: 'PDF Merge', desc: 'Combine multiple PDF files into one single PDF document.', path: 'pdf-merge.html' },
-            { id: 'pdf-to-word', name: 'PDF to Word Converter', desc: 'Convert PDF documents into editable Word files (.docx / .doc).', path: 'pdf-to-word.html' },
-            { id: 'pdf-reorder', name: 'PDF Page Split & Reorder', desc: 'Reorganize, split, or delete PDF pages easily.', path: 'pdf-reorder.html' },
-            { id: 'image-to-pdf', name: 'Image to PDF', desc: 'Combine multiple image files into a single clean PDF document.', path: 'image-to-pdf.html' }
+            { id: 'pdf-compressor', name: 'PDF Compressor', desc: 'Reduce storage size of PDF files.', path: 'pdf-compressor' },
+            { id: 'pdf-merge', name: 'PDF Merge', desc: 'Combine multiple PDF files into one single PDF document.', path: 'pdf-merge' },
+            { id: 'pdf-to-word', name: 'PDF to Word Converter', desc: 'Convert PDF documents into editable Word files (.docx / .doc).', path: 'pdf-to-word' },
+            { id: 'pdf-reorder', name: 'PDF Page Split & Reorder', desc: 'Reorganize, split, or delete PDF pages easily.', path: 'pdf-reorder' },
+            { id: 'image-to-pdf', name: 'Image to PDF', desc: 'Combine multiple image files into a single clean PDF document.', path: 'image-to-pdf' }
         ]
     },
     {
         id: 'image',
         name: 'Image Tools',
         icon: '🖼️',
-        file: 'image.html',
+        file: 'image',
         desc: 'Compress, convert, create biometric passport photos, and cut out backgrounds.',
         tools: [
-            { id: 'image-compressor', name: 'Image Compressor', desc: 'Reduce the file size of JPG, PNG, or WebP images while keeping quality.', path: 'image-compressor.html' },
-            { id: 'image-converter', name: 'Image Converter', desc: 'Convert image files instantly between JPG, PNG, and WebP formats.', path: 'image-converter.html' },
-            { id: 'passport-photo', name: 'AI Passport Photo Maker', desc: 'Create 2x2 inch / 35x45mm passport photos with auto face fit, virtual suits & A4 print sheet.', path: 'passport-photo.html' },
-            { id: 'bg-remover', name: 'Transparent PNG Generator', desc: 'Remove white/solid background from logos, signatures, and graphics.', path: 'bg-remover.html' }
+            { id: 'image-compressor', name: 'Image Compressor', desc: 'Reduce the file size of JPG, PNG, or WebP images while keeping quality.', path: 'image-compressor' },
+            { id: 'image-converter', name: 'Image Converter', desc: 'Convert image files instantly between JPG, PNG, and WebP formats.', path: 'image-converter' },
+            { id: 'passport-photo', name: 'AI Passport Photo Maker', desc: 'Create 2x2 inch / 35x45mm passport photos with auto face fit, virtual suits & A4 print sheet.', path: 'passport-photo' },
+            { id: 'bg-remover', name: 'Transparent PNG Generator', desc: 'Remove white/solid background from logos, signatures, and graphics.', path: 'bg-remover' }
         ]
     },
     {
         id: 'ai',
         name: 'AI Tools',
         icon: '🤖',
-        file: 'ai.html',
+        file: 'ai',
         isAi: true,
         desc: 'Next-generation AI utilities for humanizing text, proofreading, and detection.',
         tools: [
-            { id: 'ai-humanizer', name: 'AI Text Humanizer', desc: 'Elevate AI drafts into polished human writing with natural nuance and effortless flow.', path: 'ai-humanizer.html' },
-            { id: 'grammar-fixer', name: 'AI Grammar & Spell Checker', desc: 'Check and fix spelling, grammar mistakes, punctuation, and refine writing tone instantly.', path: 'grammar-fixer.html' },
-            { id: 'speech-to-bangla', name: 'Bangla Voice Typing & Translator', desc: 'Speak in Bengali or English to convert speech into clean Bangla text with real-time translation.', path: 'speech-to-bangla.html' },
-            { id: 'ai-detector', name: 'AI Text & Image Detector', desc: 'Scan and detect AI-generated text (ChatGPT, Claude) and AI photos (Midjourney, DALL-E) instantly.', path: 'ai-detector.html' },
+            { id: 'ai-humanizer', name: 'AI Text Humanizer', desc: 'Elevate AI drafts into polished human writing with natural nuance and effortless flow.', path: 'ai-humanizer' },
+            { id: 'grammar-fixer', name: 'AI Grammar & Spell Checker', desc: 'Check and fix spelling, grammar mistakes, punctuation, and refine writing tone instantly.', path: 'grammar-fixer' },
+            { id: 'speech-to-bangla', name: 'Bangla Voice Typing & Translator', desc: 'Speak in Bengali or English to convert speech into clean Bangla text with real-time translation.', path: 'speech-to-bangla' },
+            { id: 'ai-detector', name: 'AI Text & Image Detector', desc: 'Scan and detect AI-generated text (ChatGPT, Claude) and AI photos (Midjourney, DALL-E) instantly.', path: 'ai-detector' },
             { id: 'ai-resume', name: 'AI Resume Maker', desc: 'Build an outstanding professional resume using AI.', isFuture: true }
         ]
     },
@@ -59,27 +59,27 @@ const CATEGORIES_DATA = [
         id: 'calculators',
         name: 'Calculators & Utilities',
         icon: '🧮',
-        file: 'calculators.html',
+        file: 'calculators',
         desc: 'Everyday math, health, conversion, and text analytics.',
         tools: [
-            { id: 'age-calculator', name: 'Age Calculator', desc: 'Calculate your exact age in years, months, days, and next birthday details.', path: 'age-calculator.html' },
-            { id: 'bmi-calculator', name: 'BMI Health Calculator', desc: 'Calculate your Body Mass Index (BMI) and check your health classification.', path: 'bmi-calculator.html' },
-            { id: 'unit-converter', name: 'Unit Converter', desc: 'Convert between different units of length, weight, and temperature.', path: 'unit-converter.html' },
-            { id: 'file-size-converter', name: 'File Size Converter', desc: 'Convert file storage sizes between Bytes, KB, MB, GB, TB, and PB.', path: 'file-size-converter.html' },
-            { id: 'qr-generator', name: 'QR Code Generator', desc: 'Generate customized high-quality QR codes for links, text, or phone numbers.', path: 'qr-generator.html' },
-            { id: 'qr-scanner', name: 'QR Code Scanner', desc: 'Scan QR codes using your device camera or upload image files.', path: 'qr-scanner.html' },
-            { id: 'word-counter', name: 'Word & Character Counter', desc: 'Count words, characters, lines, sentences, and estimated reading time.', path: 'word-counter.html' }
+            { id: 'age-calculator', name: 'Age Calculator', desc: 'Calculate your exact age in years, months, days, and next birthday details.', path: 'age-calculator' },
+            { id: 'bmi-calculator', name: 'BMI Health Calculator', desc: 'Calculate your Body Mass Index (BMI) and check your health classification.', path: 'bmi-calculator' },
+            { id: 'unit-converter', name: 'Unit Converter', desc: 'Convert between different units of length, weight, and temperature.', path: 'unit-converter' },
+            { id: 'file-size-converter', name: 'File Size Converter', desc: 'Convert file storage sizes between Bytes, KB, MB, GB, TB, and PB.', path: 'file-size-converter' },
+            { id: 'qr-generator', name: 'QR Code Generator', desc: 'Generate customized high-quality QR codes for links, text, or phone numbers.', path: 'qr-generator' },
+            { id: 'qr-scanner', name: 'QR Code Scanner', desc: 'Scan QR codes using your device camera or upload image files.', path: 'qr-scanner' },
+            { id: 'word-counter', name: 'Word & Character Counter', desc: 'Count words, characters, lines, sentences, and estimated reading time.', path: 'word-counter' }
         ]
     },
     {
         id: 'bangla',
         name: 'Bangla Tools',
         icon: '🔤',
-        file: 'bangla.html',
+        file: 'bangla',
         desc: 'Bengali typography and voice dictation utilities.',
         tools: [
-            { id: 'bangla-unicode', name: 'Unicode ↔ Bijoy Converter', desc: 'Convert Bijoy keyboard legacy typing to Unicode Bangla and vice-versa.', path: 'bangla-unicode.html' },
-            { id: 'speech-to-bangla', name: 'Bangla Voice Typing & Translator', desc: 'Speak in Bengali to type Bangla text in real-time with voice recognition.', path: 'speech-to-bangla.html' }
+            { id: 'bangla-unicode', name: 'Unicode ↔ Bijoy Converter', desc: 'Convert Bijoy keyboard legacy typing to Unicode Bangla and vice-versa.', path: 'bangla-unicode' },
+            { id: 'speech-to-bangla', name: 'Bangla Voice Typing & Translator', desc: 'Speak in Bengali to type Bangla text in real-time with voice recognition.', path: 'speech-to-bangla' }
         ]
     }
 ];
@@ -90,9 +90,9 @@ function initLayout() {
     const isSubFolder = path.includes('/tools/') || path.includes('/blog/') || path.includes('/categories/') || path.includes('tools/') || path.includes('blog/') || path.includes('categories/');
     const isToolPage = path.includes('/tools/') || path.includes('tools/');
     const isCategoryPage = path.includes('/categories/') || path.includes('categories/');
-    const isHomePage = path.endsWith('/index.html') || path.endsWith('/') || path === '' || (!path.includes('.html') && !isSubFolder);
-    const homePath = isSubFolder ? '../index.html' : 'index.html';
-    const privacyPath = isSubFolder ? '../privacy-policy.html' : 'privacy-policy.html';
+    const isHomePage = path.endsWith('/') || path.endsWith('/') || path === '' || (!path.includes('.html') && !isSubFolder);
+    const homePath = isSubFolder ? '../' : '/';
+    const privacyPath = isSubFolder ? '../privacy-policy' : 'privacy-policy';
     const toolsPrefix = isSubFolder ? '' : 'tools/';
     
     // Inject Layout Elements
@@ -224,7 +224,7 @@ function injectToolBackButton(homePath, isSubFolder, isHomePage) {
         backLabel = 'Back to Categories';
     } else if (isBlogPage) {
         categoryName = 'Blog';
-        backUrl = isSubFolder ? '../blog.html' : 'blog.html';
+        backUrl = isSubFolder ? '../blog' : 'blog';
         backLabel = 'Back to All Articles';
         const h1 = document.querySelector('h1');
         if (h1 && h1.textContent.trim()) {
@@ -382,57 +382,15 @@ function injectPrivacyTrustBadge(privacyPath) {
 
 
 
-// Inject Header Navbar with Navigation Menu (Feedback 1)
+// SSR Header: Header HTML is now pre-rendered in each .html file for Googlebot.
+// This function only ensures the class is set (no innerHTML overwrite needed).
 function injectHeader(homePath, isSubFolder, isHomePage) {
     const header = document.getElementById("main-header");
     if (!header) return;
-    
-    header.className = "header-nav";
-    
-    const categoriesLink = isHomePage ? '#categories-section' : `${homePath}#categories-section`;
-    const blogLink = isSubFolder ? '../blog.html' : 'blog.html';
-    const aboutLink = isSubFolder ? '../about.html' : 'about.html';
-    const contactLink = isSubFolder ? '../contact.html' : 'contact.html';
-    
-    header.innerHTML = `
-        <a href="${homePath}" class="logo-container" style="display:flex; align-items:center; gap:8px;">
-            <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 6px rgba(251, 140, 0, 0.4)); flex-shrink:0;">
-                <rect width="32" height="32" rx="10" fill="url(#logo-grad-header)" />
-                <path d="M10 10L22 22" stroke="white" stroke-width="4" stroke-linecap="round" />
-                <path d="M22 10L10 22" stroke="rgba(255,255,255,0.6)" stroke-width="4" stroke-linecap="round" />
-                <circle cx="16" cy="16" r="3" fill="#E65100" />
-                <defs>
-                    <linearGradient id="logo-grad-header" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-                        <stop stop-color="#FFCA28" />
-                        <stop offset="1" stop-color="#F57C00" />
-                    </linearGradient>
-                </defs>
-            </svg>
-            <span class="logo-text">ToolX<span class="logo-pro-badge">PRO</span></span>
-        </a>
-        <ul class="nav-menu">
-            <li><a href="${homePath}" class="nav-menu-link">Home</a></li>
-            <li><a href="${categoriesLink}" class="nav-menu-link">Categories</a></li>
-            <li><a href="${blogLink}" class="nav-menu-link">Blog</a></li>
-            <li><a href="${aboutLink}" class="nav-menu-link">About</a></li>
-            <li><a href="${contactLink}" class="nav-menu-link">Contact</a></li>
-        </ul>
-        <div class="nav-actions">
-            <button id="header-install-pwa-btn" class="header-install-app-btn" title="Install ToolX Pro Web App" style="display:none;" aria-label="Install App">
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
-                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
-                </svg>
-                <span>Install App</span>
-            </button>
-            <div id="theme-toggle-btn" class="theme-switch" role="button" tabindex="0" title="Toggle Light/Dark Theme">
-                <span class="switch-icon sun">☀️</span>
-                <span class="switch-icon moon">🌙</span>
-                <span class="switch-thumb"></span>
-            </div>
-            <button id="hamburger-menu-btn" class="hamburger-btn" title="Open Menu">☰</button>
-        </div>
-    `;
+    // Class already set in SSR HTML, but ensure it's applied for safety
+    if (!header.classList.contains("header-nav")) {
+        header.className = "header-nav";
+    }
 }
 
 // Inject Sidebar (Only for Tool pages)
@@ -486,88 +444,21 @@ function injectSidebar(toolsPrefix) {
     sidebar.innerHTML = sidebarHtml;
 }
 
-// Inject Compact, Clean & Professional SaaS Footer
+// SSR Footer: Footer HTML is now pre-rendered in each .html file for Googlebot.
+// This function only ensures the class is set (no innerHTML overwrite needed).
 function injectFooter(homePath, isSubFolder, isHomePage) {
     const footer = document.getElementById("main-footer");
     if (!footer) return;
-    
-    footer.className = "footer-container";
-    
-    const year = new Date().getFullYear();
-    const categoriesLink = isHomePage ? '#categories-section' : `${homePath}#categories-section`;
-    const blogLink = isSubFolder ? '../blog.html' : 'blog.html';
-    const aboutLink = isSubFolder ? '../about.html' : 'about.html';
-    const contactLink = isSubFolder ? '../contact.html' : 'contact.html';
-    const privacyLink = isSubFolder ? '../privacy-policy.html' : 'privacy-policy.html';
-    const termsLink = isSubFolder ? '../terms.html' : 'terms.html';
-    const disclaimerLink = isSubFolder ? '../disclaimer.html' : 'disclaimer.html';
-    
-    footer.innerHTML = `
-        <div class="footer-compact-wrapper">
-            <div class="footer-compact-top">
-                <a href="${homePath}" class="footer-brand-logo" title="ToolX Pro Homepage">
-                    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
-                        <rect width="32" height="32" rx="8" fill="url(#logo-grad-footer)" />
-                        <path d="M10 10L22 22" stroke="white" stroke-width="4" stroke-linecap="round" />
-                        <path d="M22 10L10 22" stroke="rgba(255,255,255,0.65)" stroke-width="4" stroke-linecap="round" />
-                        <circle cx="16" cy="16" r="3" fill="#E65100" />
-                        <defs>
-                            <linearGradient id="logo-grad-footer" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-                                <stop stop-color="#FFCA28" />
-                                <stop offset="1" stop-color="#F57C00" />
-                            </linearGradient>
-                        </defs>
-                    </svg>
-                    <span class="logo-text" style="font-size:1.15rem;">ToolX<span class="logo-pro-badge" style="font-size:0.65rem;">PRO</span></span>
-                </a>
-
-                <nav class="footer-compact-nav" aria-label="Compliance & Legal Links">
-                    <a href="${aboutLink}">About</a>
-                    <span class="footer-nav-dot">•</span>
-                    <a href="${contactLink}">Contact</a>
-                    <span class="footer-nav-dot">•</span>
-                    <a href="${blogLink}">Blog</a>
-                    <span class="footer-nav-dot">•</span>
-                    <a href="${privacyLink}">Privacy Policy</a>
-                    <span class="footer-nav-dot">•</span>
-                    <a href="${termsLink}">Terms</a>
-                    <span class="footer-nav-dot">•</span>
-                    <a href="${disclaimerLink}">Disclaimer</a>
-                </nav>
-
-                <div class="footer-social-icons">
-                    <a href="https://github.com/sanjidalam69" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="GitHub" aria-label="GitHub">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/sanjid-alam-29752619b/" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="LinkedIn" aria-label="LinkedIn">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                    </a>
-                    <a href="https://www.facebook.com/sanjidalam69" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="Facebook" aria-label="Facebook">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                    </a>
-                    <a href="https://www.instagram.com/sanjidalam69/?hl=en" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="Instagram" aria-label="Instagram">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                    </a>
-                    <a href="mailto:ai.sanjid.alam@gmail.com" class="footer-social-btn" title="Email: ai.sanjid.alam@gmail.com" aria-label="Email">
-                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
-                    </a>
-                </div>
-            </div>
-
-            <div class="footer-compact-bottom">
-                <p class="footer-copyright">
-                    © ${year} <strong>ToolX Pro</strong>. Founded & developed by <a href="https://www.linkedin.com/in/sanjid-alam-29752619b/" target="_blank" rel="noopener noreferrer" class="footer-author-link">Sanjid Alam</a>. All rights reserved.
-                </p>
-                <span class="footer-client-tag">🔒 Privacy-Focused • No Account Required</span>
-            </div>
-        </div>
-    `;
+    // Class already set in SSR HTML, but ensure it's applied for safety
+    if (!footer.classList.contains("footer-container")) {
+        footer.className = "footer-container";
+    }
 }
 
 
 
 // Initialize Custom Generic Modals (About, Contact, Privacy, Terms)
-function initNavInteractions(homePath = 'index.html') {
+function initNavInteractions(homePath = '/') {
     let genericModal = document.getElementById("generic-info-modal");
     if (!genericModal) {
         genericModal = document.createElement("div");
@@ -764,9 +655,9 @@ function initMobileDrawer(homePath, isSubFolder, isHomePage) {
         drawer.className = "drawer-overlay";
         
         const categoriesLink = isHomePage ? '#categories-section' : `${homePath}#categories-section`;
-        const blogLink = isSubFolder ? '../blog.html' : 'blog.html';
-        const aboutLink = isSubFolder ? '../about.html' : 'about.html';
-        const contactLink = isSubFolder ? '../contact.html' : 'contact.html';
+        const blogLink = isSubFolder ? '../blog' : 'blog';
+        const aboutLink = isSubFolder ? '../about' : 'about';
+        const contactLink = isSubFolder ? '../contact' : 'contact';
         
         drawer.innerHTML = `
             <div class="drawer-panel">

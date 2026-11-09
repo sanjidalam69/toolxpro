@@ -3,3 +3,62 @@
 /.netlify/functions/grammar-fix /api/grammar-fix 200
 /.netlify/functions/ai-humanize /api/ai-humanize 200
 /.netlify/functions/ai-detect /api/ai-detect 200
+
+# Redirect .html URLs to clean URLs (301 permanent)
+/index.html / 301
+/about.html /about 301
+/contact.html /contact 301
+/blog.html /blog 301
+/privacy-policy.html /privacy-policy 301
+/terms.html /terms 301
+/disclaimer.html /disclaimer 301
+
+# Category pages
+/categories/student.html /categories/student 301
+/categories/pdf.html /categories/pdf 301
+/categories/image.html /categories/image 301
+/categories/ai.html /categories/ai 301
+/categories/calculators.html /categories/calculators 301
+/categories/bangla.html /categories/bangla 301
+
+# Blog pages
+/blog/ai-detector-guide.html /blog/ai-detector-guide 301
+/blog/bangla-voice-typing-guide.html /blog/bangla-voice-typing-guide 301
+/blog/ai-writing-guide.html /blog/ai-writing-guide 301
+/blog/bd-cgpa-guide.html /blog/bd-cgpa-guide 301
+/blog/assignment-cover-guide.html /blog/assignment-cover-guide 301
+/blog/lab-report-cover-guide.html /blog/lab-report-cover-guide 301
+/blog/how-to-calculate-bmi.html /blog/how-to-calculate-bmi 301
+/blog/best-pdf-tools.html /blog/best-pdf-tools 301
+/blog/image-compression-guide.html /blog/image-compression-guide 301
+/blog/qr-code-technology-guide.html /blog/qr-code-technology-guide 301
+/blog/complete-image-optimization-guide.html /blog/complete-image-optimization-guide 301
+/blog/academic-grading-systems-guide.html /blog/academic-grading-systems-guide 301
+/blog/pdf-document-management-guide.html /blog/pdf-document-management-guide 301
+
+# Tool pages
+/tools/ai-detector.html /tools/ai-detector 301
+/tools/ai-humanizer.html /tools/ai-humanizer 301
+/tools/speech-to-bangla.html /tools/speech-to-bangla 301
+/tools/grammar-fixer.html /tools/grammar-fixer 301
+/tools/assignment-cover.html /tools/assignment-cover 301
+/tools/lab-report-cover.html /tools/lab-report-cover 301
+/tools/bd-gpa.html /tools/bd-gpa 301
+/tools/bd-cgpa.html /tools/bd-cgpa 301
+/tools/pdf-to-word.html /tools/pdf-to-word 301
+/tools/pdf-merge.html /tools/pdf-merge 301
+/tools/image-to-pdf.html /tools/image-to-pdf 301
+/tools/pdf-compressor.html /tools/pdf-compressor 301
+/tools/pdf-reorder.html /tools/pdf-reorder 301
+/tools/image-compressor.html /tools/image-compressor 301
+/tools/image-converter.html /tools/image-converter 301
+/tools/passport-photo.html /tools/passport-photo 301
+/tools/bg-remover.html /tools/bg-remover 301
+/tools/age-calculator.html /tools/age-calculator 301
+/tools/bmi-calculator.html /tools/bmi-calculator 301
+/tools/word-counter.html /tools/word-counter 301
+/tools/bangla-unicode.html /tools/bangla-unicode 301
+/tools/qr-generator.html /tools/qr-generator 301
+/tools/qr-scanner.html /tools/qr-scanner 301
+/tools/unit-converter.html /tools/unit-converter 301
+/tools/file-size-converter.html /tools/file-size-converter 301

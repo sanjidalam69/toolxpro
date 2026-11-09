@@ -20,6 +20,7 @@
 
     <!-- Google AdSense -->
     <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6731712917349369" crossorigin="anonymous"></script>
+    <meta name="google-adsense-account" content="ca-pub-6731712917349369">
 
     <!-- Canonical & Open Graph -->
     <link rel="canonical" href="https://toolxpro.live/">
@@ -143,7 +144,47 @@
 <body>
     <div id="app-container">
         <!-- Header Injected dynamically by layout.js -->
-        <header id="main-header"></header>
+        <header id="main-header" class="header-nav">
+        <a href="/" class="logo-container" style="display:flex; align-items:center; gap:8px;">
+            <svg width="28" height="28" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="filter: drop-shadow(0 2px 6px rgba(251, 140, 0, 0.4)); flex-shrink:0;">
+                <rect width="32" height="32" rx="10" fill="url(#logo-grad-header)" />
+                <path d="M10 10L22 22" stroke="white" stroke-width="4" stroke-linecap="round" />
+                <path d="M22 10L10 22" stroke="rgba(255,255,255,0.6)" stroke-width="4" stroke-linecap="round" />
+                <circle cx="16" cy="16" r="3" fill="#E65100" />
+                <defs>
+                    <linearGradient id="logo-grad-header" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                        <stop stop-color="#FFCA28" />
+                        <stop offset="1" stop-color="#F57C00" />
+                    </linearGradient>
+                </defs>
+            </svg>
+            <span class="logo-text">ToolX<span class="logo-pro-badge">PRO</span></span>
+        </a>
+        <nav aria-label="Main Navigation">
+        <ul class="nav-menu">
+            <li><a href="/" class="nav-menu-link">Home</a></li>
+            <li><a href="/#categories-section" class="nav-menu-link">Categories</a></li>
+            <li><a href="/blog" class="nav-menu-link">Blog</a></li>
+            <li><a href="/about" class="nav-menu-link">About</a></li>
+            <li><a href="/contact" class="nav-menu-link">Contact</a></li>
+        </ul>
+        </nav>
+        <div class="nav-actions">
+            <button id="header-install-pwa-btn" class="header-install-app-btn" title="Install ToolX Pro Web App" style="display:none;" aria-label="Install App">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect>
+                    <line x1="12" y1="18" x2="12.01" y2="18"></line>
+                </svg>
+                <span>Install App</span>
+            </button>
+            <div id="theme-toggle-btn" class="theme-switch" role="button" tabindex="0" title="Toggle Light/Dark Theme">
+                <span class="switch-icon sun">☀️</span>
+                <span class="switch-icon moon">🌙</span>
+                <span class="switch-thumb"></span>
+            </div>
+            <button id="hamburger-menu-btn" class="hamburger-btn" title="Open Menu">☰</button>
+        </div>
+    </header>
 
         <main class="main-wrapper" style="flex-direction: column;">
             <!-- Hero Section -->
@@ -172,7 +213,7 @@
             <section class="category-hub-showcase" id="categories-section">
                 <div class="hub-grid compact-hub-grid" id="category-hubs-grid">
                     <!-- 1. AI Tools -->
-                    <a href="categories/ai.html" class="hub-compact-card">
+                    <a href="categories/ai" class="hub-compact-card">
                         <div class="hub-squircle-icon icon-pink">
                             <span class="hub-emoji">🤖</span>
                         </div>
@@ -182,7 +223,7 @@
                     </a>
 
                     <!-- 2. Student Corner -->
-                    <a href="categories/student.html" class="hub-compact-card">
+                    <a href="categories/student" class="hub-compact-card">
                         <div class="hub-squircle-icon icon-purple">
                             <span class="hub-emoji">🎓</span>
                         </div>
@@ -192,7 +233,7 @@
                     </a>
 
                     <!-- 3. PDF Tools -->
-                    <a href="categories/pdf.html" class="hub-compact-card">
+                    <a href="categories/pdf" class="hub-compact-card">
                         <div class="hub-squircle-icon icon-red">
                             <span class="hub-emoji">📄</span>
                         </div>
@@ -202,7 +243,7 @@
                     </a>
 
                     <!-- 4. Image Tools -->
-                    <a href="categories/image.html" class="hub-compact-card">
+                    <a href="categories/image" class="hub-compact-card">
                         <div class="hub-squircle-icon icon-green">
                             <span class="hub-emoji">🖼️</span>
                         </div>
@@ -212,7 +253,7 @@
                     </a>
 
                     <!-- 5. Calculators & Tools -->
-                    <a href="categories/calculators.html" class="hub-compact-card">
+                    <a href="categories/calculators" class="hub-compact-card">
                         <div class="hub-squircle-icon icon-teal">
                             <span class="hub-emoji">🧮</span>
                         </div>
@@ -222,7 +263,7 @@
                     </a>
 
                     <!-- 6. Bangla Tools -->
-                    <a href="categories/bangla.html" class="hub-compact-card">
+                    <a href="categories/bangla" class="hub-compact-card">
                         <div class="hub-squircle-icon icon-amber">
                             <span class="hub-emoji bangla-letter-icon">অ</span>
                         </div>
@@ -243,28 +284,28 @@
                         <p class="featured-section-subtitle">Most frequently used utilities by students, creators, and professionals daily.</p>
                     </div>
                     <div class="tools-grid featured-tools-grid">
-                        <a href="tools/ai-humanizer.html" class="tool-card" data-keywords="ai humanizer bypass turnitin gptzero text rewriter chatgpt polish natural flow">
+                        <a href="tools/ai-humanizer" class="tool-card" data-keywords="ai humanizer bypass turnitin gptzero text rewriter chatgpt polish natural flow">
                             <span class="tool-badge badge-popular" style="background: linear-gradient(135deg, #10b981, #059669); color: #fff;">Popular AI</span>
                             <div class="tool-card-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">✨</div>
                             <h3 class="tool-card-title">AI Text Humanizer</h3>
                             <p class="tool-card-desc">Elevate AI drafts into natural, polished human writing with effortless flow and authentic tone.</p>
                             <div class="card-action">Use Tool &rarr;</div>
                         </a>
-                        <a href="tools/assignment-cover.html" class="tool-card" data-keywords="assignment cover generator university front page a4 print nsu bracu iub ewu seu aiub uiu du buet kuet sust ru cu private public student">
+                        <a href="tools/assignment-cover" class="tool-card" data-keywords="assignment cover generator university front page a4 print nsu bracu iub ewu seu aiub uiu du buet kuet sust ru cu private public student">
                             <span class="tool-badge badge-popular" style="background: rgba(245, 158, 11, 0.15); color: #f59e0b; border: 1px solid rgba(245, 158, 11, 0.3);">Print Ready</span>
                             <div class="tool-card-icon" style="background: rgba(245, 158, 11, 0.1); color: #f59e0b;">📄</div>
                             <h3 class="tool-card-title">Assignment Cover Generator</h3>
                             <p class="tool-card-desc">Create print-ready A4 assignment cover pages with 31+ official Bangladeshi university presets, logos, and custom borders.</p>
                             <div class="card-action">Use Tool &rarr;</div>
                         </a>
-                        <a href="tools/ai-detector.html" class="tool-card" data-keywords="ai detector chatgpt scanner image detector forensics fake photo text authenticity">
+                        <a href="tools/ai-detector" class="tool-card" data-keywords="ai detector chatgpt scanner image detector forensics fake photo text authenticity">
                             <span class="tool-badge badge-popular" style="background: linear-gradient(135deg, #ef4444, #8b5cf6); color: #fff;">Multi-Modal</span>
                             <div class="tool-card-icon" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">🛡️</div>
                             <h3 class="tool-card-title">AI Text & Image Detector</h3>
                             <p class="tool-card-desc">Scan and detect AI-generated text (ChatGPT, Claude) and synthetic photos (Midjourney, DALL-E) instantly.</p>
                             <div class="card-action">Use Tool &rarr;</div>
                         </a>
-                        <a href="tools/passport-photo.html" class="tool-card" data-keywords="passport photo maker 2x2 35x45 biometric print sheet suit change background">
+                        <a href="tools/passport-photo" class="tool-card" data-keywords="passport photo maker 2x2 35x45 biometric print sheet suit change background">
                             <span class="tool-badge badge-popular" style="background: linear-gradient(135deg, #6366f1, #3b82f6); color: #fff;">Smart AI</span>
                             <div class="tool-card-icon icon-passport">📸</div>
                             <h3 class="tool-card-title">AI Passport Photo Maker</h3>
@@ -280,7 +321,7 @@
                     <p style="color:var(--text-secondary); margin-bottom:1rem; font-size:0.95rem;">Practical guides on health calculations, PDF security, image optimization, and study productivity.</p>
                     
                     <div class="blog-list-container">
-                        <a href="blog/ai-detector-guide.html" class="blog-list-row">
+                        <a href="blog/ai-detector-guide" class="blog-list-row">
                             <div class="blog-list-icon" style="background: rgba(239, 68, 68, 0.1); color: #ef4444;">🛡️</div>
                             <div class="blog-list-info">
                                 <div class="blog-list-title-wrap">
@@ -295,7 +336,7 @@
                             </div>
                         </a>
 
-                        <a href="blog/bangla-voice-typing-guide.html" class="blog-list-row">
+                        <a href="blog/bangla-voice-typing-guide" class="blog-list-row">
                             <div class="blog-list-icon" style="background: rgba(245, 158, 11, 0.1); color: var(--accent);">🎙️</div>
                             <div class="blog-list-info">
                                 <div class="blog-list-title-wrap">
@@ -310,7 +351,7 @@
                             </div>
                         </a>
 
-                        <a href="blog/ai-writing-guide.html" class="blog-list-row">
+                        <a href="blog/ai-writing-guide" class="blog-list-row">
                             <div class="blog-list-icon">🤖</div>
                             <div class="blog-list-info">
                                 <div class="blog-list-title-wrap">
@@ -325,7 +366,7 @@
                             </div>
                         </a>
 
-                        <a href="blog/bd-cgpa-guide.html" class="blog-list-row">
+                        <a href="blog/bd-cgpa-guide" class="blog-list-row">
                             <div class="blog-list-icon">🎓</div>
                             <div class="blog-list-info">
                                 <div class="blog-list-title-wrap">
@@ -340,7 +381,7 @@
                             </div>
                         </a>
 
-                        <a href="blog/assignment-cover-guide.html" class="blog-list-row">
+                        <a href="blog/assignment-cover-guide" class="blog-list-row">
                             <div class="blog-list-icon">📄</div>
                             <div class="blog-list-info">
                                 <div class="blog-list-title-wrap">
@@ -355,7 +396,7 @@
                             </div>
                         </a>
 
-                        <a href="blog/lab-report-cover-guide.html" class="blog-list-row">
+                        <a href="blog/lab-report-cover-guide" class="blog-list-row">
                             <div class="blog-list-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">🧪</div>
                             <div class="blog-list-info">
                                 <div class="blog-list-title-wrap">
@@ -370,7 +411,7 @@
                             </div>
                         </a>
 
-                        <a href="blog/how-to-calculate-bmi.html" class="blog-list-row">
+                        <a href="blog/how-to-calculate-bmi" class="blog-list-row">
                             <div class="blog-list-icon">⚖️</div>
                             <div class="blog-list-info">
                                 <div class="blog-list-title-wrap">
@@ -385,7 +426,7 @@
                             </div>
                         </a>
 
-                        <a href="blog/best-pdf-tools.html" class="blog-list-row">
+                        <a href="blog/best-pdf-tools" class="blog-list-row">
                             <div class="blog-list-icon">📄</div>
                             <div class="blog-list-info">
                                 <div class="blog-list-title-wrap">
@@ -400,7 +441,7 @@
                             </div>
                         </a>
 
-                        <a href="blog/image-compression-guide.html" class="blog-list-row">
+                        <a href="blog/image-compression-guide" class="blog-list-row">
                             <div class="blog-list-icon">✨</div>
                             <div class="blog-list-info">
                                 <div class="blog-list-title-wrap">
@@ -529,9 +570,9 @@
                                 <span style="color:var(--border-color);">•</span>
                                 <a href="https://github.com/sanjidalam69" target="_blank" rel="noopener" style="color:var(--text-secondary); text-decoration:none;">GitHub</a>
                                 <span style="color:var(--border-color);">•</span>
-                                <a href="about.html" style="color:var(--text-secondary); text-decoration:none;">About Us</a>
+                                <a href="about" style="color:var(--text-secondary); text-decoration:none;">About Us</a>
                                 <span style="color:var(--border-color);">•</span>
-                                <a href="contact.html" style="color:var(--text-secondary); text-decoration:none;">Contact</a>
+                                <a href="contact" style="color:var(--text-secondary); text-decoration:none;">Contact</a>
                             </div>
                         </div>
                     </div>
@@ -541,10 +582,71 @@
 
 
             </div>
-        </main>
+        
+                <div class="page-meta-info" style="margin-top: 2rem; padding: 1rem 1.5rem; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 10px; font-size: 0.88rem; color: var(--text-secondary); display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center;">
+                        <span>✍️ Published by <strong style="color: var(--text-primary);">SmartVibe Labs</strong> (Sanjid Alam)</span>
+                        <span>📅 Last Updated: <strong style="color: var(--text-primary);">2026-11-08</strong></span>
+                    </div>
+            </main>
 
         <!-- Footer Injected dynamically by layout.js -->
-        <footer id="main-footer"></footer>
+        <footer id="main-footer" class="footer-container">
+        <div class="footer-compact-wrapper">
+            <div class="footer-compact-top">
+                <a href="/" class="footer-brand-logo" title="ToolX Pro Homepage">
+                    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" style="flex-shrink:0;">
+                        <rect width="32" height="32" rx="8" fill="url(#logo-grad-footer)" />
+                        <path d="M10 10L22 22" stroke="white" stroke-width="4" stroke-linecap="round" />
+                        <path d="M22 10L10 22" stroke="rgba(255,255,255,0.65)" stroke-width="4" stroke-linecap="round" />
+                        <circle cx="16" cy="16" r="3" fill="#E65100" />
+                        <defs>
+                            <linearGradient id="logo-grad-footer" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+                                <stop stop-color="#FFCA28" />
+                                <stop offset="1" stop-color="#F57C00" />
+                            </linearGradient>
+                        </defs>
+                    </svg>
+                    <span class="logo-text" style="font-size:1.15rem;">ToolX<span class="logo-pro-badge" style="font-size:0.65rem;">PRO</span></span>
+                </a>
+
+                <nav class="footer-compact-nav" aria-label="Footer Navigation">
+                    <a href="/about">About</a>
+                    <span class="footer-nav-dot">•</span>
+                    <a href="/contact">Contact</a>
+                    <span class="footer-nav-dot">•</span>
+                    <a href="/blog">Blog</a>
+                    <span class="footer-nav-dot">•</span>
+                    <a href="/privacy-policy">Privacy Policy</a>
+                    <span class="footer-nav-dot">•</span>
+                    <a href="/terms">Terms</a>
+                    <span class="footer-nav-dot">•</span>
+                    <a href="/disclaimer">Disclaimer</a>
+                </nav>
+
+                <div class="footer-social-icons">
+                    <a href="https://github.com/sanjidalam69" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="GitHub" aria-label="GitHub">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/sanjid-alam-29752619b/" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="LinkedIn" aria-label="LinkedIn">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    </a>
+                    <a href="https://www.facebook.com/sanjidalam69" target="_blank" rel="noopener noreferrer" class="footer-social-btn" title="Facebook" aria-label="Facebook">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                    </a>
+                    <a href="mailto:ai.sanjid.alam@gmail.com" class="footer-social-btn" title="Email" aria-label="Email">
+                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"></rect><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path></svg>
+                    </a>
+                </div>
+            </div>
+
+            <div class="footer-compact-bottom">
+                <p class="footer-copyright">
+                    © 2026 <strong>ToolX Pro</strong>. Founded &amp; developed by <a href="https://www.linkedin.com/in/sanjid-alam-29752619b/" target="_blank" rel="noopener noreferrer" class="footer-author-link">Sanjid Alam</a>. All rights reserved.
+                </p>
+                <span class="footer-client-tag">🔒 Privacy-Focused • No Account Required</span>
+            </div>
+        </div>
+    </footer>
     </div>
 
     <script src="js/layout.js?v=70.0"></script>
