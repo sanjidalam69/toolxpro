@@ -62,3 +62,6 @@
 /tools/qr-scanner.html /tools/qr-scanner 301
 /tools/unit-converter.html /tools/unit-converter 301
 /tools/file-size-converter.html /tools/file-size-converter 301
+
+/tools/file%20size%20converter /tools/file-size-converter 301
+/tools/file_size_converter /tools/file-size-converter 301
