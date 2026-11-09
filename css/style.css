@@ -6677,35 +6677,36 @@ img, video, canvas, svg {
 }
 
 /* ══════════════════════════════════════════════════════════════════
-   PREMIUM HERO SECTION OVERHAUL (Desktop & Mobile Optimized)
-   Fixes the weird floating dark box on desktop while keeping mobile perfect
+   HARMONIOUS LIGHT & DARK HERO SECTION OVERHAUL
+   Seamlessly integrates with the site's clean white light theme and sleek dark mode
    ══════════════════════════════════════════════════════════════════ */
 
+/* ── Light Mode (Default: Clean, Crisp, Apple/Stripe-Grade SaaS) ── */
 .hero-saas {
     position: relative !important;
-    background: radial-gradient(circle at 50% 0%, rgba(245, 124, 0, 0.18) 0%, rgba(30, 41, 59, 0.95) 55%, #090d16 100%) !important;
-    border: 1px solid rgba(245, 158, 11, 0.25) !important;
+    background: linear-gradient(180deg, #ffffff 0%, #f8fafc 60%, #f1f5f9 100%) !important;
+    border: 1px solid rgba(226, 232, 240, 0.9) !important;
     border-radius: 28px !important;
     padding: 3.5rem 2.5rem 3rem 2.5rem !important;
     margin: 1.5rem auto 2.5rem auto !important;
     max-width: var(--container-max-width, 1180px) !important;
     width: 100% !important;
     text-align: center !important;
-    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.35), 0 0 50px -10px rgba(245, 124, 0, 0.12) !important;
+    box-shadow: 0 20px 45px -15px rgba(15, 23, 42, 0.08), 0 0 50px -15px rgba(245, 124, 0, 0.08) !important;
     overflow: hidden !important;
     box-sizing: border-box !important;
 }
 
-/* Subtle glowing decorative backdrop */
+/* Vibrant warm ambient glow on top in light mode */
 .hero-saas::before {
     content: '' !important;
     position: absolute !important;
-    top: -50px !important;
+    top: -60px !important;
     left: 50% !important;
     transform: translateX(-50%) !important;
-    width: 600px !important;
+    width: 650px !important;
     height: 250px !important;
-    background: radial-gradient(ellipse, rgba(245, 124, 0, 0.25), transparent 70%) !important;
+    background: radial-gradient(ellipse, rgba(245, 124, 0, 0.12) 0%, rgba(251, 191, 36, 0.08) 50%, transparent 75%) !important;
     pointer-events: none !important;
     z-index: 1 !important;
 }
@@ -6714,23 +6715,22 @@ img, video, canvas, svg {
     position: relative !important;
     z-index: 2 !important;
     font-size: 2.75rem !important;
-    font-weight: 800 !important;
+    font-weight: 850 !important;
     letter-spacing: -0.8px !important;
     line-height: 1.2 !important;
-    color: #ffffff !important;
+    color: #0f172a !important;
     margin-bottom: 0.8rem !important;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
 }
 
 .hero-saas .dashboard-desc {
     position: relative !important;
     z-index: 2 !important;
     font-size: 1.12rem !important;
-    color: #cbd5e1 !important;
+    color: #475569 !important;
     max-width: 650px !important;
     margin: 0 auto 1.8rem auto !important;
     line-height: 1.6 !important;
-    font-weight: 400 !important;
+    font-weight: 450 !important;
 }
 
 .hero-saas .search-container {
@@ -6743,43 +6743,45 @@ img, video, canvas, svg {
 
 .hero-saas .search-input {
     width: 100% !important;
-    height: 62px !important;
-    padding: 16px 24px 16px 56px !important;
+    height: 60px !important;
+    padding: 16px 24px 16px 54px !important;
     border-radius: 50px !important;
-    border: 2px solid rgba(245, 124, 0, 0.5) !important;
-    background: rgba(15, 23, 42, 0.85) !important;
-    backdrop-filter: blur(12px) !important;
-    -webkit-backdrop-filter: blur(12px) !important;
-    color: #ffffff !important;
+    border: 2px solid #e2e8f0 !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
     font-size: 1.05rem !important;
-    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35) !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: 0 4px 20px rgba(15, 23, 42, 0.06) !important;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
     box-sizing: border-box !important;
 }
 
 .hero-saas .search-input:hover {
     border-color: #f57c00 !important;
-    background: rgba(15, 23, 42, 0.95) !important;
-    box-shadow: 0 10px 35px rgba(245, 124, 0, 0.2) !important;
+    box-shadow: 0 6px 25px rgba(245, 124, 0, 0.12) !important;
 }
 
 .hero-saas .search-input:focus {
     outline: none !important;
-    border-color: #ff9800 !important;
-    background: #090d16 !important;
-    box-shadow: 0 0 0 4px rgba(245, 124, 0, 0.3), 0 12px 40px rgba(0, 0, 0, 0.5) !important;
-    color: #ffffff !important;
+    border-color: #f57c00 !important;
+    background: #ffffff !important;
+    box-shadow: 0 0 0 4px rgba(245, 124, 0, 0.18), 0 8px 30px rgba(15, 23, 42, 0.08) !important;
+    color: #0f172a !important;
+}
+
+.hero-saas .search-input::placeholder {
+    color: #94a3b8 !important;
+    font-weight: 400 !important;
 }
 
 .hero-saas .search-icon {
     position: absolute !important;
-    left: 22px !important;
+    left: 20px !important;
     top: 50% !important;
     transform: translateY(-50%) !important;
     font-size: 1.25rem !important;
     pointer-events: none !important;
     z-index: 25 !important;
-    opacity: 0.85 !important;
+    opacity: 0.7 !important;
 }
 
 .hero-trust-line {
@@ -6789,17 +6791,63 @@ img, video, canvas, svg {
     align-items: center !important;
     justify-content: center !important;
     gap: 12px !important;
-    font-size: 0.9rem !important;
-    color: #94a3b8 !important;
+    font-size: 0.88rem !important;
+    color: #64748b !important;
     margin-top: 0.5rem !important;
-    background: rgba(255, 255, 255, 0.05) !important;
+    background: #f1f5f9 !important;
     padding: 6px 18px !important;
     border-radius: 30px !important;
-    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    border: 1px solid #e2e8f0 !important;
+    font-weight: 500 !important;
 }
 
 .hero-trust-line .trust-dot {
     color: #f57c00 !important;
+    font-weight: bold !important;
+}
+
+/* ── Dark Mode Overrides (When user switches theme to Dark) ── */
+[data-theme="dark"] .hero-saas {
+    background: radial-gradient(circle at 50% 0%, rgba(245, 124, 0, 0.15) 0%, rgba(30, 41, 59, 0.85) 60%, #090d16 100%) !important;
+    border: 1px solid rgba(245, 158, 11, 0.25) !important;
+    box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.6), 0 0 45px -10px rgba(245, 124, 0, 0.12) !important;
+}
+
+[data-theme="dark"] .hero-saas::before {
+    background: radial-gradient(ellipse, rgba(245, 124, 0, 0.2), transparent 70%) !important;
+}
+
+[data-theme="dark"] .hero-saas .dashboard-title {
+    color: #ffffff !important;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3) !important;
+}
+
+[data-theme="dark"] .hero-saas .dashboard-desc {
+    color: #cbd5e1 !important;
+}
+
+[data-theme="dark"] .hero-saas .search-input {
+    background: rgba(15, 23, 42, 0.9) !important;
+    border-color: rgba(245, 124, 0, 0.45) !important;
+    color: #ffffff !important;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4) !important;
+}
+
+[data-theme="dark"] .hero-saas .search-input:focus {
+    background: #090d16 !important;
+    border-color: #ff9800 !important;
+    color: #ffffff !important;
+    box-shadow: 0 0 0 4px rgba(245, 124, 0, 0.3), 0 12px 40px rgba(0, 0, 0, 0.6) !important;
+}
+
+[data-theme="dark"] .hero-saas .search-input::placeholder {
+    color: #64748b !important;
+}
+
+[data-theme="dark"] .hero-trust-line {
+    background: rgba(255, 255, 255, 0.05) !important;
+    color: #94a3b8 !important;
+    border-color: rgba(255, 255, 255, 0.08) !important;
 }
 
 /* Tablet view adjustments (769px - 1024px) */
@@ -6812,7 +6860,7 @@ img, video, canvas, svg {
     }
 }
 
-/* Mobile view (Retains the clean adjusted layout you liked) */
+/* Mobile view (Retains compact clean layout) */
 @media screen and (max-width: 768px) {
     .hero-saas {
         padding: 1.8rem 1.2rem !important;
@@ -6820,7 +6868,7 @@ img, video, canvas, svg {
         margin: 0.5rem 0 1.25rem 0 !important;
     }
     .hero-saas .dashboard-title {
-        font-size: 1.5rem !important;
+        font-size: 1.55rem !important;
         line-height: 1.28 !important;
     }
     .hero-saas .dashboard-desc {
