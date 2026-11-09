@@ -6496,3 +6496,182 @@ pre, code {
         display: none;
     }
 }
+
+/* ══════════════════════════════════════════════════════════════════
+   GLOBAL MOBILE-FRIENDLY & RESPONSIVE ENGINE FOR ALL TOOLS
+   Ensures 100% responsive layout across mobile screens (320px - 768px)
+   ══════════════════════════════════════════════════════════════════ */
+
+/* Prevent horizontal overflow on mobile viewports */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
+#app-container, .main-wrapper, .content-area, .tool-container {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+}
+
+/* Ensure all media and canvas scale down responsively */
+img, video, canvas, svg {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Auto-wrap tables in editorial guides or tool outputs to avoid horizontal break */
+.tool-editorial-content table, 
+.results-card table,
+.tool-body table {
+    display: block;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-collapse: collapse;
+}
+
+/* Base Form Control touch target on Mobile (Prevents iOS zoom) */
+@media screen and (max-width: 768px) {
+    .content-area {
+        padding: 12px 10px !important;
+    }
+
+    .tool-container {
+        padding: 16px 12px !important;
+        border-radius: 12px !important;
+        margin: 0 auto !important;
+    }
+
+    .tool-header {
+        margin-bottom: 1.25rem !important;
+    }
+
+    .tool-title {
+        font-size: 1.45rem !important;
+        line-height: 1.3 !important;
+    }
+
+    .tool-desc {
+        font-size: 0.88rem !important;
+        line-height: 1.5 !important;
+    }
+
+    .form-control, 
+    input[type="text"], 
+    input[type="number"], 
+    input[type="file"], 
+    select, 
+    textarea {
+        font-size: 16px !important; /* Prevents auto-zoom on iOS */
+        min-height: 44px;
+        box-sizing: border-box;
+    }
+
+    /* Action buttons on mobile */
+    .btn {
+        min-height: 44px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 10px 16px;
+        font-size: 0.92rem;
+    }
+
+    /* Form rows and grids stacking */
+    .form-row,
+    .tool-body > div[style*="display:flex"],
+    .tool-body > div[style*="display: flex"] {
+        flex-wrap: wrap !important;
+    }
+
+    /* Upload Drop Zone */
+    .upload-area {
+        padding: 24px 12px !important;
+    }
+
+    .upload-area .upload-icon {
+        font-size: 2rem !important;
+        margin-bottom: 6px !important;
+    }
+
+    .upload-area h3 {
+        font-size: 0.98rem !important;
+    }
+
+    .upload-area p {
+        font-size: 0.8rem !important;
+    }
+
+    /* Result cards */
+    .results-card {
+        padding: 16px 12px !important;
+        margin-top: 1.25rem !important;
+    }
+
+    .results-title {
+        font-size: 1.2rem !important;
+    }
+
+    /* Stats dashboard grid stacking on mobile */
+    #stats-dashboard div[style*="grid-template-columns"] {
+        grid-template-columns: repeat(2, 1fr) !important;
+        gap: 8px !important;
+    }
+
+    /* Page meta info box on mobile */
+    .page-meta-info {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+        padding: 12px !important;
+        font-size: 0.82rem !important;
+    }
+
+    /* Breadcrumb top bar on mobile */
+    .tool-nav-top-bar {
+        padding: 8px 10px !important;
+        margin-bottom: 12px !important;
+        font-size: 0.82rem !important;
+        flex-wrap: wrap !important;
+        gap: 8px !important;
+    }
+}
+
+/* Extra small screens (<= 480px, e.g. iPhone SE, Galaxy A series) */
+@media screen and (max-width: 480px) {
+    .tool-title {
+        font-size: 1.3rem !important;
+    }
+
+    .tool-body button.btn,
+    .tool-container .btn-primary,
+    .tool-container .btn-secondary {
+        width: 100% !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+    }
+
+    .tool-body div[style*="display:flex"]:not(.radio-badge):not(.badge-icon-wrap) {
+        flex-direction: column !important;
+        align-items: stretch !important;
+    }
+
+    #stats-dashboard div[style*="grid-template-columns"] {
+        grid-template-columns: 1fr !important;
+    }
+
+    /* Privacy trust badge styling on mobile */
+    .tool-privacy-badge {
+        font-size: 0.78rem !important;
+        padding: 8px 10px !important;
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 6px !important;
+    }
+
+    .badge-learn-link {
+        margin-left: 0 !important;
+    }
+}

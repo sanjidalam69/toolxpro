@@ -6,7 +6,7 @@
     <title>BD University CGPA Calculator (UGC 4.00 Scale) - ToolX Pro</title>
     <meta name="description" content="Calculate CGPA & GPA for Bangladeshi Public, Private, and National Universities following the official UGC Uniform Grading System and credit-weighted formula.">
     <link rel="canonical" href="https://toolxpro.live/tools/bd-cgpa">
-    <link rel="stylesheet" href="../css/style.css?v=70.0">
+    <link rel="stylesheet" href="../css/style.css?v=71.0">
 
         <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5ML311H57V"></script>
@@ -29,14 +29,20 @@
     <meta property="og:description" content="Calculate CGPA & GPA for Bangladeshi Public, Private, and National Universities following the official UGC Uniform Grading System.">
     <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
     <style>
+        .table-responsive-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
         .ugc-scale-table {
             width: 100%;
+            min-width: 500px;
             border-collapse: collapse;
-            margin: 1.5rem 0;
             font-size: 0.92rem;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            overflow: hidden;
+            margin: 0;
         }
         .ugc-scale-table th {
             background: var(--bg-secondary);
@@ -46,14 +52,14 @@
             font-weight: 700;
         }
         .ugc-scale-table td {
-            padding: 8px 14px;
+            padding: 9px 14px;
             border-bottom: 1px solid var(--border-color);
             color: var(--text-primary);
         }
         .ugc-scale-table tr:hover {
             background: var(--primary-glow);
         }
-        .entry-row {
+        .course-row, .semester-row {
             display: flex;
             align-items: center;
             gap: 10px;
@@ -61,11 +67,28 @@
             background: var(--bg-secondary);
             border-radius: 10px;
             border: 1px solid var(--border-color);
-            flex-wrap: wrap;
             transition: var(--transition);
         }
-        .entry-row:hover {
+        .course-row:hover, .semester-row:hover {
             border-color: var(--primary);
+        }
+        @media (max-width: 640px) {
+            #entries-header-row {
+                display: none !important;
+            }
+            .course-row, .semester-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                padding: 14px 12px;
+            }
+            .course-row input, .course-row select,
+            .semester-row input, .semester-row select {
+                width: 100% !important;
+            }
+            .course-row .btn-remove-row, .semester-row .btn-remove-row {
+                align-self: flex-end;
+            }
         }
     </style>
     <!-- Favicon & Brand Icons -->
@@ -232,7 +255,7 @@
                         </p>
 
                         <div class="table-responsive">
-                            <table class="ugc-scale-table">
+                            <div class="table-responsive-wrapper"><table class="ugc-scale-table">
                                 <thead>
                                     <tr>
                                         <th>Numerical Marks</th>

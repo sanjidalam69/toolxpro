@@ -6,7 +6,7 @@
     <title>SSC & HSC GPA Calculator (Bangladesh Board Standard) - ToolX Pro</title>
     <meta name="description" content="Calculate your SSC, HSC, Dakhil, and Alim GPA following official Bangladesh Education Board 4th subject rules and 5.00 grading scale.">
     <link rel="canonical" href="https://toolxpro.live/tools/bd-gpa">
-    <link rel="stylesheet" href="../css/style.css?v=70.0">
+    <link rel="stylesheet" href="../css/style.css?v=71.0">
 
         <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5ML311H57V"></script>
@@ -29,14 +29,20 @@
     <meta property="og:description" content="Calculate SSC and HSC GPA following official Bangladesh Education Board rules and 4th subject bonus points logic.">
     <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
     <style>
+        .table-responsive-wrapper {
+            width: 100%;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
         .bd-scale-table {
             width: 100%;
+            min-width: 500px;
             border-collapse: collapse;
-            margin: 1.5rem 0;
             font-size: 0.92rem;
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            overflow: hidden;
+            margin: 0;
         }
         .bd-scale-table th {
             background: var(--bg-secondary);
@@ -79,6 +85,28 @@
             font-size: 0.88rem;
             font-weight: 600;
             user-select: none;
+        }
+        @media (max-width: 640px) {
+            .subject-row {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+                padding: 12px 10px;
+            }
+            .subject-row .sub-name {
+                font-size: 0.95rem;
+                width: 100%;
+            }
+            .subject-row .form-control {
+                width: 100% !important;
+            }
+            .subject-row > div {
+                width: 100%;
+                justify-content: space-between;
+            }
+            .radio-badge {
+                padding: 6px 0;
+            }
         }
     </style>
     <!-- Favicon & Brand Icons -->
@@ -255,7 +283,7 @@
                         </p>
 
                         <div class="table-responsive">
-                            <table class="bd-scale-table">
+                            <div class="table-responsive-wrapper"><table class="bd-scale-table">
                                 <thead>
                                     <tr>
                                         <th>Class Interval (Marks)</th>
