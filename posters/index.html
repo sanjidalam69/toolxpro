@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ToolX Pro - Social Media Marketing Kit (Lab Report Cover)</title>
+    <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&family=Plus+Jakarta+Sans:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #f57c00;
+            --primary-dark: #d96b00;
+            --bg-dark: #0b0f19;
+            --card-bg: #141b2d;
+            --text-main: #f8fafc;
+            --text-sub: #94a3b8;
+            --border: rgba(245, 124, 0, 0.25);
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Plus Jakarta Sans', 'Hind Siliguri', sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-main);
+            padding: 30px 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        .brand {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+        .brand span { color: var(--primary); }
+        .tagline {
+            color: var(--text-sub);
+            font-size: 1.1rem;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        @media (max-width: 900px) {
+            .grid { grid-template-columns: 1fr; }
+        }
+        .poster-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+        .poster-card h3 {
+            font-size: 1.3rem;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .badge {
+            background: rgba(245, 124, 0, 0.2);
+            color: var(--primary);
+            font-size: 0.8rem;
+            padding: 4px 10px;
+            border-radius: 20px;
+            border: 1px solid var(--primary);
+        }
+        .poster-preview {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+            background: #000;
+        }
+        .poster-preview img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .btn-download {
+            background: var(--primary);
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: 700;
+            text-align: center;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .btn-download:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        .caption-section {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+        .caption-section h2 {
+            font-size: 1.6rem;
+            margin-bottom: 20px;
+            color: var(--primary);
+        }
+        .caption-box {
+            background: #0a0e17;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 24px;
+            position: relative;
+        }
+        .caption-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            padding-bottom: 8px;
+        }
+        .caption-title {
+            font-weight: 700;
+            color: #38bdf8;
+            font-size: 1.05rem;
+        }
+        .btn-copy {
+            background: rgba(245, 124, 0, 0.15);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 6px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        .btn-copy:hover {
+            background: var(--primary);
+            color: #fff;
+        }
+        .caption-content {
+            white-space: pre-wrap;
+            font-family: inherit;
+            line-height: 1.65;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+        }
+        .tips-box {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid #10b981;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .tips-box h4 {
+            color: #10b981;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+        .tips-box ul {
+            padding-left: 20px;
+            color: #cbd5e1;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="brand"><span>ToolX</span> PRO • Social Media Kit</div>
+            <p class="tagline">Lab Report Cover Generator প্রমোশনাল পোস্টার ও রেডি ক্যাপশন</p>
+        </header>
+
+        <!-- Posters Grid -->
+        <div class="grid">
+            <!-- Poster 1: Branded Feature Poster -->
+            <div class="poster-card">
+                <h3>📢 অফিশিয়াল ব্র্যান্ডেড পোস্টার <span class="badge">Square 1080x1080</span></h3>
+                <div class="poster-preview">
+                    <img src="toolxpro-lab-report-poster.png" alt="ToolX Pro Lab Report Poster">
+                </div>
+                <a href="toolxpro-lab-report-poster.png" download="toolxpro-lab-report-poster.png" class="btn-download">
+                    ⬇️ ডাউনলোড করুন (High-Res PNG)
+                </a>
+            </div>
+
+            <!-- Poster 2: 3D Modern Tech Poster -->
+            <div class="poster-card">
+                <h3>🚀 3D টেক গ্রাফিক্স পোস্টার <span class="badge">AI Tech Edition</span></h3>
+                <div class="poster-preview">
+                    <img src="toolxpro-ai-poster.jpg" alt="ToolX Pro 3D AI Poster">
+                </div>
+                <a href="toolxpro-ai-poster.jpg" download="toolxpro-ai-poster.jpg" class="btn-download">
+                    ⬇️ ডাউনলোড করুন (High-Res JPG)
+                </a>
+            </div>
+        </div>
+
+        <!-- Ready-to-copy Social Media Captions -->
+        <div class="caption-section">
+            <h2>📝 রেডি সোশ্যাল মিডিয়া ক্যাপশন (১-ক্লিকে কপি করুন)</h2>
+
+            <!-- Caption 1: For SEU Students -->
+            <div class="caption-box">
+                <div class="caption-header">
+                    <span class="caption-title">🎯 অপশন ১: Southeast University (SEU) গ্রুপ ও ব্যাচ পোস্টের জন্য</span>
+                    <button class="btn-copy" onclick="copyCaption('cap1', this)">📋 কপি করুন</button>
+                </div>
+                <div class="caption-content" id="cap1">ল্যাব রিপোর্ট জমা দেওয়ার শেষ রাতে কভার পেজ ডিজাইন নিয়ে আর কোনো টেনশন নেই! 🧪📑
+
+Southeast University (SEU)-এর স্টুডেন্টদের জন্য তৈরি হলো ইনস্ট্যান্ট "Lab Report Cover Generator"!
+
+এখন মাত্র ১০ সেকেন্ডেই তৈরি করে নিতে পারবেন প্রিন্ট-রেডি অফিশিয়াল A4 কভার পেজ:
+
+✨ যা যা থাকছে:
+✅ অফিশিয়াল Southeast University লোগো প্রিলোডেড
+✅ ১০+ আকর্ষণীয় প্রফেশনাল টেমপ্লেট (Engineering, Modern, Formal Crest ইত্যাদি)
+✅ সিঙ্গেল বা গ্রুপ রিপোর্ট (৮ জন পর্যন্ত টিম মেম্বার)
+✅ মোবাইল বা পিসি থেকে লাইভ প্রিভিউ দেখে এডিট করার সুবিধা
+✅ ১-ক্লিকেই হাই-কোয়ালিটি A4 PDF এবং PNG ডাউনলোড!
+✅ সম্পূর্ণ ফ্রি, কোনো সাইন-আপ বা লগইন ঝামেলা নেই!
+
+👉 আজই ট্রাই করুন: https://toolxpro.live/tools/lab-report-cover?mode=seu
+
+বন্ধুদের সাথে শেয়ার করে দিন, ল্যাব রিপোর্টের ঝামেলা থেকে বাঁচুন! 🙌
+
+#SoutheastUniversity #SEU #CSE #EEE #Pharmacy #LabReport #StudentToolkit #ToolXPro #FreeTools</div>
+            </div>
+
+            <!-- Caption 2: For All University Students -->
+            <div class="caption-box">
+                <div class="caption-header">
+                    <span class="caption-title">🌐 অপশন ২: সকল বিশ্ববিদ্যালয় স্টুডেন্ট গ্রুপ ও ফেসবুক পেইজের জন্য</span>
+                    <button class="btn-copy" onclick="copyCaption('cap2', this)">📋 কপি করুন</button>
+                </div>
+                <div class="caption-content" id="cap2">ল্যাব রিপোর্টের ফ্রন্ট পেজ বানাতে গিয়ে MS Word-এ টেবিল ও ফরম্যাটিং ভেঙে যায়? 😫
+
+এখন আর কোনো ফরম্যাটিংয়ের ঝামেলা নেই! ToolX Pro নিয়ে এলো সম্পূর্ণ ফ্রি "A4 Lab Report Cover Generator"! 🚀
+
+মাত্র কয়েকটি ইনফো টাইপ করলেই সেকেন্ডের মধ্যে পেয়ে যাবেন প্রফেশনাল প্রিন্ট-রেডি ফ্রন্ট পেজ!
+
+🔥 স্পেশাল ফিচারসমূহ:
+🎯 Southeast University সহ যেকোনো ভার্সিটির কাস্টম লোগো আপলোডের সুবিধা
+🎯 ১০টি প্রিমিয়াম একাডেমিক টেমপ্লেট
+🎯 সিঙ্গেল স্টুডেন্ট এবং গ্রুপ প্রজেক্ট (টিম মেম্বার) মোড
+🎯 মোবাইল ফ্রেন্ডলি লাইভ ক্যানভাস প্রিভিউ
+🎯 সরাসরি ফুল রেজ্যুলেশন A4 PDF & PNG ডাউনলোড
+🎯 ১০০% ফ্রি — কোনো রেজিস্ট্রেশন বা বিজ্ঞাপন ঝামেলা ছাড়াই
+
+👉 ফ্রিতে ট্রাই করুন এখনই: https://toolxpro.live/tools/lab-report-cover
+
+আপনার বিশ্ববিদ্যালয়ের বন্ধুদের সাথে পোস্টটি শেয়ার করে রাখুন, সেমিস্টার জুড়ে কাজে লাগবে! 💡
+
+#UniversityLife #LabReport #EngineeringStudents #DhakaUniversity #BUET #NSU #BRACU #AIUB #UIU #DIU #AUST #SEU #ToolXPro #AcademicTools</div>
+            </div>
+
+            <!-- Caption 3: Short / Story / Reels -->
+            <div class="caption-box">
+                <div class="caption-header">
+                    <span class="caption-title">⚡ অপশন ৩: শর্ট স্ট্যাটাস / WhatsApp গ্রুপ / Story ক্যাপশন</span>
+                    <button class="btn-copy" onclick="copyCaption('cap3', this)">📋 কপি করুন</button>
+                </div>
+                <div class="caption-content" id="cap3">ল্যাব রিপোর্টের কভার পেজ বানান মাত্র ১০ সেকেন্ডে! 🧪📄
+১০+ রেডি টেমপ্লেট • যেকোনো ভার্সিটির লোগো • ১-ক্লিকে A4 PDF ডাউনলোড!
+
+সম্পূর্ণ ফ্রিতে ট্রাই করুন:
+🔗 toolxpro.live/tools/lab-report-cover
+
+#ToolXPro #LabReportCover #StudentHacks</div>
+            </div>
+
+            <!-- Promotional Strategy Tips -->
+            <div class="tips-box">
+                <h4>💡 পোস্ট করার কার্যকারী টিপস (Viral Tips for Traffic):</h4>
+                <ul>
+                    <li><strong>SEU ফেসবুক গ্রুপ:</strong> "SEU CSE Students", "Southeast University Notice Board", "SEU Batch Groups", ডিপার্টমেন্টাল মেসেঞ্জার ও হোয়াটসঅ্যাপ গ্রুপে অপশন ১ এর ক্যাপশন সহ পোস্টার দিন। এতে দ্রুত ৩০০-৫০০ ইনস্ট্যান্ট অর্গানিক ভিজিটর আসবে!</li>
+                    <li><strong>অন্যান্য ভার্সিটি গ্রুপ:</strong> বিভিন্ন ভার্সিটির গ্রুপে (যেমন: "Engineering Students Bangladesh", "Diploma & B.Sc Engineering Hub") অপশন ২ পোস্ট করুন।</li>
+                    <li><strong>পোস্ট করার পিক টাইম:</strong> ল্যাব রিপোর্টের চাপ সাধারণত বৃহস্পতি, শুক্র ও শনিবার বেশি থাকে। এছাড়া প্রতিদিন রাত ৮:০০ টা থেকে রাত ১১:০০ টার মধ্যে পোস্ট করলে সবচেয়ে বেশি এনগেজমেন্ট পাওয়া যায়।</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function copyCaption(id, btn) {
+            const text = document.getElementById(id).innerText;
+            navigator.clipboard.writeText(text).then(() => {
+                const orig = btn.innerText;
+                btn.innerText = "✅ কপি হয়েছে!";
+                setTimeout(() => btn.innerText = orig, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
