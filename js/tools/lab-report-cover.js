@@ -143,64 +143,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    // ── Mode Initialization ────────────────────────────────────────────
-    const urlParams = new URLSearchParams(window.location.search);
-    const urlMode   = urlParams.get("mode"); // 'all', 'seu', or null
-
-    if (btnBackSelection) {
-        btnBackSelection.addEventListener("click", () => {
-            window.location.href = "lab-report-cover.html";
-        });
-    }
-
-    if (urlMode === "seu" || urlMode === "all") {
-        currentMode = urlMode;
-        if (landingSelection) {
-            landingSelection.style.display = "none";
-            landingSelection.classList.add("hidden");
-        }
-        if (generatorInterface) {
-            generatorInterface.style.display = "";
-            generatorInterface.classList.remove("hidden");
-            setTimeout(updatePreviewScale, 50);
-            setTimeout(updatePreviewScale, 200);
-            setTimeout(updatePreviewScale, 500);
-        }
-
-        const toolTitleEl = document.querySelector(".tool-title");
-        const urlUni = urlParams.get("uni");
-        if (urlMode === "seu") {
-            applyUniversityPreset("seu");
-            if (toolTitleEl) toolTitleEl.textContent = "🧪 Lab Report Cover Generator (SEU)";
-            document.title = "Lab Report Cover Generator (SEU) - ToolX Pro";
-        } else if (urlUni) {
-            applyUniversityPreset(urlUni.toLowerCase());
-            if (toolTitleEl) toolTitleEl.textContent = "🧪 Lab Report Cover Generator";
-            document.title = "Lab Report Cover Generator - ToolX Pro";
-        } else {
-            if (inpUniName) {
-                inpUniName.value = "";
-                inpUniName.placeholder = "e.g. UNIVERSITY OF DHAKA";
-            }
-            if (inpColor) inpColor.value = "#003366";
-            activeLogo = customLogoSrc || defaultLogo;
-            updateLogoBadge("", defaultLogo);
-            if (toolTitleEl) toolTitleEl.textContent = "🧪 Lab Report Cover Generator (All Universities)";
-            document.title = "Lab Report Cover Generator (All Universities) - ToolX Pro";
-        }
-    } else {
-        if (landingSelection) {
-            landingSelection.style.display = "block";
-            landingSelection.classList.remove("hidden");
-        }
-        if (generatorInterface) {
-            generatorInterface.style.display = "none";
-            generatorInterface.classList.add("hidden");
-        }
-        const toolTitleEl = document.querySelector(".tool-title");
-        if (toolTitleEl) toolTitleEl.textContent = "🧪 Lab Report Cover Generator";
-    }
-
     // ── Submission Type (Individual vs Group) Toggle ────────────────────
     if (btnTypeIndiv && btnTypeGroup) {
         btnTypeIndiv.addEventListener("click", () => {
@@ -1123,9 +1065,6 @@ document.addEventListener("DOMContentLoaded", () => {
         preview.innerHTML = renderer(data);
     }
 
-    // Initial render
-    renderPreview();
-    setTimeout(updatePreviewScale, 150);
 
     // ── Export Handlers ────────────────────────────────────────────────
     const generateCanvas = async () => {
@@ -1194,6 +1133,71 @@ document.addEventListener("DOMContentLoaded", () => {
         btnDirectPrint.addEventListener("click", () => {
             window.print();
         });
+    }
+
+
+    // ── Initial Render & Page Mode Setup ──────────────────────────────
+    const urlParams = new URLSearchParams(window.location.search);
+    const urlMode   = urlParams.get("mode"); // 'all', 'seu', or null
+
+    if (btnBackSelection) {
+        btnBackSelection.addEventListener("click", () => {
+            window.location.href = "lab-report-cover.html";
+        });
+    }
+
+    if (urlMode === "seu" || urlMode === "all") {
+        currentMode = urlMode;
+        if (landingSelection) {
+            landingSelection.style.display = "none";
+            landingSelection.classList.add("hidden");
+        }
+        if (generatorInterface) {
+            generatorInterface.style.display = "";
+            generatorInterface.classList.remove("hidden");
+            if (typeof switchToEditView === "function" && window.innerWidth <= 768) {
+                switchToEditView();
+            }
+        }
+
+        const toolTitleEl = document.querySelector(".tool-title");
+        const urlUni = urlParams.get("uni");
+        if (urlMode === "seu") {
+            applyUniversityPreset("seu");
+            if (toolTitleEl) toolTitleEl.textContent = "🧪 Lab Report Cover Generator (SEU)";
+            document.title = "Lab Report Cover Generator (SEU) - ToolX Pro";
+        } else if (urlUni) {
+            applyUniversityPreset(urlUni.toLowerCase());
+            if (toolTitleEl) toolTitleEl.textContent = "🧪 Lab Report Cover Generator";
+            document.title = "Lab Report Cover Generator - ToolX Pro";
+        } else {
+            if (inpUniName) {
+                inpUniName.value = "";
+                inpUniName.placeholder = "e.g. UNIVERSITY OF DHAKA";
+            }
+            if (inpColor) inpColor.value = "#003366";
+            activeLogo = customLogoSrc || defaultLogo;
+            updateLogoBadge("", defaultLogo);
+            if (toolTitleEl) toolTitleEl.textContent = "🧪 Lab Report Cover Generator (All Universities)";
+            document.title = "Lab Report Cover Generator (All Universities) - ToolX Pro";
+        }
+        renderPreview();
+        updatePreviewScale();
+        setTimeout(updatePreviewScale, 50);
+        setTimeout(updatePreviewScale, 150);
+        setTimeout(updatePreviewScale, 300);
+        setTimeout(updatePreviewScale, 600);
+    } else {
+        if (landingSelection) {
+            landingSelection.style.display = "block";
+            landingSelection.classList.remove("hidden");
+        }
+        if (generatorInterface) {
+            generatorInterface.style.display = "none";
+            generatorInterface.classList.add("hidden");
+        }
+        const toolTitleEl = document.querySelector(".tool-title");
+        if (toolTitleEl) toolTitleEl.textContent = "🧪 Lab Report Cover Generator";
     }
 
 });
