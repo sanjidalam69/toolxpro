@@ -162,6 +162,9 @@ document.addEventListener("DOMContentLoaded", () => {
         if (generatorInterface) {
             generatorInterface.style.display = "";
             generatorInterface.classList.remove("hidden");
+            setTimeout(updatePreviewScale, 50);
+            setTimeout(updatePreviewScale, 200);
+            setTimeout(updatePreviewScale, 500);
         }
 
         const toolTitleEl = document.querySelector(".tool-title");
@@ -425,18 +428,32 @@ document.addEventListener("DOMContentLoaded", () => {
     function updatePreviewScale() {
         if (!preview || !previewOuter) return;
 
+        const isMobile = window.innerWidth <= 768;
+        const padding = isMobile ? 12 : 48;
+        const parentW = previewOuter.parentElement ? previewOuter.parentElement.clientWidth : 0;
+        const cWidth = previewOuter.clientWidth || parentW || (isMobile ? window.innerWidth - 24 : 600);
+        const containerWidth = cWidth - padding;
+        const paperWidth = 794;
+
         let scale = 1;
         if (currentScale === "auto") {
-            const containerWidth = previewOuter.clientWidth - 48;
-            scale = Math.min(1, Math.max(0.32, containerWidth / 794));
+            if (containerWidth > 0 && containerWidth < paperWidth) {
+                scale = Math.max(0.28, containerWidth / paperWidth);
+            } else if (containerWidth >= paperWidth) {
+                scale = 1;
+            } else {
+                scale = 0.65;
+            }
         } else {
             scale = parseFloat(currentScale) || 1;
         }
 
         preview.style.transform = `scale(${scale})`;
+        preview.style.transformOrigin = "top center";
         
-        const renderedHeight = 1123 * scale;
-        previewOuter.style.minHeight = `${renderedHeight + 40}px`;
+        const renderedHeight = Math.round(1123 * scale);
+        previewOuter.style.minHeight = `${renderedHeight + padding + 20}px`;
+        previewOuter.style.height = `${renderedHeight + padding + 20}px`;
     }
 
     window.addEventListener("resize", updatePreviewScale);
