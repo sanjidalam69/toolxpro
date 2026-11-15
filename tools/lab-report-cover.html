@@ -159,9 +159,12 @@
 
         .lab-generator-grid {
             display: grid;
-            grid-template-columns: 420px 1fr;
+            grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
             gap: 22px;
             align-items: flex-start;
+            min-width: 0;
+            width: 100%;
+            max-width: 100%;
         }
 
         /* Mobile Segmented View Switcher */
@@ -208,6 +211,8 @@
             border: 1px solid var(--border-color);
             box-sizing: border-box;
             box-shadow: var(--card-shadow);
+            min-width: 0;
+            max-width: 100%;
         }
 
         .form-section-title {
@@ -312,6 +317,10 @@
             border-radius: 10px;
             padding: 12px;
             margin-bottom: 14px;
+            min-width: 0;
+            max-width: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
         }
         .uni-quick-pills {
             display: flex;
@@ -321,6 +330,10 @@
             gap: 6px;
             padding: 2px 2px 8px 2px;
             scrollbar-width: thin;
+            min-width: 0;
+            max-width: 100%;
+            width: 100%;
+            box-sizing: border-box;
         }
         .uni-quick-pills::-webkit-scrollbar {
             height: 4px;
@@ -626,10 +639,22 @@
 
         /* Responsive Layout Overhauls */
         @media (max-width: 992px) {
+            html, body {
+                max-width: 100vw !important;
+                overflow-x: hidden !important;
+            }
+            .main-wrapper, .content-area, .lab-generator-wrapper, .tool-container {
+                max-width: 100vw !important;
+                width: 100% !important;
+                overflow-x: hidden !important;
+                box-sizing: border-box !important;
+                padding-left: 6px !important;
+                padding-right: 6px !important;
+            }
             .mobile-view-tabs {
                 display: flex !important;
                 position: sticky;
-                top: 10px;
+                top: 8px;
                 z-index: 999;
                 background: rgba(255, 255, 255, 0.96);
                 backdrop-filter: blur(12px);
@@ -649,17 +674,124 @@
                 display: flex;
                 flex-direction: column;
                 gap: 16px;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                box-sizing: border-box !important;
             }
             .lab-generator-grid.view-edit .preview-wrapper { display: none !important; }
-            .lab-generator-grid.view-edit .controls-card { display: block !important; }
+            .lab-generator-grid.view-edit .controls-card { display: block !important; width: 100% !important; max-width: 100% !important; }
             .lab-generator-grid.view-preview .controls-card { display: none !important; }
-            .lab-generator-grid.view-preview .preview-wrapper { display: flex !important; position: static; }
+            .lab-generator-grid.view-preview .preview-wrapper { display: flex !important; position: static; width: 100% !important; max-width: 100% !important; }
             .btn-goto-preview { display: flex !important; }
             .preview-actions-bar { display: flex !important; }
+
+            .controls-card, .preview-wrapper, .preview-container {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                box-sizing: border-box !important;
+            }
 
             .tool-content-body {
                 margin-top: 2.2rem !important;
                 padding-top: 1.8rem !important;
+            }
+
+            /* Floating Mobile Bottom Action Bar */
+            body {
+                padding-bottom: 76px !important;
+            }
+            .mobile-sticky-action-bar {
+                display: block !important;
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 9999 !important;
+                background: rgba(255, 255, 255, 0.96) !important;
+                backdrop-filter: blur(14px) !important;
+                -webkit-backdrop-filter: blur(14px) !important;
+                border-top: 1.5px solid var(--border-color) !important;
+                padding: 10px 14px !important;
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.12) !important;
+                box-sizing: border-box !important;
+            }
+            [data-theme="dark"] .mobile-sticky-action-bar {
+                background: rgba(18, 24, 38, 0.96) !important;
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.45) !important;
+            }
+            .sticky-bar-edit {
+                display: flex;
+                width: 100%;
+            }
+            .btn-mobile-sticky-preview {
+                width: 100%;
+                background: linear-gradient(135deg, #f57c00 0%, #ea580c 100%);
+                color: #ffffff;
+                border: none;
+                border-radius: 12px;
+                padding: 13px 18px;
+                font-weight: 800;
+                font-size: 0.98rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                box-shadow: 0 4px 14px rgba(245, 124, 0, 0.35);
+                touch-action: manipulation;
+            }
+            .sticky-bar-preview {
+                display: flex;
+                gap: 8px;
+                width: 100%;
+            }
+            .btn-mobile-sticky-edit {
+                flex: 1;
+                background: var(--bg-primary);
+                border: 1.5px solid var(--border-color);
+                color: var(--text-primary);
+                border-radius: 10px;
+                padding: 11px;
+                font-weight: 700;
+                font-size: 0.9rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 4px;
+            }
+            .btn-mobile-sticky-pdf {
+                flex: 2;
+                background: linear-gradient(135deg, #f57c00 0%, #ea580c 100%);
+                color: #ffffff;
+                border: none;
+                border-radius: 10px;
+                padding: 11px;
+                font-weight: 800;
+                font-size: 0.92rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                box-shadow: 0 4px 12px rgba(245, 124, 0, 0.3);
+            }
+            .btn-mobile-sticky-png {
+                flex: 1;
+                background: linear-gradient(135deg, #10b981, #059669);
+                color: #ffffff;
+                border: none;
+                border-radius: 10px;
+                padding: 11px;
+                font-weight: 800;
+                font-size: 0.88rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 4px;
             }
         }
 
@@ -700,13 +832,36 @@
                 border-radius: 10px !important;
             }
             .template-picker {
-                grid-template-columns: repeat(2, 1fr) !important;
-                gap: 8px !important;
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                scroll-snap-type: x mandatory !important;
+                gap: 10px !important;
+                padding: 4px 4px 12px 4px !important;
+                margin-bottom: 12px !important;
+                scrollbar-width: thin !important;
+                min-width: 0 !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .template-picker::-webkit-scrollbar {
+                height: 5px;
+            }
+            .template-picker::-webkit-scrollbar-thumb {
+                background: #f57c00;
+                border-radius: 4px;
             }
             .tpl-btn {
-                min-height: 56px !important;
-                padding: 8px 6px !important;
-                font-size: 0.76rem !important;
+                flex: 0 0 135px !important;
+                min-width: 135px !important;
+                max-width: 135px !important;
+                scroll-snap-align: start !important;
+                min-height: 62px !important;
+                padding: 10px 8px !important;
+                font-size: 0.78rem !important;
+                border-radius: 12px !important;
             }
             .mobile-tab-btn {
                 min-height: 42px;
@@ -1099,7 +1254,10 @@
                                 </div>
 
                                 <div class="form-group-lab">
-                                    <label>Lab Report Template:</label>
+                                    <label style="display:flex; justify-content:space-between; align-items:center;">
+                                        <span>Lab Report Template:</span>
+                                        <span style="font-size:0.75rem; color:var(--text-secondary); font-weight:600;">(↔ Swipe to choose)</span>
+                                    </label>
                                     <div class="template-picker">
                                         <button type="button" class="tpl-btn active" data-tpl="eng-border">
                                             <span class="tpl-icon">📐</span>
@@ -1173,7 +1331,19 @@
                                     <span>🏛️</span> 2. University & Department
                                 </div>
 
-                                <div class="uni-preset-box">
+                                <!-- SEU Verified Mode Banner (shown when mode=seu) -->
+                                <div id="seu-verified-banner" class="seu-verified-banner" style="display:none; background:linear-gradient(135deg, rgba(0,51,102,0.06), rgba(245,124,0,0.08)); border:1.5px solid #003366; border-radius:12px; padding:12px 14px; margin-bottom:14px; align-items:center; gap:12px;">
+                                    <img src="../images/universities/seu.png" alt="SEU Crest" style="width:44px; height:44px; object-fit:contain; flex-shrink:0; background:#fff; border-radius:6px; padding:2px; box-shadow:0 2px 6px rgba(0,0,0,0.08);">
+                                    <div style="flex:1; min-width:0;">
+                                        <div style="font-weight:800; color:#003366; font-size:0.95rem; display:flex; align-items:center; gap:6px;">
+                                            <span>Southeast University (SEU)</span>
+                                            <span style="font-size:0.7rem; background:#10b981; color:#fff; padding:1px 6px; border-radius:4px; font-weight:700;">Verified</span>
+                                        </div>
+                                        <div style="font-size:0.76rem; color:var(--text-secondary); margin-top:2px;">Official crest logo & standard department layout pre-loaded</div>
+                                    </div>
+                                </div>
+
+                                <div class="uni-preset-box" id="uni-preset-box">
                                     <label class="form-label" for="select-university-preset" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:4px;">
                                         <span style="font-weight:700;">Select University Preset (Logo & Name)</span>
                                         <span style="font-size:0.75rem; background:rgba(30,58,138,0.1); color:var(--primary); padding:2px 8px; border-radius:12px; font-weight:700;">⚡ 31+ Official BD Logos</span>
@@ -1470,6 +1640,26 @@
                                         <button type="button" id="btn-preview-dl-png" class="btn-dl-png" style="background:#10b981; color:#fff;">🖼️ PNG</button>
                                         <button type="button" id="btn-preview-dl-pdf" class="btn-dl-pdf" style="background:var(--primary); color:#fff;">📄 PDF (A4)</button>
                                     </div>
+                                </div>
+                            </div>
+
+                            <!-- Mobile Sticky Bottom Floating Action Bar -->
+                            <div class="mobile-sticky-action-bar" id="mobile-sticky-bar">
+                                <div class="sticky-bar-edit" id="sticky-bar-edit">
+                                    <button type="button" class="btn-mobile-sticky-preview" id="btn-sticky-preview">
+                                        <span>👁️</span> View Live A4 Preview
+                                    </button>
+                                </div>
+                                <div class="sticky-bar-preview" id="sticky-bar-preview" style="display:none;">
+                                    <button type="button" class="btn-mobile-sticky-edit" id="btn-sticky-edit">
+                                        <span>✏️</span> Edit Details
+                                    </button>
+                                    <button type="button" class="btn-mobile-sticky-pdf" id="btn-sticky-pdf">
+                                        <span>📄</span> Download PDF
+                                    </button>
+                                    <button type="button" class="btn-mobile-sticky-png" id="btn-sticky-png">
+                                        <span>🖼️</span> PNG
+                                    </button>
                                 </div>
                             </div>
 

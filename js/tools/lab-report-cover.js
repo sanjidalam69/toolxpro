@@ -346,6 +346,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (tabBtnPreview) tabBtnPreview.classList.remove("active");
         generatorInterface.classList.remove("view-preview");
         generatorInterface.classList.add("view-edit");
+        const stickyBarEdit = document.getElementById("sticky-bar-edit");
+        const stickyBarPrev = document.getElementById("sticky-bar-preview");
+        if (stickyBarEdit) stickyBarEdit.style.display = "flex";
+        if (stickyBarPrev) stickyBarPrev.style.display = "none";
         window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
@@ -355,6 +359,10 @@ document.addEventListener("DOMContentLoaded", () => {
         if (tabBtnEdit) tabBtnEdit.classList.remove("active");
         generatorInterface.classList.remove("view-edit");
         generatorInterface.classList.add("view-preview");
+        const stickyBarEdit = document.getElementById("sticky-bar-edit");
+        const stickyBarPrev = document.getElementById("sticky-bar-preview");
+        if (stickyBarEdit) stickyBarEdit.style.display = "none";
+        if (stickyBarPrev) stickyBarPrev.style.display = "flex";
         requestAnimationFrame(() => updatePreviewScale());
         setTimeout(updatePreviewScale, 60);
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -364,6 +372,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (tabBtnPreview) tabBtnPreview.addEventListener("click", switchToPreviewView);
     if (btnGotoPreview) btnGotoPreview.addEventListener("click", switchToPreviewView);
     if (btnBackToEdit) btnBackToEdit.addEventListener("click", switchToEditView);
+
+    // Mobile sticky bottom bar action buttons
+    const btnStickyPreview = document.getElementById("btn-sticky-preview");
+    const btnStickyEdit    = document.getElementById("btn-sticky-edit");
+    const btnStickyPdf     = document.getElementById("btn-sticky-pdf");
+    const btnStickyPng     = document.getElementById("btn-sticky-png");
+
+    if (btnStickyPreview) btnStickyPreview.addEventListener("click", switchToPreviewView);
+    if (btnStickyEdit) btnStickyEdit.addEventListener("click", switchToEditView);
+    if (btnStickyPdf && btnDlPdf) btnStickyPdf.addEventListener("click", () => btnDlPdf.click());
+    if (btnStickyPng && btnDlPng) btnStickyPng.addEventListener("click", () => btnDlPng.click());
 
     if (btnPreviewDlPdf && btnDlPdf) {
         btnPreviewDlPdf.addEventListener("click", () => btnDlPdf.click());
@@ -1162,14 +1181,28 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const toolTitleEl = document.querySelector(".tool-title");
         const urlUni = urlParams.get("uni");
+        const seuBanner = document.getElementById("seu-verified-banner");
+        const uniPresetBox = document.getElementById("uni-preset-box");
+        const wrapperUniName = document.getElementById("wrapper-uni-name");
+        const wrapperLogoUpload = document.getElementById("wrapper-logo-upload");
+
         if (urlMode === "seu") {
+            currentMode = "seu";
             applyUniversityPreset("seu");
             if (toolTitleEl) toolTitleEl.textContent = "🧪 Lab Report Cover Generator (SEU)";
             document.title = "Lab Report Cover Generator (SEU) - ToolX Pro";
+            if (seuBanner) seuBanner.style.display = "flex";
+            if (uniPresetBox) uniPresetBox.style.display = "none";
+            if (wrapperUniName) wrapperUniName.style.display = "none";
+            if (wrapperLogoUpload) wrapperLogoUpload.style.display = "none";
         } else if (urlUni) {
             applyUniversityPreset(urlUni.toLowerCase());
             if (toolTitleEl) toolTitleEl.textContent = "🧪 Lab Report Cover Generator";
             document.title = "Lab Report Cover Generator - ToolX Pro";
+            if (seuBanner) seuBanner.style.display = "none";
+            if (uniPresetBox) uniPresetBox.style.display = "block";
+            if (wrapperUniName) wrapperUniName.style.display = "flex";
+            if (wrapperLogoUpload) wrapperLogoUpload.style.display = "grid";
         } else {
             if (inpUniName) {
                 inpUniName.value = "";
@@ -1180,6 +1213,10 @@ document.addEventListener("DOMContentLoaded", () => {
             updateLogoBadge("", defaultLogo);
             if (toolTitleEl) toolTitleEl.textContent = "🧪 Lab Report Cover Generator (All Universities)";
             document.title = "Lab Report Cover Generator (All Universities) - ToolX Pro";
+            if (seuBanner) seuBanner.style.display = "none";
+            if (uniPresetBox) uniPresetBox.style.display = "block";
+            if (wrapperUniName) wrapperUniName.style.display = "flex";
+            if (wrapperLogoUpload) wrapperLogoUpload.style.display = "grid";
         }
         renderPreview();
         updatePreviewScale();

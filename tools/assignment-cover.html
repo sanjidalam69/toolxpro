@@ -29,9 +29,12 @@
     <style>
         .cover-generator-grid {
             display: grid;
-            grid-template-columns: 400px 1fr;
+            grid-template-columns: minmax(0, 400px) minmax(0, 1fr);
             gap: 20px;
             align-items: flex-start;
+            min-width: 0;
+            width: 100%;
+            max-width: 100%;
         }
 
         #generator-interface.hidden,
@@ -281,10 +284,37 @@
                 font-size: 16px !important; /* Prevents auto-zoom on iOS Safari */
                 padding: 10px 12px;
             }
+            .template-picker {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                overflow-x: auto !important;
+                -webkit-overflow-scrolling: touch !important;
+                scroll-snap-type: x mandatory !important;
+                gap: 10px !important;
+                padding: 4px 4px 12px 4px !important;
+                margin-bottom: 12px !important;
+                scrollbar-width: thin !important;
+                min-width: 0 !important;
+                width: 100% !important;
+                box-sizing: border-box !important;
+            }
+            .template-picker::-webkit-scrollbar {
+                height: 5px;
+            }
+            .template-picker::-webkit-scrollbar-thumb {
+                background: #f57c00;
+                border-radius: 4px;
+            }
             .tpl-btn {
-                min-height: 48px;
-                font-size: 0.76rem;
-                padding: 8px 4px;
+                flex: 0 0 135px !important;
+                min-width: 135px !important;
+                max-width: 135px !important;
+                scroll-snap-align: start !important;
+                min-height: 62px !important;
+                padding: 10px 8px !important;
+                font-size: 0.78rem !important;
+                border-radius: 12px !important;
             }
         }
 
@@ -295,8 +325,24 @@
             border-radius: 10px;
             padding: 12px;
             margin-bottom: 14px;
+            min-width: 0;
+            max-width: 100%;
+            overflow: hidden;
+            box-sizing: border-box;
         }
         .uni-quick-pills {
+            display: flex;
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            gap: 6px;
+            padding: 2px 2px 8px 2px;
+            scrollbar-width: thin;
+            min-width: 0;
+            max-width: 100%;
+            width: 100%;
+            box-sizing: border-box;
+        }
             display: flex;
             flex-wrap: nowrap;
             overflow-x: auto;
