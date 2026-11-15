@@ -231,14 +231,33 @@
             border: 2px solid var(--border-color);
             border-radius: 8px;
             padding: 9px 6px;
-            cursor: pointer;
+            cursor: pointer !important;
+            user-select: none !important;
             text-align: center;
             font-size: 0.78rem;
             font-weight: 600;
             background: var(--bg-primary);
             color: var(--text-primary);
-            transition: all 0.2s;
+            transition: all 0.15s ease;
             touch-action: manipulation;
+            position: relative;
+            z-index: 2;
+        }
+        .tpl-btn * {
+            pointer-events: none !important;
+        }
+        .tpl-btn:hover {
+            border-color: var(--primary) !important;
+            transform: translateY(-1px);
+        }
+        .tpl-btn:active {
+            transform: scale(0.96) !important;
+        }
+        .tpl-btn.active {
+            border-color: var(--primary) !important;
+            background: var(--primary) !important;
+            color: #ffffff !important;
+            box-shadow: 0 4px 12px rgba(0, 51, 102, 0.25);
         }
         .tpl-btn:hover { border-color: var(--primary); }
         .tpl-btn.active { border-color: var(--primary); background: var(--primary); color: #fff; }
@@ -1313,7 +1332,7 @@
 
                                 <div class="preview-container" id="preview-outer-container">
                                     <div id="a4-preview">
-                                        <!-- Rendered dynamically by lab-report-cover.js?v=76.0 -->
+                                        <!-- Rendered dynamically by lab-report-cover.js?v=77.0 -->
                                     </div>
                                 </div>
 
@@ -1505,7 +1524,7 @@
     <!-- Core Layout & Script -->
     <script src="../js/layout.js?v=70.0"></script>
     <script src="../js/bd-universities.js"></script>
-    <script src="../js/tools/lab-report-cover.js?v=76.0?v=71.0"></script>
+    <script src="../js/tools/lab-report-cover.js?v=77.0?v=71.0"></script>
 </body>
 </html>
 

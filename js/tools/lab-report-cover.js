@@ -351,11 +351,17 @@ document.addEventListener("DOMContentLoaded", () => {
     // ── Template Picker Handlers ───────────────────────────────────────
     const tplBtns = document.querySelectorAll(".tpl-btn");
     tplBtns.forEach(btn => {
-        btn.addEventListener("click", () => {
+        btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const targetBtn = e.currentTarget || btn;
             tplBtns.forEach(b => b.classList.remove("active"));
-            btn.classList.add("active");
-            currentTemplate = btn.getAttribute("data-tpl");
+            targetBtn.classList.add("active");
+            const selectedTpl = targetBtn.getAttribute("data-tpl");
+            if (selectedTpl) {
+                currentTemplate = selectedTpl;
+            }
             renderPreview();
+            setTimeout(updatePreviewScale, 50);
         });
     });
 
