@@ -802,25 +802,56 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnGotoPreview = document.getElementById("btn-goto-preview");
     const btnBackToEdit = document.getElementById("btn-back-to-edit");
 
+    // ── Preview Scaling ───────────────────────────────────────────────
+    const previewContainer = document.querySelector('.preview-container');
+    const resizePreview = () => {
+        if (!previewContainer || !preview) return;
+        const isMobile = window.innerWidth <= 768;
+        const padding = isMobile ? 12 : 40;
+        const parentW = previewContainer.parentElement ? previewContainer.parentElement.clientWidth : 0;
+        const cWidth = previewContainer.clientWidth || parentW || (isMobile ? window.innerWidth - 20 : 600);
+        const containerWidth = cWidth - padding;
+        const paperWidth = 794;
+        let scale = 1;
+        if (containerWidth > 0 && containerWidth < paperWidth) {
+            scale = Math.max(0.28, containerWidth / paperWidth);
+        } else if (containerWidth >= paperWidth) {
+            scale = 1;
+        } else {
+            scale = 0.65;
+        }
+        preview.style.transform = `scale(${scale})`;
+        preview.style.transformOrigin = "top center";
+        const renderedHeight = Math.round(1123 * scale);
+        previewContainer.style.minHeight = `${renderedHeight + padding + 10}px`;
+        previewContainer.style.height = `${renderedHeight + padding + 10}px`;
+    };
+
     function setMobileView(view) {
         if (!generatorInterface) return;
+        const stickyBarEdit = document.getElementById("sticky-bar-edit");
+        const stickyBarPrev = document.getElementById("sticky-bar-preview");
         if (view === "preview") {
             generatorInterface.classList.remove("view-edit");
             generatorInterface.classList.add("view-preview");
             if (tabBtnEdit) tabBtnEdit.classList.remove("active");
             if (tabBtnPreview) tabBtnPreview.classList.add("active");
-            // Trigger recalculation after DOM display change
+            if (stickyBarEdit) stickyBarEdit.style.display = "none";
+            if (stickyBarPrev) stickyBarPrev.style.display = "flex";
             requestAnimationFrame(() => {
                 resizePreview();
-                setTimeout(resizePreview, 50);
+                setTimeout(resizePreview, 60);
+                setTimeout(resizePreview, 150);
             });
-            window.scrollTo({ top: generatorInterface.offsetTop - 15, behavior: "smooth" });
+            window.scrollTo({ top: 0, behavior: "smooth" });
         } else {
             generatorInterface.classList.remove("view-preview");
             generatorInterface.classList.add("view-edit");
             if (tabBtnPreview) tabBtnPreview.classList.remove("active");
             if (tabBtnEdit) tabBtnEdit.classList.add("active");
-            window.scrollTo({ top: generatorInterface.offsetTop - 15, behavior: "smooth" });
+            if (stickyBarEdit) stickyBarEdit.style.display = "flex";
+            if (stickyBarPrev) stickyBarPrev.style.display = "none";
+            window.scrollTo({ top: 0, behavior: "smooth" });
         }
     }
 
@@ -829,23 +860,17 @@ document.addEventListener("DOMContentLoaded", () => {
     if (btnGotoPreview) btnGotoPreview.addEventListener("click", () => setMobileView("preview"));
     if (btnBackToEdit) btnBackToEdit.addEventListener("click", () => setMobileView("edit"));
 
-    // ── Preview Scaling ───────────────────────────────────────────────
-    const previewContainer = document.querySelector('.preview-container');
-    const resizePreview = () => {
-        if (!previewContainer || !preview) return;
-        const padding = window.innerWidth <= 576 ? 10 : 40;
-        const cWidth = previewContainer.clientWidth || (previewContainer.parentElement ? previewContainer.parentElement.clientWidth : 0);
-        const containerWidth = cWidth - padding;
-        const paperWidth = 794;
-        if (containerWidth > 0 && containerWidth < paperWidth) {
-            const scale = containerWidth / paperWidth;
-            preview.style.transform = `scale(${scale})`;
-            previewContainer.style.height = `${Math.round(1123 * scale) + padding}px`;
-        } else {
-            preview.style.transform = 'scale(1)';
-            previewContainer.style.height = `${1123 + padding}px`;
-        }
-    };
+    // Mobile sticky bottom bar action buttons
+    const btnStickyPreview = document.getElementById("btn-sticky-preview");
+    const btnStickyEdit    = document.getElementById("btn-sticky-edit");
+    const btnStickyPdf     = document.getElementById("btn-sticky-pdf");
+    const btnStickyPng     = document.getElementById("btn-sticky-png");
+
+    if (btnStickyPreview) btnStickyPreview.addEventListener("click", () => setMobileView("preview"));
+    if (btnStickyEdit) btnStickyEdit.addEventListener("click", () => setMobileView("edit"));
+    if (btnStickyPdf && btnDlPdf) btnStickyPdf.addEventListener("click", () => btnDlPdf.click());
+    if (btnStickyPng && btnDlPng) btnStickyPng.addEventListener("click", () => btnDlPng.click());
+
     window.addEventListener('resize', resizePreview);
     window.addEventListener('orientationchange', () => setTimeout(resizePreview, 200));
     setTimeout(resizePreview, 100);
@@ -945,14 +970,27 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const toolTitleEl = document.querySelector(".tool-title");
         const urlUni = urlParams.get("uni");
+        const seuBanner = document.getElementById("seu-verified-banner");
+        const uniPresetBox = document.getElementById("uni-preset-box");
+        const wrapperUniName = document.getElementById("wrapper-uni-name");
+        const wrapperLogoUpload = document.getElementById("wrapper-logo-upload");
+
         if (urlMode === "seu") {
             applyUniversityPreset("seu");
             if (toolTitleEl) toolTitleEl.textContent = "📄 Assignment Cover Generator (SEU)";
             document.title = "Assignment Cover Generator (SEU) - ToolX Pro";
+            if (seuBanner) seuBanner.style.display = "flex";
+            if (uniPresetBox) uniPresetBox.style.display = "none";
+            if (wrapperUniName) wrapperUniName.style.display = "none";
+            if (wrapperLogoUpload) wrapperLogoUpload.style.display = "none";
         } else if (urlUni) {
             applyUniversityPreset(urlUni.toLowerCase());
             if (toolTitleEl) toolTitleEl.textContent = "📄 Assignment Cover Generator";
             document.title = "Assignment Cover Generator - ToolX Pro";
+            if (seuBanner) seuBanner.style.display = "none";
+            if (uniPresetBox) uniPresetBox.style.display = "block";
+            if (wrapperUniName) wrapperUniName.style.display = "block";
+            if (wrapperLogoUpload) wrapperLogoUpload.style.display = "block";
         } else {
             inpUni.value = "";
             inpUni.readOnly = false;
@@ -961,6 +999,10 @@ document.addEventListener("DOMContentLoaded", () => {
             updateLogoBadge("", defaultLogo);
             if (toolTitleEl) toolTitleEl.textContent = "📄 Assignment Cover Generator (All Universities)";
             document.title = "Assignment Cover Generator (All Universities) - ToolX Pro";
+            if (seuBanner) seuBanner.style.display = "none";
+            if (uniPresetBox) uniPresetBox.style.display = "block";
+            if (wrapperUniName) wrapperUniName.style.display = "block";
+            if (wrapperLogoUpload) wrapperLogoUpload.style.display = "block";
         }
         render();
         setTimeout(resizePreview, 150);

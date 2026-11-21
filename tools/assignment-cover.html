@@ -147,13 +147,45 @@
         }
 
         @media (max-width: 992px) {
+            html, body {
+                max-width: 100vw !important;
+                overflow-x: hidden !important;
+            }
+            .main-wrapper, .content-area, .tool-container {
+                max-width: 100vw !important;
+                width: 100% !important;
+                overflow-x: hidden !important;
+                box-sizing: border-box !important;
+                padding-left: 6px !important;
+                padding-right: 6px !important;
+            }
             .mobile-view-tabs {
-                display: flex;
+                display: flex !important;
+                position: sticky !important;
+                top: 8px !important;
+                z-index: 999 !important;
+                background: rgba(255, 255, 255, 0.96) !important;
+                backdrop-filter: blur(12px) !important;
+                -webkit-backdrop-filter: blur(12px) !important;
+                border: 1.5px solid rgba(245, 124, 0, 0.35) !important;
+                border-radius: 30px !important;
+                padding: 4px !important;
+                margin-bottom: 14px !important;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08) !important;
+            }
+            [data-theme="dark"] .mobile-view-tabs {
+                background: rgba(18, 24, 38, 0.96) !important;
+                border-color: rgba(245, 124, 0, 0.4) !important;
+                box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4) !important;
             }
             .cover-generator-grid {
-                display: flex;
-                flex-direction: column;
-                gap: 16px;
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 16px !important;
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                box-sizing: border-box !important;
             }
             #generator-interface.hidden,
             #generator-interface[style*="display: none"],
@@ -170,19 +202,141 @@
             }
             .cover-generator-grid.view-edit .controls-card {
                 display: block !important;
+                width: 100% !important;
+                max-width: 100% !important;
             }
             .cover-generator-grid.view-preview .controls-card {
                 display: none !important;
             }
             .cover-generator-grid.view-preview .preview-wrapper {
                 display: flex !important;
-                position: static;
+                position: static !important;
+                width: 100% !important;
+                max-width: 100% !important;
             }
             .btn-goto-preview {
-                display: block;
+                display: flex !important;
+                width: 100% !important;
+                background: linear-gradient(135deg, #f57c00 0%, #ea580c 100%) !important;
+                color: #ffffff !important;
+                border: none !important;
+                border-radius: 12px !important;
+                padding: 14px 20px !important;
+                font-weight: 800 !important;
+                font-size: 1rem !important;
+                box-shadow: 0 4px 16px rgba(245, 124, 0, 0.35) !important;
+                min-height: 48px !important;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                margin: 18px 0 10px 0 !important;
             }
             .preview-actions-bar {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 8px !important;
+            }
+            .controls-card, .preview-wrapper, .preview-container {
+                width: 100% !important;
+                max-width: 100% !important;
+                min-width: 0 !important;
+                box-sizing: border-box !important;
+            }
+
+            /* Floating Mobile Bottom Action Bar */
+            body {
+                padding-bottom: 76px !important;
+            }
+            .mobile-sticky-action-bar {
+                display: block !important;
+                position: fixed !important;
+                bottom: 0 !important;
+                left: 0 !important;
+                right: 0 !important;
+                z-index: 9999 !important;
+                background: rgba(255, 255, 255, 0.96) !important;
+                backdrop-filter: blur(14px) !important;
+                -webkit-backdrop-filter: blur(14px) !important;
+                border-top: 1.5px solid var(--border-color) !important;
+                padding: 10px 14px !important;
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.12) !important;
+                box-sizing: border-box !important;
+            }
+            [data-theme="dark"] .mobile-sticky-action-bar {
+                background: rgba(18, 24, 38, 0.96) !important;
+                box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.45) !important;
+            }
+            .sticky-bar-edit {
                 display: flex;
+                width: 100%;
+            }
+            .btn-mobile-sticky-preview {
+                width: 100%;
+                background: linear-gradient(135deg, #f57c00 0%, #ea580c 100%);
+                color: #ffffff;
+                border: none;
+                border-radius: 12px;
+                padding: 13px 18px;
+                font-weight: 800;
+                font-size: 0.98rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 8px;
+                box-shadow: 0 4px 14px rgba(245, 124, 0, 0.35);
+                touch-action: manipulation;
+            }
+            .sticky-bar-preview {
+                display: flex;
+                gap: 8px;
+                width: 100%;
+            }
+            .btn-mobile-sticky-edit {
+                flex: 1;
+                background: var(--bg-primary);
+                border: 1.5px solid var(--border-color);
+                color: var(--text-primary);
+                border-radius: 10px;
+                padding: 11px;
+                font-weight: 700;
+                font-size: 0.9rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 4px;
+            }
+            .btn-mobile-sticky-pdf {
+                flex: 2;
+                background: linear-gradient(135deg, #f57c00 0%, #ea580c 100%);
+                color: #ffffff;
+                border: none;
+                border-radius: 10px;
+                padding: 11px;
+                font-weight: 800;
+                font-size: 0.92rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 6px;
+                box-shadow: 0 4px 12px rgba(245, 124, 0, 0.3);
+            }
+            .btn-mobile-sticky-png {
+                flex: 1;
+                background: linear-gradient(135deg, #10b981, #059669);
+                color: #ffffff;
+                border: none;
+                border-radius: 10px;
+                padding: 11px;
+                font-weight: 800;
+                font-size: 0.88rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                gap: 4px;
             }
         }
 
@@ -342,14 +496,6 @@
             max-width: 100%;
             width: 100%;
             box-sizing: border-box;
-        }
-            display: flex;
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            -webkit-overflow-scrolling: touch;
-            gap: 6px;
-            padding: 2px 2px 8px 2px;
-            scrollbar-width: thin;
         }
         .uni-quick-pills::-webkit-scrollbar {
             height: 4px;
@@ -1427,7 +1573,10 @@
                             </div>
 
                             <!-- Template Picker -->
-                            <h3 class="form-section-title">🎨 Choose Template</h3>
+                            <h3 class="form-section-title" style="display:flex; justify-content:space-between; align-items:center;">
+                                <span>🎨 Choose Template</span>
+                                <span style="font-size:0.75rem; color:var(--text-secondary); font-weight:600;">(↔ Swipe to choose)</span>
+                            </h3>
                             <div class="template-picker">
                                 <button class="tpl-btn active" data-tpl="royal"><span class="tpl-icon">👑</span>Royal Academic</button>
                                 <button class="tpl-btn" data-tpl="banner"><span class="tpl-icon">🏷️</span>Bold Banner</button>
@@ -1462,7 +1611,19 @@
                             <!-- University Info -->
                             <h3 class="form-section-title">🏛️ University Details</h3>
                             
-                            <div class="uni-preset-box">
+                            <!-- SEU Verified Mode Banner (shown when mode=seu) -->
+                            <div id="seu-verified-banner" class="seu-verified-banner" style="display:none; background:linear-gradient(135deg, rgba(0,51,102,0.06), rgba(245,124,0,0.08)); border:1.5px solid #003366; border-radius:12px; padding:12px 14px; margin-bottom:14px; align-items:center; gap:12px;">
+                                <img src="../images/universities/seu.png" alt="SEU Crest" style="width:44px; height:44px; object-fit:contain; flex-shrink:0; background:#fff; border-radius:6px; padding:2px; box-shadow:0 2px 6px rgba(0,0,0,0.08);">
+                                <div style="flex:1; min-width:0;">
+                                    <div style="font-weight:800; color:#003366; font-size:0.95rem; display:flex; align-items:center; gap:6px;">
+                                        <span>Southeast University (SEU)</span>
+                                        <span style="font-size:0.7rem; background:#10b981; color:#fff; padding:1px 6px; border-radius:4px; font-weight:700;">Verified</span>
+                                    </div>
+                                    <div style="font-size:0.76rem; color:var(--text-secondary); margin-top:2px;">Official crest logo & standard assignment format pre-loaded</div>
+                                </div>
+                            </div>
+
+                            <div class="uni-preset-box" id="uni-preset-box">
                                 <label class="form-label" for="select-university-preset" style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:4px;">
                                     <span style="font-weight:700;">Select University (Auto-fill Logo & Name)</span>
                                     <span style="font-size:0.75rem; background:rgba(30,58,138,0.1); color:var(--primary); padding:2px 8px; border-radius:12px; font-weight:700;">⚡ 31+ Official BD Logos</span>
@@ -1547,11 +1708,13 @@
                                 </div>
                             </div>
 
-                            <div class="input-grid full">
+                            <div class="input-grid full" id="wrapper-uni-name">
                                 <div>
                                     <label class="form-label">University Name</label>
                                     <input type="text" id="inp-uni" class="form-control-sm" value="" placeholder="e.g. University of Dhaka">
                                 </div>
+                            </div>
+                            <div class="input-grid full" id="wrapper-logo-upload" style="margin-top:8px;">
                                 <div>
                                     <div style="display:flex; justify-content:space-between; align-items:center;">
                                         <label class="form-label" style="margin-bottom:0;">University Logo</label>
@@ -1718,6 +1881,26 @@
                                     <button id="btn-preview-dl-png" class="btn-download-png">🖼️ PNG</button>
                                     <button id="btn-preview-dl-pdf" class="btn-download-pdf">⬇️ PDF (A4)</button>
                                 </div>
+                            </div>
+                        </div>
+
+                        <!-- Mobile Sticky Bottom Floating Action Bar -->
+                        <div class="mobile-sticky-action-bar" id="mobile-sticky-bar">
+                            <div class="sticky-bar-edit" id="sticky-bar-edit">
+                                <button type="button" class="btn-mobile-sticky-preview" id="btn-sticky-preview">
+                                    <span>👁️</span> View Live A4 Preview
+                                </button>
+                            </div>
+                            <div class="sticky-bar-preview" id="sticky-bar-preview" style="display:none;">
+                                <button type="button" class="btn-mobile-sticky-edit" id="btn-sticky-edit">
+                                    <span>✏️</span> Edit Details
+                                </button>
+                                <button type="button" class="btn-mobile-sticky-pdf" id="btn-sticky-pdf">
+                                    <span>📄</span> Download PDF
+                                </button>
+                                <button type="button" class="btn-mobile-sticky-png" id="btn-sticky-png">
+                                    <span>🖼️</span> PNG
+                                </button>
                             </div>
                         </div>
 
