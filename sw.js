@@ -1,9 +1,9 @@
-// ToolX Pro Service Worker (PWA Engine v76.0)
-const CACHE_NAME = 'toolxpro-pwa-v76';
+// ToolX Pro Service Worker (PWA Engine v77.0)
+const CACHE_NAME = 'toolxpro-pwa-v77';
 const STATIC_ASSETS = [
     '/',
-    '/css/style.css?v=76.0',
-    '/js/layout.js?v=76.0',
+    '/css/style.css?v=77.0',
+    '/js/layout.js?v=77.0',
     '/js/main.js',
     '/site.webmanifest',
     '/images/icon-512.png',
@@ -42,12 +42,11 @@ self.addEventListener('fetch', (event) => {
     const request = event.request;
     const url = new URL(request.url);
 
-    // Bypass non-GET requests, AdSense, Analytics, or API requests
+    // Bypass non-GET requests, AdSense, Analytics, or third-party translation/grammar APIs
     if (request.method !== 'GET' ||
         url.hostname.includes('googlesyndication') ||
         url.hostname.includes('google-analytics') ||
-        url.hostname.includes('doubleclick') ||
-        url.pathname.startsWith('/api/')) {
+        url.hostname.includes('doubleclick')) {
         return;
     }
 

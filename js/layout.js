@@ -109,9 +109,6 @@ function initLayout() {
     
     // Initialize Theme
     initTheme();
-    
-    // Initialize Future Tools Modal (Coming Soon)
-    initFutureModal();
 
     // Initialize Page Scrolling/Interaction links
     initNavInteractions(homePath);
@@ -313,8 +310,8 @@ function injectPrivacyTrustBadge(privacyPath) {
     const lastPart = (pathParts[pathParts.length - 1] || '').toLowerCase();
     const cleanFileName = lastPart.replace('.html', '');
     
-    // Categorize tool: AI tools vs 100% Client-Side Local tools
-    const aiToolIds = ['ai-detector', 'ai-humanizer', 'grammar-fixer', 'speech-to-bangla'];
+    // Categorize tool: external language/voice API tools vs 100% Client-Side Local tools
+    const aiToolIds = ['grammar-fixer', 'speech-to-bangla'];
     const isAiTool = aiToolIds.some(id => cleanFileName.includes(id) || lastPart.includes(id));
     
     const badge = document.createElement("div");
@@ -322,7 +319,7 @@ function injectPrivacyTrustBadge(privacyPath) {
     if (isAiTool) {
         badge.className = "tool-privacy-badge ai-badge";
         badge.setAttribute("role", "status");
-        badge.setAttribute("aria-label", "Secure Edge AI Privacy guarantee");
+        badge.setAttribute("aria-label", "Privacy-Focused Language Processing");
         badge.innerHTML = `
             <div class="badge-icon-wrap">
                 <span class="badge-pulse-dot" aria-hidden="true"></span>
@@ -333,9 +330,9 @@ function injectPrivacyTrustBadge(privacyPath) {
                 </svg>
             </div>
             <span class="badge-text">
-                <strong>Processed securely via Cloudflare Edge AI</strong> — zero data logging or retention.
+                <strong>Encrypted HTTPS language check</strong> — zero ToolX Pro server logging or storage.
             </span>
-            <a href="${privacyPath}#ai-processing" class="badge-learn-link" title="Read our AI data processing privacy policy">
+            <a href="${privacyPath}#ai-processing" class="badge-learn-link" title="Read our language processing privacy policy">
                 <span>Learn how it works</span>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="9 18 15 12 9 6"></polyline></svg>
             </a>
@@ -415,24 +412,14 @@ function injectSidebar(toolsPrefix) {
         `;
         
         category.tools.forEach(tool => {
-            if (tool.isFuture) {
-                sidebarHtml += `
-                    <li>
-                        <a href="#" class="sidebar-link future-tool-trigger" data-tool="${tool.name}">
-                            🤖 ${tool.name} <span class="badge badge-ai" style="font-size:0.6rem; padding: 1px 4px;">AI</span>
-                        </a>
-                    </li>
-                `;
-            } else {
-                const isActive = tool.path === currentFileName ? 'active' : '';
-                sidebarHtml += `
-                    <li>
-                        <a href="${toolsPrefix}${tool.path}" class="sidebar-link ${isActive}">
-                            👉 ${tool.name}
-                        </a>
-                    </li>
-                `;
-            }
+            const isActive = tool.path === currentFileName ? 'active' : '';
+            sidebarHtml += `
+                <li>
+                    <a href="${toolsPrefix}${tool.path}" class="sidebar-link ${isActive}">
+                        👉 ${tool.name}
+                    </a>
+                </li>
+            `;
         });
         
         sidebarHtml += `
@@ -498,7 +485,7 @@ function initNavInteractions(homePath = '/') {
                     <p><b>ToolX Pro</b> is a premier, privacy-first web utility platform designed to make daily digital tasks effortless for students, professionals, creators, and developers.</p>
                     
                     <div style="background:var(--primary-glow); padding:14px; border-radius:10px; border-left:4px solid var(--accent); font-size:0.92rem;">
-                        🔒 <b>Privacy-First Architecture:</b> Core utilities (calculators, PDF tools, image compressors, cover generators, and Bangla converters) run locally inside your browser sandbox. AI writing and analysis tools process submitted payloads over encrypted HTTPS via Cloudflare Edge AI Workers with zero persistent storage.
+                        🔒 <b>Privacy-First Architecture:</b> Calculators, PDF tools, image compressors, cover generators, AI Text Humanizer, AI Content Detector, and Bangla converters execute 100% locally in your browser. Grammar and voice tools use encrypted public language services without ToolX Pro server logging.
                     </div>
 
                     <h4 style="font-size:1.05rem; margin-top:4px; color:var(--text-primary);">💡 Key Highlights & Features</h4>
@@ -552,7 +539,7 @@ function initNavInteractions(homePath = '/') {
             title: "🔒 Privacy Policy",
             body: `
                 <p style="margin-bottom:10px;"><b>Your privacy is our number one priority.</b></p>
-                <p style="margin-bottom:10px;">Core utilities (calculators, PDF tools, image utilities, cover generators, and Bangla converters) run locally inside your browser sandbox so files never leave your device. AI writing and detection tools transmit submitted payloads over encrypted HTTPS to Cloudflare Edge AI Workers without retaining user data.</p>
+                <p style="margin-bottom:10px;">Core utilities (including calculators, PDF tools, image utilities, cover generators, AI Text Humanizer, AI Content Detector, and Bangla converters) execute locally inside your browser sandbox so files stay on your device. Grammar checking and voice translation transmit over encrypted HTTPS to public language APIs without ToolX Pro account tracking or server retention.</p>
                 <p style="margin-bottom:10px;">We use standard Google AdSense cookies and anonymous Google Analytics to understand traffic volumes, which do not identify you personally.</p>
                 <p>By using this portal, you agree to our <a href="${homePath}privacy-policy" style="color:var(--primary); font-weight:600;">Privacy Policy</a>.</p>
             `
@@ -601,49 +588,6 @@ function initNavInteractions(homePath = '/') {
                 document.getElementById("info-modal-body").innerHTML = content.body;
                 genericModal.classList.add("active");
             }
-        }
-    });
-}
-
-// Initialize Coming Soon Modal for Future/AI Tools
-function initFutureModal() {
-    let modal = document.getElementById("coming-soon-modal");
-    if (!modal) {
-        modal = document.createElement("div");
-        modal.id = "coming-soon-modal";
-        modal.className = "modal-overlay";
-        modal.innerHTML = `
-            <div class="modal-card">
-                <div class="modal-icon">🤖</div>
-                <div class="modal-title" id="modal-tool-name">AI Tool</div>
-                <div class="modal-desc">This AI-powered utility is currently in development. It will be available in the upcoming releases!</div>
-                <button class="btn btn-primary" id="modal-close-btn" style="width:auto; min-width:120px;">Close</button>
-            </div>
-        `;
-        document.body.appendChild(modal);
-    }
-    
-    const closeBtn = document.getElementById("modal-close-btn");
-    if (closeBtn) {
-        closeBtn.addEventListener("click", () => {
-            modal.classList.remove("active");
-        });
-    }
-    
-    modal.addEventListener("click", (e) => {
-        if (e.target === modal) {
-            modal.classList.remove("active");
-        }
-    });
-
-    // Attach triggers
-    document.addEventListener("click", (e) => {
-        const trigger = e.target.closest(".future-tool-trigger");
-        if (trigger) {
-            e.preventDefault();
-            const name = trigger.getAttribute("data-tool") || "AI Tool";
-            document.getElementById("modal-tool-name").innerText = `${name} (Coming Soon)`;
-            modal.classList.add("active");
         }
     });
 }

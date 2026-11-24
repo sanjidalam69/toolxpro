@@ -1,16 +1,7 @@
 // ToolX Pro - Multi-Modal AI Content Detector (Text & Image)
-// Dual-Engine: Gemini 2.5 Flash Vision + Neural Heuristic & Visual Entropy Engine
+// 100% Client-Side Stylometric Burstiness & Visual Entropy Forensic Engine
 
 document.addEventListener("DOMContentLoaded", () => {
-    // ═══════════════════════════════════════════════════════════════════════
-    // API ENDPOINT RESOLVER (Supports file:///, localhost & live production)
-    // ═══════════════════════════════════════════════════════════════════════
-    function getApiEndpoint() {
-        if (window.location.protocol === "file:") {
-            return "https://toolxpro.live/api/ai-detect";
-        }
-        return "/api/ai-detect";
-    }
 
     // ═══════════════════════════════════════════════════════════════════════
     // TAB NAVIGATION
@@ -270,53 +261,6 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
-    // Direct Gemini Browser Caller (fallback if API key stored in localStorage)
-    async function callGeminiDirectText(text) {
-        const apiKey = localStorage.getItem("toolx_gemini_key");
-        if (!apiKey) return null;
-
-        const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.5-pro", "gemini-1.5-pro", "gemini-1.5-flash-8b", "gemini-2.0-flash-lite"];
-        const prompt = `Analyze this text for AI generation vs Human writing. Respond strictly with JSON:
-{
-  "aiScore": <number 0-100>,
-  "humanScore": <number 0-100>,
-  "verdict": "<Entirely AI-Generated Content | Mixed AI & Human | Highly Likely Human>",
-  "metrics": {
-    "perplexity": "<Low (AI) | Moderate | High (Human)>",
-    "burstiness": "<Uniform (AI) | Moderate | Dynamic (Human)>",
-    "repetition": "<High (AI) | Normal | Low>"
-  },
-  "summary": "<1-2 sentences>",
-  "sentences": [
-    { "text": "<sentence>", "status": "<ai | mixed | human>", "reason": "<brief note>" }
-  ]
-}`;
-
-        for (const model of MODELS) {
-            try {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-                const res = await fetch(url, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        contents: [{ role: "user", parts: [{ text: `${prompt}\n\nUser Text:\n${text}` }] }],
-                        generationConfig: { temperature: 0.1, responseMimeType: "application/json" }
-                    })
-                });
-
-                if (res.ok) {
-                    const data = await res.json();
-                    const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-                    const jsonMatch = raw.match(/\{[\s\S]*\}/);
-                    if (jsonMatch) {
-                        return JSON.parse(jsonMatch[0]);
-                    }
-                }
-            } catch (err) {}
-        }
-        return null;
-    }
-
     // Render Text Results
     function renderTextResults(data) {
         if (!data || !textResultsHub) return;
@@ -395,39 +339,8 @@ document.addEventListener("DOMContentLoaded", () => {
             if (scanTextLabel) scanTextLabel.textContent = "Analyzing Sentence Heatmap & Perplexity…";
             showStatus(textStatus, "🔍 Scanning neural perplexity and syntactic burstiness...", "var(--text-secondary)");
 
-            let result = null;
-
-            // 1. Try Live Serverless / Backend Function
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 12000);
-                const endpoint = getApiEndpoint();
-
-                const res = await fetch(endpoint, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    signal: controller.signal,
-                    body: JSON.stringify({ type: "text", text: raw })
-                });
-                clearTimeout(timeoutId);
-
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data && (data.aiScore !== undefined || data.verdict)) {
-                        result = data;
-                    }
-                }
-            } catch (e) {}
-
-            // 2. Try Direct Gemini API (if key stored)
-            if (!result) {
-                result = await callGeminiDirectText(raw);
-            }
-
-            // 3. Fallback to High-Performance Client Heuristic Engine
-            if (!result) {
-                result = runClientTextAnalysis(raw);
-            }
+            // Run Client-Side Stylometric & Burstiness Engine
+            const result = runClientTextAnalysis(raw);
 
             // Restore UI
             scanTextBtn.disabled = false;
@@ -450,7 +363,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 `Perplexity: ${lastTextReport.metrics?.perplexity || 'N/A'}\n` +
                 `Burstiness: ${lastTextReport.metrics?.burstiness || 'N/A'}\n` +
                 `Summary: ${lastTextReport.summary}\n\n` +
-                `Scan another text for free at: https://toolxpro.live/tools/ai-detector.html`;
+                `Scan another text for free at: https://toolxpro.live/tools/ai-detector`;
 
             navigator.clipboard.writeText(report).then(() => {
                 const orig = copyReportBtn.textContent;
@@ -1036,77 +949,6 @@ document.addEventListener("DOMContentLoaded", () => {
         };
     }
 
-    // Direct Gemini Browser Vision Caller (fallback if client has direct API key)
-    async function callGeminiDirectVision(base64Data, mimeType) {
-        const apiKey = localStorage.getItem("toolx_gemini_key");
-        if (!apiKey) return null;
-
-        const cleanBase64 = base64Data.replace(/^data:image\/[a-zA-Z+]+;base64,/, "").trim();
-        const MODELS = ["gemini-2.5-flash", "gemini-2.0-flash", "gemini-1.5-flash", "gemini-2.5-pro", "gemini-1.5-pro", "gemini-1.5-flash-8b", "gemini-2.0-flash-lite"];
-
-        let normMime = (mimeType || "image/jpeg").toLowerCase();
-        if (normMime === "image/jpg") normMime = "image/jpeg";
-        if (!["image/jpeg", "image/png", "image/webp"].includes(normMime)) {
-            normMime = "image/jpeg";
-        }
-
-        const prompt = `You are a forensic AI Image & Graphic Media Detector.
-Analyze this image to determine whether it is:
-1. Authentic Human Graphic Design / News Poster (social media cards, news banners, typography graphics, infographics) -> aiProbability 2-12%, humanProbability 88-98%, verdict "Authentic Human Graphic Design / News Poster", suspectedEngine "Digital Graphic Suite / Editorial Layout (Human Design)".
-2. Authentic Human Photo / Camera Capture (real smartphones/DSLRs) -> aiProbability 1-15%, humanProbability 85-99%, verdict "Authentic Human Photo / Camera Capture", suspectedEngine "Smartphone / DSLR Camera".
-3. Authentic Human Artwork / Illustration (hand-drawn art) -> aiProbability 3-18%, humanProbability 82-97%, verdict "Authentic Human Artwork / Illustration", suspectedEngine "Hand-drawn / Digital Art Suite".
-4. AI-Generated Image Detected (Midjourney, DALL-E, Flux, Stable Diffusion) -> aiProbability 82-99%, humanProbability 1-18%, verdict "AI-Generated Image Detected", suspectedEngine "Midjourney v6 / FLUX.1".
-5. AI Deepfake / Synthetic Face Detected -> aiProbability 86-99%, humanProbability 1-14%, verdict "AI Deepfake / Synthetic Face Detected".
-6. Mixed / AI-Edited Image -> aiProbability 40-75%, humanProbability 25-60%, verdict "Mixed / AI-Edited Image".
-
-Respond strictly with valid JSON only:
-{
-  "aiProbability": <number 0-100, e.g. 8 or 96>,
-  "humanProbability": <number 0-100, e.g. 92 or 4>,
-  "verdict": "<Authentic Human Graphic Design / News Poster | Authentic Human Photo / Camera Capture | Authentic Human Artwork / Illustration | AI-Generated Image Detected | AI Deepfake / Synthetic Face Detected | Mixed / AI-Edited Image>",
-  "suspectedEngine": "<string>",
-  "checklist": {
-    "anatomy": "<string>",
-    "skinAndTextures": "<string>",
-    "lightingAndPhysics": "<string>",
-    "backgroundCoherence": "<string>"
-  },
-  "explanation": "<2-3 concise sentences detailing specific forensic findings>"
-}`;
-
-        for (const model of MODELS) {
-            try {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-                const res = await fetch(url, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({
-                        contents: [
-                            {
-                                role: "user",
-                                parts: [
-                                    { inlineData: { mimeType: normMime, data: cleanBase64 } },
-                                    { text: prompt }
-                                ]
-                            }
-                        ],
-                        generationConfig: { temperature: 0.1, responseMimeType: "application/json" }
-                    })
-                });
-
-                if (res.ok) {
-                    const data = await res.json();
-                    const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-                    const jsonMatch = raw.match(/\{[\s\S]*\}/);
-                    if (jsonMatch) {
-                        return JSON.parse(jsonMatch[0]);
-                    }
-                }
-            } catch (err) {}
-        }
-        return null;
-    }
-
     // Render Image Results Hub
     function renderImageResults(data) {
         if (!data || !imageResultsHub) return;
@@ -1174,46 +1016,11 @@ Respond strictly with valid JSON only:
             // Loading state
             scanImageBtn.disabled = true;
             if (scanImgIcon) scanImgIcon.textContent = "⏳";
-            if (scanImgLabel) scanImgLabel.textContent = "Running Forensic Neural Inspection…";
-            showStatus(imageStatus, "🔬 Running Gemini 2.5 Flash Vision deep forensic scan...", "var(--text-secondary)");
+            if (scanImgLabel) scanImgLabel.textContent = "Running Pixel & Metadata Forensics…";
+            showStatus(imageStatus, "🔬 Running pixel entropy, noise floor & EXIF metadata forensic scan...", "var(--text-secondary)");
 
-            let result = null;
-
-            // 1. Try Live Serverless / Backend Function (works on file:///, localhost and toolxpro.live)
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 20000);
-                const endpoint = getApiEndpoint();
-
-                const res = await fetch(endpoint, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    signal: controller.signal,
-                    body: JSON.stringify({
-                        type: "image",
-                        image: currentImageDataUrl,
-                        mimeType: "image/jpeg"
-                    })
-                });
-                clearTimeout(timeoutId);
-
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data && (data.aiProbability !== undefined || data.verdict)) {
-                        result = data;
-                    }
-                }
-            } catch (e) {}
-
-            // 2. Direct Gemini Vision API (if key stored in localStorage)
-            if (!result) {
-                result = await callGeminiDirectVision(currentImageDataUrl, currentImageMime);
-            }
-
-            // 3. Smart Dynamic Heuristic & Pixel Forensic Engine
-            if (!result) {
-                result = runClientImageForensics(currentImageDataUrl, detectedCameraMeta, originalFileName, canvasPixelStats);
-            }
+            // Client-Side Pixel, Noise Floor & Metadata Forensic Engine
+            const result = runClientImageForensics(currentImageDataUrl, detectedCameraMeta, originalFileName, canvasPixelStats);
 
             // Restore UI
             scanImageBtn.disabled = false;

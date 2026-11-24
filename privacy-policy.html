@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Privacy Policy - ToolX Pro</title>
-    <meta name="description" content="ToolX Pro Privacy Policy — learn how we handle your data, how our client-side tools work, and how our AI tools use Google Gemini API.">
-    <meta name="keywords" content="ToolX Pro privacy policy, data privacy, client side tools, gemini api privacy, advertising cookies">
-    <link rel="stylesheet" href="css/style.css?v=76.0">
+    <meta name="description" content="ToolX Pro Privacy Policy — learn how our browser-based utilities run locally and how public grammar and speech APIs handle requests without storing user files.">
+    <meta name="keywords" content="ToolX Pro privacy policy, data privacy, client side tools, browser privacy, advertising cookies">
+    <link rel="stylesheet" href="css/style.css?v=77.0">
 
     <!-- Canonical & Open Graph -->
     <link rel="canonical" href="https://toolxpro.live/privacy-policy">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://toolxpro.live/privacy-policy">
     <meta property="og:title" content="Privacy Policy - ToolX Pro">
-    <meta property="og:description" content="ToolX Pro Privacy Policy — learn how we handle your data, how our client-side tools work, and how our AI tools use Google Gemini API.">
+    <meta property="og:description" content="ToolX Pro Privacy Policy — learn how our browser-based utilities run locally and how public grammar and speech APIs handle requests without storing user files.">
     <meta property="og:image" content="https://toolxpro.live/images/icon-512.png">
 
         <!-- Google tag (gtag.js) -->
@@ -238,41 +238,38 @@
                 <section class="policy-section" id="local-processing">
                     <h2 class="policy-heading">1. Information We Do NOT Collect (100% Client-Side & Local Processing)</h2>
                     <p class="policy-text">
-                        The overwhelming majority of tools on ToolX Pro — including all PDF tools, image compressors, converters, background removers, cover page generators (Assignment & Lab Report), financial & health calculators, student board & university GPA/CGPA calculators, and text utilities — operate <strong>100% locally inside your browser</strong> via client-side JavaScript, WebAssembly, and HTML5 Canvas. This means:
+                        The overwhelming majority of tools on ToolX Pro — including the <strong>AI Text Humanizer</strong>, <strong>AI Text &amp; Image Detector</strong>, all PDF tools, image compressors, converters, background removers, cover page generators (Assignment &amp; Lab Report), health &amp; age calculators, student board &amp; university GPA/CGPA calculators, and Bangla Unicode tools — operate <strong>100% locally inside your browser</strong> via client-side JavaScript, WebAssembly, and HTML5 Canvas. This means:
                     </p>
                     <ul class="policy-list">
-                        <li><strong>Files you upload or select</strong> (PDFs, images, documents, university logos) are <em>never</em> uploaded or transmitted to our servers or any third-party cloud storage.</li>
+                        <li><strong>Files and text you input</strong> (PDFs, images, drafts, university logos) stay in your local browser memory and are <em>never</em> uploaded or stored on ToolX Pro servers.</li>
                         <li><strong>Personal details & academic inputs</strong> (student names, student IDs, course titles, teacher names, grades, marks) stay strictly within your browser's private sandbox.</li>
-                        <li><strong>All rendering & computation</strong> happens locally within your device's memory.</li>
+                        <li><strong>All rendering &amp; forensic checks</strong> happen locally within your device's memory.</li>
                     </ul>
                     <div class="policy-highlight">
-                        🛡️ <strong>Zero Server Uploads & Zero Retention:</strong> These client-side tools have zero persistent data collection. As soon as you reload or close your browser tab, all session calculations, generated cover sheets, and uploaded files are instantly erased from your temporary local memory.
+                        🛡️ <strong>Zero Server Uploads &amp; Zero Retention:</strong> These client-side tools have zero persistent data collection. As soon as you reload or close your browser tab, all session calculations, generated cover sheets, and uploaded files are instantly erased from your temporary local memory.
                     </div>
                 </section>
 
                 <!-- Section 2 -->
                 <section class="policy-section" id="ai-processing">
-                    <h2 class="policy-heading">2. AI-Powered Writing, Vision & Voice Tools (Cloudflare Edge AI & Google Gemini)</h2>
+                    <h2 class="policy-heading">2. Language, Grammar &amp; Voice Assistance Tools</h2>
                     <p class="policy-text">
-                        Our specialized AI utilities (currently <strong>AI Text & Image Detector</strong>, <strong>AI Text Humanizer</strong>, <strong>AI Grammar & Spell Fixer</strong>, and <strong>Bangla Voice Typing & Speech Translator</strong>) provide advanced language assistance, tone enhancement, and content verification:
+                        Two language utilities (<strong>AI Grammar &amp; Spell Checker</strong> and <strong>Bangla Voice Typing &amp; Translator</strong>) pair in-browser algorithms with public browser/language endpoints:
                     </p>
                     <ul class="policy-list">
-                        <li><strong>Encrypted Edge AI Transmission:</strong> When you submit text or image analysis requests, payloads are transmitted securely over TLS 1.3 encrypted HTTPS connections to our stateless Cloudflare Edge AI Workers and Google Gemini API infrastructure.</li>
-                        <li><strong>Zero Data Logging & Zero Retention:</strong> Neither ToolX Pro nor our Cloudflare Edge proxies log, store, archive, or inspect your text submissions, uploaded images, or voice transcripts. Requests are processed transiently in-memory and discarded immediately upon returning the result to your browser.</li>
-                        <li><strong>Zero Model Training on User Data:</strong> ToolX Pro accesses enterprise developer API endpoints with strict data-exclusion policies. Your submitted essays, reports, or articles are <em>never</em> used to train public machine learning or foundation models.</li>
-                        <li><strong>Client-Side Vision & Forensics:</strong> Image forensic analyses, canvas noise extractions, and texture assessments run directly inside your browser's WebGL / HTML5 Canvas memory before any transient verification check.</li>
-                        <li><strong>Local Speech Processing:</strong> Voice typing operates natively via the browser's local Web Speech API and client-side punctuation normalization algorithms.</li>
+                        <li><strong>Grammar Proofreading via LanguageTool:</strong> When you run an online grammar check, the text snippet is sent directly from your browser over encrypted HTTPS to the public LanguageTool API (<code>api.languagetool.org</code>) or falls back to local browser structural rules, without passing through any ToolX Pro backend database.</li>
+                        <li><strong>Browser Speech Recognition &amp; Translation:</strong> Voice typing uses your browser's built-in Web Speech API along with optional live translation requests without creating user profiles or storing transcripts on ToolX Pro servers.</li>
+                        <li><strong>Zero Account Logging on ToolX Pro:</strong> ToolX Pro operates as a stateless static web application — we maintain no user database, file storage, or manuscript archive.</li>
                     </ul>
                     <p class="policy-text">
-                        For comprehensive third-party infrastructure terms and privacy safeguards, you may review:
+                        For third-party service terms and privacy policies, you may review:
                     </p>
                     <ul class="policy-list">
-                        <li><a href="https://www.cloudflare.com/privacypolicy/" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 600;">Cloudflare Privacy & Security Policy</a></li>
+                        <li><a href="https://languagetool.org/legal/privacy" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 600;">LanguageTool Privacy Policy</a></li>
                         <li><a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 600;">Google Privacy Policy</a></li>
-                        <li><a href="https://ai.google.dev/gemini-api/terms" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 600;">Google Gemini API Terms of Service</a></li>
                     </ul>
                     <div class="policy-highlight">
-                        🛡️ <strong>Zero Logging Guarantee:</strong> All AI processing requests are stateless. As soon as the analysis or paraphrase finishes, the data ceases to exist on the edge network.
+                        🛡️ <strong>Zero Server Storage:</strong> ToolX Pro stores zero uploaded files, zero user manuscripts, and zero personal logs.
                     </div>
                 </section>
 
@@ -428,7 +425,7 @@
     </footer>
     </div>
 
-    <script src="js/layout.js?v=76.0"></script>
+    <script src="js/layout.js?v=77.0"></script>
 </body>
 </html>
 

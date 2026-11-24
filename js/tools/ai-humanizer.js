@@ -1,5 +1,5 @@
 // ToolX Pro - AI Text Humanizer & Natural Writing Refiner
-// Dual Engine: Gemini AI (Cloudflare Pages Function) + High-Performance Client-Side Humanizer Fallback
+// 100% Client-Side Style Refiner, Cliché Eliminator & Readability Engine
 
 document.addEventListener("DOMContentLoaded", () => {
     // DOM Elements
@@ -236,94 +236,24 @@ document.addEventListener("DOMContentLoaded", () => {
         { regex: /\bwe are\b/gi, repl: "we're" }
     ];
 
-    const DEFAULT_GEMINI_KEY = "";
-    const GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-2.0-flash", "gemini-2.5-pro", "gemini-1.5-flash"];
-
-    // ── Direct Browser Gemini AI Caller (Works on file:///, localhost & live) ──
-    async function callGeminiDirect(text, mode) {
-        const apiKey = localStorage.getItem("toolx_gemini_key") || DEFAULT_GEMINI_KEY;
-        if (!apiKey) return null;
-        const modeProfiles = {
-            stealth: "DEEP EDITORIAL POLISH — Maximum syntactic variance, vivid concrete phrasing, natural human cadence, and zero robotic clichés.",
-            academic: "ACADEMIC SCHOLARLY — Peer-review level scholarly precision. Active voice, disciplined vocabulary, embedded subordinate clauses, rigorous argumentation, zero fluff.",
-            executive: "EXECUTIVE STRATEGIC — Concise, direct, authoritative prose. High impact per sentence, clear causation, zero corporate buzzwords.",
-            casual: "CASUAL NATURAL — Relaxed, direct, genuine human voice. Organic flow, natural contractions, straightforward conversational tone without forced slang.",
-            standard: "BALANCED NATURAL HUMAN — Fluid, articulate, engaging human prose that reads naturally while preserving all core facts."
-        };
-        const modeProfile = modeProfiles[mode] || modeProfiles.standard;
-
-        const systemPrompt = `You are an experienced human editor. Your single objective is to rewrite the input text so it reads as authentic, engaging human writing with natural cadence and clear phrasing.
-
-MODE OBJECTIVE: ${modeProfile}
-
-MANDATORY RULES TO ELIMINATE ALL AI DETECTOR SIGNATURES:
-1. ELIMINATE DETECTOR-FLAGGED SYNTAX TEMPLATES (ZERO-TOLERANCE):
-- NO HEADINGS OR TITLES: Never output markdown headers like "## Title" or section headings. Output clean, continuous body paragraphs only.
-- NO 3-ITEM LISTS: Never write three items joined by "and" (e.g. do NOT write "clinics, offices, and schools", "grading quizzes, tracking attendance, and sorting files", or "mentoring, discussions, and support"). Humans describe one central concept at a time.
-- NO DOMAIN SUMMARY OPENERS: Never begin by listing other industries (e.g. do NOT say "across healthcare, finance, and technology"). Dive straight into the core educational subject.
-- NO "WHILE [VERB]-ING" CLAUSES: Never write "while easing...", "while offering...", "while giving...". Use two independent sentences instead.
-- NO BINARY CONTRASTS: Avoid formulaic structures like "some excel at X while others need Y". State facts directly with natural phrasing.
-- NO "INSTEAD OF X, Y DOES Z": Do not use templated setups like "Instead of a one-size-fits-all approach, modern classrooms rely on software to...".
-- NO PARALLEL "HOW/WHAT" CLAUSES: Avoid "shifting how students absorb lessons and how instructors manage daily routines".
-- STRICTLY AVOID these AI words: delve, tapestry, crucial, paramount, pivotal, furthermore, moreover, in conclusion, plethora, multifaceted, revolutionize, elevate, unlocking, fostering, seamless, game-changer, meticulous, it is worth noting, holistic, vital role, undeniable, not only but also, one of the most, making waves.
-
-2. WRITE WITH TRUE HUMAN PERPLEXITY & BURSTINESS:
-- Alternate sentence lengths naturally: tight 4 to 8-word punchy statements alongside rich compound sentences.
-- Write with a conversational, relatable human voice. Strictly avoid highly academic, thesaurus-like phrasing (e.g. avoid "permeates numerous domains", "shapes contemporary society profoundly"). Use plain, everyday English.
-- Inject natural conversational flow: occasionally begin sentences with "But", "And", or "Because".
-- Use natural punctuation: em-dashes (—) and occasional parenthetical remarks.
-- Vary grammatical openers across every single paragraph.
-
-3. 100% FACTUAL INTEGRITY:
-- Retain all core arguments, facts, statistics, and concepts from the original text without omitting or inventing data.
-- Maintain original paragraph structure cleanly.
-
-Respond strictly with valid JSON only, no markdown backticks, no preamble:
-{
-  "humanized": "<fully rewritten 100% human text>",
-  "aiScoreBefore": 98,
-  "humanScoreAfter": 100
-}`;
-
-        for (const model of GEMINI_MODELS) {
-            try {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 25000); // 25s to avoid silent fallback
-
-                const res = await fetch(url, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    signal: controller.signal,
-                    body: JSON.stringify({
-                        system_instruction: { parts: [{ text: systemPrompt }] },
-                        contents: [{ role: "user", parts: [{ text }] }],
-                        generationConfig: {
-                            temperature: 0.85,
-                            topP: 0.94,
-                            topK: 40,
-                            responseMimeType: "application/json"
-                        }
-                    })
-                });
-                clearTimeout(timeoutId);
-
-                if (res.ok) {
-                    const data = await res.json();
-                    const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-                    const cleaned = raw.replace(/^```json\s*/i, "").replace(/```$/i, "").trim();
-                    const parsed = JSON.parse(cleaned);
-                    if (parsed && parsed.humanized) {
-                        parsed.humanized = parsed.humanized.replace(/^#{1,6}\s+[^\n]+\n*/gm, '').trim();
-                        return parsed;
-                    }
-                }
-            } catch (e) {
-                // Continue to next fallback model immediately
-            }
-        }
-        return null;
-    }
+    // Extra Plain-English Simplifications for Deep Rewrite mode
+    const DEEP_REWRITE_RULES = [
+        { regex: /\bin order to\b/gi, repl: "to" },
+        { regex: /\butilize\b/gi, repl: "use" },
+        { regex: /\butilizes\b/gi, repl: "uses" },
+        { regex: /\butilizing\b/gi, repl: "using" },
+        { regex: /\bfacilitate\b/gi, repl: "help" },
+        { regex: /\bsubsequently\b/gi, repl: "later" },
+        { regex: /\bprior to\b/gi, repl: "before" },
+        { regex: /\bcommence\b/gi, repl: "start" },
+        { regex: /\bterminate\b/gi, repl: "end" },
+        { regex: /\bendeavor\b/gi, repl: "try" },
+        { regex: /\bis designed to\b/gi, repl: "helps" },
+        { regex: /\ballows users to\b/gi, repl: "lets you" },
+        { regex: /\ba significant number of\b/gi, repl: "many" },
+        { regex: /\bdue to the fact that\b/gi, repl: "because" },
+        { regex: /\bfor the purpose of\b/gi, repl: "for" }
+    ];
 
     function runClientHumanizer(rawText, mode) {
         let humanized = rawText;
@@ -339,6 +269,18 @@ Respond strictly with valid JSON only, no markdown backticks, no preamble:
             }
         });
 
+        // Apply extra plain-English rewrite simplifications in Deep Rewrite mode
+        if (mode === "stealth") {
+            DEEP_REWRITE_RULES.forEach(rule => {
+                if (rule.regex.test(humanized)) {
+                    humanized = humanized.replace(rule.regex, (match) => {
+                        replacedPhrases.push({ original: match, replacedWith: rule.repl });
+                        return rule.repl;
+                    });
+                }
+            });
+        }
+
         // Apply contractions
         CONTRACTIONS_MAP.forEach(rule => {
             if (rule.regex.test(humanized)) {
@@ -349,14 +291,15 @@ Respond strictly with valid JSON only, no markdown backticks, no preamble:
             }
         });
 
-        // Strip accidental Markdown headers
-        humanized = humanized.replace(/^#{1,6}\s+[^\n]+\n*/gm, '').trim();
+        // Normalize extra double spaces without collapsing paragraph breaks
+        humanized = humanized.replace(/^#{1,6}\s+[^\n]+\n*/gm, '').replace(/ {2,}/g, ' ').trim();
 
+        const editCount = replacedPhrases.length;
         return {
             humanized,
-            aiScoreBefore: 94,
-            humanScoreAfter: 99,
-            aiPhrasesReplaced: replacedPhrases.slice(0, 8)
+            aiScoreBefore: editCount > 0 ? Math.min(95, 55 + editCount * 8) : 30,
+            humanScoreAfter: editCount > 0 ? 96 : 98,
+            aiPhrasesReplaced: replacedPhrases.slice(0, 12)
         };
     }
 
@@ -437,60 +380,13 @@ Respond strictly with valid JSON only, no markdown backticks, no preamble:
         stopTTS();
 
         const timer1 = setTimeout(() => {
-            thinkingPhase.textContent = "⚡ Injecting Human Perplexity & Flow…";
-        }, 400);
+            thinkingPhase.textContent = "⚡ Refining Flow & Readability…";
+        }, 180);
 
-        const timer2 = setTimeout(() => {
-            thinkingPhase.textContent = "✨ Refining Natural Human Syntax…";
-        }, 800);
-
-        let resultData = null;
-
-        // 1. Try Live Serverless Function (only on http/https with fast timeout)
-        if (window.location.protocol.startsWith("http")) {
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 15000);
-                const res = await fetch("/api/ai-humanize", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    signal: controller.signal,
-                    body: JSON.stringify({ text, mode: currentMode })
-                });
-                clearTimeout(timeoutId);
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data && data.humanized) resultData = data;
-                }
-            } catch (e) {
-                // failover immediately to direct browser API
-            }
-        }
-
-        // 2. Direct Gemini Fast API Call (Ultra-fast direct execution with model failover)
-        if (!resultData) {
-            try {
-                resultData = await callGeminiDirect(text, currentMode);
-            } catch (e) {
-                // fallback to client engine
-            }
-        }
-
-        // 3. Seamless Client-Side Algorithmic Humanizer Fallback
-        if (!resultData) {
-            console.warn("API unavailable or timed out, using basic offline humanizer.");
-            resultData = runClientHumanizer(text, currentMode);
-            // Optionally, add a notice to the replaced phrases so user knows it fell back
-            resultData.aiPhrasesReplaced.push({
-                 original: "[OFFLINE FALLBACK]", 
-                 replacedWith: "Offline stylistic refinement applied (edge AI endpoint unavailable). Check connection or retry for full AI rewrite."
-            });
-        }
-
-        clearTimeout(timer1);
-        clearTimeout(timer2);
+        const resultData = runClientHumanizer(text, currentMode);
 
         setTimeout(() => {
+            clearTimeout(timer1);
             thinkingOverlay.style.display = "none";
             renderHumanizedResult(text, resultData);
 

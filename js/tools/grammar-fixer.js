@@ -1,5 +1,5 @@
 // ToolX Pro - AI Grammar & Tone Co-Pilot
-// Supports Cloudflare Pages Function (Gemini AI) + Client-Side Fallback Engine + Smart Voice TTS
+// Powered by LanguageTool Public API + Client-Side Structural & Tone Engine + Smart Voice TTS
 
 document.addEventListener("DOMContentLoaded", () => {
     // DOM Elements
@@ -353,77 +353,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     // ── Main Proofread Button Click Handler ───────────────────────────────────
-    const DEFAULT_GEMINI_KEY = "";
-    const GEMINI_MODELS = ["gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-2.0-flash", "gemini-2.5-pro", "gemini-1.5-flash"];
-
-    async function callGeminiGrammarDirect(text, tone = "standard") {
-        const apiKey = localStorage.getItem("toolx_gemini_key") || DEFAULT_GEMINI_KEY;
-        if (!apiKey) return null;
-        const toneInstruction = {
-            paraphrase: "Paraphrase and rephrase the entire text completely using fresh, articulate phrasing and enhanced vocabulary while strictly preserving the core meaning and fixing all grammar/spelling errors.",
-            formal: "Adopt a formal, executive, and professional tone suitable for business correspondence.",
-            academic: "Adopt an academic, scholarly, and authoritative tone suitable for scientific and university papers.",
-            concise: "Make the writing concise, punchy, and direct while eliminating redundant filler words.",
-            casual: "Adopt a friendly, conversational, and natural tone.",
-            standard: "Preserve the original meaning, tone, and style as closely as possible."
-        }[tone] || "Preserve the original meaning and style.";
-
-        const systemPrompt = `You are a world-class AI grammar checker, writing editor, and intelligent paraphraser.
-Analyze the user's input text and fix all spelling, grammar, punctuation, and structural issues.
-Tone & Intent Instruction: ${toneInstruction}
-
-You must respond ONLY with a valid JSON object matching this schema:
-{
-  "corrected": "<the fully corrected or paraphrased text with all fixes applied>",
-  "changes": [
-    {
-      "original": "<the exact snippet from input text that was modified>",
-      "fixed": "<the corrected or rephrased replacement>",
-      "reason": "<clear explanation of why this was changed or rephrased>"
-    }
-  ]
-}`;
-
-        const isParaphrase = tone === "paraphrase";
-        const targetTemp = isParaphrase ? 0.75 : 0.2;
-        const targetTopP = isParaphrase ? 0.95 : 0.9;
-
-        for (const model of GEMINI_MODELS) {
-            try {
-                const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${apiKey}`;
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 15000);
-
-                const res = await fetch(url, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    signal: controller.signal,
-                    body: JSON.stringify({
-                        system_instruction: { parts: [{ text: systemPrompt }] },
-                        contents: [{ role: "user", parts: [{ text }] }],
-                        generationConfig: {
-                            temperature: targetTemp,
-                            topP: targetTopP,
-                            responseMimeType: "application/json"
-                        }
-                    })
-                });
-                clearTimeout(timeoutId);
-
-                if (res.ok) {
-                    const data = await res.json();
-                    const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || "";
-                    const cleaned = raw.replace(/^```json\s*/i, "").replace(/```$/i, "").trim();
-                    const parsed = JSON.parse(cleaned);
-                    if (parsed && (parsed.corrected || parsed.changes)) return parsed;
-                }
-            } catch (e) {
-                // Continue to next model
-            }
-        }
-        return null;
-    }
-
     async function executeProofread(customTone = null) {
         const text = inputText.value.trim();
         const activeTone = customTone || selectedTone;
@@ -437,57 +366,20 @@ You must respond ONLY with a valid JSON object matching this schema:
         // Reset & Open Thinking State
         fixBtn.disabled = true;
         btnIcon.textContent = "⏳";
-        btnText.textContent = "AI Neural Engine Thinking…";
+        btnText.textContent = "Checking Grammar & Style…";
         statusMsg.textContent = "";
         aiThinking.style.display = "block";
         setThinkingStep(1);
         stopTTS();
 
-        const stepTimer1 = setTimeout(() => setThinkingStep(2), 200);
-        const stepTimer2 = setTimeout(() => setThinkingStep(3), 400);
+        const stepTimer1 = setTimeout(() => setThinkingStep(2), 180);
+        const stepTimer2 = setTimeout(() => setThinkingStep(3), 360);
 
         let resultData = null;
-
-        // 1. Try Primary Cloudflare Pages Gemini Function (only on http/https)
-        if (window.location.protocol.startsWith("http")) {
-            try {
-                const controller = new AbortController();
-                const timeoutId = setTimeout(() => controller.abort(), 3500);
-                const res = await fetch("/api/grammar-fix", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    signal: controller.signal,
-                    body: JSON.stringify({ text, tone: activeTone })
-                });
-                clearTimeout(timeoutId);
-
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data && (data.corrected || data.changes)) {
-                        resultData = data;
-                    }
-                }
-            } catch (err) {
-                // Failover immediately to direct browser API
-            }
-        }
-
-        // 2. Direct Gemini Fast API Call (Ultra-fast 250ms direct execution)
-        if (!resultData) {
-            try {
-                resultData = await callGeminiGrammarDirect(text, activeTone);
-            } catch (err) {
-                // fallback to client engine
-            }
-        }
-
-        // 3. Seamless Fallback Engine if API unavailable
-        if (!resultData) {
-            try {
-                resultData = await runFallbackEngine(text, activeTone);
-            } catch (err) {
-                resultData = { corrected: text, changes: [] };
-            }
+        try {
+            resultData = await runFallbackEngine(text, activeTone);
+        } catch (err) {
+            resultData = { corrected: text, changes: [] };
         }
 
         clearTimeout(stepTimer1);
@@ -498,7 +390,7 @@ You must respond ONLY with a valid JSON object matching this schema:
         setTimeout(() => {
             aiThinking.style.display = "none";
             renderResults(text, resultData);
-            statusMsg.textContent = activeTone === "paraphrase" ? "✨ AI Paraphrasing & Polish Complete!" : "✨ AI Proofreading & Tone Polish Complete!";
+            statusMsg.textContent = activeTone === "paraphrase" ? "✨ Style & Paraphrase Polish Complete!" : "✨ Grammar & Tone Check Complete!";
             statusMsg.style.color = "#10b981";
 
             fixBtn.disabled = false;
