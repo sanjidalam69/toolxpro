@@ -1,10 +1,9 @@
-// ToolX Pro Service Worker (PWA Engine v1.0)
-const CACHE_NAME = 'toolxpro-pwa-v1';
+// ToolX Pro Service Worker (PWA Engine v76.0)
+const CACHE_NAME = 'toolxpro-pwa-v76';
 const STATIC_ASSETS = [
     '/',
-    '/index.html',
-    '/css/style.css?v=69.0',
-    '/js/layout.js?v=69.0',
+    '/css/style.css?v=76.0',
+    '/js/layout.js?v=76.0',
     '/js/main.js',
     '/site.webmanifest',
     '/images/icon-512.png',

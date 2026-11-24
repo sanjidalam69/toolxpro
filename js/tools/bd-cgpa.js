@@ -150,7 +150,7 @@ document.addEventListener("DOMContentLoaded", () => {
             breakDownListHtml += `
                 <li style="display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--border-color); font-size:0.92rem;">
                     <span><b>${name}</b> (${credits} Credits)</span>
-                    <span>Grade: <b>${gradeLabel}</b> $\\rightarrow$ <span style="color:var(--accent); font-weight:700;">${qualityPoints.toFixed(2)} QP</span></span>
+                    <span>Grade: <b>${gradeLabel}</b> &rarr; <span style="color:var(--accent); font-weight:700;">${qualityPoints.toFixed(2)} QP</span></span>
                 </li>
             `;
         });

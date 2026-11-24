@@ -21,7 +21,7 @@ const BANNED_AI_WORDS = [
 ];
 
 const MODE_PROFILES = {
-  stealth: "MAXIMUM STEALTH — Engineered specifically to defeat neural classifier algorithms (QuillBot, GPTZero, ZeroGPT, Turnitin). Maximum syntactic variance, high perplexity, concrete phrasing, completely natural human cadence.",
+  stealth: "DEEP EDITORIAL POLISH — Maximum syntactic variance, vivid concrete phrasing, natural human cadence, and zero robotic clichés.",
   academic: "ACADEMIC SCHOLARLY — Peer-review level scholarly precision. Active voice, disciplined vocabulary, embedded subordinate clauses, rigorous argumentation, zero fluff.",
   executive: "EXECUTIVE STRATEGIC — Concise, direct, authoritative prose. High impact per sentence, clear causation, zero corporate buzzwords.",
   casual: "CASUAL NATURAL — Relaxed, direct, genuine human voice. Organic flow, natural contractions, straightforward conversational tone without forced slang.",
@@ -31,7 +31,7 @@ const MODE_PROFILES = {
 function getHumanizerSystemPrompt(mode = "standard") {
   const modeProfile = MODE_PROFILES[mode] || MODE_PROFILES.standard;
 
-  return `You are a master human writer. Your single objective is to rewrite the input text so it reads as authentic human writing and scores 0% AI on modern detectors (QuillBot, GPTZero, ZeroGPT, Turnitin, Copyleaks).
+  return `You are an experienced human editor. Your single objective is to rewrite the input text so it reads as authentic, engaging human writing with natural cadence and clear phrasing.
 
 MODE OBJECTIVE: ${modeProfile}
 

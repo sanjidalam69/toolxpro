@@ -1,4 +1,4 @@
-// ToolX Pro - AI Text Humanizer & Detector Bypass
+// ToolX Pro - AI Text Humanizer & Natural Writing Refiner
 // Dual Engine: Gemini AI (Cloudflare Pages Function) + High-Performance Client-Side Humanizer Fallback
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -244,7 +244,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const apiKey = localStorage.getItem("toolx_gemini_key") || DEFAULT_GEMINI_KEY;
         if (!apiKey) return null;
         const modeProfiles = {
-            stealth: "MAXIMUM STEALTH — Engineered specifically to defeat neural classifier algorithms (QuillBot, GPTZero, ZeroGPT, Turnitin). Maximum syntactic variance, high perplexity, concrete phrasing, completely natural human cadence.",
+            stealth: "DEEP EDITORIAL POLISH — Maximum syntactic variance, vivid concrete phrasing, natural human cadence, and zero robotic clichés.",
             academic: "ACADEMIC SCHOLARLY — Peer-review level scholarly precision. Active voice, disciplined vocabulary, embedded subordinate clauses, rigorous argumentation, zero fluff.",
             executive: "EXECUTIVE STRATEGIC — Concise, direct, authoritative prose. High impact per sentence, clear causation, zero corporate buzzwords.",
             casual: "CASUAL NATURAL — Relaxed, direct, genuine human voice. Organic flow, natural contractions, straightforward conversational tone without forced slang.",
@@ -252,7 +252,7 @@ document.addEventListener("DOMContentLoaded", () => {
         };
         const modeProfile = modeProfiles[mode] || modeProfiles.standard;
 
-        const systemPrompt = `You are a master human writer. Your single objective is to rewrite the input text so it reads as authentic human writing and scores 0% AI on modern detectors (QuillBot, GPTZero, ZeroGPT, Turnitin, Copyleaks).
+        const systemPrompt = `You are an experienced human editor. Your single objective is to rewrite the input text so it reads as authentic, engaging human writing with natural cadence and clear phrasing.
 
 MODE OBJECTIVE: ${modeProfile}
 
@@ -441,7 +441,7 @@ Respond strictly with valid JSON only, no markdown backticks, no preamble:
         }, 400);
 
         const timer2 = setTimeout(() => {
-            thinkingPhase.textContent = "🛡️ Verifying Undetectable Human Syntax…";
+            thinkingPhase.textContent = "✨ Refining Natural Human Syntax…";
         }, 800);
 
         let resultData = null;
@@ -482,8 +482,8 @@ Respond strictly with valid JSON only, no markdown backticks, no preamble:
             resultData = runClientHumanizer(text, currentMode);
             // Optionally, add a notice to the replaced phrases so user knows it fell back
             resultData.aiPhrasesReplaced.push({
-                 original: "[SYSTEM NOTICE]", 
-                 replacedWith: "Basic offline humanizer used. API failed or timed out. Try again for better AI bypass."
+                 original: "[OFFLINE FALLBACK]", 
+                 replacedWith: "Offline stylistic refinement applied (edge AI endpoint unavailable). Check connection or retry for full AI rewrite."
             });
         }
 

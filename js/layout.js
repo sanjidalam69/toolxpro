@@ -51,8 +51,7 @@ const CATEGORIES_DATA = [
             { id: 'ai-humanizer', name: 'AI Text Humanizer', desc: 'Elevate AI drafts into polished human writing with natural nuance and effortless flow.', path: 'ai-humanizer' },
             { id: 'grammar-fixer', name: 'AI Grammar & Spell Checker', desc: 'Check and fix spelling, grammar mistakes, punctuation, and refine writing tone instantly.', path: 'grammar-fixer' },
             { id: 'speech-to-bangla', name: 'Bangla Voice Typing & Translator', desc: 'Speak in Bengali or English to convert speech into clean Bangla text with real-time translation.', path: 'speech-to-bangla' },
-            { id: 'ai-detector', name: 'AI Text & Image Detector', desc: 'Scan and detect AI-generated text (ChatGPT, Claude) and AI photos (Midjourney, DALL-E) instantly.', path: 'ai-detector' },
-            { id: 'ai-resume', name: 'AI Resume Maker', desc: 'Build an outstanding professional resume using AI.', isFuture: true }
+            { id: 'ai-detector', name: 'AI Text & Image Detector', desc: 'Scan and analyze text patterns and image signals for synthetic AI indicators.', path: 'ai-detector' }
         ]
     },
     {
@@ -250,6 +249,7 @@ function injectToolBackButton(homePath, isSubFolder, isHomePage) {
                 <span class="crumb-active" title="${categoryName}">${categoryName}</span>
             </nav>
         `;
+    } else {
         navBar.innerHTML = `
             <a href="${backUrl}" class="back-to-home-btn" title="${backLabel}">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -498,16 +498,16 @@ function initNavInteractions(homePath = '/') {
                     <p><b>ToolX Pro</b> is a premier, privacy-first web utility platform designed to make daily digital tasks effortless for students, professionals, creators, and developers.</p>
                     
                     <div style="background:var(--primary-glow); padding:14px; border-radius:10px; border-left:4px solid var(--accent); font-size:0.92rem;">
-                        🔒 <b>100% Client-Side Privacy Guarantee:</b> All calculations, image compression, PDF processing, and text conversions execute entirely inside your local browser sandbox. Your private files and text never leave your device.
+                        🔒 <b>Privacy-First Architecture:</b> Core utilities (calculators, PDF tools, image compressors, cover generators, and Bangla converters) run locally inside your browser sandbox. AI writing and analysis tools process submitted payloads over encrypted HTTPS via Cloudflare Edge AI Workers with zero persistent storage.
                     </div>
 
                     <h4 style="font-size:1.05rem; margin-top:4px; color:var(--text-primary);">💡 Key Highlights & Features</h4>
                     <ul style="padding-left:20px; font-size:0.92rem; display:flex; flex-direction:column; gap:6px;">
-                        <li><b>29+ Premium Web Utilities:</b> Free calculators, image compressors, background removers, PDF editors, and converters.</li>
-                        <li><b>Bangladesh Specials:</b> Tailored tools including SSC/HSC Board GPA, Bijoy to Unicode, and BD VAT.</li>
+                        <li><b>25 Free Web Utilities:</b> AI writing & detection tools, academic cover generators, PDF editors, image tools, Bangla utilities, and everyday calculators.</li>
+                        <li><b>Bangladesh Specials:</b> Tailored tools including SSC/HSC Board GPA, University CGPA, SEU & BD University Cover Generators, and Bijoy to Unicode.</li>
                         <li><b>Zero Registration Required:</b> No account signup, email verification, or personal info needed.</li>
-                        <li><b>Instant & Offline Capable:</b> Since code runs in your browser, most tools work even offline.</li>
-                        <li><b>100% Mathematical Accuracy:</b> Built using official WHO, BD Education Board, and banking formulas.</li>
+                        <li><b>Instant & Lightweight:</b> Core browser utilities run client-side with minimal data usage and fast response times.</li>
+                        <li><b>Transparent Academic & Health Formulas:</b> Built using official WHO BMI ranges, Bangladesh Education Board GPA tables, and UGC 4.00 CGPA scales.</li>
                     </ul>
 
                     <p style="font-size:0.9rem; color:var(--text-secondary); margin-top:4px;">Designed & Developed with ❤️ by <a href="https://www.linkedin.com/in/sanjid-alam-29752619b/" target="_blank" rel="noopener noreferrer" style="color:var(--primary); font-weight:bold;">Sanjid Alam</a>.</p>
@@ -540,6 +540,8 @@ function initNavInteractions(homePath = '/') {
                     </a>
                     <a href="https://www.linkedin.com/in/sanjid-alam-29752619b/" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; gap:10px; background:var(--bg-secondary); padding:10px 14px; border-radius:8px; border:1px solid var(--border-color); text-decoration:none; color:var(--text-primary); font-weight:600;">
                         <svg width="18" height="18" viewBox="0 0 24 24" fill="#0A66C2"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                        LinkedIn: Sanjid Alam
+                    </a>
                     <a href="mailto:ai.sanjid.alam@gmail.com" style="display:flex; align-items:center; gap:10px; background:var(--bg-secondary); padding:10px 14px; border-radius:8px; border:1px solid var(--border-color); text-decoration:none; color:var(--text-primary); font-weight:600;">
                         ✉️ Email: ai.sanjid.alam@gmail.com
                     </a>
@@ -550,37 +552,37 @@ function initNavInteractions(homePath = '/') {
             title: "🔒 Privacy Policy",
             body: `
                 <p style="margin-bottom:10px;"><b>Your privacy is our number one priority.</b></p>
-                <p style="margin-bottom:10px;">Since ToolX Pro runs entirely on client-side code, we do not collect, process, or store any data you input in our calculators, image compressors, or text counters. All operations are done in your local browser sandbox.</p>
+                <p style="margin-bottom:10px;">Core utilities (calculators, PDF tools, image utilities, cover generators, and Bangla converters) run locally inside your browser sandbox so files never leave your device. AI writing and detection tools transmit submitted payloads over encrypted HTTPS to Cloudflare Edge AI Workers without retaining user data.</p>
                 <p style="margin-bottom:10px;">We use standard Google AdSense cookies and anonymous Google Analytics to understand traffic volumes, which do not identify you personally.</p>
-                <p>By using this portal, you agree to this local-sandbox policy.</p>
+                <p>By using this portal, you agree to our <a href="${homePath}privacy-policy" style="color:var(--primary); font-weight:600;">Privacy Policy</a>.</p>
             `
         },
         terms: {
             title: "📄 Terms of Service",
             body: `
                 <p style="margin-bottom:10px;">Welcome to ToolX Pro. By accessing our website, you agree to use our tools responsibly.</p>
-                <p style="margin-bottom:10px;">All tools are provided "as is" without guarantees of continuous availability or 100% mathematical accuracy. We do our best to maintain the highest standard of calculation correctness.</p>
-                <p>Commercial scraping or reverse engineering of our offline tool bundles is prohibited without explicit consent.</p>
+                <p style="margin-bottom:10px;">All tools are provided "as is" without guarantees of continuous availability or suitability for specific academic, legal, or medical decisions. Always verify critical outputs independently.</p>
+                <p>Commercial scraping or automated abuse of our services is prohibited. Read the full <a href="${homePath}terms" style="color:var(--primary); font-weight:600;">Terms of Service</a>.</p>
             `
         },
         disclaimer: {
             title: "⚠️ Disclaimer",
             body: `
                 <p style="margin-bottom:10px;">The calculations and conversions provided by ToolX Pro are for informational purposes only.</p>
-                <p style="margin-bottom:10px;">• <b>Financial Tools (EMI):</b> Always verify results with your bank or financial advisor before signing loan terms.</p>
+                <p style="margin-bottom:10px;">• <b>Academic & GPA Tools:</b> Always verify GPA/CGPA calculations and cover formats against your university or board syllabus.</p>
                 <p style="margin-bottom:10px;">• <b>Health Tools (BMI):</b> Consult a licensed doctor or dietitian for professional medical diagnostics.</p>
-                <p>We are not liable for any losses or damages arising from the use of our services.</p>
+                <p>• <b>AI Writing & Detection Tools:</b> Review AI-refined drafts and detector probabilities critically before publication.</p>
             `
         },
         sitemap: {
             title: "🗺️ Sitemap Directory",
             body: `
-                <p style="margin-bottom:10px;">List of all available pages in ToolX Pro:</p>
+                <p style="margin-bottom:10px;">Explore all active hubs and pages in ToolX Pro:</p>
                 <ul style="padding-left:20px; display:flex; flex-direction:column; gap:6px;">
                     <li><a href="${homePath}" style="color:var(--primary);">Home Dashboard</a></li>
-                    <li><a href="${homePath}#categories-section" style="color:var(--primary);">All Tools Categories</a></li>
-                    <li><a href="${homePath}#blog-container" style="color:var(--primary);">Latest Articles Blog</a></li>
-                    <li>Age, BMI, EMI, GPA, Sales Tax, Image tools, PDF tools, Word Counter, QR, Unit, Currency, File converters.</li>
+                    <li><a href="${homePath}#categories-section" style="color:var(--primary);">All 6 Tool Categories (25 Tools)</a></li>
+                    <li><a href="${homePath}blog" style="color:var(--primary);">Guides & Tutorials Blog (13 Articles)</a></li>
+                    <li>AI Tools, Student Cover Generators, PDF Tools, Image Tools, Bangla Voice & Unicode, and Everyday Calculators.</li>
                 </ul>
             `
         }
